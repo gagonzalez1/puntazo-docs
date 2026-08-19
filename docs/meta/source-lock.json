@@ -1,0 +1,21 @@
+{
+  "documentedAt": "2026-08-18",
+  "repositories": [
+    {
+      "kind": "frontend",
+      "name": "gonzalotev/app-fidelidad",
+      "url": "https://github.com/gonzalotev/app-fidelidad",
+      "localPath": "../app-fidelidad",
+      "commit": "99a350bd6e204a1f866d78dcfb20bd9bc108ffda",
+      "commitDate": "2026-08-13"
+    },
+    {
+      "kind": "backend",
+      "name": "am-p/app-loyalty",
+      "url": "https://github.com/am-p/app-loyalty",
+      "localPath": "../app-loyalty",
+      "commit": "f03b9aa202587510508a6f2a094b808f5ed6353d",
+      "commitDate": "2026-08-03"
+    }
+  ]
+}
