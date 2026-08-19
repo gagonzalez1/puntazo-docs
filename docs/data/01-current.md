@@ -32,7 +32,7 @@ PostgreSQL contiene una sola tabla creada al iniciar el servidor. Tiendas, clien
 
 ## Dos capas de datos
 
-- [Modelo objetivo consolidado](#/data-target): propuesta marca–sucursal del spec `v1.4-draft`.
+- [Modelo objetivo consolidado](#/data-target): propuesta marca–sucursal del spec `v1.5-review`.
 - [Matriz pantalla–API](#/integration-matrix): qué datos ya viajan y cuáles siguen locales.
 
 ## Referencias de código

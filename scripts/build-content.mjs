@@ -66,6 +66,7 @@ const sourceFiles = await walk(docsRoot);
 const docs = [];
 const ids = new Set();
 const allowedStatuses = new Set(["current", "mixed", "mock", "target", "gap"]);
+const allowedAuthorities = new Set(["source_code", "agreed", "proposal_codex", "mixed"]);
 
 for (const sourceFile of sourceFiles) {
   const relativePath = path.relative(root, sourceFile).split(path.sep).join("/");
@@ -77,6 +78,7 @@ for (const sourceFile of sourceFiles) {
   if (!/^[a-z0-9-]+$/.test(metadata.id)) throw new Error(`${relativePath}: id inválido ${metadata.id}`);
   if (ids.has(metadata.id)) throw new Error(`${relativePath}: id duplicado ${metadata.id}`);
   if (metadata.status && !allowedStatuses.has(metadata.status)) throw new Error(`${relativePath}: status inválido ${metadata.status}`);
+  if (metadata.authority && !allowedAuthorities.has(metadata.authority)) throw new Error(`${relativePath}: authority inválida ${metadata.authority}`);
   ids.add(metadata.id);
 
   const { mermaid, prose } = extractMermaid(body);
@@ -102,6 +104,7 @@ for (const sourceFile of sourceFiles) {
     parent: metadata.parent || null,
     level: metadata.level || "reference",
     status: metadata.status || "current",
+    authority: metadata.authority || (metadata.status === "current" ? "source_code" : "mixed"),
     summary: metadata.summary,
     sourcePath: relativePath,
     sourceMarkdown: raw,
@@ -150,6 +153,9 @@ for (const repository of sourceLock.repositories) {
 const sourceKinds = new Set(sourceLock.repositories.map((repository) => repository.kind));
 if (!sourceKinds.has("frontend") || !sourceKinds.has("backend")) {
   throw new Error("source-lock debe contener los kinds frontend y backend");
+}
+if (!Array.isArray(sourceLock.documents) || !sourceLock.documents.some((document) => document.name === "BACKEND_SPEC_CORREGIDO.md" && /^v[0-9.]+-review$/.test(document.version) && /^[a-f0-9]{64}$/.test(document.sha256))) {
+  throw new Error("source-lock debe fijar BACKEND_SPEC_CORREGIDO.md con versión review y SHA-256");
 }
 const lockedCommits = new Set(sourceLock.repositories.map((repository) => repository.commit));
 for (const doc of docs) {

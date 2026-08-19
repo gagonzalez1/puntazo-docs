@@ -33,6 +33,7 @@ Para obtener contexto suficiente sin cargar toda la documentación:
 4. [`docs/architecture/02-containers.md`](#/c4-containers) — límites entre app, API, base de datos y proveedores.
 5. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — qué está conectado y qué continúa simulado.
 6. [`docs/references/02-gaps.md`](#/implementation-gaps) — brechas que no deben confundirse con comportamiento actual.
+7. [`docs/backend/00-review-index.md`](#/backend-review-index) — decisiones de backend propuestas por Codex que requieren aprobación.
 
 Después se debe abrir el flujo, la secuencia o el modelo de datos específico de la tarea.
 
@@ -58,7 +59,15 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 10. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — relación pantalla–API y contratos faltantes.
 11. [`docs/references/02-gaps.md`](#/implementation-gaps) — diferencias entre código, documentación y propuesta.
 
-### 3. Flujos del frontend
+### 3. Backend objetivo pendiente de aprobación
+
+12. [`docs/backend/00-review-index.md`](#/backend-review-index) — checklist de decisiones `PC-01` a `PC-14`.
+13. [`docs/backend/01-api-contract.md`](#/backend-api-contract) — dominios, permisos y contrato HTTP formalizado en `openapi.yaml`.
+14. [`docs/backend/02-database-physical.md`](#/backend-database-physical) — tipos PostgreSQL, integridad, índices y concurrencia.
+15. [`docs/backend/03-operations.md`](#/backend-operations) — sesiones, storage, migraciones y observabilidad.
+16. [`docs/backend/04-backend-spec.md`](#/backend-full-spec) — spec normativo completo `v1.5-review`, con acuerdos y propuestas diferenciados.
+
+### 4. Flujos del frontend
 
 12. [`docs/flows/00-frontend-flows.md`](#/frontend-flows) — índice de recorridos del frontend.
 13. [`docs/flows/01-auth.md`](#/flow-auth) — acceso, onboarding y restauración.
@@ -75,7 +84,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 24. [`docs/flows/23-customer-cards.md`](#/flow-customer-cards) — tarjetas de fidelidad.
 25. [`docs/flows/24-customer-profile.md`](#/flow-customer-profile) — perfil real y campos derivados.
 
-### 4. Secuencias de ejecución
+### 5. Secuencias de ejecución
 
 26. [`docs/sequences/00-index.md`](#/sequences) — índice de interacciones temporales.
 27. [`docs/sequences/01-register.md`](#/sequence-register) — registro por email.
@@ -84,16 +93,16 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 30. [`docs/sequences/04-restore.md`](#/sequence-restore) — restauración de sesión.
 31. [`docs/sequences/05-scan.md`](#/sequence-scan) — escaneo actual y corte hacia la futura API.
 
-### 5. Diseño objetivo
+### 6. Diseño objetivo
 
-32. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.4-draft`; no representa todavía la base implementada.
+32. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
 
 ## Estrategia de carga para un LLM
 
 - **Cambio de frontend:** reglas + contenedores + componente frontend + flujo afectado + secuencia relacionada.
-- **Cambio de backend:** reglas + contenedores + componente backend + secuencia + datos actuales.
-- **Contrato frontend/backend:** matriz de integración + secuencia + datos actuales + brechas.
-- **Decisión de negocio o modelo:** reglas + brechas + modelo objetivo, conservando explícita la diferencia entre propuesta e implementación.
+- **Cambio de backend:** reglas + índice de revisión + contrato API + PostgreSQL + componente backend + secuencia.
+- **Contrato frontend/backend:** matriz de integración + contrato API + secuencia + datos actuales + brechas.
+- **Decisión de negocio o modelo:** reglas + índice de revisión + brechas + modelo objetivo, conservando explícita la diferencia entre propuesta e implementación.
 - **Actualización documental:** commits + reglas + documentos afectados + validaciones del proyecto.
 
 Evitar cargar todos los archivos por defecto. La lectura selectiva reduce contexto irrelevante, pero esta lista completa permite comprobar que no falta ningún documento.

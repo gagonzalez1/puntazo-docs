@@ -20,6 +20,7 @@ type Doc = {
   parent: string | null;
   level: string;
   status: "current" | "mixed" | "mock" | "target" | "gap";
+  authority: "source_code" | "agreed" | "proposal_codex" | "mixed";
   summary: string;
   sourcePath: string;
   sourceMarkdown: string;
@@ -40,6 +41,13 @@ const STATUS_LABEL: Record<Doc["status"], string> = {
   mock: "Mock",
   target: "Propuesto",
   gap: "Brecha",
+};
+
+const AUTHORITY_LABEL: Record<Doc["authority"], string> = {
+  source_code: "Fuente: código",
+  agreed: "Acordado",
+  proposal_codex: "Propuesta Codex",
+  mixed: "Autoridad mixta",
 };
 
 function icon(name: "back" | "search" | "minus" | "plus" | "reset" | "download" | "code" | "menu" | "close") {
@@ -365,7 +373,11 @@ export default function ArchitectureExplorer() {
         <article className="document-view">
           <div className="document-heading">
             <div>
-              <div className="eyebrow"><span>{activeDoc.level}</span><i className={`status-badge ${activeDoc.status}`}>{STATUS_LABEL[activeDoc.status]}</i></div>
+              <div className="eyebrow">
+                <span>{activeDoc.level}</span>
+                <i className={`status-badge ${activeDoc.status}`}>{STATUS_LABEL[activeDoc.status]}</i>
+                <i className={`authority-badge ${activeDoc.authority}`}>{AUTHORITY_LABEL[activeDoc.authority]}</i>
+              </div>
               <h1>{activeDoc.title}</h1>
               <div className="source-reference">
                 <span>Fuente MD</span>

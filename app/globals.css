@@ -100,6 +100,10 @@ code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospac
 .status-badge.mock { color: #855b07; background: var(--amber-soft); }
 .status-badge.target { color: #5c4ca0; background: #efeafd; }
 .status-badge.gap { color: #a03e30; background: var(--red-soft); }
+.authority-badge { padding: 4px 7px; border-radius: 99px; color: #46534f; background: #eef1f0; font-style: normal; font-size: 9px; letter-spacing: .06em; }
+.authority-badge.agreed { color: #1d6549; background: var(--brand-soft); }
+.authority-badge.proposal_codex { color: #855b07; background: var(--amber-soft); }
+.authority-badge.mixed { color: #5c4ca0; background: #efeafd; }
 .source-reference { max-width: 850px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 11px; color: #76857f; font-size: 10px; }
 .source-reference span { font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .source-reference code { max-width: min(100%, 600px); overflow: hidden; padding: 4px 7px; color: #285b49; background: #edf6f1; border-radius: 5px; text-overflow: ellipsis; white-space: nowrap; }

@@ -36,4 +36,4 @@ No existe hoy un `POST` de suscripción. Tampoco se envía al backend si el regi
 
 ## Contrato objetivo
 
-En el spec `v1.4-draft`, el tipo de cuenta se declara al registrar; un cliente final no contrata una suscripción. La marca se crea en un paso posterior y Backoffice administra su suscripción por sucursales.
+En el spec `v1.5-review`, el tipo de cuenta se declara al registrar; un cliente final no contrata una suscripción. La marca se crea en un paso posterior y Backoffice administra su suscripción por sucursales. Los precios, períodos y cambios están en `PROPUESTA CODEX PC-03`, todavía pendiente de aprobación.

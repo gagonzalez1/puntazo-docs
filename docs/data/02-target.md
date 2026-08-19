@@ -1,16 +1,17 @@
 ---
 id: data-target
-title: Datos · Modelo objetivo v1.4
+title: Datos · Modelo objetivo v1.5-review
 group: 04 · Datos
 order: 20
 parent: data-current
 level: data
 status: target
+authority: mixed
 summary: DER propuesto de identidad unificada, marcas, sucursales, suscripciones y saldos compartidos.
 diagram: true
 ---
 
-# Datos · Modelo objetivo v1.4
+# Datos · Modelo objetivo v1.5-review
 
 > Este diagrama **no representa migraciones implementadas**. Es la propuesta consolidada en `BACKEND_SPEC_CORREGIDO.md` para orientar el desarrollo.
 
@@ -57,7 +58,7 @@ erDiagram
     PLANES {
         int id_plan PK
         string codigo UK
-        decimal precio_base
+        int precio_base_centavos
         boolean activo
     }
     SUSCRIPCIONES {
@@ -71,7 +72,7 @@ erDiagram
         int id_suscripcion_sucursal PK
         int id_suscripcion FK
         int id_sucursal FK
-        decimal precio_mensual
+        int precio_mensual_centavos
         string estado
     }
     PROGRAMAS_FIDELIDAD {
@@ -79,7 +80,7 @@ erDiagram
         int id_marca FK
         string tipo
         int cantidad_fija
-        decimal importe_por_unidad
+        int importe_por_unidad_centavos
         string moneda
         boolean activo
     }
@@ -105,10 +106,11 @@ erDiagram
         int id_usuario_operador FK
         string tipo_saldo
         string operacion
+        string sentido
         int cantidad
         int saldo_anterior
         int saldo_posterior
-        decimal importe_compra
+        int importe_compra_centavos
         string idempotency_key UK
     }
     CARD_TEMPLATES {
@@ -147,6 +149,11 @@ erDiagram
 - Una tarjeta representa cliente–marca; `saldo_sellos` y `saldo_puntos` se comparten entre todas sus sucursales.
 - MVP 1 activa Sellos o Puntos. Guardar ambos saldos permite habilitar ambos programas después sin migrar tarjetas.
 - Cada cambio de saldo produce un movimiento auditable e idempotente.
+- Los puntos, sellos, importes y divisores usan enteros; no se usan valores de punto flotante.
+- `sentido` separa crédito y débito sin almacenar cantidades negativas.
+
+> La estructura de negocio combina decisiones acordadas con detalles físicos
+> `PROPUESTA CODEX PC-09` y `PC-10`. Consulte el índice antes de implementar.
 
 ## Restricciones mínimas
 

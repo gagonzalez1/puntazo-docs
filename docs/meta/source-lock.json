@@ -1,5 +1,5 @@
 {
-  "documentedAt": "2026-08-18",
+  "documentedAt": "2026-08-19",
   "repositories": [
     {
       "kind": "frontend",
@@ -16,6 +16,15 @@
       "localPath": "../app-loyalty",
       "commit": "f03b9aa202587510508a6f2a094b808f5ed6353d",
       "commitDate": "2026-08-03"
+    }
+  ],
+  "documents": [
+    {
+      "name": "BACKEND_SPEC_CORREGIDO.md",
+      "localPath": "../docs/BACKEND_SPEC_CORREGIDO.md",
+      "publishedPath": "docs/backend/04-backend-spec.md",
+      "version": "v1.5-review",
+      "sha256": "01fcb896610ad00fa7dd55e057753fe5e8b34f2f3acf9ef9230717b4f8cca723"
     }
   ]
 }

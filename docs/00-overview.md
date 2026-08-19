@@ -5,6 +5,7 @@ group: 00 · Inicio
 order: 0
 level: hub
 status: current
+authority: mixed
 summary: Puerta de entrada al mapa C4, los flujos del frontend, las secuencias y los datos.
 diagram: true
 ---
@@ -23,8 +24,10 @@ flowchart LR
     SEQ["Secuencias"]
     DATA["Datos"]
     REF["Código y commits"]
+    BE["Backend · revisión"]
 
     CTX --> CNT
+    CNT --> BE
     CNT --> FEF
     CNT --> SEQ
     SEQ --> DATA
@@ -36,6 +39,7 @@ flowchart LR
     click SEQ href "#/sequences" "Abrir secuencias"
     click DATA href "#/data-current" "Abrir datos"
     click REF href "#/documented-commits" "Abrir referencias"
+    click BE href "#/backend-review-index" "Abrir revisión del backend"
 ```
 
 ## Convenciones
