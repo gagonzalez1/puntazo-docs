@@ -42,5 +42,5 @@ flowchart LR
 ## Referencias de código
 
 - [Registro de rutas HTTP del backend](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/cmd/server/main.go#L43-L51)
-- [Cliente HTTP central del frontend](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/src/core/api/client.ts#L25-L84)
-- [Servicios mock de fidelidad](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/src/features/loyalty/services/loyaltyService.ts#L84-L146)
+- [Cliente HTTP central del frontend](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/core/api/client.ts#L25-L84)
+- [Servicios mock de fidelidad](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/loyalty/services/loyaltyService.ts#L84-L146)

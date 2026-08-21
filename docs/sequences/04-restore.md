@@ -40,6 +40,6 @@ La llamada se dispara en el layout raíz. El layout de tabs decide redirecciones
 
 ## Referencias de código
 
-- [Disparo de restauración](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/app/_layout.tsx#L48-L51)
-- [Restauración y descarte de token](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/src/features/auth/store/useAuthStore.ts#L50-L65)
+- [Disparo de restauración](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/_layout.tsx#L48-L51)
+- [Restauración y descarte de token](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/store/useAuthStore.ts#L50-L65)
 - [Middleware de autenticación](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/internal/middleware/auth.go#L12-L34)

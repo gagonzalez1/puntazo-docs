@@ -39,7 +39,7 @@ La detección podrá funcionar aunque la computadora local esté apagada. La gen
 | Workflow de GitHub | Implementado, pendiente de ejecución en `main` | `.github/workflows/detect-doc-drift.yml` |
 | Historial documental | Implementado | `docs/references/05-change-history.md` |
 | Tarea programada de Codex | Activa, diariamente a las 10:00 | Automatización `Sincronizar documentación Puntazo` |
-| Primera sincronización | Pendiente | El frontend presenta un cambio real `99a350bd…afec4792` |
+| Primera sincronización | Documentada, pendiente de merge | Frontend actualizado de `99a350bd` a `afec4792` en el draft PR #1 |
 
 ## 2. Alcance
 
@@ -246,9 +246,9 @@ La automatización se considerará preparada cuando:
 - [ ] Una ejecución sin cambios no cree issues, ramas ni PR.
 - [x] La tarea de Codex funcione sin `OPENAI_API_KEY`.
 - [ ] Codex trabaje en un worktree aislado.
-- [ ] El PR incluya rangos de commits y documentos afectados.
-- [ ] `docs/meta/source-lock.json` se actualice con commits completos de 40 caracteres.
-- [ ] Las referencias al código apunten a los nuevos commits documentados.
+- [x] El PR incluya rangos de commits y documentos afectados.
+- [x] `docs/meta/source-lock.json` se actualice con commits completos de 40 caracteres.
+- [x] Las referencias al código apunten a los nuevos commits documentados.
 - [x] El historial de cambios reciba una entrada verificable.
 - [ ] `npm test` pase antes de solicitar revisión.
 - [ ] Codex no pueda hacer merge automáticamente.
@@ -261,7 +261,7 @@ La automatización se considerará preparada cuando:
 3. [x] Agregar el workflow de detección y la gestión automática de la etiqueta `docs-drift`.
 4. [ ] Probar la detección mediante `workflow_dispatch` después de integrar este primer PR.
 5. [x] Crear y activar la tarea programada de Codex Desktop a las 10:00.
-6. [ ] Procesar el cambio real detectado en frontend y comprobar la creación del primer draft PR de sincronización.
+6. [x] Procesar el cambio real detectado en frontend y documentarlo en el primer draft PR.
 7. [ ] Revisar el primer PR manualmente y ajustar las instrucciones de la tarea.
 8. [ ] Confirmar el funcionamiento periódico de punta a punta.
 
