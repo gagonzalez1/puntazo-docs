@@ -15,7 +15,7 @@ El contenido representa una fotografía del código. Toda afirmación sobre impl
 
 | Repositorio | Commit completo | Fecha del commit | Estado al analizar |
 |---|---|---|---|
-| `gonzalotev/app-fidelidad` | `99a350bd6e204a1f866d78dcfb20bd9bc108ffda` | 2026-08-13 | limpio |
+| `gonzalotev/app-fidelidad` | `afec4792729b48de4646168846ab221c96352f51` | 2026-08-20 | revisado; cambio visual aprobado |
 | `am-p/app-loyalty` | `f03b9aa202587510508a6f2a094b808f5ed6353d` | 2026-08-03 | limpio |
 
 ## Regla de actualización

@@ -31,8 +31,8 @@ No hay consultas al backend, persistencia ni filtros reales por marca o sucursal
 
 ## Referencias de código
 
-- [Pantalla de analíticas](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/app/(tabs)/analytics/index.tsx#L33-L90)
-- [Servicio de métricas mock](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/src/features/analytics/services/analyticsService.ts#L1-L140)
+- [Pantalla de analíticas](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/analytics/index.tsx#L33-L90)
+- [Servicio de métricas mock](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/analytics/services/analyticsService.ts#L1-L140)
 
 ## API objetivo
 

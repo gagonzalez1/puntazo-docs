@@ -32,8 +32,8 @@ La tienda está fijada a `id_tienda = 1`; los filtros y los cambios sólo afecta
 
 ## Referencias de código
 
-- [Pantalla de clientes](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/app/(tabs)/customers/index.tsx#L78-L155)
-- [Join sobre mocks](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/src/features/loyalty/services/loyaltyService.ts#L87-L99)
+- [Pantalla de clientes](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/customers/index.tsx#L78-L155)
+- [Join sobre mocks](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/loyalty/services/loyaltyService.ts#L87-L99)
 
 ## API objetivo
 

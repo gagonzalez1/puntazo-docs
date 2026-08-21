@@ -17,6 +17,7 @@ codeRefs: required
 flowchart LR
     ROUTER["Expo Router\napp/"]
     SCREENS["Pantallas\nauth + tabs"]
+    THEME["Tema y utilidades visuales\ncolors + shadow"]
     STORE["Zustand\nuseAuthStore"]
     QUERY["TanStack Query\nhooks por feature"]
     REAL["authService\nAPI real"]
@@ -24,6 +25,7 @@ flowchart LR
     HTTP["api client + endpoints"]
 
     ROUTER --> SCREENS
+    SCREENS --> THEME
     SCREENS --> STORE
     SCREENS --> QUERY
     STORE --> REAL
@@ -37,6 +39,8 @@ flowchart LR
 
 ## Referencias de código
 
-- [Layout raíz](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/app/_layout.tsx#L27-L77)
-- [Store de autenticación](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/src/features/auth/store/useAuthStore.ts#L14-L107)
-- [QueryClient](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/src/core/queryClient.ts#L1-L10)
+- [Layout raíz](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/_layout.tsx#L27-L77)
+- [Store de autenticación](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/store/useAuthStore.ts#L14-L107)
+- [QueryClient](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/core/queryClient.ts#L1-L10)
+- [Layout de tabs con paleta fija](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/_layout.tsx#L13-L139)
+- [Utilidades compartidas de sombras](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/core/utils/shadow.ts#L1-L52)

@@ -26,6 +26,8 @@ flowchart LR
 
 La navegación funciona, aunque el guard depende de una suscripción `GRATIS` creada localmente. En el modelo objetivo el cliente final es gratuito y no tiene suscripción.
 
+La barra inferior comparte la paleta fija de Puntazo con el recorrido comercial. El cambio `afec4792` no altera las tres tabs del cliente ni su lógica de selección; sólo unifica la presentación visual.
+
 ## Referencias de código
 
-- [Tabs y criterio de plan](https://github.com/gonzalotev/app-fidelidad/blob/99a350bd6e204a1f866d78dcfb20bd9bc108ffda/app/(tabs)/_layout.tsx#L17-L141)
+- [Tabs, paleta y criterio de plan](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/_layout.tsx#L13-L139)
