@@ -22,6 +22,7 @@ Este archivo es el **punto de entrada recomendado para cualquier LLM o persona**
 3. Distinguir siempre los estados `current`, `mixed`, `mock`, `gap` y `target`.
 4. Verificar en el código fijado a commit cualquier afirmación que vaya a convertirse en implementación.
 5. No presentar el modelo objetivo ni el backend spec como funcionalidad ya implementada.
+6. Antes de sincronizar commits, leer [`docs/references/04-documentation-sync-plan.md`](#/documentation-sync-plan) y comprobar si el flujo sigue en estado propuesto o ya fue implementado.
 
 ## Lectura mínima recomendada
 
@@ -44,7 +45,9 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 1. [`docs/00-llm-guide.md`](#/markdown-index) — esta guía y el índice completo.
 2. [`docs/references/01-commits.md`](#/documented-commits) — commits que sustentan la documentación.
 3. [`docs/references/03-documentation-rules.md`](#/documentation-rules) — cómo leer, verificar y actualizar los documentos.
-4. [`docs/00-overview.md`](#/overview) — puerta de entrada al mapa completo.
+4. [`docs/references/04-documentation-sync-plan.md`](#/documentation-sync-plan) — plan propuesto para detectar cambios y preparar PR documentales sin API de OpenAI.
+5. [`docs/references/05-change-history.md`](#/documentation-change-history) — historial funcional de cada sincronización documental aceptada.
+6. [`docs/00-overview.md`](#/overview) — puerta de entrada al mapa completo.
 
 ### 1. Arquitectura del sistema
 

@@ -1,0 +1,101 @@
+name: Detectar desactualización documental
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: detect-doc-drift
+  cancel-in-progress: true
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Comparar commits documentados y remotos
+        run: node scripts/detect-source-drift.mjs --output docs-drift-report.json
+
+      - name: Crear, actualizar o cerrar el issue de seguimiento
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("node:fs");
+            const report = JSON.parse(fs.readFileSync("docs-drift-report.json", "utf8"));
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const label = "docs-drift";
+            const title = "[docs-drift] Repositorios fuente adelantados a la documentación";
+
+            try {
+              await github.rest.issues.getLabel({ owner, repo, name: label });
+            } catch (error) {
+              if (error.status !== 404) throw error;
+              await github.rest.issues.createLabel({
+                owner,
+                repo,
+                name: label,
+                color: "D93F0B",
+                description: "La documentación no coincide con los commits fuente actuales",
+              });
+            }
+
+            const { data: candidates } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              labels: label,
+              per_page: 100,
+            });
+            const issues = candidates.filter((issue) => !issue.pull_request && issue.title === title);
+
+            if (!report.drift) {
+              for (const issue of issues) {
+                await github.rest.issues.createComment({
+                  owner,
+                  repo,
+                  issue_number: issue.number,
+                  body: "Los commits documentados vuelven a coincidir con las fuentes. Cierre automático.",
+                });
+                await github.rest.issues.update({ owner, repo, issue_number: issue.number, state: "closed" });
+              }
+              core.info("La documentación está sincronizada.");
+              return;
+            }
+
+            const rows = report.repositories.map((source) => {
+              const state = source.drift ? "⚠️ Pendiente" : "✅ Actualizado";
+              const comparison = source.drift ? `[Ver cambios](${source.compareUrl})` : "—";
+              return `| ${source.kind} | \`${source.documentedCommit}\` | \`${source.remoteCommit}\` | ${state} | ${comparison} |`;
+            });
+            const body = [
+              "## Desactualización detectada",
+              "",
+              `Última comprobación: \`${report.checkedAt}\``,
+              "",
+              "| Fuente | Commit documentado | Commit remoto | Estado | Comparación |",
+              "|---|---|---|---|---|",
+              ...rows,
+              "",
+              "Este issue es administrado por GitHub Actions. La tarea programada de Codex debe analizar los cambios, validar la documentación y abrir un draft PR. No se debe hacer merge automáticamente.",
+            ].join("\n");
+
+            if (issues.length > 0) {
+              await github.rest.issues.update({ owner, repo, issue_number: issues[0].number, body });
+              core.info(`Issue #${issues[0].number} actualizado.`);
+            } else {
+              const { data: issue } = await github.rest.issues.create({ owner, repo, title, body, labels: [label] });
+              core.info(`Issue #${issue.number} creado.`);
+            }
+
