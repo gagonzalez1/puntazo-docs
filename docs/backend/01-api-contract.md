@@ -1,87 +1,94 @@
 ---
 id: backend-api-contract
-title: Backend · Contrato API propuesto
+title: Backend · Contrato API implementado
 group: 03 · Backend objetivo
 order: 20
 parent: backend-review-index
 level: api
-status: target
-authority: mixed
-summary: Contrato objetivo parcialmente aprobado, con implementación y billing todavía pendientes.
+status: current
+authority: source_code
+summary: Contrato OpenAPI implementado y verificado en el backend Sellos/Puntos de la release gratuita.
 diagram: true
-codeRefs: optional
+codeRefs: required
 ---
 
-# Backend · Contrato API propuesto
+# Backend · Contrato API implementado
 
-> **AUTORIDAD MIXTA.** `PR-01` a `PR-09` están aprobadas para `FREE_ACCESS_V1`.
-> El archivo [`openapi.yaml`](/openapi.yaml) es el contrato formal de transporte;
-> las operaciones siguen sin implementar y billing permanece diferido.
+> **Fuente: código.** El contrato canónico es [openapi.yaml](/openapi.yaml) y
+> coincide con la implementación verificada en el backend
+> [b87b00ce41d94b4cc719934fc3cc1a8ff18803c1](https://github.com/am-p/app-loyalty/tree/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1).
+> Cada operación declarada `IMPLEMENTED` en ese archivo tiene handler, persistencia,
+> autorización y pruebas en esa revisión. Las extensiones futuras de billing no
+> forman parte de este contrato.
 
 ```mermaid
 flowchart TB
-  API["Puntazo API /v1"] --> AU["Auth y cuenta"]
-  API --> MA["Marcas, sucursales y personal"]
-  API --> LO["Programas, beneficios y tarjetas"]
-  API --> MO["Preview, scan, canje y ajustes"]
-  API --> SU["Suscripciones"]
-  API --> AN["Analíticas"]
-  API --> BO["Backoffice y auditoría"]
-  MO --> DB["Transacción + idempotencia"]
-  SU --> DB
-  BO --> DB
-  click DB href "#/backend-database-physical" "Abrir diseño físico"
+  API["Puntazo API /v1"] --> AU["Auth, sesiones y cuenta"]
+  API --> MA["Marcas, sucursales, beneficios y personal"]
+  API --> LO["Clientes, tarjetas y saldos"]
+  API --> MO["Preview, scan, canje e idempotencia"]
+  API --> OP["Health, readiness y versión"]
+  MA --> PG["PostgreSQL 16"]
+  MO --> PG
+  MA --> S3["Storage S3-compatible privado"]
+  API --> RD["Redis rate limiter"]
+  click PG href "#/backend-database-physical" "Abrir datos físicos"
+  click API href "#/c4-containers" "Abrir contenedores"
 ```
 
-## Convenciones propuestas
+## Convenciones implementadas
 
-- Base URL: `/v1`.
-- Recurso individual: `{ "data": {...}, "request_id": "..." }`.
-- Colección: agrega `pagination` con `page`, `page_size`, `total_items` y `total_pages`.
-- Error: `code`, `message`, `details` y `request_id`.
-- Mutaciones concurrentes: `If-Match` y respuesta `412 PRECONDITION_FAILED`.
-- Scan, canje, ajustes y suscripciones: header `Idempotency-Key` UUID obligatorio.
-- Paginación MVP: página 1, tamaño 20 por defecto y máximo 100.
-- Un recurso de otra marca responde `404` para no revelar su existencia.
-- Puntos: carga manual `1..100000`; preview marca confirmación reforzada desde `10001`.
-- Movimientos preservan el transporte v1 existente: `operation`, `branch_id`,
-  `benefit_id` y respuestas con `id`, `balance_before`, `amount`, `balance_after`.
-- Beneficios: `requisito_cantidad` entre `1` y `10000000`.
-- Primera release: alta comercial con código, costo cero y ninguna ruta de billing activa.
-- Producción: login por contraseña requiere email verificado. El registro puede
-  responder `verification_required: true` y omitir por completo la sesión.
-- Solicitudes de verificación y reset responden siempre `202` genérico. Sus tokens
-  se almacenan hasheados, son de un uso y vencen a las 24 h y 1 h respectivamente.
-- Google sólo marca el email local como verificado si el ID token trae
-  `email_verified=true`; un reset exitoso revoca todas las sesiones.
+- Base versionada: `/v1`; las respuestas usan `data` y `request_id`.
+  Las colecciones agregan `pagination`.
+- Mutaciones editables usan `If-Match` con ETag fuerte y devuelven
+  `412 PRECONDITION_FAILED` cuando falta, es inválido o está desactualizado.
+- Alta demo y mutaciones de movimientos usan `Idempotency-Key` UUID; un replay
+  devuelve el resultado persistido sin duplicar efectos.
+- `X-Client-Platform: web` transporta refresh mediante cookie HttpOnly,
+  Secure y SameSite=Strict; `native` recibe el refresh en JSON.
+- `/health/ready` valida PostgreSQL, la versión exacta del esquema, Redis y
+  storage privado S3 cuando media está habilitado.
+- `SELLOS` acredita una unidad por acumulación. `PUNTOS` recibe
+  `cantidad_puntos` sólo en preview, entre 1 y 100.000; la confirmación
+  consume el snapshot inmutable. Los beneficios aceptan 1..10.000.000.
+- Registro de cliente y alta demo exigen email, contraseña de 10..72 bytes
+  compatibles con bcrypt. Login por contraseña requiere email verificado.
+  Verificación y reset responden `202` genérico; los tokens son de un uso,
+  hash en base y vencen a las 24 h y 1 h.
+- Los movimientos conservan `operation`, `branch_id`, `benefit_id` y
+  snapshots históricos de programa/beneficio. La resolución de una operación
+  incierta usa `GET /movimientos/idempotencia/{idempotency_key}`.
 
-## Contratos de mayor riesgo
+## Operaciones de mayor riesgo
 
-| Operación | Request determinante | Resultado |
+| Dominio | Operaciones implementadas | Garantía observable |
 |---|---|---|
-| `POST /movimientos/preview` | `operation`, QR/código, `branch_id` y sólo aquí `cantidad_puntos` o `benefit_id` | Snapshot temporal con `id`, `balance_before`, `amount` y `balance_after` |
-| `POST /movimientos/scan` | `preview_id`, QR/código y `branch_id`; no reenvía puntos | Consume snapshot inmutable y crea movimiento `CREDITO` |
-| `POST /movimientos/canje` | `preview_id`, QR/código, `branch_id` y `benefit_id` | Consume snapshot inmutable, crea `DEBITO` y conserva remanente |
-| `PATCH /me` | `If-Match` + `{nombre, apellido?, alias?, foto_url?}` | Perfil actualizado con nueva versión |
-| `GET /me/export` | Sesión autenticada | Exportación JSON de perfil, membresías, tarjetas y movimientos |
-| `DELETE /me` | `If-Match` + `{confirmacion:"ANONIMIZAR"}` y `auth_time <= 10 min` | Anonimización con sesiones revocadas y ledger preservado |
-| `POST /marcas/{id}/invitaciones` | email, rol y sucursales | Invitación de un solo uso |
-| `POST /auth/email-verification/request` | `{email}` | `202` genérico; token de un uso por 24 h |
-| `POST /auth/email-verification/confirm` | `{token}` | Marca el email como verificado |
-| `POST /auth/password-reset/request` | `{email}` | `202` genérico; token de un uso por 1 h |
-| `POST /auth/password-reset/confirm` | `{token,new_password}` | Cambia la clave y revoca sesiones |
+| Salud | `GET /health/live`, `GET /health/ready`, `GET /version` | `200` con `status: ok`; readiness devuelve `503` si falla una dependencia |
+| Identidad | registro, login, Google, refresh, logout, verificación y reset | sesiones rotativas; revocación al reutilizar/resetear |
+| Cuenta | `GET/PATCH/DELETE /me`, `GET /me/export` | ETag, exportación autorizada, anonimización `202` preservando ledger |
+| Comercio | marcas, sucursales, programa y beneficios | edición, reactivación y baja lógica; tipo de programa se bloquea con beneficios/movimientos |
+| Personal | invitaciones y `/marcas/{brand_id}/personal/{id_membresia}` | identificador es membership_id entero; invitación de un uso, UUID, 72 h |
+| Media | listar/subir/eliminar imágenes privadas | WebP se decodifica y re-encodea a JPEG/PNG; logo/icono se reducen a 1024/512; URL firmada puede omitirse si el presign falla |
+| Fidelidad | clientes, tarjetas, preview, scan y canje | transacción serializable, locks, reintentos acotados e idempotencia |
 
-## Autorización propuesta
+## Autorización implementada
 
-- `PROPIETARIO`: configuración total de su marca y personal.
-- `ADMINISTRADOR`: configuración, sucursales y personal, salvo convertir propietarios.
-- `OPERADOR`: scan/canje sólo en sucursales asignadas.
-- `SOPORTE`: lectura y ajustes con motivo; no factura.
-- `FINANZAS`: suscripciones; no ajusta saldos.
-- `ADMIN_SISTEMA`: planes y operación interna completa, siempre auditada.
+- `PROPIETARIO` configura la marca y personal según sus invariantes.
+- `ADMINISTRADOR` tiene alcance global de la marca; no recibe sucursales
+  asignadas y no puede convertir propietarios.
+- `OPERADOR` sólo puede operar y consultar las sucursales incluidas en
+  `branch_ids`/`sucursal_ids`; el servidor exige al menos una asignación.
+- Un recurso fuera de la marca o del alcance responde `404` cuando corresponde,
+  sin revelar ownership. `ACCOUNT_MODE_CONFLICT` evita convertir una cuenta
+  cliente no vacía al aceptar una invitación.
 
-El cliente final sólo accede a `/clientes/me` y a sus propias tarjetas y movimientos.
+## Referencias fijadas
 
-Las rutas de planes y suscripciones están marcadas `DEFERRED_BILLING` en OpenAPI.
-No forman parte de `FREE_ACCESS_V1` y no deben exponerse hasta una decisión comercial,
-fiscal y legal posterior.
+- [Router y grupos autenticados](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/cmd/server/router.go)
+- [Rutas de movimientos](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/cmd/server/routes_movement.go)
+- [Handlers de personal y media](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/handler/staff.go)
+- [Health/readiness](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/handler/health.go)
+
+Billing, analíticas por período, backoffice y otras operaciones que no aparecen en
+el OpenAPI canónico continúan fuera del alcance de esta release.
+
