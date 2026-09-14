@@ -69,6 +69,10 @@ SMTP"]
 
 - S3-compatible privado con credenciales de mínimo privilegio y SSE `AES256`
   enviado en cada upload cuando media está habilitado.
+- `S3_ENDPOINT` es el endpoint interno para readiness, uploads y borrados.
+  `S3_PUBLIC_ENDPOINT` sólo se usa para firmar lecturas `GET`; debe ser una URL
+  HTTP(S) limpia, y en producción HTTPS. Las operaciones de escritura nunca
+  dependen de ese endpoint público.
 - El backend autentica/autorizada al actor antes de decodificar, valida bytes reales
   y acepta JPEG, PNG y WebP. WebP se re-encodea a JPEG/PNG seguro.
 - Límite de 5 MiB, 4096 px por lado y 16 megapíxeles para el archivo; logos se
@@ -111,7 +115,7 @@ SMTP"]
 
 ## Referencias fijadas
 
-- [Readiness y versionado](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/handler/health.go)
-- [Rate limiter Redis](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/middleware/ratelimit.go)
-- [Media privada y reconciliación](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/service/media.go)
-- [Worker de mantenimiento](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/maintenance/worker.go)
+- [Readiness y versionado](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/handler/health.go)
+- [Rate limiter Redis](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/middleware/ratelimit.go)
+- [Media privada y reconciliación](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/service/media.go)
+- [Worker de mantenimiento](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/maintenance/worker.go)

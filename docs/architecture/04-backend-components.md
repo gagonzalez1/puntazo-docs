@@ -58,7 +58,7 @@ schema 0017")]
 
 ## Referencias fijadas
 
-- [Router y rutas por dominio](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/cmd/server/routes_merchant.go)
-- [Handler de movimientos](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/handler/movement.go)
-- [Servicio de media](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/service/media.go)
-- [Worker de mantenimiento](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/maintenance/worker.go)
+- [Router y rutas por dominio](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/cmd/server/routes_merchant.go)
+- [Handler de movimientos](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/handler/movement.go)
+- [Servicio de media](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/service/media.go)
+- [Worker de mantenimiento](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/maintenance/worker.go)

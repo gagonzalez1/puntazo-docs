@@ -57,7 +57,7 @@ outbox transaccional"]
 | API | Go 1.25, Gin, JWT, middleware de timeout/recovery/CORS/rate limit | Implementado |
 | Datos | PostgreSQL 16, 17 migraciones numeradas, pool pgx | Implementado |
 | Rate limiting | Redis compartido con fallback local sólo fuera de producción | Implementado |
-| Media | S3-compatible privado, reencode y leases de reconciliación | Implementado; homologación de credenciales pendiente |
+| Media | S3-compatible privado, reencode y leases de reconciliación | Implementado; `S3_ENDPOINT` interno para operaciones y `S3_PUBLIC_ENDPOINT` sólo para GET presignado; homologación de credenciales pendiente |
 | Correo | SMTP mediante outbox cifrado y worker con leases | Implementado; validación de proveedor/dominio pendiente |
 
 ## Frontera de release
@@ -72,11 +72,14 @@ outbox transaccional"]
   y se re-encodea a JPEG/PNG; variantes de logo/icono limitan lado máximo a
   1024/512. Una falla transitoria de presign puede devolver el recurso persistido
   sin URL para recuperarla mediante listado posterior.
+- `S3_ENDPOINT` permanece en la red privada para readiness, uploads y borrados.
+  `S3_PUBLIC_ENDPOINT` sólo construye URLs `GET` presignadas y no publica el
+  bucket, la consola ni las credenciales.
 - Logs, métricas, backups, restore y QA físico son gates operativos, no efectos
   garantizados por este diagrama.
 
 ## Referencias de código
 
-- [Composición de servidor y migrador](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/cmd/server/main.go)
-- [Configuración de Redis, media y migraciones](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/config/config.go)
+- [Composición de servidor y migrador](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/cmd/server/main.go)
+- [Configuración de Redis, media y migraciones](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/config/config.go)
 - [Proxy y headers de la PWA](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/nginx/default.conf)

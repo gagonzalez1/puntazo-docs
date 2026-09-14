@@ -40,6 +40,6 @@ la evidencia de staging ni autorizan billing o publicación.
 
 ## Referencias fijadas
 
-- [OpenAPI implementado](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/openapi.yaml)
-- [README operativo del backend](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/README.md)
+- [OpenAPI implementado](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/openapi.yaml)
+- [README operativo del backend](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/README.md)
 - [Servicios de integración frontend](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/demo/services/demoService.ts)

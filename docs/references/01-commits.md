@@ -17,11 +17,11 @@ implementación se rastrean a estas revisiones y al contrato OpenAPI del backend
 | Repositorio | Commit completo | Fecha del commit | Estado al analizar |
 |---|---|---|---|
 | `gonzalotev/app-fidelidad` | [`1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01`](https://github.com/gonzalotev/app-fidelidad/tree/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01) | 2026-09-14 | revisado; integración API, PWA y contratos de recuperación verificados |
-| `am-p/app-loyalty` | [`b87b00ce41d94b4cc719934fc3cc1a8ff18803c1`](https://github.com/am-p/app-loyalty/tree/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1) | 2026-09-14 | revisado; rutas, migraciones, PostgreSQL, Redis, S3 y workers verificados |
+| `am-p/app-loyalty` | [`581776101221e31f513cbb939396f6b0603b386f`](https://github.com/am-p/app-loyalty/tree/581776101221e31f513cbb939396f6b0603b386f) | 2026-09-14 | revisado; rutas, migraciones, PostgreSQL, Redis, S3 y workers verificados; endpoints interno/público de media separados |
 
 ## Alcance de la sincronización
 
-- El backend final expone el contrato de `FREE_ACCESS_V1` en [`openapi.yaml`](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/openapi.yaml).
+- El backend final expone el contrato de `FREE_ACCESS_V1` en [`openapi.yaml`](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/openapi.yaml).
 - El frontend final consume las rutas reales de auth, onboarding, cuenta,
   comercio, personal, clientes, movimientos, analíticas y media.
 - Las operaciones fuera del OpenAPI canónico —billing, POS, analítica avanzada y

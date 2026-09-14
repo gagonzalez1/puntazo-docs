@@ -16,7 +16,7 @@ codeRefs: required
 
 > **Fuente: código.** El contrato canónico es [openapi.yaml](/openapi.yaml) y
 > coincide con la implementación verificada en el backend
-> [b87b00ce41d94b4cc719934fc3cc1a8ff18803c1](https://github.com/am-p/app-loyalty/tree/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1).
+> [581776101221e31f513cbb939396f6b0603b386f](https://github.com/am-p/app-loyalty/tree/581776101221e31f513cbb939396f6b0603b386f).
 > Cada operación declarada `IMPLEMENTED` en ese archivo tiene handler, persistencia,
 > autorización y pruebas en esa revisión. Las extensiones futuras de billing no
 > forman parte de este contrato.
@@ -48,6 +48,9 @@ flowchart TB
   Secure y SameSite=Strict; `native` recibe el refresh en JSON.
 - `/health/ready` valida PostgreSQL, la versión exacta del esquema, Redis y
   storage privado S3 cuando media está habilitado.
+- `S3_ENDPOINT` se usa para readiness, uploads y borrados internos; las URLs
+  `GET` presignadas usan `S3_PUBLIC_ENDPOINT` limpio y separado para no filtrar
+  el host privado.
 - `SELLOS` acredita una unidad por acumulación. `PUNTOS` recibe
   `cantidad_puntos` sólo en preview, entre 1 y 100.000; la confirmación
   consume el snapshot inmutable. Los beneficios aceptan 1..10.000.000.
@@ -84,11 +87,10 @@ flowchart TB
 
 ## Referencias fijadas
 
-- [Router y grupos autenticados](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/cmd/server/router.go)
-- [Rutas de movimientos](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/cmd/server/routes_movement.go)
-- [Handlers de personal y media](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/handler/staff.go)
-- [Health/readiness](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/handler/health.go)
+- [Router y grupos autenticados](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/cmd/server/router.go)
+- [Rutas de movimientos](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/cmd/server/routes_movement.go)
+- [Handlers de personal y media](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/handler/staff.go)
+- [Health/readiness](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/handler/health.go)
 
 Billing, analíticas por período, backoffice y otras operaciones que no aparecen en
 el OpenAPI canónico continúan fuera del alcance de esta release.
-

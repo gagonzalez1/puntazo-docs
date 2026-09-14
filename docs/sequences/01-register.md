@@ -49,5 +49,5 @@ backend o frontend actuales ya soportan la respuesta condicional.
 ## Referencias de código
 
 - [Pantalla de autenticación](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/app/(auth)/index.tsx#L31-L76)
-- [Handler RegisterUser](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/handler/user.go#L23-L70)
-- [Hash y creación de usuario](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/service/user.go#L19-L38)
+- [Handler RegisterUser](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/handler/user.go#L23-L70)
+- [Hash y creación de usuario](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/service/user.go#L19-L38)
