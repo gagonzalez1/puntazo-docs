@@ -35,6 +35,7 @@ Para obtener contexto suficiente sin cargar toda la documentación:
 5. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — qué está conectado y qué continúa simulado.
 6. [`docs/references/02-gaps.md`](#/implementation-gaps) — brechas que no deben confundirse con comportamiento actual.
 7. [`docs/backend/00-review-index.md`](#/backend-review-index) — decisiones de backend propuestas por Codex que requieren aprobación.
+8. [`docs/backend/05-decision-log.md`](#/backend-decision-log) — decisiones de preparación productiva aprobadas por el usuario y su alcance exacto.
 
 Después se debe abrir el flujo, la secuencia o el modelo de datos específico de la tarea.
 
@@ -69,6 +70,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 14. [`docs/backend/02-database-physical.md`](#/backend-database-physical) — tipos PostgreSQL, integridad, índices y concurrencia.
 15. [`docs/backend/03-operations.md`](#/backend-operations) — sesiones, storage, migraciones y observabilidad.
 16. [`docs/backend/04-backend-spec.md`](#/backend-full-spec) — spec normativo completo `v1.5-review`, con acuerdos y propuestas diferenciados.
+17. [`docs/backend/05-decision-log.md`](#/backend-decision-log) — decisiones aprobadas para la primera release gratuita.
 
 ### 4. Flujos del frontend
 
