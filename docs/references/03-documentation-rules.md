@@ -34,6 +34,7 @@ summary: Cómo interpretar estados, trazabilidad y precedencia sin confundir có
 |---|---|
 | Fuente: código | Comprobado en los commits documentados |
 | Acordado | Decisión de negocio confirmada por el equipo |
+| Aprobada por el usuario | Decisión explícita para el release identificado; no implica implementación |
 | Propuesta Codex | Diseño sugerido para revisión; todavía no aprobado |
 | Autoridad mixta | La vista combina más de una de las capas anteriores |
 
@@ -46,3 +47,5 @@ summary: Cómo interpretar estados, trazabilidad y precedencia sin confundir có
 - Al actualizar un flujo, revisar sus vistas hijas, la matriz de integración y el documento de brechas.
 - No presentar una `PROPUESTA CODEX PC-xx` como decisión del equipo aunque figure en OpenAPI.
 - Una aprobación debe actualizar el índice, quitar el estado pendiente y registrar la decisión asociada.
+- `APROBADA_USUARIO` fija contrato objetivo, pero conserva estado `target` y
+  `NOT_IMPLEMENTED` hasta verificar código, migraciones y pruebas en `source-lock`.

@@ -6,51 +6,81 @@ order: 20
 parent: c4-context
 level: container
 status: current
-summary: App Expo, API Go, PostgreSQL y proveedores externos con su grado real de integración.
+summary: PWA y aplicaciones nativas, API Go, PostgreSQL, Redis, storage y proveedores en la release implementada.
 diagram: true
 codeRefs: required
 ---
-
 # C4 · Contenedores
-
-La separación por contenedores evidencia el límite actual: sólo autenticación atraviesa la API; el resto vuelve a servicios locales de la aplicación.
 
 ```mermaid
 flowchart LR
     subgraph DEVICE["Dispositivo del usuario"]
-      EXPO["App Expo / React Native\nExpo Router + Zustand + TanStack Query"]
-      TOKEN["SecureStore / localStorage\nJWT de sesión"]
-      MOCKS["Servicios mock\nperfil, loyalty, analytics"]
+      WEB["PWA web
+Expo export + Nginx"]
+      NATIVE["iOS / Android
+Expo SDK 54"]
+      STORAGE["SecureStore / cookie HttpOnly"]
     end
 
-    API["API Go\nGin + JWT"]
-    DB[("PostgreSQL 16\nusers")]
+    API["API Go /v1
+Gin + JWT"]
+    MIG["Job de migración
+SQL versionado"]
+    DB[("PostgreSQL 16
+schema 0017")]
+    REDIS[("Redis
+rate limiter compartido")]
+    S3[("S3-compatible
+bucket privado")]
+    MAIL["SMTP
+outbox transaccional"]
     GOOGLE["Google Identity"]
 
-    EXPO -->|"4 endpoints reales"| API
-    EXPO --> TOKEN
-    EXPO -->|"funciones aún sin API"| MOCKS
+    WEB -->|"same-origin proxy /api"| API
+    NATIVE -->|"HTTPS"| API
+    WEB --> STORAGE
+    NATIVE --> STORAGE
     API --> DB
+    MIG --> DB
+    API --> REDIS
+    API --> S3
+    API --> MAIL
     API --> GOOGLE
-
-    click EXPO href "#/frontend-components" "Ver componentes frontend"
-    click MOCKS href "#/frontend-flows" "Ver flujos frontend"
-    click API href "#/backend-components" "Ver componentes backend"
-    click DB href "#/data-current" "Ver datos implementados"
 ```
 
-## Tecnologías
+## Tecnologías y estado
 
 | Contenedor | Tecnología | Estado |
 |---|---|---|
-| Aplicación | Expo SDK 54, React Native 0.81, Expo Router | Implementado |
-| Estado cliente | Zustand y almacenamiento seguro/local | Implementado |
-| Estado servidor | TanStack Query | Implementado; mayormente sobre mocks |
-| API | Go 1.25, Gin, JWT | Implementado para autenticación |
-| Datos | PostgreSQL 16 con pgx | Sólo tabla `users` |
+| Aplicación web | Expo SDK 54 exportada como PWA, Nginx y proxy same-origin | Implementado en el commit frontend fijado |
+| Aplicaciones nativas | Expo SDK 54, React Native 0.81, IDs `com.puntazo.app` | Configurado; QA físico/publicación aún pendiente |
+| API | Go 1.25.13, Gin, JWT, middleware de timeout/recovery/CORS/rate limit | Implementado en la rama de staging fijada |
+| Datos | PostgreSQL 16, 17 migraciones numeradas, pool pgx | Implementado |
+| Rate limiting | Redis compartido con fallback local sólo fuera de producción | Implementado |
+| Media | S3-compatible privado, reencode y leases de reconciliación | Implementado; `S3_ENDPOINT` interno para operaciones y `S3_PUBLIC_ENDPOINT` sólo para GET presignado; homologación de credenciales pendiente |
+| Correo | SMTP mediante outbox cifrado y worker con leases | Implementado; validación de proveedor/dominio pendiente |
+
+## Frontera de release
+
+- `FREE_ACCESS_V1` no expone billing ni cobros; el alta comercial exige
+  código de acceso y costo cero.
+- La API no crea tablas al arrancar. El job de migración aplica SQL y readiness
+  exige la versión exacta configurada.
+- PostgreSQL, Redis y el bucket no se publican. Sólo el proxy HTTPS debe exponer
+  tráfico externo.
+- Logos, iconos y beneficios se almacenan privados. WebP se valida por contenido
+  y se re-encodea a JPEG/PNG; variantes de logo/icono limitan lado máximo a
+  1024/512. Una falla transitoria de presign puede devolver el recurso persistido
+  sin URL para recuperarla mediante listado posterior.
+- `S3_ENDPOINT` permanece en la red privada para readiness, uploads y borrados.
+  `S3_PUBLIC_ENDPOINT` sólo construye URLs `GET` presignadas y no publica el
+  bucket, la consola ni las credenciales.
+- Logs, métricas, backups, restore y QA físico son gates operativos, no efectos
+  garantizados por este diagrama.
 
 ## Referencias de código
 
-- [Providers y restauración de sesión](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/_layout.tsx#L42-L76)
-- [Persistencia del token](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/core/storage/tokenStorage.ts#L4-L32)
-- [Bootstrap de API y PostgreSQL](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/cmd/server/main.go#L18-L51)
+- [Composición de servidor y migrador](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/cmd/server/main.go)
+- [Configuración de Redis, media y migraciones](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/internal/config/config.go)
+- [Proxy y headers de la PWA](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/nginx/default.conf)
+- [Composición desplegable de staging](https://github.com/gagonzalez1/puntazo-preview/blob/e6efbd7da4d3a22be9f818b000ef44d4ac2ed40b/deploy/compose.yaml)

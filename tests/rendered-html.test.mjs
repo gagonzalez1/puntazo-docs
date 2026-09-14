@@ -31,7 +31,7 @@ test("el catálogo contiene las vistas y commits documentados", async () => {
     assert.ok(ids.has(id), `falta la vista ${id}`);
   }
   assert.ok(catalog.docs.length >= 30);
-  assert.equal(catalog.sourceLock.repositories.length, 2);
+  assert.equal(catalog.sourceLock.repositories.length, 3);
   assert.match(catalog.sourceLock.repositories[0].commit, /^[a-f0-9]{40}$/);
   assert.ok(catalog.docs.every((doc) => doc.sourceMarkdown.startsWith("---\n")));
 });

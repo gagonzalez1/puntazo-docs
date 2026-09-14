@@ -6,41 +6,57 @@ order: 10
 parent: overview
 level: context
 status: current
-summary: Personas, sistema Puntazo y dependencias externas observadas en el código.
+summary: Personas, sistema Puntazo y dependencias externas verificadas en la release gratuita.
 diagram: true
 codeRefs: required
 ---
-
 # C4 · Contexto del sistema
 
-Puntazo conecta clientes finales y comercios mediante una aplicación Expo. El backend Go ofrece hoy únicamente identidad y sesión. Las funciones de fidelidad continúan dentro de servicios mock del frontend.
+Puntazo conecta clientes finales y personal de marcas mediante una aplicación Expo
+exportable como PWA y aplicaciones nativas. La API Go aplica identidad,
+autorización comercial y transacciones de fidelidad sobre PostgreSQL; Redis y
+storage S3-compatible sostienen controles operativos y media privada.
 
 ```mermaid
 flowchart LR
     CUSTOMER["Persona · Cliente final"]
-    STAFF["Persona · Personal del comercio"]
-    PUNTAZO["Sistema · Puntazo\nApp móvil/web + API"]
+    STAFF["Persona · Personal de marca"]
+    PUNTAZO["Sistema · Puntazo
+PWA + iOS/Android + API /v1"]
     GOOGLE["Sistema externo · Google Identity"]
-    POSTGRES["Sistema externo · PostgreSQL 16"]
+    POSTGRES["PostgreSQL 16"]
+    REDIS["Redis
+rate limiting"]
+    S3["S3-compatible privado
+media"]
 
-    CUSTOMER -->|"consulta QR y tarjetas"| PUNTAZO
-    STAFF -->|"gestiona clientes, marca y escaneos"| PUNTAZO
+    CUSTOMER -->|"consulta QR, tarjetas y movimientos"| PUNTAZO
+    STAFF -->|"gestiona marca, personal y operaciones"| PUNTAZO
     PUNTAZO -->|"valida ID token"| GOOGLE
-    PUNTAZO -->|"persiste usuarios"| POSTGRES
+    PUNTAZO -->|"persiste cuenta, catálogo y ledger"| POSTGRES
+    PUNTAZO -->|"limita solicitudes entre réplicas"| REDIS
+    PUNTAZO -->|"normaliza y firma imágenes privadas"| S3
 
     click PUNTAZO href "#/c4-containers" "Ver contenedores"
     click CUSTOMER href "#/customer-flows" "Ver flujos de cliente"
     click STAFF href "#/merchant-flows" "Ver flujos de comercio"
 ```
 
-## Estado observado
+## Estado verificado
 
-- La app llama realmente a `/auth/register`, `/auth/login`, `/auth/google` y `/me`.
-- Tarjetas, tienda, escaneo, perfil y analíticas se resuelven en memoria dentro del frontend.
-- El backend sólo crea y consulta la tabla `users`.
+- Registro de clientes y alta demo de marcas usan API, PostgreSQL y respuestas
+  versionadas. El alta demo crea propietario, sucursal y programa Sellos/Puntos;
+  el primer beneficio completa el onboarding.
+- Login, Google, refresh rotativo, verificación de email, reset, exportación y
+  anonimización tienen rutas implementadas.
+- Clientes, tarjetas, movimientos, CRUD comercial, personal, analíticas resumen
+  y media privada cruzan la API. La app conserva estados de carga, error y
+  recuperación en las consultas.
+- Billing, analíticas por períodos/drill-down y backoffice no forman parte de
+  `FREE_ACCESS_V1`.
 
 ## Referencias de código
 
-- [Registro de rutas HTTP del backend](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/cmd/server/main.go#L43-L51)
-- [Cliente HTTP central del frontend](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/core/api/client.ts#L25-L84)
-- [Servicios mock de fidelidad](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/loyalty/services/loyaltyService.ts#L84-L146)
+- [Router versionado y grupos autenticados](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/cmd/server/router.go)
+- [Cliente HTTP y reintento de sesión](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/core/api/client.ts)
+- [Health/readiness de dependencias](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/internal/handler/health.go)

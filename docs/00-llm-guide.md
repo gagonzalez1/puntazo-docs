@@ -35,6 +35,8 @@ Para obtener contexto suficiente sin cargar toda la documentación:
 5. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — qué está conectado y qué continúa simulado.
 6. [`docs/references/02-gaps.md`](#/implementation-gaps) — brechas que no deben confundirse con comportamiento actual.
 7. [`docs/backend/00-review-index.md`](#/backend-review-index) — decisiones de backend propuestas por Codex que requieren aprobación.
+8. [`docs/backend/05-decision-log.md`](#/backend-decision-log) — decisiones de preparación productiva aprobadas por el usuario y su alcance exacto.
+9. [`docs/delivery/01-production-release-checklist.md`](#/production-release-checklist) — evidencia obligatoria de CI, recuperación, incidentes, QA físico y revisión legal.
 
 Después se debe abrir el flujo, la secuencia o el modelo de datos específico de la tarea.
 
@@ -69,6 +71,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 14. [`docs/backend/02-database-physical.md`](#/backend-database-physical) — tipos PostgreSQL, integridad, índices y concurrencia.
 15. [`docs/backend/03-operations.md`](#/backend-operations) — sesiones, storage, migraciones y observabilidad.
 16. [`docs/backend/04-backend-spec.md`](#/backend-full-spec) — spec normativo completo `v1.5-review`, con acuerdos y propuestas diferenciados.
+17. [`docs/backend/05-decision-log.md`](#/backend-decision-log) — decisiones aprobadas para la primera release gratuita.
 
 ### 4. Flujos del frontend
 
@@ -95,10 +98,18 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 29. [`docs/sequences/03-google.md`](#/sequence-google) — acceso con Google.
 30. [`docs/sequences/04-restore.md`](#/sequence-restore) — restauración de sesión.
 31. [`docs/sequences/05-scan.md`](#/sequence-scan) — escaneo actual y corte hacia la futura API.
+32. [`docs/sequences/06-invitation.md`](#/sequence-invitation) — invitación objetivo de personal con vigencia de 72 horas.
+33. [`docs/sequences/07-account-anonymization.md`](#/sequence-account-anonymization) — anonimización objetivo preservando el ledger.
+34. [`docs/sequences/08-email-verification.md`](#/sequence-email-verification) — verificación objetivo anti-enumeración con token de 24 horas.
+35. [`docs/sequences/09-password-reset.md`](#/sequence-password-reset) — recuperación objetivo con token de una hora y revocación de sesiones.
 
 ### 6. Diseño objetivo
 
-32. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
+36. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
+
+### 7. Entrega y operación
+
+37. [`docs/delivery/01-production-release-checklist.md`](#/production-release-checklist) — gates verificables de piloto y producción comercial.
 
 ## Estrategia de carga para un LLM
 

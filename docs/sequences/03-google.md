@@ -37,8 +37,12 @@ sequenceDiagram
 
 La vinculación prioriza `google_id`, luego email. El usuario nuevo recibe también el rol fijo `CLIENTE_FINAL`.
 
+En el objetivo aprobado `PR-09`, el backend rechaza el alta o enlace si el ID token
+no confirma `email_verified=true`. Cuando sí lo confirma, registra la identidad local
+como verificada. Esta regla permanece `NOT_IMPLEMENTED` hasta contar con código y pruebas.
+
 ## Referencias de código
 
-- [Endpoint frontend Google](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/services/authService.ts#L96-L105)
-- [Orquestación Google en servicio](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/internal/service/user.go#L60-L95)
-- [Validación de ID token](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/internal/auth/google.go#L13-L37)
+- [Endpoint frontend Google](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/auth/services/authService.ts#L96-L105)
+- [Orquestación Google en servicio](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/internal/service/user.go#L60-L95)
+- [Validación de ID token](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/internal/auth/google.go#L13-L37)

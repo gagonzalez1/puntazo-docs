@@ -31,9 +31,12 @@ No existe hoy un `POST` de suscripción. Tampoco se envía al backend si el regi
 
 ## Referencias de código
 
-- [Pantalla y opciones de plan](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(auth)/subscription.tsx#L10-L114)
-- [Suscripción local y cambio de rol](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/store/useAuthStore.ts#L66-L98)
+- [Pantalla y opciones de plan](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/app/(auth)/subscription.tsx#L10-L114)
+- [Suscripción local y cambio de rol](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/auth/store/useAuthStore.ts#L66-L98)
 
 ## Contrato objetivo
 
-En el spec `v1.5-review`, el tipo de cuenta se declara al registrar; un cliente final no contrata una suscripción. La marca se crea en un paso posterior y Backoffice administra su suscripción por sucursales. Los precios, períodos y cambios están en `PROPUESTA CODEX PC-03`, todavía pendiente de aprobación.
+`PR-01` reemplaza esta pantalla en la primera release: el cliente final continúa
+gratuito y el alta comercial usa un código de acceso. El backend fija el acceso en
+cero, no crea billing y no acepta precio, renovación ni estado de pago desde el
+cliente. `PC-03` y toda suscripción comercial permanecen diferidos.

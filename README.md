@@ -1,9 +1,13 @@
 # Puntazo Architecture Docs
 
-Proyecto independiente de documentación C4 y flujos de Puntazo. Analiza dos repositorios sin modificar su código:
+Proyecto independiente de documentación C4 y flujos de Puntazo. El lock actual
+describe fuentes aisladas de staging sin modificar su código:
 
-- frontend: `gonzalotev/app-fidelidad` @ `99a350bd6e204a1f866d78dcfb20bd9bc108ffda`
-- backend: `am-p/app-loyalty` @ `f03b9aa202587510508a6f2a094b808f5ed6353d`
+- frontend: `gonzalotev/app-fidelidad` rama `testing` @ `1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01`
+- backend: `gagonzalez1/app-loyalty` rama `staging` @ `50e95e9407ee5ffaccfc3cebcbef464d24f26427`
+- preview: `gagonzalez1/puntazo-preview` rama `testing` @ `e6efbd7da4d3a22be9f818b000ef44d4ac2ed40b`
+
+Estos SHA no declaran integración en `main`, upstream ni producción.
 
 La web está pensada para lectura humana y los archivos de `docs/` para lectura humana o por LLM. Markdown y los bloques Mermaid son la fuente de verdad; `public/generated/catalog.json` es un artefacto generado.
 
@@ -65,7 +69,7 @@ Las referencias al código deben usar permalinks GitHub con el hash completo. Lo
 
 ## Actualizar la fotografía
 
-1. Revisar el nuevo `HEAD` de frontend y backend.
+1. Revisar el nuevo commit de cada rama declarada en el lock.
 2. Actualizar `docs/meta/source-lock.json`.
 3. Revisar todas las afirmaciones y permalinks afectados.
 4. Ejecutar `npm run content:build`.

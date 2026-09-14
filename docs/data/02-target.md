@@ -7,19 +7,20 @@ parent: data-current
 level: data
 status: target
 authority: mixed
-summary: DER propuesto de identidad unificada, marcas, sucursales, suscripciones y saldos compartidos.
+summary: DER objetivo de identidad unificada, marcas, sucursales, acceso gratuito y saldos compartidos.
 diagram: true
 ---
 
 # Datos · Modelo objetivo v1.5-review
 
-> Este diagrama **no representa migraciones implementadas**. Es la propuesta consolidada en `BACKEND_SPEC_CORREGIDO.md` para orientar el desarrollo.
+> Este diagrama **no representa migraciones implementadas**. Combina el contrato aprobado `PR-01` a `PR-09` con detalles físicos todavía propuestos para orientar el desarrollo.
 
 ```mermaid
 erDiagram
     USUARIOS {
         int id_usuario PK
         string email UK
+        datetime email_verified_at
         string password_hash
         string google_id UK
         string nombre
@@ -80,8 +81,8 @@ erDiagram
         int id_marca FK
         string tipo
         int cantidad_fija
-        int importe_por_unidad_centavos
-        string moneda
+        int cantidad_puntos_maxima
+        int umbral_confirmacion_reforzada
         boolean activo
     }
     BENEFICIOS {
@@ -111,6 +112,10 @@ erDiagram
         int saldo_anterior
         int saldo_posterior
         int importe_compra_centavos
+        string marca_nombre_snapshot
+        string sucursal_nombre_snapshot
+        string programa_nombre_unidad_snapshot
+        string beneficio_nombre_snapshot
         string idempotency_key UK
     }
     CARD_TEMPLATES {
@@ -143,14 +148,18 @@ erDiagram
 ## Decisiones que expresa
 
 - `usuarios` unifica identidad, autenticación, perfil y QR; no existe `clientes_finales`.
+- `email_verified_at` permanece nulo hasta confirmar un token de email o validar
+  `email_verified=true` en Google; producción bloquea login por contraseña mientras sea nulo.
 - `tipo_cuenta` no es un plan. Distingue `CLIENTE_FINAL` de `PERSONAL_MARCA`.
 - El rol operativo vive en `membresias_marca`: `PROPIETARIO`, `ADMINISTRADOR` u `OPERADOR`.
-- Una marca posee varias sucursales. La suscripción pertenece a la marca y cobra cada sucursal activa.
+- Una marca posee varias sucursales. En `FREE_ACCESS_V1` opera sin suscripción ni billing; las tablas comerciales quedan fuera del flujo de release.
 - Una tarjeta representa cliente–marca; `saldo_sellos` y `saldo_puntos` se comparten entre todas sus sucursales.
 - MVP 1 activa Sellos o Puntos. Guardar ambos saldos permite habilitar ambos programas después sin migrar tarjetas.
 - Cada cambio de saldo produce un movimiento auditable e idempotente.
-- Los puntos, sellos, importes y divisores usan enteros; no se usan valores de punto flotante.
+- PUNTOS se ingresa manualmente entre 1 y 100000; la UI reconfirma desde 10001. Los beneficios aceptan requisitos hasta 10000000.
+- Los puntos, sellos e importes históricos usan enteros; no se usan valores de punto flotante.
 - `sentido` separa crédito y débito sin almacenar cantidades negativas.
+- La anonimización de cuenta elimina identificadores personales y preserva el ledger con snapshots operativos mínimos.
 
 > La estructura de negocio combina decisiones acordadas con detalles físicos
 > `PROPUESTA CODEX PC-09` y `PC-10`. Consulte el índice antes de implementar.
@@ -162,8 +171,10 @@ erDiagram
 | Membresía de marca | Única por usuario y marca |
 | Tarjeta | Única por cliente final y marca; saldos no negativos |
 | Programa | Único por marca y tipo; máximo uno activo en MVP 1 |
-| Suscripción | Máximo una activa por marca |
-| Ítem facturable | Único por suscripción y sucursal |
+| Suscripción | No participa en `FREE_ACCESS_V1`; si se activa billing en otra release, máximo una activa por marca |
+| Ítem facturable | Fuera de `FREE_ACCESS_V1`; único por suscripción y sucursal en una release comercial futura |
 | Movimiento | Saldo y auditoría dentro de la misma transacción |
+| Anonimización | Revoca acceso, elimina identificadores directos y no borra tarjetas ni movimientos del ledger |
+| Tokens de identidad | Sólo hash persistido; un uso; verificación 24 h y reset 1 h; reset revoca sesiones |
 
 La fuente de detalle contractual sigue siendo `docs/BACKEND_SPEC_CORREGIDO.md` del workspace; este mapa la resume sin presentarla como código existente.

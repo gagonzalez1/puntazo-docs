@@ -38,13 +38,13 @@ Fecha: **19 de agosto de 2026**
 
 | Revisar | ID | Tema | Propuesta resumida | Sección |
 |---|---|---|---|---|
-| [ ] | `PC-01` | Puntos enteros | Calcular con importes en centavos enteros, dividir y descartar el resto | 15.1 |
+| [~] | `PC-01` | Puntos enteros | Sustituida en la primera release por carga manual `PR-02` | 15.1 |
 | [ ] | `PC-02` | Backoffice | Autenticación separada, MFA y roles `ADMIN_SISTEMA`, `FINANZAS`, `SOPORTE` | 15.2 |
 | [ ] | `PC-03` | Suscripción | Ciclo mensual sin prorrateo en MVP; cambios en próxima renovación | 15.3 |
-| [ ] | `PC-04` | Contrato HTTP | Envelope uniforme, códigos estables, paginación y filtros comunes | 16 |
-| [ ] | `PC-05` | Invitaciones | Token de un solo uso, vencimiento 72 h, email coincidente y revocación | 17 |
-| [ ] | `PC-06` | Beneficios | `DELETE` lógico; nunca borrar físicamente si existe historial | 18 |
-| [ ] | `PC-07` | Imágenes | Storage S3-compatible, validación, metadatos y borrado diferido | 19 |
+| [x] | `PC-04` | Contrato HTTP | Aprobado para edición, `If-Match`, envelopes e idempotencia mediante `PR-03` | 16 |
+| [x] | `PC-05` | Invitaciones | Aprobado mediante `PR-05` | 17 |
+| [x] | `PC-06` | Beneficios | Aprobado mediante `PR-03` | 18 |
+| [x] | `PC-07` | Imágenes | Aprobado mediante `PR-04` | 19 |
 | [ ] | `PC-08` | Analíticas | Contratos JSON comunes para resumen, series y drill-down paginado | 20 |
 | [ ] | `PC-09` | PostgreSQL | Tipos físicos, `CHECK`, FKs, índices y reglas `ON DELETE` | 21 |
 | [ ] | `PC-10` | Concurrencia | Locks por tarjeta/suscripción, idempotencia y reintentos controlados | 22 |
@@ -94,7 +94,7 @@ Este apartado registra cómo evolucionó el contrato desde el HTML original hast
 | Tarjetas | La tarjeta relaciona cliente–tienda mediante una clave compuesta | La tarjeta relaciona usuario cliente–marca, tiene identidad propia y una restricción única por usuario y marca |
 | Saldos | `sellos` y `puntos` pertenecen a cada tienda | `saldo_sellos` y `saldo_puntos` conviven en la tarjeta y se comparten entre todas las sucursales de la marca |
 | Sellos | Cada scan suma uno y el contador entra en un ciclo al completar la meta | Cada compra suma una cantidad fija configurada; el canje descuenta sólo la cantidad requerida |
-| Puntos | Cada scan suma un valor fijo configurado en la tienda | Los puntos son enteros, dependen del importe y se calculan en backend; `PC-01` propone la fórmula exacta |
+| Puntos | Cada scan suma un valor fijo configurado en la tienda | El operador ingresa manualmente entre 1 y 100000 puntos; desde 10001 la UI exige una confirmación reforzada (`PR-02`) |
 | Canje | El flujo mezcla el ciclo de Sellos con el descuento de saldo | El canje valida saldo y descuenta exactamente `requisito_cantidad`, conservando el remanente |
 | Vigencia | No queda cerrada una política uniforme para premios | Los beneficios no vencen ni manejan stock durante el MVP |
 | Movimientos | Registra cliente, tienda, sucursal, tipo, cantidad y fecha | Registra tarjeta, sucursal, operador, beneficio, tipo de saldo, operación, saldos anterior/posterior, importe e idempotencia |
@@ -196,6 +196,7 @@ Backoffice crea y modifica suscripciones, habilita sucursales facturables y real
 |---|---|---|
 | `id_usuario` | int PK | — |
 | `email` | string unique | normalizado |
+| `email_verified_at` | timestamp nullable | null hasta verificar; Google sólo lo completa con `email_verified=true` |
 | `password_hash` | string nullable | null para cuenta Google |
 | `google_id` | string unique nullable | OAuth |
 | `nombre` | string | — |
@@ -335,9 +336,10 @@ Restricciones:
 | `tipo` | enum | `SELLOS` o `PUNTOS` |
 | `nombre_unidad` | string | sellos, puntos, estrellas |
 | `cantidad_fija` | int nullable | Sellos por compra |
-| `importe_por_unidad_centavos` | bigint nullable | importe entero requerido por punto |
-| `moneda` | string nullable | ISO 4217, ej. `ARS` |
+| `maximo_puntos_por_operacion` | bigint nullable | `100000` para Puntos; fijado por contrato |
 | `activo` | boolean | — |
+| `version` | int | control optimista `If-Match` |
+| `deleted_at` | timestamp nullable | baja lógica |
 | `created_at` | timestamp ISO | — |
 | `updated_at` | timestamp ISO | — |
 
@@ -345,7 +347,7 @@ Restricciones:
 
 - `UNIQUE (id_marca, tipo)`.
 - Sellos requiere `cantidad_fija > 0`.
-- Puntos requiere `importe_por_unidad > 0` y moneda.
+- Puntos usa ingreso manual global `1..100000` y no configura una fórmula monetaria.
 - MVP 1: máximo un programa activo por marca.
 - MVP 2: pueden estar activos Sellos y Puntos.
 
@@ -353,10 +355,9 @@ Restricciones:
 
 **ACORDADO D-14-A:** los puntos se almacenan, acumulan y descuentan únicamente como números enteros.
 
-**PROPUESTA CODEX `PC-01` — PENDIENTE DE REVISIÓN:** representar importes monetarios
-en centavos enteros y calcular `puntos_generados = importe_compra_centavos /
-importe_por_punto_centavos` mediante división entera. El resto se descarta y no se
-arrastra a otra compra. Consulte la sección 15.1 para ejemplos y casos límite.
+**APROBADO `PR-02`:** la primera release recibe Puntos manuales enteros entre `1`
+y `100000`. No calcula puntos desde dinero. Desde `10001`, la preview exige que la
+UI presente una confirmación reforzada. Consulte la sección 15.1.
 
 ### 5.10 `beneficios`
 
@@ -366,9 +367,10 @@ arrastra a otra compra. Consulte la sección 15.1 para ejemplos y casos límite.
 | `id_programa` | int FK | saldo que consume |
 | `nombre` | string | — |
 | `descripcion` | string | — |
-| `requisito_cantidad` | int | saldo a descontar |
+| `requisito_cantidad` | int | saldo a descontar, `1..10000000` |
 | `activo` | boolean | — |
-| `created_at` | timestamp ISO | — |
+| `version` | int | control optimista `If-Match` |
+| `deleted_at` | timestamp nullable | baja lógica |
 | `updated_at` | timestamp ISO | — |
 
 No vencen ni manejan stock en el MVP.
@@ -535,8 +537,8 @@ erDiagram
         string tipo
         string nombre_unidad
         int cantidad_fija
-        decimal importe_por_unidad
-        string moneda
+        int cantidad_puntos_maxima
+        int umbral_confirmacion_reforzada
         boolean activo
         datetime created_at
         datetime updated_at
@@ -649,6 +651,8 @@ Validaciones:
 - `CLIENTE_FINAL` genera un `qr_token` opaco y único.
 - `PERSONAL_MARCA` no recibe rol ni marca durante el registro.
 - El registro nunca crea una suscripción ni acepta `id_plan`.
+- En `FREE_ACCESS_V1`, `PERSONAL_MARCA` requiere un código de acceso; el backend
+  valida su hash, aplica rate limit y nunca persiste ni registra el código plano.
 
 ### 6.2 Respuesta `201` de cliente final
 
@@ -693,7 +697,33 @@ El primer propietario continúa con `POST /marcas`. Los demás empleados se crea
 
 El JWT identifica usuario y tipo de cuenta. Roles y asignaciones se consultan en las membresías para que una revocación sea inmediata.
 
+### 6.5 Verificación de email y recuperación (`PR-09`)
+
+> **APROBADA POR EL USUARIO como contrato objetivo. Todavía no implementada.**
+
+- Producción requiere email verificado para iniciar sesión por contraseña. El alta
+  puede responder `verification_required: true` y omitir todos los campos de sesión.
+- `POST /auth/email-verification/request` recibe `{ "email": "..." }` y devuelve
+  `202` genérico independientemente de que la cuenta exista o ya esté verificada.
+- `POST /auth/email-verification/confirm` recibe `{ "token": "..." }`; el token
+  vence a las 24 horas, es de un solo uso y se guarda únicamente hasheado.
+- `POST /auth/password-reset/request` aplica la misma respuesta anti-enumeración.
+- `POST /auth/password-reset/confirm` recibe `{ "token": "...", "new_password": "..." }`;
+  el token vence en 1 hora, es de un solo uso y el éxito revoca todas las sesiones.
+- Google sólo crea o enlaza una identidad verificada cuando la validación del ID token
+  confirma `email_verified=true`.
+- La promoción a producción queda bloqueada sin proveedor de correo configurado,
+  dominio autenticado y pruebas de entrega, expiración, reuso y revocación.
+
 ## 7. Planes y suscripción
+
+> **DIFERIDO POR `PR-01`.** La primera release no ejecuta billing ni crea una
+> suscripción paga. Las rutas de esta sección permanecen como objetivo futuro y
+> no habilitan cobros, renovación, deuda, factura ni integración de pagos.
+
+Durante `FREE_ACCESS_V1`, el acceso operativo aprobado se fija a costo cero en el
+backend y puede cerrarse para nuevas altas desactivando el código. No se representa
+como una suscripción ficticia ni se migra automáticamente a un futuro plan pago.
 
 ### 7.1 `GET /planes`
 
@@ -796,7 +826,9 @@ El contrato deja de usar `/tiendas/me`, que no representa correctamente múltipl
 - `POST /marcas/{id_marca}/sucursales`
 - `PUT /marcas/{id_marca}/sucursales/{id_sucursal}`
 
-Crear una sucursal no la habilita para operar: Backoffice debe incluirla en la suscripción.
+En `FREE_ACCESS_V1`, una sucursal activa puede operar por la autorización gratuita
+de la marca. En una versión comercial futura, la habilitación dependerá del
+contrato de suscripción que se apruebe entonces.
 
 Request de `POST /marcas/{id_marca}/sucursales`:
 
@@ -871,17 +903,31 @@ Cada tarjeta incluye saldos compartidos, branding, programas, beneficios y sucur
 
 ## 10. Movimientos y canjes
 
-### 10.1 `POST /movimientos/scan`
+### 10.1 `POST /movimientos/preview`
 
 El operador escanea al finalizar la compra.
 
 ```json
 {
+  "operation": "ACUMULACION",
   "qr_token": "token-opaco",
-  "id_sucursal": 101,
-  "importe_compra_centavos": 450000,
-  "moneda": "ARS",
-  "preview_id": "uuid-del-preview"
+  "branch_id": 101,
+  "cantidad_puntos": 45000
+}
+```
+
+La respuesta preserva la forma v1: `id`, `expires_at`, `operation`, `program_type`,
+`customer`, `card_id`, `balance_before`, `amount` y `balance_after`. Para PUNTOS,
+`amount` es la cantidad manual ya validada; la UI exige segunda confirmación cuando
+es `>=10001`.
+
+### 10.2 `POST /movimientos/scan`
+
+```json
+{
+  "preview_id": "uuid-del-preview",
+  "qr_token": "token-opaco",
+  "branch_id": 101
 }
 ```
 
@@ -891,29 +937,45 @@ Flujo:
 
 1. validar operador y sucursal;
 2. resolver marca desde sucursal;
-3. validar suscripción e ítem facturable activos;
+3. validar acceso gratuito vigente para la marca; no consultar billing;
 4. resolver usuario cliente por QR;
 5. crear o bloquear tarjeta usuario–marca;
 6. resolver programa activo;
 7. Sellos: sumar `cantidad_fija`;
-8. Puntos: calcular en backend según importe;
+8. Puntos: consumir del snapshot inmutable de preview la cantidad manual ya validada
+   `1..100000`; la confirmación no reenvía ni puede sustituir ese valor;
 9. actualizar saldo y registrar movimiento en una transacción;
 10. rechazar reintentos por idempotencia.
 
-`importe_compra_centavos` es obligatorio para Puntos y opcional para Sellos.
+`cantidad_puntos` es obligatoria para Puntos y no se acepta para Sellos **sólo al
+crear la preview**. El backend no confía en la UI: al confirmar revalida actor,
+identidad, sucursal, programa, expiración, saldo e idempotencia contra el snapshot.
 
-### 10.2 Futuro programa combinado
+### 10.3 Futuro programa combinado
 
 **PENDIENTE D-13:** con `AMBOS`, definir si una compra suma ambos saldos o si el operador selecciona uno.
 
-### 10.3 `POST /movimientos/canje`
+### 10.4 `POST /movimientos/canje`
+
+El canje se previsualiza primero con `POST /movimientos/preview`:
 
 ```json
 {
+  "operation": "CANJE",
   "qr_token": "token-opaco",
-  "id_sucursal": 102,
-  "id_beneficio": 90,
-  "preview_id": "uuid-del-preview"
+  "branch_id": 102,
+  "benefit_id": 90
+}
+```
+
+La confirmación posterior usa:
+
+```json
+{
+  "preview_id": "uuid-del-preview",
+  "qr_token": "token-opaco",
+  "branch_id": 102,
+  "benefit_id": 90
 }
 ```
 
@@ -962,7 +1024,7 @@ validar que cubran los gráficos y filtros finales del dashboard.
 13. MVP 1 permite Sellos o Puntos; MVP 2 podrá permitir ambos.
 14. Todas las sucursales heredan la misma configuración.
 15. Sellos suma una cantidad fija por compra.
-16. Puntos se calculan en backend según el importe.
+16. En PUNTOS, el operador ingresa de 1 a 100000; desde 10001 debe completar una segunda confirmación visible.
 17. El canje descuenta el requisito y conserva el saldo restante.
 18. Los beneficios no vencen ni manejan stock en el MVP.
 19. Propietarios y administradores acceden a todas las sucursales.
@@ -1011,7 +1073,7 @@ validar que cubran los gráficos y filtros finales del dashboard.
 ## 14. Orden de implementación
 
 1. Migración de `usuarios` unificado, marcas, membresías y sucursales.
-2. Ajustar registro, login y `/me` a tipos de cuenta y permisos.
+2. Ajustar registro, login y `/me` a tipos de cuenta, email verificado y permisos.
 3. Implementar `POST /marcas` y creación transaccional del propietario.
 4. Planes de marca, suscripción e ítems por sucursal.
 5. Programas y validación Sellos/Puntos.
@@ -1030,36 +1092,29 @@ Las siguientes subsecciones cierran huecos de implementación para que puedan
 revisarse de forma concreta. Todas mantienen estado `PROPUESTA CODEX` hasta que el
 equipo marque su casilla en el índice y registre la decisión final.
 
-### 15.1 `PC-01` — Fórmula de Puntos con enteros
+### 15.1 `PR-02` — Puntos manuales enteros
 
-> **PROPUESTA CODEX `PC-01` — PENDIENTE DE REVISIÓN DEL EQUIPO.**
+> **APROBADA POR EL USUARIO. CONTRATO OBJETIVO TODAVÍA NO IMPLEMENTADO.**
 
-- Los saldos y movimientos de Puntos son `BIGINT` enteros.
-- Los importes se transportan y almacenan en la unidad mínima de la moneda:
-  centavos para ARS. No se usan `float` ni `decimal` para calcular puntos.
-- `importe_por_punto_centavos` también es entero y mayor que cero.
-- Fórmula: `puntos_generados = importe_compra_centavos / importe_por_punto_centavos`
-  usando división entera positiva.
-- El resto se descarta y no se acumula entre compras.
-- Si el resultado es cero, se registra la compra sólo si el producto necesita
-  auditoría de intentos; en el MVP se responde correctamente sin crear movimiento.
-- El backend rechaza importes negativos, moneda diferente a la del programa y
-  valores mayores al límite operativo configurado.
+- El operador envía `cantidad_puntos` como entero entre `1` y `100000`.
+- La preview devuelve la cantidad validada en `amount`; desde `10001` inclusive la
+  UI deriva y exige la confirmación reforzada.
+- La UI muestra cliente, marca, saldo anterior, cantidad y saldo resultante. Para
+  `10001..100000` exige una segunda acción explícita y no preseleccionada.
+- La confirmación envía `preview_id`, identidad y `branch_id`, pero no vuelve a enviar
+  cantidad. El backend consume el snapshot inmutable y revalida actor, sucursal,
+  programa, expiración, saldo e idempotencia en una transacción.
+- Cada movimiento conserva cantidad, tipo de saldo y snapshots históricos, sin
+  inventar un importe monetario.
+- `SELLOS` conserva su regla propia y no acepta `cantidad_puntos`.
+- `requisito_cantidad` de cualquier beneficio admite `1..10000000`.
 
-Ejemplos con `importe_por_punto_centavos = 100000` — ARS 1.000 por punto:
-
-| Compra | Representación | Resultado |
-|---|---:|---:|
-| ARS 999 | `99900` | `0` puntos |
-| ARS 1.000 | `100000` | `1` punto |
-| ARS 4.500 | `450000` | `4` puntos |
-
-Punto a confirmar por negocio: el valor inicial de `importe_por_punto_centavos`
-para cada plan. La fórmula no debe quedar escrita de forma fija en el código.
+La fórmula monetaria de `PC-01` queda fuera de esta release.
 
 ### 15.2 `PC-02` — Backoffice y permisos
 
-> **PROPUESTA CODEX `PC-02` — PENDIENTE DE REVISIÓN DEL EQUIPO.**
+> **ROLES APROBADOS POR `PR-05`; SESIONES Y DEMÁS DETALLES DE BACKOFFICE SIGUEN
+> PROPUESTOS. CONTRATO OBJETIVO TODAVÍA NO IMPLEMENTADO.**
 
 Backoffice usa una identidad separada de `usuarios` para que una cuenta interna no
 pueda transformarse accidentalmente en cliente o empleado de una marca.
@@ -1147,7 +1202,7 @@ Campos físicos adicionales:
 
 ## 16. `PC-04` — Contrato HTTP común
 
-> **PROPUESTA CODEX `PC-04` — PENDIENTE DE REVISIÓN DEL EQUIPO.**
+> **APROBADA EN EL ALCANCE `PR-03`. CONTRATO OBJETIVO TODAVÍA NO IMPLEMENTADO.**
 
 El detalle normativo de rutas y esquemas vive en `openapi.yaml`. Estas convenciones
 se aplican a todas las operaciones.
@@ -1274,7 +1329,7 @@ no autoriza ni congela datos.
 
 ## 17. `PC-05` — Ciclo completo de invitaciones
 
-> **PROPUESTA CODEX `PC-05` — PENDIENTE DE REVISIÓN DEL EQUIPO.**
+> **APROBADA POR `PR-05`. CONTRATO OBJETIVO TODAVÍA NO IMPLEMENTADO.**
 
 Tabla `invitaciones_marca`:
 
@@ -1311,7 +1366,7 @@ Rutas:
 
 ## 18. `PC-06` — Eliminación de beneficios
 
-> **PROPUESTA CODEX `PC-06` — PENDIENTE DE REVISIÓN DEL EQUIPO.**
+> **APROBADA POR `PR-03`. CONTRATO OBJETIVO TODAVÍA NO IMPLEMENTADO.**
 
 - `DELETE` cambia `activo=false` y completa `deleted_at`; no elimina la fila.
 - Un beneficio inactivo no aparece en nuevas tarjetas ni permite canjes.
@@ -1325,7 +1380,7 @@ Rutas:
 
 ## 19. `PC-07` — Almacenamiento de imágenes
 
-> **PROPUESTA CODEX `PC-07` — PENDIENTE DE REVISIÓN DEL EQUIPO.**
+> **APROBADA POR `PR-04`. CONTRATO OBJETIVO TODAVÍA NO IMPLEMENTADO.**
 
 - Storage S3-compatible privado; el backend devuelve URL pública/CDN o firmada.
 - Formatos: JPEG, PNG y WebP. Tamaño máximo: 5 MiB.
@@ -1510,13 +1565,19 @@ Secuencia inicial propuesta:
 - Backoffice usa `aud=puntazo-backoffice`; la app usa `aud=puntazo-app`.
 - `POST /auth/logout` revoca la sesión refresh; no necesita blacklist global del
   access token por su vida corta.
+- Un reset de contraseña exitoso revoca todas las sesiones refresh de la persona.
 
 Tabla `sesiones_refresh`: usuario o usuario backoffice, token hash, familia, fecha
 de vencimiento, revocación, IP resumida, user agent y timestamps.
 
+Los tokens de verificación de email y reset se persisten sólo como hash, con usuario,
+propósito, vencimiento y fecha de consumo. Son de un uso y duran 24 h y 1 h
+respectivamente; el secreto enviado por email nunca se registra.
+
 ### 24.2 Límites y seguridad
 
-- Login/registro/Google: 10 intentos por IP cada 10 minutos y límite adicional por email.
+- Login/registro/Google/verificación/reset: 10 intentos por IP cada 10 minutos y
+  límite adicional por email o cuenta cuando no revele su existencia.
 - Scan/canje: 60 por operador por minuto, además de idempotencia.
 - Upload: 20 por marca por hora.
 - Body JSON máximo 1 MiB; imágenes máximo 5 MiB.
@@ -1534,6 +1595,31 @@ de vencimiento, revocación, IP resumida, user agent y timestamps.
   migración incompatible o crecimiento anormal de idempotencias fallidas.
 - Backups de PostgreSQL diarios, retención 30 días y prueba mensual de restauración.
 
+### 24.4 Anonimización de cuenta (`PR-07`)
+
+> **APROBADA POR EL USUARIO como contrato objetivo. No está implementada en los repositorios fuente bloqueados.**
+
+- `PATCH /me` conserva el contrato `{ nombre, apellido?, alias?, foto_url? }` y
+  requiere `If-Match`; no admite campos de rol, cuenta o membresía.
+- `GET /me/export` devuelve a la persona autenticada su perfil, membresías, tarjetas
+  y movimientos en JSON.
+- `DELETE /me` requiere `If-Match`, body exacto `{ "confirmacion": "ANONIMIZAR" }`
+  y un JWT cuyo claim `auth_time` no supere 10 minutos. Si no es reciente responde
+  `401 RECENT_AUTH_REQUIRED`.
+- Si la persona es último `PROPIETARIO` activo de una marca responde
+  `409 OWNERSHIP_TRANSFER_REQUIRED`; primero debe transferir la propiedad o cerrar
+  la marca mediante un flujo autorizado.
+- Revoca sesiones e invitaciones pendientes e inhabilita el acceso antes de iniciar
+  el procesamiento asíncrono.
+- Elimina o sustituye de forma irreversible nombre, email, credenciales, identidad
+  Google, QR, imágenes y demás datos que permitan identificar directamente a la persona.
+- Conserva IDs técnicos, tarjetas, saldos y movimientos necesarios para que el ledger
+  siga siendo íntegro y auditable, sin permitir reconstruir la identidad borrada.
+- Los snapshots históricos conservan únicamente datos operativos mínimos y deben evitar
+  email, QR, tokens u otros identificadores directos.
+- El plazo de ejecución y cualquier retención obligatoria requieren política legal y
+  fiscal aprobada profesionalmente antes de producción comercial.
+
 ## 25. Relación con `openapi.yaml`
 
 `openapi.yaml` es el contrato formal de transporte. Este Markdown prevalece para
@@ -1544,4 +1630,3 @@ actualicen en el mismo cambio.
 El archivo debe validarse en CI y versionarse junto con este documento. Los SDK o
 tipos de frontend deben generarse desde OpenAPI una vez que el equipo apruebe las
 propuestas `PC-xx`.
-

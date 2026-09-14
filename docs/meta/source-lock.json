@@ -1,21 +1,32 @@
 {
-  "documentedAt": "2026-08-21",
+  "documentedAt": "2026-09-14",
   "repositories": [
     {
       "kind": "frontend",
       "name": "gonzalotev/app-fidelidad",
       "url": "https://github.com/gonzalotev/app-fidelidad",
       "localPath": "../app-fidelidad",
-      "commit": "afec4792729b48de4646168846ab221c96352f51",
-      "commitDate": "2026-08-20"
+      "branch": "testing",
+      "commit": "1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01",
+      "commitDate": "2026-09-14"
     },
     {
       "kind": "backend",
-      "name": "am-p/app-loyalty",
-      "url": "https://github.com/am-p/app-loyalty",
+      "name": "gagonzalez1/app-loyalty",
+      "url": "https://github.com/gagonzalez1/app-loyalty",
       "localPath": "../app-loyalty",
-      "commit": "f03b9aa202587510508a6f2a094b808f5ed6353d",
-      "commitDate": "2026-08-03"
+      "branch": "staging",
+      "commit": "50e95e9407ee5ffaccfc3cebcbef464d24f26427",
+      "commitDate": "2026-09-14"
+    },
+    {
+      "kind": "preview",
+      "name": "gagonzalez1/puntazo-preview",
+      "url": "https://github.com/gagonzalez1/puntazo-preview",
+      "localPath": "../puntazo-preview",
+      "branch": "testing",
+      "commit": "e6efbd7da4d3a22be9f818b000ef44d4ac2ed40b",
+      "commitDate": "2026-09-14"
     }
   ],
   "documents": [
@@ -24,7 +35,7 @@
       "localPath": "../docs/BACKEND_SPEC_CORREGIDO.md",
       "publishedPath": "docs/backend/04-backend-spec.md",
       "version": "v1.5-review",
-      "sha256": "01fcb896610ad00fa7dd55e057753fe5e8b34f2f3acf9ef9230717b4f8cca723"
+      "sha256": "e617469243a67619f58b91bc9e001c75b7c4ba568e5b18c9ff92311540602e50"
     }
   ]
 }
