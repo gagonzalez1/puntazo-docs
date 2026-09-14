@@ -4248,17 +4248,42 @@ components:
           title: Preview de acumulación
           additionalProperties: false
           required:
-            - operacion
+            - operation
             - qr_token
-            - id_sucursal
+            - branch_id
           properties:
-            operacion:
+            operation:
               type: string
               const: ACUMULACION
             qr_token:
               type: string
               minLength: 16
-            id_sucursal:
+            branch_id:
+              type: integer
+              format: int64
+              minimum: 1
+            cantidad_puntos:
+              type: integer
+              format: int64
+              minimum: 1
+              maximum: 100000
+              description: Obligatoria para PUNTOS y ausente para SELLOS.
+        - type: object
+          title: Preview de acumulación por código visible
+          additionalProperties: false
+          required:
+            - operation
+            - customer_code
+            - branch_id
+          properties:
+            operation:
+              type: string
+              const: ACUMULACION
+            customer_code:
+              type: string
+              minLength: 1
+              maxLength: 64
+            branch_id:
               type: integer
               format: int64
               minimum: 1
@@ -4272,82 +4297,103 @@ components:
           title: Preview de canje
           additionalProperties: false
           required:
-            - operacion
+            - operation
             - qr_token
-            - id_sucursal
-            - id_beneficio
+            - branch_id
+            - benefit_id
           properties:
-            operacion:
+            operation:
               type: string
               const: CANJE
             qr_token:
               type: string
               minLength: 16
-            id_sucursal:
+            branch_id:
               type: integer
               format: int64
               minimum: 1
-            id_beneficio:
+            benefit_id:
+              type: integer
+              format: int64
+              minimum: 1
+        - type: object
+          title: Preview de canje por código visible
+          additionalProperties: false
+          required:
+            - operation
+            - customer_code
+            - branch_id
+            - benefit_id
+          properties:
+            operation:
+              type: string
+              const: CANJE
+            customer_code:
+              type: string
+              minLength: 1
+              maxLength: 64
+            branch_id:
+              type: integer
+              format: int64
+              minimum: 1
+            benefit_id:
               type: integer
               format: int64
               minimum: 1
       discriminator:
-        propertyName: operacion
+        propertyName: operation
     MovementPreview:
       type: object
       additionalProperties: false
       required:
-        - preview_id
+        - id
         - expires_at
-        - operacion
-        - cliente
-        - tipo_saldo
-        - saldo_actual
-        - cantidad
-        - saldo_resultante
-        - requiere_confirmacion_reforzada
+        - operation
+        - program_type
+        - customer
+        - card_id
+        - balance_before
+        - amount
+        - balance_after
       properties:
-        preview_id:
+        id:
           type: string
           format: uuid
         expires_at:
           $ref: '#/components/schemas/Timestamp'
-        operacion:
+        operation:
           $ref: '#/components/schemas/MovementOperation'
-        cliente:
+        program_type:
+          $ref: '#/components/schemas/ProgramType'
+        customer:
           type: object
           required:
-            - id_usuario
-            - nombre
+            - id
+            - name
           properties:
-            id_usuario:
+            id:
               type: integer
               format: int64
-            nombre:
+            name:
               type: string
-            foto_url:
-              type:
-                - string
-                - 'null'
-              format: uri
-        tipo_saldo:
-          $ref: '#/components/schemas/BalanceType'
-        saldo_actual:
+        card_id:
           type: integer
           format: int64
           minimum: 0
-        cantidad:
+        balance_before:
           type: integer
           format: int64
           minimum: 0
-        saldo_resultante:
+        amount:
+          type: integer
+          format: int64
+          minimum: 1
+          description: Cantidad validada e inmovilizada por la preview; desde 10001 PUNTOS la UI exige segunda confirmación.
+        balance_after:
           type: integer
           format: int64
           minimum: 0
-        requiere_confirmacion_reforzada:
-          type: boolean
-          description: true para acumulaciones PUNTOS de 10001 a 100000; la UI exige segunda confirmación.
-        beneficio:
+        benefit:
           oneOf:
             - $ref: '#/components/schemas/Benefit'
             - type: 'null'
@@ -4362,139 +4408,178 @@ components:
         request_id:
           $ref: '#/components/schemas/RequestId'
     ScanRequest:
-      type: object
-      additionalProperties: false
-      required:
-        - preview_id
-        - qr_token
-        - id_sucursal
-      properties:
-        preview_id:
-          type: string
-          format: uuid
-        qr_token:
-          type: string
-          minLength: 16
-        id_sucursal:
-          type: integer
-          format: int64
-          minimum: 1
-        cantidad_puntos:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 100000
-          description: Debe coincidir con la preview cuando el programa es PUNTOS; ausente para SELLOS.
+      oneOf:
+        - type: object
+          additionalProperties: false
+          required:
+            - preview_id
+            - qr_token
+            - branch_id
+          properties:
+            preview_id:
+              type: string
+              format: uuid
+            qr_token:
+              type: string
+              minLength: 16
+            branch_id:
+              type: integer
+              format: int64
+              minimum: 1
+        - type: object
+          additionalProperties: false
+          required:
+            - preview_id
+            - customer_code
+            - branch_id
+          properties:
+            preview_id:
+              type: string
+              format: uuid
+            customer_code:
+              type: string
+              minLength: 1
+              maxLength: 64
+            branch_id:
+              type: integer
+              format: int64
+              minimum: 1
+      description: No reenvía cantidad_puntos; consume la cantidad y el programa del snapshot inmutable de preview.
     RedemptionRequest:
-      type: object
-      additionalProperties: false
-      required:
-        - preview_id
-        - qr_token
-        - id_sucursal
-        - id_beneficio
-      properties:
-        preview_id:
-          type: string
-          format: uuid
-        qr_token:
-          type: string
-          minLength: 16
-        id_sucursal:
-          type: integer
-          format: int64
-          minimum: 1
-        id_beneficio:
-          type: integer
-          format: int64
-          minimum: 1
+      oneOf:
+        - type: object
+          additionalProperties: false
+          required:
+            - preview_id
+            - qr_token
+            - branch_id
+            - benefit_id
+          properties:
+            preview_id:
+              type: string
+              format: uuid
+            qr_token:
+              type: string
+              minLength: 16
+            branch_id:
+              type: integer
+              format: int64
+              minimum: 1
+            benefit_id:
+              type: integer
+              format: int64
+              minimum: 1
+        - type: object
+          additionalProperties: false
+          required:
+            - preview_id
+            - customer_code
+            - branch_id
+            - benefit_id
+          properties:
+            preview_id:
+              type: string
+              format: uuid
+            customer_code:
+              type: string
+              minLength: 1
+              maxLength: 64
+            branch_id:
+              type: integer
+              format: int64
+              minimum: 1
+            benefit_id:
+              type: integer
+              format: int64
+              minimum: 1
     Movement:
       type: object
       additionalProperties: false
       required:
-        - id_movimiento
-        - id_operacion
-        - id_tarjeta
-        - id_sucursal
-        - marca_nombre_snapshot
-        - sucursal_nombre_snapshot
-        - programa_nombre_unidad_snapshot
-        - tipo_saldo
-        - operacion
-        - sentido
-        - cantidad
-        - saldo_anterior
-        - saldo_posterior
-        - fecha_movimiento
+        - id
+        - operation_id
+        - card_id
+        - branch_id
+        - operation
+        - program_type
+        - direction
+        - amount
+        - balance_before
+        - balance_after
+        - occurred_at
       properties:
-        id_movimiento:
+        id:
           type: integer
           format: int64
-        id_operacion:
+        operation_id:
           type: string
           format: uuid
-        id_tarjeta:
+        card_id:
           type: integer
           format: int64
-        id_sucursal:
+        brand_id:
+          type: integer
+          format: int64
+        brand_name:
+          type: string
+        branch_id:
           type:
             - integer
             - 'null'
           format: int64
-        marca_nombre_snapshot:
-          type: string
-        sucursal_nombre_snapshot:
+        branch_name:
           type:
             - string
             - 'null'
-        programa_nombre_unidad_snapshot:
-          type: string
-        id_beneficio:
-          type:
-            - integer
-            - 'null'
+        operation:
+          $ref: '#/components/schemas/MovementOperation'
+        program_type:
+          $ref: '#/components/schemas/ProgramType'
+        direction:
+          $ref: '#/components/schemas/MovementDirection'
+        amount:
+          type: integer
           format: int64
-        beneficio_nombre_snapshot:
+          minimum: 1
+        balance_before:
+          type: integer
+          format: int64
+          minimum: 0
+        balance_after:
+          type: integer
+          format: int64
+          minimum: 0
+        benefit_name_snapshot:
           type:
             - string
             - 'null'
-        beneficio_requisito_snapshot:
+        benefit_required_stamps_snapshot:
           type:
             - integer
             - 'null'
           format: int64
           maximum: 10000000
-        id_usuario_operador:
+        benefit_required_points_snapshot:
           type:
             - integer
             - 'null'
           format: int64
-        operador_nombre:
+          maximum: 10000000
+        brand_name_snapshot:
           type:
             - string
             - 'null'
-        cliente_nombre:
+          description: Extensión objetivo aún no implementada.
+        branch_name_snapshot:
           type:
             - string
             - 'null'
-        tipo_saldo:
-          $ref: '#/components/schemas/BalanceType'
-        operacion:
-          $ref: '#/components/schemas/MovementOperation'
-        sentido:
-          $ref: '#/components/schemas/MovementDirection'
-        cantidad:
-          type: integer
-          format: int64
-          minimum: 1
-        saldo_anterior:
-          type: integer
-          format: int64
-          minimum: 0
-        saldo_posterior:
-          type: integer
-          format: int64
-          minimum: 0
+          description: Extensión objetivo aún no implementada.
+        program_unit_name_snapshot:
+          type:
+            - string
+            - 'null'
+          description: Extensión objetivo aún no implementada.
         importe_compra_centavos:
           type:
             - integer
@@ -4510,7 +4595,7 @@ components:
           type:
             - string
             - 'null'
-        fecha_movimiento:
+        occurred_at:
           $ref: '#/components/schemas/Timestamp'
     MovementEnvelope:
       type: object

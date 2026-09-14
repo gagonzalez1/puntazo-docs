@@ -32,6 +32,9 @@ codeRefs: optional
 ## Reglas de precedencia
 
 - `PR-02` sustituye la fórmula monetaria propuesta en `PC-01` para esta release.
+- La decisión de integración conserva el transporte v1 de movimientos
+  (`operation`, `branch_id`, `benefit_id`; respuesta `id/balance_before/amount`).
+  `cantidad_puntos` se agrega sólo a preview y scan consume su snapshot inmutable.
 - `PR-01` difiere `PC-03` y todas las rutas de billing. Esas rutas pueden
   conservarse en OpenAPI como objetivo futuro, marcadas fuera del release.
 - `PR-03`, `PR-04` y `PR-05` aprueban el alcance correspondiente de `PC-04` a

@@ -40,9 +40,12 @@ sequenceDiagram
 ## Diferencia con el objetivo
 
 El objetivo aprobado usa `POST /movimientos/preview` y luego
-`POST /movimientos/scan`. Debe identificar marca y sucursal autorizadas, aceptar
-Puntos manuales `1..100000`, marcar confirmación reforzada desde `10001`, bloquear
-duplicados mediante idempotencia y escribir saldo más snapshot en una transacción.
+`POST /movimientos/scan`. Preview conserva los nombres v1 `operation`, `branch_id`
+y `benefit_id`; para PUNTOS agrega `cantidad_puntos` manual `1..100000` y responde
+`id`, `balance_before`, `amount` y `balance_after`. Desde `10001` la UI reconfirma.
+Scan envía `preview_id`, identidad y `branch_id`, sin repetir puntos; el backend
+consume el snapshot inmutable, bloquea duplicados mediante idempotencia y escribe
+saldo más movimiento en una transacción.
 
 ## Referencias de código
 

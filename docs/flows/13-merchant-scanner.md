@@ -33,8 +33,11 @@ El servicio usa sucursal `101` y tienda `1`. Sellos suma uno y reinicia a uno al
 
 `PR-02` fija Puntos manuales entre `1` y `100000`. La UI pide cantidad antes de
 crear la preview. Desde `10001`, muestra una segunda confirmación inequívoca con
-cliente, cantidad y saldo resultante. El backend vuelve a validar rango, preview,
-actor, sucursal e idempotencia; la confirmación visual no amplía permisos.
+cliente, cantidad y saldo resultante. El request de preview conserva `operation`,
+`branch_id` y `benefit_id`, y sólo para PUNTOS agrega `cantidad_puntos`. La
+confirmación no reenvía la cantidad: consume el snapshot inmutable de preview y el
+backend revalida actor, identidad, sucursal, programa, expiración, saldo e
+idempotencia. La confirmación visual no amplía permisos.
 
 ## Referencias de código
 

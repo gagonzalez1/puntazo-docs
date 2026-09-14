@@ -44,6 +44,8 @@ flowchart TB
 - Paginación MVP: página 1, tamaño 20 por defecto y máximo 100.
 - Un recurso de otra marca responde `404` para no revelar su existencia.
 - Puntos: carga manual `1..100000`; preview marca confirmación reforzada desde `10001`.
+- Movimientos preservan el transporte v1 existente: `operation`, `branch_id`,
+  `benefit_id` y respuestas con `id`, `balance_before`, `amount`, `balance_after`.
 - Beneficios: `requisito_cantidad` entre `1` y `10000000`.
 - Primera release: alta comercial con código, costo cero y ninguna ruta de billing activa.
 
@@ -51,9 +53,9 @@ flowchart TB
 
 | Operación | Request determinante | Resultado |
 |---|---|---|
-| `POST /movimientos/preview` | QR, sucursal, operación, cantidad manual de puntos o beneficio | Cálculo temporal sin mutar saldo |
-| `POST /movimientos/scan` | `preview_id`, QR, sucursal y `cantidad_puntos` cuando aplica | Movimiento `CREDITO`, snapshots y saldo posterior |
-| `POST /movimientos/canje` | `preview_id`, QR, sucursal y beneficio | Movimiento `DEBITO` y remanente |
+| `POST /movimientos/preview` | `operation`, QR/código, `branch_id` y sólo aquí `cantidad_puntos` o `benefit_id` | Snapshot temporal con `id`, `balance_before`, `amount` y `balance_after` |
+| `POST /movimientos/scan` | `preview_id`, QR/código y `branch_id`; no reenvía puntos | Consume snapshot inmutable y crea movimiento `CREDITO` |
+| `POST /movimientos/canje` | `preview_id`, QR/código, `branch_id` y `benefit_id` | Consume snapshot inmutable, crea `DEBITO` y conserva remanente |
 | `PATCH /me` | `If-Match` + `{nombre, apellido?, alias?, foto_url?}` | Perfil actualizado con nueva versión |
 | `GET /me/export` | Sesión autenticada | Exportación JSON de perfil, membresías, tarjetas y movimientos |
 | `DELETE /me` | `If-Match` + `{confirmacion:"ANONIMIZAR"}` y `auth_time <= 10 min` | Anonimización con sesiones revocadas y ledger preservado |

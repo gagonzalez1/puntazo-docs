@@ -884,16 +884,31 @@ Cada tarjeta incluye saldos compartidos, branding, programas, beneficios y sucur
 
 ## 10. Movimientos y canjes
 
-### 10.1 `POST /movimientos/scan`
+### 10.1 `POST /movimientos/preview`
 
 El operador escanea al finalizar la compra.
 
 ```json
 {
+  "operation": "ACUMULACION",
   "qr_token": "token-opaco",
-  "id_sucursal": 101,
-  "cantidad_puntos": 45000,
-  "preview_id": "uuid-del-preview"
+  "branch_id": 101,
+  "cantidad_puntos": 45000
+}
+```
+
+La respuesta preserva la forma v1: `id`, `expires_at`, `operation`, `program_type`,
+`customer`, `card_id`, `balance_before`, `amount` y `balance_after`. Para PUNTOS,
+`amount` es la cantidad manual ya validada; la UI exige segunda confirmación cuando
+es `>=10001`.
+
+### 10.2 `POST /movimientos/scan`
+
+```json
+{
+  "preview_id": "uuid-del-preview",
+  "qr_token": "token-opaco",
+  "branch_id": 101
 }
 ```
 
@@ -908,26 +923,40 @@ Flujo:
 5. crear o bloquear tarjeta usuario–marca;
 6. resolver programa activo;
 7. Sellos: sumar `cantidad_fija`;
-8. Puntos: validar la cantidad manual `1..100000`; desde `10001`, exigir que la
-   preview indique confirmación reforzada y revalidar el mismo valor;
+8. Puntos: consumir del snapshot inmutable de preview la cantidad manual ya validada
+   `1..100000`; la confirmación no reenvía ni puede sustituir ese valor;
 9. actualizar saldo y registrar movimiento en una transacción;
 10. rechazar reintentos por idempotencia.
 
-`cantidad_puntos` es obligatoria para Puntos y no se acepta para Sellos. El backend
-no confía en la UI: el rango y la coincidencia con la preview se validan nuevamente.
+`cantidad_puntos` es obligatoria para Puntos y no se acepta para Sellos **sólo al
+crear la preview**. El backend no confía en la UI: al confirmar revalida actor,
+identidad, sucursal, programa, expiración, saldo e idempotencia contra el snapshot.
 
-### 10.2 Futuro programa combinado
+### 10.3 Futuro programa combinado
 
 **PENDIENTE D-13:** con `AMBOS`, definir si una compra suma ambos saldos o si el operador selecciona uno.
 
-### 10.3 `POST /movimientos/canje`
+### 10.4 `POST /movimientos/canje`
+
+El canje se previsualiza primero con `POST /movimientos/preview`:
 
 ```json
 {
+  "operation": "CANJE",
   "qr_token": "token-opaco",
-  "id_sucursal": 102,
-  "id_beneficio": 90,
-  "preview_id": "uuid-del-preview"
+  "branch_id": 102,
+  "benefit_id": 90
+}
+```
+
+La confirmación posterior usa:
+
+```json
+{
+  "preview_id": "uuid-del-preview",
+  "qr_token": "token-opaco",
+  "branch_id": 102,
+  "benefit_id": 90
 }
 ```
 
@@ -1049,12 +1078,13 @@ equipo marque su casilla en el índice y registre la decisión final.
 > **APROBADA POR EL USUARIO. CONTRATO OBJETIVO TODAVÍA NO IMPLEMENTADO.**
 
 - El operador envía `cantidad_puntos` como entero entre `1` y `100000`.
-- La preview devuelve la cantidad validada y
-  `requiere_confirmacion_reforzada=true` desde `10001` inclusive.
+- La preview devuelve la cantidad validada en `amount`; desde `10001` inclusive la
+  UI deriva y exige la confirmación reforzada.
 - La UI muestra cliente, marca, saldo anterior, cantidad y saldo resultante. Para
   `10001..100000` exige una segunda acción explícita y no preseleccionada.
-- La confirmación repite actor, sucursal, programa, cantidad, preview e idempotencia
-  en una transacción; el backend no confía en la confirmación visual.
+- La confirmación envía `preview_id`, identidad y `branch_id`, pero no vuelve a enviar
+  cantidad. El backend consume el snapshot inmutable y revalida actor, sucursal,
+  programa, expiración, saldo e idempotencia en una transacción.
 - Cada movimiento conserva cantidad, tipo de saldo y snapshots históricos, sin
   inventar un importe monetario.
 - `SELLOS` conserva su regla propia y no acepta `cantidad_puntos`.
