@@ -32,8 +32,8 @@ El usuario autenticado no determina las tarjetas mostradas. El ID `501` es const
 
 ## Referencias de código
 
-- [Pantalla de tarjetas](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/my-loyalty-cards/index.tsx#L1-L120)
-- [Cliente fijo y composición local](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/services/authService.ts#L42-L150)
+- [Pantalla de tarjetas](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/app/(tabs)/my-loyalty-cards/index.tsx#L1-L120)
+- [Cliente fijo y composición local](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/auth/services/authService.ts#L42-L150)
 
 ## API objetivo
 

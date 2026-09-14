@@ -39,5 +39,5 @@ backend, con límite de 5 MiB por archivo.
 
 ## Referencias de código
 
-- [Pantalla de perfil comercial](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/profile/index.tsx#L32-L119)
-- [Servicio de perfil local](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/profile/services/profileService.ts#L23-L88)
+- [Pantalla de perfil comercial](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/app/(tabs)/profile/index.tsx#L32-L119)
+- [Servicio de perfil local](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/profile/services/profileService.ts#L23-L88)

@@ -30,6 +30,6 @@ El QR no es todavía un token opaco emitido por backend. Por ser derivable desde
 
 ## Referencias de código
 
-- [Pantalla Mi Tarjeta](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/my-card/index.tsx#L10-L50)
-- [Derivación del perfil y QR](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/services/authService.ts#L46-L62)
-- [Lectura real de usuario](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/services/authService.ts#L107-L121)
+- [Pantalla Mi Tarjeta](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/app/(tabs)/my-card/index.tsx#L10-L50)
+- [Derivación del perfil y QR](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/auth/services/authService.ts#L46-L62)
+- [Lectura real de usuario](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/auth/services/authService.ts#L107-L121)

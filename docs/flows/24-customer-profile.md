@@ -33,5 +33,5 @@ La lectura básica está conectada. La edición completa y los campos específic
 
 ## Referencias de código
 
-- [Pantalla Mi Perfil](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/my-profile/index.tsx#L1-L140)
-- [Mapeo híbrido desde usuario](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/services/authService.ts#L46-L62)
+- [Pantalla Mi Perfil](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/app/(tabs)/my-profile/index.tsx#L1-L140)
+- [Mapeo híbrido desde usuario](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/auth/services/authService.ts#L46-L62)

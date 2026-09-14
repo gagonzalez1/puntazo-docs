@@ -43,6 +43,6 @@ como verificada. Esta regla permanece `NOT_IMPLEMENTED` hasta contar con código
 
 ## Referencias de código
 
-- [Endpoint frontend Google](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/services/authService.ts#L96-L105)
-- [Orquestación Google en servicio](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/internal/service/user.go#L60-L95)
-- [Validación de ID token](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/internal/auth/google.go#L13-L37)
+- [Endpoint frontend Google](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/auth/services/authService.ts#L96-L105)
+- [Orquestación Google en servicio](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/service/user.go#L60-L95)
+- [Validación de ID token](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/auth/google.go#L13-L37)

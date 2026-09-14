@@ -42,5 +42,5 @@ El cambio es exclusivamente visual: no modifica las tabs habilitadas, la autenti
 
 ## Referencias de código
 
-- [Guard, paleta fija y visibilidad de tabs](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/_layout.tsx#L13-L139)
-- [Sombra compartida del botón QR](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/LayoutStyle.ts#L37-L52)
+- [Guard, paleta fija y visibilidad de tabs](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/app/(tabs)/_layout.tsx#L13-L139)
+- [Sombra compartida del botón QR](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/app/(tabs)/LayoutStyle.ts#L37-L52)

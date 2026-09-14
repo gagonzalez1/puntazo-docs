@@ -41,6 +41,6 @@ idempotencia. La confirmación visual no amplía permisos.
 
 ## Referencias de código
 
-- [Pantalla y captura](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/scanner/index.tsx#L10-L91)
-- [Mutación de escaneo](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/loyalty/hooks/useLoyalty.ts#L16-L30)
-- [Reglas mock](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/loyalty/services/loyaltyService.ts#L101-L147)
+- [Pantalla y captura](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/app/(tabs)/scanner/index.tsx#L10-L91)
+- [Mutación de escaneo](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/loyalty/hooks/useLoyalty.ts#L16-L30)
+- [Reglas mock](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/loyalty/services/loyaltyService.ts#L101-L147)

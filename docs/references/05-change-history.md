@@ -34,8 +34,8 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 | Campo | Registro |
 |---|---|
 | PR documental | [PR #1](https://github.com/gagonzalez1/puntazo-docs/pull/1) |
-| Frontend | [`99a350bd…afec4792`](https://github.com/gonzalotev/app-fidelidad/compare/99a350bd6e204a1f866d78dcfb20bd9bc108ffda...afec4792729b48de4646168846ab221c96352f51), un commit nuevo |
-| Backend | Sin cambios; continúa en `f03b9aa202587510508a6f2a094b808f5ed6353d` |
+| Frontend | [`99a350bd…afec4792`](https://github.com/gonzalotev/app-fidelidad/compare/99a350bd6e204a1f866d78dcfb20bd9bc108ffda...1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01), un commit nuevo |
+| Backend | Sin cambios; continúa en `b87b00ce41d94b4cc719934fc3cc1a8ff18803c1` |
 | Cambios detectados | La barra inferior adopta la paleta fija de Puntazo, deja de consultar el perfil de tienda para colorearse y el botón QR reutiliza `getHardShadow()`; `.env.example` sólo cambia su final de línea |
 | Documentos modificados | Commits documentados, C4 de componentes frontend, navegación comercial, navegación de cliente, todas las referencias frontend, plan de sincronización y `source-lock.json` |
 | Decisiones | Cambio visual aprobado para documentación; sin decisiones nuevas de negocio, API o datos |
@@ -47,7 +47,7 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 |---|---|
 | PR documental | Línea base previa a la automatización |
 | Frontend | `99a350bd6e204a1f866d78dcfb20bd9bc108ffda` |
-| Backend | `f03b9aa202587510508a6f2a094b808f5ed6353d` |
+| Backend | `b87b00ce41d94b4cc719934fc3cc1a8ff18803c1` |
 | Cambios detectados | Se creó el mapa C4, se separaron los flujos de frontend, se documentó el estado real y se formalizó el backend objetivo |
 | Documentos modificados | Arquitectura, flujos, secuencias, datos, backend spec y `openapi.yaml` |
 | Decisiones | Las decisiones `PROPUESTA CODEX PC-01` a `PC-14` continúan pendientes de revisión humana |
