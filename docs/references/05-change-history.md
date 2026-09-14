@@ -29,6 +29,18 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-09-14 — Sincronización de release gratuita implementada
+
+| Campo | Registro |
+|---|---|
+| PR documental | Pendiente de abrir; esta rama no hace push ni merge |
+| Frontend | [`1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01`](https://github.com/gonzalotev/app-fidelidad/tree/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01) |
+| Backend | [`b87b00ce41d94b4cc719934fc3cc1a8ff18803c1`](https://github.com/am-p/app-loyalty/tree/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1) |
+| Cambios detectados | La integración pasa de auth/mocks a servicios API reales para cuenta, alta gratuita, CRUD comercial, personal, clientes, movimientos, analíticas resumen y media privada. El backend agrega readiness PostgreSQL/esquema/Redis/S3, Redis distribuido, reconciliación media y contrato OpenAPI implementado. |
+| Documentos modificados | OpenAPI canónico y bundle público, C4, estado de datos, matriz pantalla–API, brechas, operación, commits y source-lock |
+| Decisiones | `PR-01..PR-09` permanecen aprobadas para `FREE_ACCESS_V1`; billing, POS, analítica avanzada y backoffice siguen fuera del alcance. |
+| Validaciones | `npm test` correcto: source lock, catálogo, Redocly, lint, build y 6 pruebas documentales. Homologación de proveedores, staging, restore/rollback y QA físico siguen pendientes. |
+
 ### 2026-08-21 — Paleta fija en la navegación del frontend
 
 | Campo | Registro |
