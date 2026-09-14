@@ -6,15 +6,26 @@
       "name": "gonzalotev/app-fidelidad",
       "url": "https://github.com/gonzalotev/app-fidelidad",
       "localPath": "../app-fidelidad",
+      "branch": "testing",
       "commit": "1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01",
       "commitDate": "2026-09-14"
     },
     {
       "kind": "backend",
-      "name": "am-p/app-loyalty",
-      "url": "https://github.com/am-p/app-loyalty",
+      "name": "gagonzalez1/app-loyalty",
+      "url": "https://github.com/gagonzalez1/app-loyalty",
       "localPath": "../app-loyalty",
-      "commit": "6a2a8f0525df9e640d895e50e59b0e9a39960aab",
+      "branch": "staging",
+      "commit": "50e95e9407ee5ffaccfc3cebcbef464d24f26427",
+      "commitDate": "2026-09-14"
+    },
+    {
+      "kind": "preview",
+      "name": "gagonzalez1/puntazo-preview",
+      "url": "https://github.com/gagonzalez1/puntazo-preview",
+      "localPath": "../puntazo-preview",
+      "branch": "testing",
+      "commit": "e6efbd7da4d3a22be9f818b000ef44d4ac2ed40b",
       "commitDate": "2026-09-14"
     }
   ],

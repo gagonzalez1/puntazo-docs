@@ -16,7 +16,8 @@ codeRefs: required
 
 > **Fuente: código.** El contrato canónico es [openapi.yaml](/openapi.yaml) y
 > coincide con la implementación verificada en el backend
-> [6a2a8f0525df9e640d895e50e59b0e9a39960aab](https://github.com/am-p/app-loyalty/tree/6a2a8f0525df9e640d895e50e59b0e9a39960aab).
+> [50e95e9407ee5ffaccfc3cebcbef464d24f26427](https://github.com/gagonzalez1/app-loyalty/tree/50e95e9407ee5ffaccfc3cebcbef464d24f26427),
+> rama `staging`; no implica integración en `main` ni en el upstream.
 > Cada operación declarada `IMPLEMENTED` en ese archivo tiene handler, persistencia,
 > autorización y pruebas en esa revisión. Las extensiones futuras de billing no
 > forman parte de este contrato.
@@ -87,10 +88,10 @@ flowchart TB
 
 ## Referencias fijadas
 
-- [Router y grupos autenticados](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/cmd/server/router.go)
-- [Rutas de movimientos](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/cmd/server/routes_movement.go)
-- [Handlers de personal y media](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/handler/staff.go)
-- [Health/readiness](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/handler/health.go)
+- [Router y grupos autenticados](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/cmd/server/router.go)
+- [Rutas de movimientos](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/cmd/server/routes_movement.go)
+- [Handlers de personal y media](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/internal/handler/staff.go)
+- [Health/readiness](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/internal/handler/health.go)
 
 Billing, analíticas por período, backoffice y otras operaciones que no aparecen en
 el OpenAPI canónico continúan fuera del alcance de esta release.

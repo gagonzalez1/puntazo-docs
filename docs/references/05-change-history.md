@@ -29,6 +29,19 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-09-14 — Lock de ramas aisladas para staging
+
+| Campo | Registro |
+|---|---|
+| PR documental | No aplica a integración de código; actualización local del lock de release, sin push ni merge |
+| Frontend | Rama `testing` fijada en [`1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01`](https://github.com/gonzalotev/app-fidelidad/tree/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01) |
+| Backend | Rama `staging` del fork fijada en [`50e95e9407ee5ffaccfc3cebcbef464d24f26427`](https://github.com/gagonzalez1/app-loyalty/tree/50e95e9407ee5ffaccfc3cebcbef464d24f26427); deriva de `6a2a8f0` y agrega cierre de alta de clientes y Go 1.25.13 |
+| Preview | Rama `testing` fijada en [`e6efbd7da4d3a22be9f818b000ef44d4ac2ed40b`](https://github.com/gagonzalez1/puntazo-preview/tree/e6efbd7da4d3a22be9f818b000ef44d4ac2ed40b); contiene copias exactas de los locks frontend/backend y el ajuste de Nginx para staging |
+| Cambios detectados | Se define una fuente reproducible por rama para levantar staging sin modificar ni asumir integración en `main`, upstream o producción. El flag de altas demo ahora cierra tanto alta comercial como registro de clientes. |
+| Documentos modificados | `source-lock.json`, commits documentados, referencias backend, C4 de contenedores, matriz de integración, secuencia de registro y este historial; catálogo generado actualizado |
+| Decisiones | Sin decisiones de producto nuevas; el lock describe exclusivamente el candidato de staging aislado |
+| Validaciones | Ramas remotas verificadas contra sus SHA exactos; validaciones documentales registradas en el commit de esta actualización |
+
 ### 2026-09-14 — Separación de endpoints S3 para media privada
 
 | Campo | Registro |

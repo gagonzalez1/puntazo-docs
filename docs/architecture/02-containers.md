@@ -54,7 +54,7 @@ outbox transaccional"]
 |---|---|---|
 | Aplicación web | Expo SDK 54 exportada como PWA, Nginx y proxy same-origin | Implementado en el commit frontend fijado |
 | Aplicaciones nativas | Expo SDK 54, React Native 0.81, IDs `com.puntazo.app` | Configurado; QA físico/publicación aún pendiente |
-| API | Go 1.25, Gin, JWT, middleware de timeout/recovery/CORS/rate limit | Implementado |
+| API | Go 1.25.13, Gin, JWT, middleware de timeout/recovery/CORS/rate limit | Implementado en la rama de staging fijada |
 | Datos | PostgreSQL 16, 17 migraciones numeradas, pool pgx | Implementado |
 | Rate limiting | Redis compartido con fallback local sólo fuera de producción | Implementado |
 | Media | S3-compatible privado, reencode y leases de reconciliación | Implementado; `S3_ENDPOINT` interno para operaciones y `S3_PUBLIC_ENDPOINT` sólo para GET presignado; homologación de credenciales pendiente |
@@ -80,6 +80,7 @@ outbox transaccional"]
 
 ## Referencias de código
 
-- [Composición de servidor y migrador](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/cmd/server/main.go)
-- [Configuración de Redis, media y migraciones](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/config/config.go)
+- [Composición de servidor y migrador](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/cmd/server/main.go)
+- [Configuración de Redis, media y migraciones](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/internal/config/config.go)
 - [Proxy y headers de la PWA](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/nginx/default.conf)
+- [Composición desplegable de staging](https://github.com/gagonzalez1/puntazo-preview/blob/e6efbd7da4d3a22be9f818b000ef44d4ac2ed40b/deploy/compose.yaml)

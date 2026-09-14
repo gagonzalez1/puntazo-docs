@@ -46,6 +46,6 @@ de recursos de personal es `membership_id`, no `user_id`.
 
 ## Referencias de código
 
-- [Esquema y migraciones](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/migrations/0017_media_reconciliation.up.sql)
-- [Modelo Go y relaciones](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/model/model.go)
+- [Esquema y migraciones](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/migrations/0017_media_reconciliation.up.sql)
+- [Modelo Go y relaciones](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/internal/model/model.go)
 - [Servicios de dominio frontend](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/merchant/services/merchantService.ts)

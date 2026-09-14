@@ -33,7 +33,11 @@ sequenceDiagram
     UI->>UI: navega a subscription
 ```
 
-El request sólo admite nombre, email y contraseña. El backend asigna `CLIENTE_FINAL`; por eso todavía no implementa el alta separada de `PERSONAL_MARCA` definida en el spec.
+El request sólo admite nombre, email y contraseña. El backend asigna
+`CLIENTE_FINAL`; el alta de personal de marca usa un flujo separado. En la rama
+`staging` fijada, `DEMO_SIGNUP_ENABLED=false` cierra este registro con
+`403 DEMO_SIGNUP_DISABLED`, además del alta comercial. La secuencia del diagrama
+sólo continúa cuando el flag se habilita expresamente en un ambiente controlado.
 
 ## Corte hacia el contrato aprobado
 
@@ -49,5 +53,5 @@ backend o frontend actuales ya soportan la respuesta condicional.
 ## Referencias de código
 
 - [Pantalla de autenticación](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/app/(auth)/index.tsx#L31-L76)
-- [Handler RegisterUser](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/handler/user.go#L23-L70)
-- [Hash y creación de usuario](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/service/user.go#L19-L38)
+- [Handler RegisterUser](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/internal/handler/user.go#L23-L70)
+- [Cierre de alta, hash y creación de usuario](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/internal/service/auth.go)

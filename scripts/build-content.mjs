@@ -142,8 +142,8 @@ for (const doc of docs) {
 
 docs.sort(sortDocs);
 const sourceLock = JSON.parse(await readFile(sourceLockPath, "utf8"));
-if (!Array.isArray(sourceLock.repositories) || sourceLock.repositories.length !== 2) {
-  throw new Error("docs/meta/source-lock.json debe registrar exactamente frontend y backend");
+if (!Array.isArray(sourceLock.repositories) || sourceLock.repositories.length < 2) {
+  throw new Error("docs/meta/source-lock.json debe registrar al menos frontend y backend");
 }
 for (const repository of sourceLock.repositories) {
   if (!repository.name || !/^[a-f0-9]{40}$/.test(repository.commit)) {

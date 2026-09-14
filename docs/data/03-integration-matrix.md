@@ -34,7 +34,7 @@ programa y beneficios"] -->|"real"| BRANDAPI["/v1/marcas/*"]
 
 | Pantalla/flujo | Frontend en el commit fijado | Backend y transporte | Estado |
 |---|---|---|---|
-| Registro de cliente | `demoService` llama `POST /v1/auth/register` | Cuenta cliente; puede responder `verification_required: true` sin sesión | Implementado |
+| Registro de cliente | `demoService` llama `POST /v1/auth/register` | Cuenta cliente; con `DEMO_SIGNUP_ENABLED=false` responde `403 DEMO_SIGNUP_DISABLED`; al habilitarse puede responder `verification_required: true` sin sesión | Implementado en staging con alta cerrada por defecto |
 | Alta comercial gratuita | `demoService` llama `POST /v1/demo/comercios` con UUID de idempotencia | Código de acceso, `program_type`, marca, sucursal, programa y propietario; onboarding queda incompleto hasta el primer beneficio | Implementado |
 | Login, Google y sesión | `authService`, store y cliente HTTP | `/auth/login`, `/auth/google`, refresh rotativo y logout; cookie web o SecureStore native | Implementado |
 | Verificación y reset | Pantallas dedicadas y estados anti-enumeración | Requests `202`, confirmaciones one-use; reset revoca sesiones | Implementado |
@@ -71,4 +71,4 @@ programa y beneficios"] -->|"real"| BRANDAPI["/v1/marcas/*"]
 - [Servicios de onboarding y auth](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/demo/services/demoService.ts)
 - [Servicios de comercio y personal](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/merchant/services/personnelService.ts)
 - [Servicio de media](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/merchant/services/mediaService.ts)
-- [Contrato OpenAPI implementado](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/openapi.yaml)
+- [Contrato OpenAPI implementado](https://github.com/gagonzalez1/app-loyalty/blob/50e95e9407ee5ffaccfc3cebcbef464d24f26427/openapi.yaml)
