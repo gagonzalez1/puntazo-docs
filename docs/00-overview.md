@@ -25,6 +25,7 @@ flowchart LR
     DATA["Datos"]
     REF["Código y commits"]
     BE["Backend · revisión"]
+    REL["Entrega · release"]
 
     CTX --> CNT
     CNT --> BE
@@ -32,6 +33,7 @@ flowchart LR
     CNT --> SEQ
     SEQ --> DATA
     DATA --> REF
+    BE --> REL
 
     click CTX href "#/c4-context" "Abrir contexto"
     click CNT href "#/c4-containers" "Abrir contenedores"
@@ -40,6 +42,7 @@ flowchart LR
     click DATA href "#/data-current" "Abrir datos"
     click REF href "#/documented-commits" "Abrir referencias"
     click BE href "#/backend-review-index" "Abrir revisión del backend"
+    click REL href "#/production-release-checklist" "Abrir checklist de release"
 ```
 
 ## Convenciones

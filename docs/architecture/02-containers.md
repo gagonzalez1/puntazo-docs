@@ -49,6 +49,22 @@ flowchart LR
 | API | Go 1.25, Gin, JWT | Implementado para autenticación |
 | Datos | PostgreSQL 16 con pgx | Sólo tabla `users` |
 
+## Frontera objetivo de producción
+
+> El siguiente bloque describe el destino aprobado, **no contenedores desplegados**.
+
+- PWA, iOS y Android consumen la misma API versionada; los identificadores nativos
+  iOS/Android son exactamente `com.puntazo.app` (`PR-06`).
+- API y job de migración son artefactos separados. Sólo el job único aplica cambios
+  de esquema; la API no crea tablas al arrancar.
+- PostgreSQL y el bucket S3-compatible no se publican en Internet. El bucket es
+  privado y la API media autorización de lectura/escritura (`PR-04`).
+- Sólo el proxy HTTPS expone `443`; `80` redirige a HTTPS. API, base y storage usan
+  redes privadas y credenciales distintas por ambiente.
+- La release `FREE_ACCESS_V1` no despliega ni expone componentes de billing.
+- Logs, métricas, alertas y backups viven fuera del dominio de falla de la API y
+  deben verificarse antes del GO (`PR-08`).
+
 ## Referencias de código
 
 - [Providers y restauración de sesión](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/_layout.tsx#L42-L76)

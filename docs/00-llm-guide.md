@@ -36,6 +36,7 @@ Para obtener contexto suficiente sin cargar toda la documentación:
 6. [`docs/references/02-gaps.md`](#/implementation-gaps) — brechas que no deben confundirse con comportamiento actual.
 7. [`docs/backend/00-review-index.md`](#/backend-review-index) — decisiones de backend propuestas por Codex que requieren aprobación.
 8. [`docs/backend/05-decision-log.md`](#/backend-decision-log) — decisiones de preparación productiva aprobadas por el usuario y su alcance exacto.
+9. [`docs/delivery/01-production-release-checklist.md`](#/production-release-checklist) — evidencia obligatoria de CI, recuperación, incidentes, QA físico y revisión legal.
 
 Después se debe abrir el flujo, la secuencia o el modelo de datos específico de la tarea.
 
@@ -103,6 +104,10 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 ### 6. Diseño objetivo
 
 34. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
+
+### 7. Entrega y operación
+
+35. [`docs/delivery/01-production-release-checklist.md`](#/production-release-checklist) — gates verificables de piloto y producción comercial.
 
 ## Estrategia de carga para un LLM
 
