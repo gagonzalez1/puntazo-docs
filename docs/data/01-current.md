@@ -6,36 +6,46 @@ order: 10
 parent: overview
 level: data
 status: current
-summary: Tabla users real y estructuras mock que viven dentro del frontend.
+summary: Modelo persistido de cuentas, marcas, catálogo, memberships, media y ledger verificado en PostgreSQL 16.
 diagram: true
 codeRefs: required
 ---
-
 # Datos · Estado implementado
 
 ```mermaid
 erDiagram
-    USERS {
-      int id PK
-      string email UK
-      string password_hash
-      string google_id
-      string name
-      string role
-      int id_shop
-      int id_client
-      datetime created_at
-    }
+    ACCOUNTS ||--o{ MEMBERSHIPS : holds
+    BRANDS ||--o{ BRANCHES : contains
+    BRANDS ||--o{ PROGRAMS : owns
+    PROGRAMS ||--o{ BENEFITS : offers
+    ACCOUNTS ||--o{ CARDS : owns
+    BRANDS ||--o{ CARDS : issues
+    CARDS ||--o{ MOVEMENTS : records
+    BRANDS ||--o{ MEDIA : stores
+    ACCOUNTS ||--o{ EMAIL_TOKENS : receives
+    ACCOUNTS ||--o{ SESSIONS : authenticates
+
+    ACCOUNTS { bigint id PK string email UK string account_type }
+    MEMBERSHIPS { bigint id PK bigint account_id bigint brand_id string role }
+    BRANCHES { bigint id PK bigint brand_id boolean principal }
+    PROGRAMS { bigint id PK bigint brand_id string type }
+    BENEFITS { bigint id PK bigint program_id bigint requirement boolean active }
+    CARDS { bigint id PK bigint customer_id bigint brand_id bigint balance }
+    MOVEMENTS { bigint id PK bigint card_id bigint branch_id string operation bigint amount }
+    MEDIA { uuid id bigint brand_id string tipo string estado }
 ```
 
-PostgreSQL contiene una sola tabla creada al iniciar el servidor. Tiendas, clientes, tarjetas, sucursales y movimientos permanecen como arrays/objetos en memoria en el frontend.
+La base nueva de la release aplica 17 migraciones numeradas. El esquema incluye
+cuentas verificables, sesiones rotativas, invitaciones y outbox, marcas/sucursales/
+programas/beneficios, tarjetas/movimientos con snapshots, media privada,
+idempotencia, retención y reconciliación. La API no crea tablas al arrancar.
 
-## Dos capas de datos
-
-- [Modelo objetivo consolidado](#/data-target): propuesta marca–sucursal del spec `v1.5-review`.
-- [Matriz pantalla–API](#/integration-matrix): qué datos ya viajan y cuáles siguen locales.
+La app no debe tomar este modelo como `Tienda` global: un actor puede tener varias
+membresías y un operador queda restringido a sus `branch_ids`. El identificador
+de recursos de personal es `membership_id`, no `user_id`.
 
 ## Referencias de código
 
-- [DDL de users](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/internal/repository/user.go#L10-L15)
-- [Tipos de dominio del frontend](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/types/db.ts#L1-L89)
+- [Esquema y migraciones](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/migrations/0017_media_reconciliation.up.sql)
+- [Modelo Go y relaciones](https://github.com/am-p/app-loyalty/blob/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1/internal/model/model.go)
+- [Servicios de dominio frontend](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/merchant/services/merchantService.ts)
