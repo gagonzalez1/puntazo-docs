@@ -16,7 +16,7 @@ codeRefs: required
 
 > **Fuente: código.** El contrato canónico es [openapi.yaml](/openapi.yaml) y
 > coincide con la implementación verificada en el backend
-> [581776101221e31f513cbb939396f6b0603b386f](https://github.com/am-p/app-loyalty/tree/581776101221e31f513cbb939396f6b0603b386f).
+> [6a2a8f0525df9e640d895e50e59b0e9a39960aab](https://github.com/am-p/app-loyalty/tree/6a2a8f0525df9e640d895e50e59b0e9a39960aab).
 > Cada operación declarada `IMPLEMENTED` en ese archivo tiene handler, persistencia,
 > autorización y pruebas en esa revisión. Las extensiones futuras de billing no
 > forman parte de este contrato.
@@ -87,10 +87,10 @@ flowchart TB
 
 ## Referencias fijadas
 
-- [Router y grupos autenticados](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/cmd/server/router.go)
-- [Rutas de movimientos](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/cmd/server/routes_movement.go)
-- [Handlers de personal y media](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/handler/staff.go)
-- [Health/readiness](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/handler/health.go)
+- [Router y grupos autenticados](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/cmd/server/router.go)
+- [Rutas de movimientos](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/cmd/server/routes_movement.go)
+- [Handlers de personal y media](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/handler/staff.go)
+- [Health/readiness](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/handler/health.go)
 
 Billing, analíticas por período, backoffice y otras operaciones que no aparecen en
 el OpenAPI canónico continúan fuera del alcance de esta release.

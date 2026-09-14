@@ -57,6 +57,6 @@ media"]
 
 ## Referencias de código
 
-- [Router versionado y grupos autenticados](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/cmd/server/router.go)
+- [Router versionado y grupos autenticados](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/cmd/server/router.go)
 - [Cliente HTTP y reintento de sesión](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/core/api/client.ts)
-- [Health/readiness de dependencias](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/handler/health.go)
+- [Health/readiness de dependencias](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/handler/health.go)

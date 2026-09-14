@@ -35,7 +35,7 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 |---|---|
 | PR documental | Pendiente de abrir; esta rama no hace push ni merge |
 | Frontend | Sin cambio; continúa en [`1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01`](https://github.com/gonzalotev/app-fidelidad/tree/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01) |
-| Backend | [`b87b00ce…581776101221e31f513cbb939396f6b0603b386f`](https://github.com/am-p/app-loyalty/compare/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1...581776101221e31f513cbb939396f6b0603b386f), un commit nuevo |
+| Backend | [`b87b00ce…6a2a8f0525df9e640d895e50e59b0e9a39960aab`](https://github.com/am-p/app-loyalty/compare/b87b00ce41d94b4cc719934fc3cc1a8ff18803c1...6a2a8f0525df9e640d895e50e59b0e9a39960aab), un commit nuevo |
 | Cambios detectados | El cliente S3 usa `S3_ENDPOINT` interno para readiness, uploads y borrados; `S3_PUBLIC_ENDPOINT` se valida como URL limpia y se reserva para URLs `GET` presignadas, evitando filtrar el host privado. Se mantienen las 17 migraciones y el contrato HTTP. |
 | Documentos modificados | `source-lock.json`, commits documentados, C4 de contenedores, contrato API, operación, datos, brechas, secuencias y este historial |
 | Decisiones | Sin decisiones nuevas; la separación de endpoints es implementación del backend fijado |

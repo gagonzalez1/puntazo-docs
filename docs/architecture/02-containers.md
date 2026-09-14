@@ -80,6 +80,6 @@ outbox transaccional"]
 
 ## Referencias de código
 
-- [Composición de servidor y migrador](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/cmd/server/main.go)
-- [Configuración de Redis, media y migraciones](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/config/config.go)
+- [Composición de servidor y migrador](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/cmd/server/main.go)
+- [Configuración de Redis, media y migraciones](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/config/config.go)
 - [Proxy y headers de la PWA](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/nginx/default.conf)

@@ -71,4 +71,4 @@ programa y beneficios"] -->|"real"| BRANDAPI["/v1/marcas/*"]
 - [Servicios de onboarding y auth](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/demo/services/demoService.ts)
 - [Servicios de comercio y personal](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/merchant/services/personnelService.ts)
 - [Servicio de media](https://github.com/gonzalotev/app-fidelidad/blob/1db7717e1aa28c2c1be7ba3538bfe9e22e0d0a01/src/features/merchant/services/mediaService.ts)
-- [Contrato OpenAPI implementado](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/openapi.yaml)
+- [Contrato OpenAPI implementado](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/openapi.yaml)

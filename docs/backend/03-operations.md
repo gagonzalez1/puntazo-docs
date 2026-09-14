@@ -115,7 +115,7 @@ SMTP"]
 
 ## Referencias fijadas
 
-- [Readiness y versionado](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/handler/health.go)
-- [Rate limiter Redis](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/middleware/ratelimit.go)
-- [Media privada y reconciliación](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/service/media.go)
-- [Worker de mantenimiento](https://github.com/am-p/app-loyalty/blob/581776101221e31f513cbb939396f6b0603b386f/internal/maintenance/worker.go)
+- [Readiness y versionado](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/handler/health.go)
+- [Rate limiter Redis](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/middleware/ratelimit.go)
+- [Media privada y reconciliación](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/service/media.go)
+- [Worker de mantenimiento](https://github.com/am-p/app-loyalty/blob/6a2a8f0525df9e640d895e50e59b0e9a39960aab/internal/maintenance/worker.go)
