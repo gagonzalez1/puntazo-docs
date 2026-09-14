@@ -54,7 +54,9 @@ flowchart TB
 | `POST /movimientos/preview` | QR, sucursal, operación, cantidad manual de puntos o beneficio | Cálculo temporal sin mutar saldo |
 | `POST /movimientos/scan` | `preview_id`, QR, sucursal y `cantidad_puntos` cuando aplica | Movimiento `CREDITO`, snapshots y saldo posterior |
 | `POST /movimientos/canje` | `preview_id`, QR, sucursal y beneficio | Movimiento `DEBITO` y remanente |
-| `DELETE /me` | `If-Match`, confirmación y motivo | Anonimización con sesiones revocadas y ledger preservado |
+| `PATCH /me` | `If-Match` + `{nombre, apellido?, alias?, foto_url?}` | Perfil actualizado con nueva versión |
+| `GET /me/export` | Sesión autenticada | Exportación JSON de perfil, membresías, tarjetas y movimientos |
+| `DELETE /me` | `If-Match` + `{confirmacion:"ANONIMIZAR"}` y `auth_time <= 10 min` | Anonimización con sesiones revocadas y ledger preservado |
 | `POST /marcas/{id}/invitaciones` | email, rol y sucursales | Invitación de un solo uso |
 
 ## Autorización propuesta

@@ -1524,8 +1524,25 @@ paths:
           content:
             application/json:
               schema: { $ref: '#/components/schemas/AnonymizationEnvelope' }
-        '409': { $ref: '#/components/responses/Conflict' }
+        '401': { $ref: '#/components/responses/RecentAuthRequired' }
+        '409': { $ref: '#/components/responses/OwnershipTransferRequired' }
         '412': { $ref: '#/components/responses/PreconditionFailed' }
+  /me/export:
+    x-puntazo-release-stage: FREE_ACCESS_V1
+    get:
+      tags: [Cuenta]
+      summary: Exporta los datos de la cuenta autenticada
+      operationId: exportCurrentUserData
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-07]
+      x-puntazo-implementation: NOT_IMPLEMENTED
+      responses:
+        '200':
+          description: Exportación JSON de perfil, membresías, tarjetas y movimientos
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AccountExportEnvelope' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
   /planes:
     x-puntazo-release-stage: DEFERRED_BILLING
     get:
@@ -1833,6 +1850,16 @@ components:
             message: La sesión no es válida.
             details: {}
             request_id: req_01K1EXAMPLE
+    RecentAuthRequired:
+      description: La sesión es válida pero auth_time supera los 10 minutos permitidos para anonimizar
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+          example:
+            code: RECENT_AUTH_REQUIRED
+            message: Vuelva a autenticarse para anonimizar la cuenta.
+            details: { max_auth_age_seconds: 600 }
+            request_id: req_01K1EXAMPLE
     Forbidden:
       description: Actor autenticado sin permiso
       content:
@@ -1862,6 +1889,16 @@ components:
             code: INVALID_STATE_TRANSITION
             message: El recurso no admite esta transición.
             details: {}
+            request_id: req_01K1EXAMPLE
+    OwnershipTransferRequired:
+      description: La cuenta es el último propietario activo de una marca
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+          example:
+            code: OWNERSHIP_TRANSFER_REQUIRED
+            message: Transfiera la propiedad o cierre la marca antes de anonimizar la cuenta.
+            details: { id_marca: 1 }
             request_id: req_01K1EXAMPLE
     PreconditionFailed:
       description: La versión enviada en If-Match está desactualizada
@@ -1958,6 +1995,7 @@ components:
             - VALIDATION_ERROR
             - UNAUTHENTICATED
             - TOKEN_EXPIRED
+            - RECENT_AUTH_REQUIRED
             - FORBIDDEN
             - RESOURCE_NOT_FOUND
             - EMAIL_ALREADY_EXISTS
@@ -1975,6 +2013,7 @@ components:
             - INVITATION_EMAIL_MISMATCH
             - INVITATION_ALREADY_USED
             - LAST_OWNER
+            - OWNERSHIP_TRANSFER_REQUIRED
             - INVALID_STATE_TRANSITION
             - BRANCH_NOT_BILLABLE
             - RELEASE_ACCESS_INACTIVE
@@ -2140,10 +2179,9 @@ components:
     AnonymizeAccountRequest:
       type: object
       additionalProperties: false
-      required: [confirmacion, motivo]
+      required: [confirmacion]
       properties:
-        confirmacion: { type: string, const: ANONIMIZAR_MI_CUENTA }
-        motivo: { type: string, minLength: 5, maxLength: 500 }
+        confirmacion: { type: string, const: ANONIMIZAR }
     AnonymizationEnvelope:
       type: object
       additionalProperties: false
@@ -2159,6 +2197,28 @@ components:
             acceso_revocado: { type: boolean, const: true }
             ledger_preservado: { type: boolean, const: true }
             requested_at: { $ref: '#/components/schemas/Timestamp' }
+        request_id: { $ref: '#/components/schemas/RequestId' }
+    AccountExportEnvelope:
+      type: object
+      additionalProperties: false
+      required: [data, request_id]
+      properties:
+        data:
+          type: object
+          additionalProperties: false
+          required: [exported_at, usuario, membresias, tarjetas, movimientos]
+          properties:
+            exported_at: { $ref: '#/components/schemas/Timestamp' }
+            usuario: { $ref: '#/components/schemas/User' }
+            membresias:
+              type: array
+              items: { $ref: '#/components/schemas/MembershipSummary' }
+            tarjetas:
+              type: array
+              items: { $ref: '#/components/schemas/CustomerCard' }
+            movimientos:
+              type: array
+              items: { $ref: '#/components/schemas/Movement' }
         request_id: { $ref: '#/components/schemas/RequestId' }
     MembershipSummary:
       type: object

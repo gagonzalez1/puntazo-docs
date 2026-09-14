@@ -26,7 +26,7 @@ codeRefs: optional
 | `PR-04` | Logos, iconos y media de beneficios viven en storage S3-compatible privado; el backend valida contenido y limita cada archivo a 5 MiB. | URLs de dispositivo, bucket público o confianza en extensión/MIME declarado por cliente. |
 | `PR-05` | Roles de marca: `PROPIETARIO`, `ADMINISTRADOR`, `OPERADOR`. Roles internos: `ADMIN_SISTEMA`, `FINANZAS`, `SOPORTE`. Las invitaciones son de un uso, ligadas al email, revocables y vencen a las 72 horas. | Invitación de propietarios y privilegios fuera de la matriz autorizada. |
 | `PR-06` | El cliente se entrega como PWA y aplicaciones iOS/Android. Ambas aplicaciones nativas usan `com.puntazo.app`. | Publicación sin QA físico, URLs legales estables o formularios de privacidad de tiendas. |
-| `PR-07` | El cierre de cuenta anonimiza identificadores personales y revoca acceso, pero preserva movimientos y snapshots necesarios para integridad del ledger, auditoría y obligaciones aplicables. | Prometer borrado absoluto del ledger o plazos legales todavía no revisados profesionalmente. |
+| `PR-07` | `PATCH /me` conserva nombre/apellido/alias/foto con `If-Match`; `GET /me/export` exporta datos; `DELETE /me` exige `ANONIMIZAR`, `auth_time <=10 min`, transfiere último propietario y anonimiza preservando ledger. | Prometer borrado absoluto del ledger o plazos legales todavía no revisados profesionalmente. |
 | `PR-08` | Producción exige evidencia de CI, SLO, backup/restore, respuesta a incidentes y QA físico de PWA/iOS/Android. | Considerar aprobada una release sólo porque compila o funciona en staging. |
 
 ## Reglas de precedencia

@@ -20,8 +20,15 @@ sequenceDiagram
     participant API as API /v1
     participant DB as PostgreSQL
     participant OBJ as Storage privado
-    U->>API: DELETE /me + If-Match + confirmación
-    API->>DB: bloquear cuenta y validar dependencias
+    U->>API: DELETE /me + If-Match + {confirmacion: ANONIMIZAR}
+    API->>API: validar auth_time <= 10 min
+    alt autenticación no reciente
+      API-->>U: 401 RECENT_AUTH_REQUIRED
+    end
+    API->>DB: bloquear cuenta y validar propietarios activos
+    alt último propietario activo
+      API-->>U: 409 OWNERSHIP_TRANSFER_REQUIRED
+    end
     API->>DB: revocar sesiones e invitaciones
     API->>DB: sustituir identificadores personales por valores irreversibles
     API->>OBJ: programar eliminación de media personal desvinculada

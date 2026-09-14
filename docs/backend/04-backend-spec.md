@@ -1544,7 +1544,16 @@ de vencimiento, revocación, IP resumida, user agent y timestamps.
 
 > **APROBADA POR EL USUARIO como contrato objetivo. No está implementada en los repositorios fuente bloqueados.**
 
-- `DELETE /me` requiere sesión válida, reautenticación explícita y `If-Match`.
+- `PATCH /me` conserva el contrato `{ nombre, apellido?, alias?, foto_url? }` y
+  requiere `If-Match`; no admite campos de rol, cuenta o membresía.
+- `GET /me/export` devuelve a la persona autenticada su perfil, membresías, tarjetas
+  y movimientos en JSON.
+- `DELETE /me` requiere `If-Match`, body exacto `{ "confirmacion": "ANONIMIZAR" }`
+  y un JWT cuyo claim `auth_time` no supere 10 minutos. Si no es reciente responde
+  `401 RECENT_AUTH_REQUIRED`.
+- Si la persona es último `PROPIETARIO` activo de una marca responde
+  `409 OWNERSHIP_TRANSFER_REQUIRED`; primero debe transferir la propiedad o cerrar
+  la marca mediante un flujo autorizado.
 - Revoca sesiones e invitaciones pendientes e inhabilita el acceso antes de iniciar
   el procesamiento asíncrono.
 - Elimina o sustituye de forma irreversible nombre, email, credenciales, identidad
