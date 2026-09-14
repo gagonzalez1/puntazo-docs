@@ -38,3 +38,8 @@ El usuario autenticado no determina las tarjetas mostradas. El ID `501` es const
 ## API objetivo
 
 `GET /clientes/me/tarjetas` debe resolver la identidad desde el JWT y devolver una tarjeta por marca, con saldos compartidos entre sus sucursales.
+
+Los movimientos devueltos conservan snapshots de marca, sucursal, programa y
+beneficio relevantes al momento de operar. La edición o baja lógica posterior no
+reescribe el historial (`PR-03`). La anonimización de cuenta elimina identificadores
+personales operativos, pero preserva este ledger sin volver a identificar a la persona (`PR-07`).

@@ -39,7 +39,10 @@ sequenceDiagram
 
 ## Diferencia con el objetivo
 
-El futuro `POST /movimientos/scan` debe identificar marca y sucursal autorizadas, calcular puntos desde el importe, bloquear duplicados mediante idempotencia y escribir saldo más movimiento en una transacción.
+El objetivo aprobado usa `POST /movimientos/preview` y luego
+`POST /movimientos/scan`. Debe identificar marca y sucursal autorizadas, aceptar
+Puntos manuales `1..100000`, marcar confirmación reforzada desde `10001`, bloquear
+duplicados mediante idempotencia y escribir saldo más snapshot en una transacción.
 
 ## Referencias de código
 

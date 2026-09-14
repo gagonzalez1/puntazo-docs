@@ -1,14 +1,14 @@
 openapi: 3.1.0
 info:
   title: Puntazo API
-  version: 1.0.0-review
+  version: 1.1.0-production-readiness
   description: |
     Contrato objetivo del backend Puntazo.
 
-    IMPORTANTE: salvo las operaciones actuales de autenticación, este contrato
-    contiene PROPUESTAS CODEX pendientes de revisión del equipo. Las extensiones
-    x-puntazo-authority y x-puntazo-implementation hacen visible su autoridad y
-    su distancia respecto del código documentado.
+    Contrato objetivo con decisiones aprobadas PR-01 a PR-08 y propuestas futuras.
+    La primera release es gratuita, requiere código de acceso y no incluye billing.
+    Las extensiones x-puntazo-authority, x-puntazo-implementation y
+    x-puntazo-release-stage separan aprobación, implementación y alcance de release.
   contact:
     name: Equipo Puntazo
 servers:
@@ -36,6 +36,11 @@ tags:
   - name: Backoffice
 security:
   - bearerAuth: []
+x-puntazo-release-profile:
+  id: FREE_ACCESS_V1
+  billing: disabled
+  native_application_id: com.puntazo.app
+  decisions: [PR-01, PR-02, PR-03, PR-04, PR-05, PR-06, PR-07, PR-08]
 paths:
   /health/live:
     get:
@@ -137,7 +142,7 @@ paths:
         '404': { $ref: '#/components/responses/NotFound' }
     post:
       tags: [Sucursales]
-      summary: Crea una sucursal todavía no facturable
+      summary: Crea una sucursal habilitada por el acceso gratuito de la release
       operationId: createBranch
       x-puntazo-authority: PROPUESTA_CODEX
       x-puntazo-decisions: [D-R02, D-R03, PC-03]
@@ -199,14 +204,17 @@ paths:
         '422': { $ref: '#/components/responses/ValidationError' }
     delete:
       tags: [Sucursales]
-      summary: Da de baja lógica una sucursal no facturable
+      summary: Da de baja lógica una sucursal preservando historial
       operationId: deactivateBranch
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-03, PC-09]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-03, PC-09]
       x-puntazo-implementation: NOT_IMPLEMENTED
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
       responses:
         '204': { description: Sucursal desactivada }
         '409': { $ref: '#/components/responses/Conflict' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
   /marcas/{id_marca}/programas:
     parameters:
       - $ref: '#/components/parameters/BrandId'
@@ -225,10 +233,10 @@ paths:
               schema: { $ref: '#/components/schemas/ProgramListEnvelope' }
     post:
       tags: [Programas]
-      summary: Crea el programa permitido por el plan
+      summary: Crea el programa habilitado para la release gratuita
       operationId: createProgram
-      x-puntazo-authority: MIXED
-      x-puntazo-decisions: [D-07, D-R05, PC-01]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [D-07, D-R05, PR-02]
       x-puntazo-implementation: NOT_IMPLEMENTED
       requestBody:
         required: true
@@ -265,8 +273,8 @@ paths:
       tags: [Programas]
       summary: Reemplaza reglas del programa
       operationId: replaceProgram
-      x-puntazo-authority: MIXED
-      x-puntazo-decisions: [D-07, PC-01, PC-04]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [D-07, PR-02, PR-03]
       x-puntazo-implementation: NOT_IMPLEMENTED
       parameters:
         - $ref: '#/components/parameters/IfMatch'
@@ -284,6 +292,19 @@ paths:
         '409': { $ref: '#/components/responses/Conflict' }
         '412': { $ref: '#/components/responses/PreconditionFailed' }
         '422': { $ref: '#/components/responses/ValidationError' }
+    delete:
+      tags: [Programas]
+      summary: Da de baja lógica un programa preservando tarjetas y movimientos
+      operationId: deactivateProgram
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-03]
+      x-puntazo-implementation: NOT_IMPLEMENTED
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
+      responses:
+        '204': { description: Programa desactivado }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
   /marcas/{id_marca}/beneficios:
     parameters:
       - $ref: '#/components/parameters/BrandId'
@@ -311,8 +332,8 @@ paths:
       tags: [Beneficios]
       summary: Crea un beneficio
       operationId: createBenefit
-      x-puntazo-authority: MIXED
-      x-puntazo-decisions: [D-04, PC-06]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [D-04, PR-03]
       x-puntazo-implementation: NOT_IMPLEMENTED
       requestBody:
         required: true
@@ -348,8 +369,8 @@ paths:
       tags: [Beneficios]
       summary: Reemplaza y permite reactivar un beneficio
       operationId: replaceBenefit
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-06]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-03]
       x-puntazo-implementation: NOT_IMPLEMENTED
       parameters:
         - $ref: '#/components/parameters/IfMatch'
@@ -370,8 +391,8 @@ paths:
       tags: [Beneficios]
       summary: Actualiza parcialmente un beneficio
       operationId: updateBenefit
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-06]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-03]
       x-puntazo-implementation: NOT_IMPLEMENTED
       parameters:
         - $ref: '#/components/parameters/IfMatch'
@@ -392,12 +413,15 @@ paths:
       tags: [Beneficios]
       summary: Da de baja lógica un beneficio
       operationId: deactivateBenefit
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-06, PC-09]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-03, PC-09]
       x-puntazo-implementation: NOT_IMPLEMENTED
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
       responses:
         '204': { description: Beneficio desactivado }
         '404': { $ref: '#/components/responses/NotFound' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
   /marcas/{id_marca}/personal:
     parameters:
       - $ref: '#/components/parameters/BrandId'
@@ -430,8 +454,8 @@ paths:
       tags: [Personal]
       summary: Cambia rol, asignaciones o estado de una membresía
       operationId: updateBrandMember
-      x-puntazo-authority: MIXED
-      x-puntazo-decisions: [D-R04, PC-02, PC-04]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [D-R04, PR-03, PR-05]
       x-puntazo-implementation: NOT_IMPLEMENTED
       parameters:
         - $ref: '#/components/parameters/IfMatch'
@@ -453,21 +477,25 @@ paths:
       tags: [Personal]
       summary: Revoca una membresía respetando la regla de último propietario
       operationId: revokeBrandMember
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-02, PC-09]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-03, PR-05, PC-09]
       x-puntazo-implementation: NOT_IMPLEMENTED
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
       responses:
         '204': { description: Membresía revocada }
         '409': { $ref: '#/components/responses/Conflict' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
   /marcas/{id_marca}/invitaciones:
+    x-puntazo-release-stage: FREE_ACCESS_V1
     parameters:
       - $ref: '#/components/parameters/BrandId'
     get:
       tags: [Invitaciones]
       summary: Lista invitaciones de la marca
       operationId: listInvitations
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-05]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-05]
       x-puntazo-implementation: NOT_IMPLEMENTED
       parameters:
         - $ref: '#/components/parameters/Page'
@@ -485,8 +513,8 @@ paths:
       tags: [Invitaciones]
       summary: Invita personal con rol y sucursales
       operationId: createInvitation
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-05]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-05]
       x-puntazo-implementation: NOT_IMPLEMENTED
       requestBody:
         required: true
@@ -502,6 +530,7 @@ paths:
         '409': { $ref: '#/components/responses/Conflict' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /marcas/{id_marca}/invitaciones/{id_invitacion}:
+    x-puntazo-release-stage: FREE_ACCESS_V1
     parameters:
       - $ref: '#/components/parameters/BrandId'
       - $ref: '#/components/parameters/InvitationId'
@@ -509,13 +538,14 @@ paths:
       tags: [Invitaciones]
       summary: Revoca una invitación pendiente
       operationId: revokeInvitation
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-05]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-05]
       x-puntazo-implementation: NOT_IMPLEMENTED
       responses:
         '204': { description: Invitación revocada }
         '409': { $ref: '#/components/responses/Conflict' }
   /marcas/{id_marca}/invitaciones/{id_invitacion}/reenviar:
+    x-puntazo-release-stage: FREE_ACCESS_V1
     parameters:
       - $ref: '#/components/parameters/BrandId'
       - $ref: '#/components/parameters/InvitationId'
@@ -523,8 +553,8 @@ paths:
       tags: [Invitaciones]
       summary: Revoca el token previo y extiende 72 horas
       operationId: resendInvitation
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-05]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-05]
       x-puntazo-implementation: NOT_IMPLEMENTED
       responses:
         '200':
@@ -534,6 +564,7 @@ paths:
               schema: { $ref: '#/components/schemas/InvitationEnvelope' }
         '409': { $ref: '#/components/responses/Conflict' }
   /invitaciones/{token}:
+    x-puntazo-release-stage: FREE_ACCESS_V1
     parameters:
       - $ref: '#/components/parameters/InvitationToken'
     get:
@@ -541,8 +572,8 @@ paths:
       summary: Obtiene la vista pública limitada de una invitación
       operationId: getInvitationByToken
       security: []
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-05]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-05]
       x-puntazo-implementation: NOT_IMPLEMENTED
       responses:
         '200':
@@ -553,14 +584,15 @@ paths:
         '404': { $ref: '#/components/responses/NotFound' }
         '409': { $ref: '#/components/responses/Conflict' }
   /invitaciones/{token}/aceptar:
+    x-puntazo-release-stage: FREE_ACCESS_V1
     parameters:
       - $ref: '#/components/parameters/InvitationToken'
     post:
       tags: [Invitaciones]
       summary: Acepta una invitación para el email autenticado
       operationId: acceptInvitation
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-05]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-05]
       x-puntazo-implementation: NOT_IMPLEMENTED
       responses:
         '201':
@@ -571,14 +603,15 @@ paths:
         '409': { $ref: '#/components/responses/Conflict' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /marcas/{id_marca}/imagenes:
+    x-puntazo-release-stage: FREE_ACCESS_V1
     parameters:
       - $ref: '#/components/parameters/BrandId'
     post:
       tags: [Imágenes]
       summary: Sube y normaliza una imagen de marca
       operationId: uploadBrandImage
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-07]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-04]
       x-puntazo-implementation: NOT_IMPLEMENTED
       requestBody:
         required: true
@@ -595,6 +628,7 @@ paths:
         '415': { $ref: '#/components/responses/UnsupportedMediaType' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /marcas/{id_marca}/imagenes/{id_archivo}:
+    x-puntazo-release-stage: FREE_ACCESS_V1
     parameters:
       - $ref: '#/components/parameters/BrandId'
       - $ref: '#/components/parameters/FileId'
@@ -602,9 +636,11 @@ paths:
       tags: [Imágenes]
       summary: Desvincula una imagen y agenda borrado físico
       operationId: deleteBrandImage
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-07]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-04]
       x-puntazo-implementation: NOT_IMPLEMENTED
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
       responses:
         '202':
           description: Borrado diferido aceptado
@@ -612,6 +648,7 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/DeletionJobEnvelope' }
         '404': { $ref: '#/components/responses/NotFound' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
   /marcas/{id_marca}/clientes:
     parameters:
       - $ref: '#/components/parameters/BrandId'
@@ -778,12 +815,13 @@ paths:
               schema: { $ref: '#/components/schemas/MovementPage' }
         '404': { $ref: '#/components/responses/NotFound' }
   /movimientos/preview:
+    x-puntazo-release-stage: FREE_ACCESS_V1
     post:
       tags: [Movimientos]
       summary: Previsualiza una acumulación o canje sin mutar saldos
       operationId: previewMovement
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-01, PC-14]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-02, PC-14]
       x-puntazo-implementation: NOT_IMPLEMENTED
       requestBody:
         required: true
@@ -798,12 +836,13 @@ paths:
               schema: { $ref: '#/components/schemas/MovementPreviewEnvelope' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /movimientos/scan:
+    x-puntazo-release-stage: FREE_ACCESS_V1
     post:
       tags: [Movimientos]
       summary: Confirma una acumulación transaccional
       operationId: confirmScan
-      x-puntazo-authority: MIXED
-      x-puntazo-decisions: [D-R02, PC-01, PC-10, PC-14]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [D-R02, PR-02, PC-10, PC-14]
       x-puntazo-implementation: NOT_IMPLEMENTED
       parameters:
         - $ref: '#/components/parameters/IdempotencyKey'
@@ -882,6 +921,7 @@ paths:
               schema: { $ref: '#/components/schemas/MovementEnvelope' }
         '404': { $ref: '#/components/responses/NotFound' }
   /marcas/{id_marca}/suscripcion:
+    x-puntazo-release-stage: DEFERRED_BILLING
     parameters:
       - $ref: '#/components/parameters/BrandId'
     get:
@@ -899,6 +939,7 @@ paths:
               schema: { $ref: '#/components/schemas/SubscriptionEnvelope' }
         '404': { $ref: '#/components/responses/NotFound' }
   /marcas/{id_marca}/suscripcion/historial:
+    x-puntazo-release-stage: DEFERRED_BILLING
     parameters:
       - $ref: '#/components/parameters/BrandId'
     get:
@@ -1068,6 +1109,7 @@ paths:
       responses:
         '204': { description: Sesión revocada }
   /backoffice/planes:
+    x-puntazo-release-stage: DEFERRED_BILLING
     get:
       tags: [Backoffice]
       summary: Lista todos los planes internos
@@ -1105,6 +1147,7 @@ paths:
               schema: { $ref: '#/components/schemas/PlanEnvelope' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /backoffice/planes/{id_plan}:
+    x-puntazo-release-stage: DEFERRED_BILLING
     parameters:
       - $ref: '#/components/parameters/PlanId'
     get:
@@ -1144,6 +1187,7 @@ paths:
         '412': { $ref: '#/components/responses/PreconditionFailed' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /backoffice/marcas/{id_marca}/suscripcion:
+    x-puntazo-release-stage: DEFERRED_BILLING
     parameters:
       - $ref: '#/components/parameters/BrandId'
     get:
@@ -1161,6 +1205,7 @@ paths:
               schema: { $ref: '#/components/schemas/SubscriptionEnvelope' }
         '404': { $ref: '#/components/responses/NotFound' }
   /backoffice/marcas/{id_marca}/suscripciones:
+    x-puntazo-release-stage: DEFERRED_BILLING
     parameters:
       - $ref: '#/components/parameters/BrandId'
     post:
@@ -1188,6 +1233,7 @@ paths:
         '409': { $ref: '#/components/responses/Conflict' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /backoffice/suscripciones/{id_suscripcion}:
+    x-puntazo-release-stage: DEFERRED_BILLING
     parameters:
       - $ref: '#/components/parameters/SubscriptionId'
     get:
@@ -1231,6 +1277,7 @@ paths:
         '412': { $ref: '#/components/responses/PreconditionFailed' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /backoffice/suscripciones/{id_suscripcion}/sucursales/{id_sucursal}:
+    x-puntazo-release-stage: DEFERRED_BILLING
     parameters:
       - $ref: '#/components/parameters/SubscriptionId'
       - $ref: '#/components/parameters/BranchId'
@@ -1414,6 +1461,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthenticated'
   /me:
+    x-puntazo-release-stage: FREE_ACCESS_V1
     get:
       tags: [Cuenta]
       summary: Obtiene identidad, membresías y onboarding
@@ -1434,8 +1482,8 @@ paths:
       tags: [Cuenta]
       summary: Actualiza el perfil común
       operationId: updateCurrentUser
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [D-05, PC-04]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [D-05, PR-03]
       x-puntazo-implementation: NOT_IMPLEMENTED
       parameters:
         - $ref: '#/components/parameters/IfMatch'
@@ -1456,7 +1504,30 @@ paths:
           $ref: '#/components/responses/PreconditionFailed'
         '422':
           $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Cuenta]
+      summary: Solicita anonimización de la cuenta preservando el ledger
+      operationId: anonymizeCurrentUser
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-07]
+      x-puntazo-implementation: NOT_IMPLEMENTED
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AnonymizeAccountRequest' }
+      responses:
+        '202':
+          description: Solicitud autenticada, sesiones revocadas y anonimización iniciada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AnonymizationEnvelope' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '412': { $ref: '#/components/responses/PreconditionFailed' }
   /planes:
+    x-puntazo-release-stage: DEFERRED_BILLING
     get:
       tags: [Catálogos]
       summary: Lista planes contratables por marcas
@@ -1565,8 +1636,8 @@ paths:
       tags: [Marcas]
       summary: Actualiza perfil, branding o plantilla
       operationId: updateBrand
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [D-R01, PC-04, PC-07]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [D-R01, PR-03, PR-04]
       x-puntazo-implementation: NOT_IMPLEMENTED
       parameters:
         - $ref: '#/components/parameters/IfMatch'
@@ -1593,14 +1664,18 @@ paths:
       tags: [Marcas]
       summary: Solicita baja lógica de una marca sin suscripción activa
       operationId: deactivateBrand
-      x-puntazo-authority: PROPUESTA_CODEX
-      x-puntazo-decisions: [PC-06, PC-09]
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions: [PR-03, PC-09]
       x-puntazo-implementation: NOT_IMPLEMENTED
+      parameters:
+        - $ref: '#/components/parameters/IfMatch'
       responses:
         '204':
           description: Marca desactivada
         '409':
           $ref: '#/components/responses/Conflict'
+        '412':
+          $ref: '#/components/responses/PreconditionFailed'
 
 components:
   securitySchemes:
@@ -1902,6 +1977,7 @@ components:
             - LAST_OWNER
             - INVALID_STATE_TRANSITION
             - BRANCH_NOT_BILLABLE
+            - RELEASE_ACCESS_INACTIVE
             - IMAGE_TOO_LARGE
             - IMAGE_TYPE_NOT_ALLOWED
             - PREVIEW_EXPIRED
@@ -1985,6 +2061,11 @@ components:
         nombre: { type: string, minLength: 1, maxLength: 120 }
         apellido: { type: string, minLength: 1, maxLength: 120 }
         tipo_cuenta: { $ref: '#/components/schemas/AccountType' }
+        codigo_acceso:
+          type: string
+          minLength: 8
+          maxLength: 128
+          description: Obligatorio para alta PERSONAL_MARCA en FREE_ACCESS_V1; nunca se persiste en claro.
     LoginRequest:
       type: object
       additionalProperties: false
@@ -2056,6 +2137,29 @@ components:
         apellido: { type: [string, 'null'], maxLength: 120 }
         alias: { type: [string, 'null'], maxLength: 80 }
         foto_url: { type: [string, 'null'], format: uri }
+    AnonymizeAccountRequest:
+      type: object
+      additionalProperties: false
+      required: [confirmacion, motivo]
+      properties:
+        confirmacion: { type: string, const: ANONIMIZAR_MI_CUENTA }
+        motivo: { type: string, minLength: 5, maxLength: 500 }
+    AnonymizationEnvelope:
+      type: object
+      additionalProperties: false
+      required: [data, request_id]
+      properties:
+        data:
+          type: object
+          additionalProperties: false
+          required: [id_solicitud, estado, acceso_revocado, ledger_preservado, requested_at]
+          properties:
+            id_solicitud: { type: string, format: uuid }
+            estado: { type: string, enum: [EN_PROCESO, COMPLETADA] }
+            acceso_revocado: { type: boolean, const: true }
+            ledger_preservado: { type: boolean, const: true }
+            requested_at: { $ref: '#/components/schemas/Timestamp' }
+        request_id: { $ref: '#/components/schemas/RequestId' }
     MembershipSummary:
       type: object
       additionalProperties: false
@@ -2291,8 +2395,13 @@ components:
         tipo: { $ref: '#/components/schemas/ProgramType' }
         nombre_unidad: { type: string }
         cantidad_fija: { type: [integer, 'null'], format: int64, minimum: 1 }
-        importe_por_unidad_centavos: { type: [integer, 'null'], format: int64, minimum: 1 }
-        moneda: { type: [string, 'null'], pattern: '^[A-Z]{3}$' }
+        maximo_puntos_por_operacion:
+          oneOf:
+            - type: integer
+              format: int64
+              const: 100000
+            - type: 'null'
+          description: Sólo para PUNTOS; límite aprobado de carga manual.
         activo: { type: boolean }
         version: { type: integer, minimum: 1 }
         created_at: { $ref: '#/components/schemas/Timestamp' }
@@ -2311,12 +2420,10 @@ components:
         - type: object
           title: Programa de Puntos
           additionalProperties: false
-          required: [tipo, nombre_unidad, importe_por_unidad_centavos, moneda, activo]
+          required: [tipo, nombre_unidad, activo]
           properties:
             tipo: { type: string, const: PUNTOS }
             nombre_unidad: { type: string, minLength: 1, maxLength: 40 }
-            importe_por_unidad_centavos: { type: integer, format: int64, minimum: 1 }
-            moneda: { type: string, pattern: '^[A-Z]{3}$' }
             activo: { type: boolean }
       discriminator:
         propertyName: tipo
@@ -2343,7 +2450,7 @@ components:
         id_programa: { type: integer, format: int64 }
         nombre: { type: string }
         descripcion: { type: string }
-        requisito_cantidad: { type: integer, format: int64, minimum: 1 }
+        requisito_cantidad: { type: integer, format: int64, minimum: 1, maximum: 10000000 }
         imagen_url: { type: [string, 'null'], format: uri }
         activo: { type: boolean }
         deleted_at: { type: [string, 'null'], format: date-time }
@@ -2358,7 +2465,7 @@ components:
         id_programa: { type: integer, format: int64, minimum: 1 }
         nombre: { type: string, minLength: 1, maxLength: 160 }
         descripcion: { type: string, minLength: 1, maxLength: 1000 }
-        requisito_cantidad: { type: integer, format: int64, minimum: 1 }
+        requisito_cantidad: { type: integer, format: int64, minimum: 1, maximum: 10000000 }
         imagen_id: { type: integer, format: int64, minimum: 1 }
     ReplaceBenefitRequest:
       type: object
@@ -2368,7 +2475,7 @@ components:
         id_programa: { type: integer, format: int64, minimum: 1 }
         nombre: { type: string, minLength: 1, maxLength: 160 }
         descripcion: { type: string, minLength: 1, maxLength: 1000 }
-        requisito_cantidad: { type: integer, format: int64, minimum: 1 }
+        requisito_cantidad: { type: integer, format: int64, minimum: 1, maximum: 10000000 }
         imagen_id: { type: [integer, 'null'], format: int64 }
         activo: { type: boolean }
     UpdateBenefitRequest:
@@ -2378,7 +2485,7 @@ components:
       properties:
         nombre: { type: string, minLength: 1, maxLength: 160 }
         descripcion: { type: string, minLength: 1, maxLength: 1000 }
-        requisito_cantidad: { type: integer, format: int64, minimum: 1 }
+        requisito_cantidad: { type: integer, format: int64, minimum: 1, maximum: 10000000 }
         imagen_id: { type: [integer, 'null'], format: int64 }
     BenefitEnvelope:
       type: object
@@ -2645,8 +2752,12 @@ components:
             operacion: { type: string, const: ACUMULACION }
             qr_token: { type: string, minLength: 16 }
             id_sucursal: { type: integer, format: int64, minimum: 1 }
-            importe_compra_centavos: { type: integer, format: int64, minimum: 0 }
-            moneda: { type: string, pattern: '^[A-Z]{3}$' }
+            cantidad_puntos:
+              type: integer
+              format: int64
+              minimum: 1
+              maximum: 100000
+              description: Obligatoria para PUNTOS y ausente para SELLOS.
         - type: object
           title: Preview de canje
           additionalProperties: false
@@ -2661,7 +2772,7 @@ components:
     MovementPreview:
       type: object
       additionalProperties: false
-      required: [preview_id, expires_at, operacion, cliente, tipo_saldo, saldo_actual, cantidad, saldo_resultante]
+      required: [preview_id, expires_at, operacion, cliente, tipo_saldo, saldo_actual, cantidad, saldo_resultante, requiere_confirmacion_reforzada]
       properties:
         preview_id: { type: string, format: uuid }
         expires_at: { $ref: '#/components/schemas/Timestamp' }
@@ -2677,6 +2788,9 @@ components:
         saldo_actual: { type: integer, format: int64, minimum: 0 }
         cantidad: { type: integer, format: int64, minimum: 0 }
         saldo_resultante: { type: integer, format: int64, minimum: 0 }
+        requiere_confirmacion_reforzada:
+          type: boolean
+          description: true para acumulaciones PUNTOS de 10001 a 100000; la UI exige segunda confirmación.
         beneficio: { oneOf: [{ $ref: '#/components/schemas/Benefit' }, { type: 'null' }] }
     MovementPreviewEnvelope:
       type: object
@@ -2692,8 +2806,12 @@ components:
         preview_id: { type: string, format: uuid }
         qr_token: { type: string, minLength: 16 }
         id_sucursal: { type: integer, format: int64, minimum: 1 }
-        importe_compra_centavos: { type: integer, format: int64, minimum: 0 }
-        moneda: { type: string, pattern: '^[A-Z]{3}$' }
+        cantidad_puntos:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 100000
+          description: Debe coincidir con la preview cuando el programa es PUNTOS; ausente para SELLOS.
     RedemptionRequest:
       type: object
       additionalProperties: false
@@ -2706,16 +2824,18 @@ components:
     Movement:
       type: object
       additionalProperties: false
-      required: [id_movimiento, id_operacion, id_tarjeta, id_sucursal, tipo_saldo, operacion, sentido, cantidad, saldo_anterior, saldo_posterior, fecha_movimiento]
+      required: [id_movimiento, id_operacion, id_tarjeta, id_sucursal, marca_nombre_snapshot, sucursal_nombre_snapshot, programa_nombre_unidad_snapshot, tipo_saldo, operacion, sentido, cantidad, saldo_anterior, saldo_posterior, fecha_movimiento]
       properties:
         id_movimiento: { type: integer, format: int64 }
         id_operacion: { type: string, format: uuid }
         id_tarjeta: { type: integer, format: int64 }
         id_sucursal: { type: [integer, 'null'], format: int64 }
-        sucursal_nombre: { type: [string, 'null'] }
+        marca_nombre_snapshot: { type: string }
+        sucursal_nombre_snapshot: { type: [string, 'null'] }
+        programa_nombre_unidad_snapshot: { type: string }
         id_beneficio: { type: [integer, 'null'], format: int64 }
         beneficio_nombre_snapshot: { type: [string, 'null'] }
-        beneficio_requisito_snapshot: { type: [integer, 'null'], format: int64 }
+        beneficio_requisito_snapshot: { type: [integer, 'null'], format: int64, maximum: 10000000 }
         id_usuario_operador: { type: [integer, 'null'], format: int64 }
         operador_nombre: { type: [string, 'null'] }
         cliente_nombre: { type: [string, 'null'] }

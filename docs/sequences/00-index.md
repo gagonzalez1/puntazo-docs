@@ -19,10 +19,14 @@ flowchart LR
     GOOGLE["Google Auth"]
     RESTORE["Restaurar sesión"]
     SCAN["Escaneo QR"]
+    INVITE["Invitación de personal"]
+    ANON["Anonimización"]
 
     click REGISTER href "#/sequence-register" "Abrir registro"
     click LOGIN href "#/sequence-login" "Abrir login"
     click GOOGLE href "#/sequence-google" "Abrir Google"
     click RESTORE href "#/sequence-restore" "Abrir restauración"
     click SCAN href "#/sequence-scan" "Abrir escaneo"
+    click INVITE href "#/sequence-invitation" "Abrir invitación"
+    click ANON href "#/sequence-account-anonymization" "Abrir anonimización"
 ```

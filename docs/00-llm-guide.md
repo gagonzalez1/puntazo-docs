@@ -97,10 +97,12 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 29. [`docs/sequences/03-google.md`](#/sequence-google) — acceso con Google.
 30. [`docs/sequences/04-restore.md`](#/sequence-restore) — restauración de sesión.
 31. [`docs/sequences/05-scan.md`](#/sequence-scan) — escaneo actual y corte hacia la futura API.
+32. [`docs/sequences/06-invitation.md`](#/sequence-invitation) — invitación objetivo de personal con vigencia de 72 horas.
+33. [`docs/sequences/07-account-anonymization.md`](#/sequence-account-anonymization) — anonimización objetivo preservando el ledger.
 
 ### 6. Diseño objetivo
 
-32. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
+34. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
 
 ## Estrategia de carga para un LLM
 

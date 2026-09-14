@@ -29,6 +29,13 @@ flowchart LR
 
 El servicio usa sucursal `101` y tienda `1`. Sellos suma uno y reinicia a uno al superar el máximo; Puntos suma diez sin considerar importe. Estas reglas no deben trasladarse al backend objetivo.
 
+## Contrato aprobado
+
+`PR-02` fija Puntos manuales entre `1` y `100000`. La UI pide cantidad antes de
+crear la preview. Desde `10001`, muestra una segunda confirmación inequívoca con
+cliente, cantidad y saldo resultante. El backend vuelve a validar rango, preview,
+actor, sucursal e idempotencia; la confirmación visual no amplía permisos.
+
 ## Referencias de código
 
 - [Pantalla y captura](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/scanner/index.tsx#L10-L91)

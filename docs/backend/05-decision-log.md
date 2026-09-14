@@ -6,7 +6,7 @@ order: 60
 parent: backend-review-index
 level: decision
 status: target
-authority: approved_user
+authority: agreed
 summary: Contrato aprobado para la primera release gratuita y sus gates, todavía pendiente de implementación.
 diagram: false
 codeRefs: optional

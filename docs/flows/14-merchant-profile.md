@@ -29,6 +29,14 @@ flowchart LR
 
 El flujo representa una tienda única. El modelo objetivo reemplaza este contexto implícito por una marca explícita y sus sucursales.
 
+## Contrato aprobado
+
+`PR-03` habilita edición persistida de marca, sucursales, programa, beneficios y
+membresías. Cada mutación sobre un recurso existente exige `If-Match`; una versión
+obsoleta responde `412`. Las bajas son lógicas y los movimientos conservan
+snapshots históricos. `PR-04` agrega media privada S3-compatible validada por el
+backend, con límite de 5 MiB por archivo.
+
 ## Referencias de código
 
 - [Pantalla de perfil comercial](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/profile/index.tsx#L32-L119)

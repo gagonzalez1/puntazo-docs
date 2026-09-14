@@ -6,17 +6,17 @@ order: 20
 parent: backend-review-index
 level: api
 status: target
-authority: proposal_codex
-summary: Mapa de dominios, convenciones HTTP y operaciones formalizadas en OpenAPI.
+authority: mixed
+summary: Contrato objetivo parcialmente aprobado, con implementación y billing todavía pendientes.
 diagram: true
 codeRefs: optional
 ---
 
 # Backend · Contrato API propuesto
 
-> **PROPUESTA CODEX `PC-02` a `PC-08`, `PC-12` a `PC-14`.** El archivo
-> [`openapi.yaml`](/openapi.yaml) es el contrato formal de transporte y debe revisarse
-> antes de generar handlers o SDK.
+> **AUTORIDAD MIXTA.** `PR-01` a `PR-08` están aprobadas para `FREE_ACCESS_V1`.
+> El archivo [`openapi.yaml`](/openapi.yaml) es el contrato formal de transporte;
+> las operaciones siguen sin implementar y billing permanece diferido.
 
 ```mermaid
 flowchart TB
@@ -43,16 +43,18 @@ flowchart TB
 - Scan, canje, ajustes y suscripciones: header `Idempotency-Key` UUID obligatorio.
 - Paginación MVP: página 1, tamaño 20 por defecto y máximo 100.
 - Un recurso de otra marca responde `404` para no revelar su existencia.
+- Puntos: carga manual `1..100000`; preview marca confirmación reforzada desde `10001`.
+- Beneficios: `requisito_cantidad` entre `1` y `10000000`.
+- Primera release: alta comercial con código, costo cero y ninguna ruta de billing activa.
 
 ## Contratos de mayor riesgo
 
 | Operación | Request determinante | Resultado |
 |---|---|---|
-| `POST /movimientos/preview` | QR, sucursal, operación, importe o beneficio | Cálculo temporal sin mutar saldo |
-| `POST /movimientos/scan` | `preview_id`, QR, sucursal, centavos y moneda | Movimiento `CREDITO` y saldo posterior |
+| `POST /movimientos/preview` | QR, sucursal, operación, cantidad manual de puntos o beneficio | Cálculo temporal sin mutar saldo |
+| `POST /movimientos/scan` | `preview_id`, QR, sucursal y `cantidad_puntos` cuando aplica | Movimiento `CREDITO`, snapshots y saldo posterior |
 | `POST /movimientos/canje` | `preview_id`, QR, sucursal y beneficio | Movimiento `DEBITO` y remanente |
-| `POST /backoffice/.../suscripciones` | plan, sucursales, inicio y motivo | Suscripción y snapshots de precio |
-| `PATCH /backoffice/suscripciones/{id}` | acción discriminada y motivo | Cambio inmediato o programado |
+| `DELETE /me` | `If-Match`, confirmación y motivo | Anonimización con sesiones revocadas y ledger preservado |
 | `POST /marcas/{id}/invitaciones` | email, rol y sucursales | Invitación de un solo uso |
 
 ## Autorización propuesta
@@ -65,3 +67,7 @@ flowchart TB
 - `ADMIN_SISTEMA`: planes y operación interna completa, siempre auditada.
 
 El cliente final sólo accede a `/clientes/me` y a sus propias tarjetas y movimientos.
+
+Las rutas de planes y suscripciones están marcadas `DEFERRED_BILLING` en OpenAPI.
+No forman parte de `FREE_ACCESS_V1` y no deben exponerse hasta una decisión comercial,
+fiscal y legal posterior.
