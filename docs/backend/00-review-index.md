@@ -14,7 +14,7 @@ codeRefs: optional
 
 # Backend · Índice de revisión
 
-> **AUTORIDAD MIXTA.** Las decisiones `PR-01` a `PR-08` fueron aprobadas por el
+> **AUTORIDAD MIXTA.** Las decisiones `PR-01` a `PR-09` fueron aprobadas por el
 > usuario para la primera release. Siguen siendo contrato objetivo: no representan
 > código implementado. Las `PC-xx` no cubiertas explícitamente continúan propuestas.
 
@@ -52,6 +52,7 @@ flowchart LR
 | [x] | `PR-06` | PWA, iOS y Android; identificador nativo `com.puntazo.app` |
 | [x] | `PR-07` | Anonimización de cuenta preservando el ledger inmutable |
 | [x] | `PR-08` | Gates de CI, SLO, backup/restore, incidentes y QA físico antes de producción |
+| [x] | `PR-09` | Email verificado, proveedor de correo y recuperación segura con revocación de sesiones |
 
 El registro normativo, las exclusiones y la frontera de implementación están en
 [Decisiones de preparación productiva](#/backend-decision-log).

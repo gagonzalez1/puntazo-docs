@@ -100,14 +100,16 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 31. [`docs/sequences/05-scan.md`](#/sequence-scan) — escaneo actual y corte hacia la futura API.
 32. [`docs/sequences/06-invitation.md`](#/sequence-invitation) — invitación objetivo de personal con vigencia de 72 horas.
 33. [`docs/sequences/07-account-anonymization.md`](#/sequence-account-anonymization) — anonimización objetivo preservando el ledger.
+34. [`docs/sequences/08-email-verification.md`](#/sequence-email-verification) — verificación objetivo anti-enumeración con token de 24 horas.
+35. [`docs/sequences/09-password-reset.md`](#/sequence-password-reset) — recuperación objetivo con token de una hora y revocación de sesiones.
 
 ### 6. Diseño objetivo
 
-34. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
+36. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
 
 ### 7. Entrega y operación
 
-35. [`docs/delivery/01-production-release-checklist.md`](#/production-release-checklist) — gates verificables de piloto y producción comercial.
+37. [`docs/delivery/01-production-release-checklist.md`](#/production-release-checklist) — gates verificables de piloto y producción comercial.
 
 ## Estrategia de carga para un LLM
 

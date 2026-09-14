@@ -14,7 +14,7 @@ codeRefs: optional
 
 # Backend · Contrato API propuesto
 
-> **AUTORIDAD MIXTA.** `PR-01` a `PR-08` están aprobadas para `FREE_ACCESS_V1`.
+> **AUTORIDAD MIXTA.** `PR-01` a `PR-09` están aprobadas para `FREE_ACCESS_V1`.
 > El archivo [`openapi.yaml`](/openapi.yaml) es el contrato formal de transporte;
 > las operaciones siguen sin implementar y billing permanece diferido.
 
@@ -48,6 +48,12 @@ flowchart TB
   `benefit_id` y respuestas con `id`, `balance_before`, `amount`, `balance_after`.
 - Beneficios: `requisito_cantidad` entre `1` y `10000000`.
 - Primera release: alta comercial con código, costo cero y ninguna ruta de billing activa.
+- Producción: login por contraseña requiere email verificado. El registro puede
+  responder `verification_required: true` y omitir por completo la sesión.
+- Solicitudes de verificación y reset responden siempre `202` genérico. Sus tokens
+  se almacenan hasheados, son de un uso y vencen a las 24 h y 1 h respectivamente.
+- Google sólo marca el email local como verificado si el ID token trae
+  `email_verified=true`; un reset exitoso revoca todas las sesiones.
 
 ## Contratos de mayor riesgo
 
@@ -60,6 +66,10 @@ flowchart TB
 | `GET /me/export` | Sesión autenticada | Exportación JSON de perfil, membresías, tarjetas y movimientos |
 | `DELETE /me` | `If-Match` + `{confirmacion:"ANONIMIZAR"}` y `auth_time <= 10 min` | Anonimización con sesiones revocadas y ledger preservado |
 | `POST /marcas/{id}/invitaciones` | email, rol y sucursales | Invitación de un solo uso |
+| `POST /auth/email-verification/request` | `{email}` | `202` genérico; token de un uso por 24 h |
+| `POST /auth/email-verification/confirm` | `{token}` | Marca el email como verificado |
+| `POST /auth/password-reset/request` | `{email}` | `202` genérico; token de un uso por 1 h |
+| `POST /auth/password-reset/confirm` | `{token,new_password}` | Cambia la clave y revoca sesiones |
 
 ## Autorización propuesta
 

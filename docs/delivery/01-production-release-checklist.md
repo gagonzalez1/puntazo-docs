@@ -14,7 +14,8 @@ codeRefs: optional
 
 # Entrega · Checklist de producción
 
-`PR-08` aprueba estos gates como condición de release. Marcar un ítem sólo con un
+`PR-08` aprueba estos gates como condición de release y `PR-09` hace obligatorios
+email verificado y proveedor de correo para producción. Marcar un ítem sólo con un
 enlace verificable a ejecución, artefacto, dashboard, acta o runbook. Nada de este
 documento prueba que la funcionalidad esté implementada.
 
@@ -35,7 +36,7 @@ flowchart LR
   checkout, suscripción, renovación, cobro ni webhook de pagos.
 - [ ] SHAs exactos de frontend, backend y documentación registrados una vez
   integrados. No actualizar `docs/meta/source-lock.json` con commits parciales.
-- [ ] Matriz `PR-01..PR-08` enlazada a historias, pruebas y responsables.
+- [ ] Matriz `PR-01..PR-09` enlazada a historias, pruebas y responsables.
 - [ ] OpenAPI generado coincide byte a byte con el canónico y no contiene rutas de
   billing habilitadas para esta release.
 - [ ] Inventario de variables por ambiente documentado sólo por nombre; valores y
@@ -134,6 +135,14 @@ disponibilidad `>=99,5 %` mensual, p95 API `<=1 s`, 5xx `<2 %` en 5 min,
 
 - [ ] Proveedor y dominio de email autenticados con SPF, DKIM y DMARC; rebotes,
   quejas, supresiones, límites, alertas y remitente de soporte están configurados.
+- [ ] Registro por email no entrega sesión antes de verificar; login rechaza cuentas
+  no verificadas y Google sólo marca verificado con `email_verified=true` validado.
+- [ ] Solicitudes de verificación y reset devuelven el mismo `202` para cuentas
+  existentes, inexistentes y ya verificadas, sin diferencias útiles de contenido o tiempo.
+- [ ] Tokens de verificación (24 h) y reset (1 h) se almacenan hasheados, son de un uso,
+  no aparecen en logs y se prueban en válido, inválido, vencido y reutilizado.
+- [ ] Reset exitoso revoca todas las sesiones web y nativas; los refresh tokens previos
+  no pueden rotarse y la confirmación no inicia una sesión implícita.
 - [ ] El código de acceso y los tokens de invitación se almacenan hasheados, expiran,
   tienen rate limiting y nunca aparecen completos en métricas o logs.
 - [ ] Privacidad, términos, consentimiento, política de cookies si corresponde,

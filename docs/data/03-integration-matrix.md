@@ -34,6 +34,7 @@ flowchart LR
 | Pantalla/flujo | Estado actual | Backend actual | Contrato necesario |
 |---|---|---|---|
 | Registro, login, Google | Real | Disponible | Ajustar tipo de cuenta y responses al spec |
+| Verificación y reset de contraseña | No existe | No existe | `PR-09`: `202` anti-enumeración, tokens hasheados de 24 h/1 h y revocación de sesiones |
 | Restaurar sesión | Real | `GET /me` | Ampliar usuario, membresías y contexto |
 | Selección de plan | Local | No existe | Reemplazar por alta gratuita con código; billing diferido (`PR-01`) |
 | Clientes del comercio | Mock | No existe | `GET /marcas/{id_marca}/clientes` |
@@ -47,7 +48,8 @@ flowchart LR
 
 ## ¿Se pueden conectar hoy?
 
-Sí, **sólo para autenticación y `GET /me`** en los commits documentados. El contrato
+Sí, **sólo para la autenticación actual y `GET /me`** en los commits documentados.
+Verificación de email y reset todavía son objetivo `NOT_IMPLEMENTED`. El contrato
 gratuito ya está aprobado, pero sigue sin implementar. Billing y suscripciones
 pagas están explícitamente fuera de `FREE_ACCESS_V1`; no deben bloquear ni
 simularse para conectar este corte.

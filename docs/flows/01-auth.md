@@ -28,6 +28,18 @@ flowchart LR
 
 La autenticación es real. La selección de plan posterior al login es local y todavía no llama al backend.
 
+## Identidad verificable objetivo
+
+`PR-09` agrega estados de registro pendiente, verificación por email y recuperación
+de contraseña. El frontend deberá tolerar un `201` con
+`verification_required: true` sin tokens, presentar reenvío con respuesta neutra y
+no iniciar sesión después de un reset. Google sólo se considera verificado cuando
+el ID token validado trae `email_verified=true`.
+
+Este flujo está `NOT_IMPLEMENTED`; la autenticación real descripta arriba no prueba
+estas garantías. Véanse [verificación](#/sequence-email-verification) y
+[recuperación](#/sequence-password-reset).
+
 ## Referencias de código
 
 - [La pantalla navega siempre a suscripción](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(auth)/index.tsx#L31-L76)

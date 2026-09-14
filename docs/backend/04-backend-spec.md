@@ -196,6 +196,7 @@ Backoffice crea y modifica suscripciones, habilita sucursales facturables y real
 |---|---|---|
 | `id_usuario` | int PK | — |
 | `email` | string unique | normalizado |
+| `email_verified_at` | timestamp nullable | null hasta verificar; Google sólo lo completa con `email_verified=true` |
 | `password_hash` | string nullable | null para cuenta Google |
 | `google_id` | string unique nullable | OAuth |
 | `nombre` | string | — |
@@ -696,6 +697,24 @@ El primer propietario continúa con `POST /marcas`. Los demás empleados se crea
 
 El JWT identifica usuario y tipo de cuenta. Roles y asignaciones se consultan en las membresías para que una revocación sea inmediata.
 
+### 6.5 Verificación de email y recuperación (`PR-09`)
+
+> **APROBADA POR EL USUARIO como contrato objetivo. Todavía no implementada.**
+
+- Producción requiere email verificado para iniciar sesión por contraseña. El alta
+  puede responder `verification_required: true` y omitir todos los campos de sesión.
+- `POST /auth/email-verification/request` recibe `{ "email": "..." }` y devuelve
+  `202` genérico independientemente de que la cuenta exista o ya esté verificada.
+- `POST /auth/email-verification/confirm` recibe `{ "token": "..." }`; el token
+  vence a las 24 horas, es de un solo uso y se guarda únicamente hasheado.
+- `POST /auth/password-reset/request` aplica la misma respuesta anti-enumeración.
+- `POST /auth/password-reset/confirm` recibe `{ "token": "...", "new_password": "..." }`;
+  el token vence en 1 hora, es de un solo uso y el éxito revoca todas las sesiones.
+- Google sólo crea o enlaza una identidad verificada cuando la validación del ID token
+  confirma `email_verified=true`.
+- La promoción a producción queda bloqueada sin proveedor de correo configurado,
+  dominio autenticado y pruebas de entrega, expiración, reuso y revocación.
+
 ## 7. Planes y suscripción
 
 > **DIFERIDO POR `PR-01`.** La primera release no ejecuta billing ni crea una
@@ -1054,7 +1073,7 @@ validar que cubran los gráficos y filtros finales del dashboard.
 ## 14. Orden de implementación
 
 1. Migración de `usuarios` unificado, marcas, membresías y sucursales.
-2. Ajustar registro, login y `/me` a tipos de cuenta y permisos.
+2. Ajustar registro, login y `/me` a tipos de cuenta, email verificado y permisos.
 3. Implementar `POST /marcas` y creación transaccional del propietario.
 4. Planes de marca, suscripción e ítems por sucursal.
 5. Programas y validación Sellos/Puntos.
@@ -1546,13 +1565,19 @@ Secuencia inicial propuesta:
 - Backoffice usa `aud=puntazo-backoffice`; la app usa `aud=puntazo-app`.
 - `POST /auth/logout` revoca la sesión refresh; no necesita blacklist global del
   access token por su vida corta.
+- Un reset de contraseña exitoso revoca todas las sesiones refresh de la persona.
 
 Tabla `sesiones_refresh`: usuario o usuario backoffice, token hash, familia, fecha
 de vencimiento, revocación, IP resumida, user agent y timestamps.
 
+Los tokens de verificación de email y reset se persisten sólo como hash, con usuario,
+propósito, vencimiento y fecha de consumo. Son de un uso y duran 24 h y 1 h
+respectivamente; el secreto enviado por email nunca se registra.
+
 ### 24.2 Límites y seguridad
 
-- Login/registro/Google: 10 intentos por IP cada 10 minutos y límite adicional por email.
+- Login/registro/Google/verificación/reset: 10 intentos por IP cada 10 minutos y
+  límite adicional por email o cuenta cuando no revele su existencia.
 - Scan/canje: 60 por operador por minuto, además de idempotencia.
 - Upload: 20 por marca por hora.
 - Body JSON máximo 1 MiB; imágenes máximo 5 MiB.

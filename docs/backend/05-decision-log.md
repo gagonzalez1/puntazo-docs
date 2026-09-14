@@ -28,6 +28,7 @@ codeRefs: optional
 | `PR-06` | El cliente se entrega como PWA y aplicaciones iOS/Android. Ambas aplicaciones nativas usan `com.puntazo.app`. | Publicación sin QA físico, URLs legales estables o formularios de privacidad de tiendas. |
 | `PR-07` | `PATCH /me` conserva nombre/apellido/alias/foto con `If-Match`; `GET /me/export` exporta datos; `DELETE /me` exige `ANONIMIZAR`, `auth_time <=10 min`, transfiere último propietario y anonimiza preservando ledger. | Prometer borrado absoluto del ledger o plazos legales todavía no revisados profesionalmente. |
 | `PR-08` | Producción exige evidencia de CI, SLO, backup/restore, respuesta a incidentes y QA físico de PWA/iOS/Android. | Considerar aprobada una release sólo porque compila o funciona en staging. |
+| `PR-09` | Producción exige email verificado y proveedor de correo operativo. Verificación (24 h) y reset de contraseña (1 h) usan tokens hasheados, de un uso; reset revoca sesiones. Google sólo verifica localmente cuando el proveedor afirma `email_verified=true`. | Activar cuentas por email sin verificar, revelar existencia de cuentas o conservar tokens recuperables. |
 
 ## Reglas de precedencia
 
@@ -41,6 +42,8 @@ codeRefs: optional
   `PC-07`; los detalles no mencionados siguen sujetos a revisión.
 - `PR-07` define el resultado técnico. Retención, excepciones y texto público
   requieren revisión legal profesional y una política implementable.
+- `PR-09` permite que registro responda `verification_required: true` sin sesión.
+  Solicitudes de verificación y reset responden `202` genérico para evitar enumeración.
 
 ## Gate de implementación
 

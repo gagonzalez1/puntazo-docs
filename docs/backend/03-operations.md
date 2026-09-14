@@ -15,7 +15,8 @@ codeRefs: optional
 # Backend · Seguridad y operación propuestas
 
 > **AUTORIDAD MIXTA.** Storage privado de hasta 5 MiB y evidencia operativa previa
-> al release están aprobados en `PR-04` y `PR-08`. Sesiones, umbrales y diseño físico
+> al release están aprobados en `PR-04` y `PR-08`; identidad verificable y proveedor
+> de correo son obligatorios por `PR-09`. Sesiones, umbrales y diseño físico
 > de migraciones siguen como `PROPUESTA CODEX PC-11/PC-12` hasta su revisión.
 
 ```mermaid
@@ -36,6 +37,8 @@ flowchart TB
 - Refresh: token opaco hasheado, 30 días, rotación y detección de reutilización.
 - MFA obligatorio para Backoffice en producción.
 - Login: 10 intentos por IP cada 10 minutos, más límite por email.
+- Verificación y reset: respuesta `202` anti-enumeración, rate limit, tokens hasheados
+  de un uso por 24 h/1 h y revocación de todas las sesiones después de reset.
 - Scan/canje: 60 operaciones por operador y minuto.
 - JSON: máximo 1 MiB. Imagen: máximo 5 MiB.
 
@@ -48,6 +51,16 @@ flowchart TB
 - Eliminar significa desvincular y programar; no borrar dentro del request.
 - El cliente no recibe credenciales del bucket; descarga mediante URL firmada breve
   o un endpoint autenticado y autorizado.
+
+## Email transaccional
+
+- Producción requiere proveedor operativo, dominio autenticado y monitoreo de entrega.
+- Verificación de email y reset no revelan si una cuenta existe o cuál es su estado.
+- El secreto viaja sólo en el mensaje; logs, métricas y PostgreSQL conservan como
+  máximo hash, propósito, propietario técnico, vencimiento y fecha de consumo.
+- Rebotes, quejas y supresiones se monitorean sin registrar tokens ni contraseñas.
+- Google sólo evita la verificación propia cuando el ID token validado afirma
+  `email_verified=true`.
 
 ## Migraciones
 

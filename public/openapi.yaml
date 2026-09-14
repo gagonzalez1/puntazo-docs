@@ -5,7 +5,7 @@ info:
   description: |
     Contrato objetivo del backend Puntazo.
 
-    Contrato objetivo con decisiones aprobadas PR-01 a PR-08 y propuestas futuras.
+    Contrato objetivo con decisiones aprobadas PR-01 a PR-09 y propuestas futuras.
     La primera release es gratuita, requiere código de acceso y no incluye billing.
     Las extensiones x-puntazo-authority, x-puntazo-implementation y
     x-puntazo-release-stage separan aprobación, implementación y alcance de release.
@@ -102,6 +102,7 @@ paths:
         - D-R06
         - D-R07
         - PC-12
+        - PR-09
       x-puntazo-implementation: DIVERGENT
       requestBody:
         required: true
@@ -111,15 +112,143 @@ paths:
               $ref: '#/components/schemas/RegisterRequest'
       responses:
         '201':
-          description: Cuenta creada y sesión iniciada
+          description: Cuenta creada; la sesión se omite cuando falta verificar el email
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthResponse'
+                $ref: '#/components/schemas/RegistrationResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '409':
           $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /auth/email-verification/request:
+    post:
+      tags:
+        - Auth
+      summary: Solicita la verificación de un email
+      operationId: requestEmailVerification
+      security: []
+      x-puntazo-release-stage: FREE_ACCESS_V1
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions:
+        - PR-09
+      x-puntazo-implementation: NOT_IMPLEMENTED
+      description: |
+        Responde siempre de forma genérica, exista o no la cuenta y cualquiera sea
+        su estado, para no permitir enumeración. El token emitido vence a las 24 h,
+        es de un solo uso y sólo se persiste hasheado.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailRequest'
+      responses:
+        '202':
+          description: Solicitud aceptada sin revelar el estado de la cuenta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAcceptedResponse'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /auth/email-verification/confirm:
+    post:
+      tags:
+        - Auth
+      summary: Confirma un email mediante un token
+      operationId: confirmEmailVerification
+      security: []
+      x-puntazo-release-stage: FREE_ACCESS_V1
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions:
+        - PR-09
+      x-puntazo-implementation: NOT_IMPLEMENTED
+      description: El token vence a las 24 h, es de un solo uso y sólo se persiste hasheado.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenConfirmationRequest'
+      responses:
+        '200':
+          description: Email verificado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailVerificationResponse'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /auth/password-reset/request:
+    post:
+      tags:
+        - Auth
+      summary: Solicita el restablecimiento de contraseña
+      operationId: requestPasswordReset
+      security: []
+      x-puntazo-release-stage: FREE_ACCESS_V1
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions:
+        - PR-09
+      x-puntazo-implementation: NOT_IMPLEMENTED
+      description: |
+        Responde siempre de forma genérica, exista o no la cuenta y cualquiera sea
+        su estado, para no permitir enumeración. El token emitido vence en 1 h,
+        es de un solo uso y sólo se persiste hasheado.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailRequest'
+      responses:
+        '202':
+          description: Solicitud aceptada sin revelar el estado de la cuenta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericAcceptedResponse'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /auth/password-reset/confirm:
+    post:
+      tags:
+        - Auth
+      summary: Confirma el restablecimiento de contraseña
+      operationId: confirmPasswordReset
+      security: []
+      x-puntazo-release-stage: FREE_ACCESS_V1
+      x-puntazo-authority: APROBADA_USUARIO
+      x-puntazo-decisions:
+        - PR-09
+      x-puntazo-implementation: NOT_IMPLEMENTED
+      description: |
+        El token vence en 1 h, es de un solo uso y sólo se persiste hasheado.
+        El cambio exitoso revoca todas las sesiones activas de la cuenta.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirmationRequest'
+      responses:
+        '200':
+          description: Contraseña restablecida y sesiones revocadas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordResetResponse'
         '422':
           $ref: '#/components/responses/ValidationError'
         '429':
@@ -1732,6 +1861,7 @@ paths:
       x-puntazo-authority: MIXED
       x-puntazo-decisions:
         - PC-12
+        - PR-09
       x-puntazo-implementation: PARTIAL
       requestBody:
         required: true
@@ -1748,6 +1878,8 @@ paths:
                 $ref: '#/components/schemas/AuthResponse'
         '401':
           $ref: '#/components/responses/Unauthenticated'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '429':
           $ref: '#/components/responses/RateLimited'
   /auth/google:
@@ -1761,6 +1893,7 @@ paths:
       x-puntazo-decisions:
         - D-05
         - PC-12
+        - PR-09
       x-puntazo-implementation: DIVERGENT
       requestBody:
         required: true
@@ -2517,6 +2650,8 @@ components:
             - VALIDATION_ERROR
             - UNAUTHENTICATED
             - TOKEN_EXPIRED
+            - INVALID_OR_EXPIRED_TOKEN
+            - EMAIL_VERIFICATION_REQUIRED
             - RECENT_AUTH_REQUIRED
             - FORBIDDEN
             - RESOURCE_NOT_FOUND
@@ -2655,6 +2790,7 @@ components:
       required:
         - id_usuario
         - email
+        - email_verified
         - nombre
         - tipo_cuenta
         - activo
@@ -2668,6 +2804,9 @@ components:
         email:
           type: string
           format: email
+        email_verified:
+          type: boolean
+          description: Obligatorio en true para iniciar sesión en producción.
         nombre:
           type: string
         apellido:
@@ -2750,6 +2889,7 @@ components:
         id_token:
           type: string
           minLength: 20
+          description: Debe incluir email_verified=true; la cuenta local queda verificada.
         tipo_cuenta:
           allOf:
             - $ref: '#/components/schemas/AccountType'
@@ -2791,6 +2931,126 @@ components:
           properties:
             usuario:
               $ref: '#/components/schemas/User'
+    RegistrationResponse:
+      oneOf:
+        - type: object
+          additionalProperties: false
+          required:
+            - usuario
+            - verification_required
+          properties:
+            usuario:
+              $ref: '#/components/schemas/User'
+            verification_required:
+              type: boolean
+              const: true
+        - type: object
+          additionalProperties: false
+          required:
+            - usuario
+            - verification_required
+            - access_token
+            - refresh_token
+            - token_type
+            - expires_in
+          properties:
+            usuario:
+              $ref: '#/components/schemas/User'
+            verification_required:
+              type: boolean
+              const: false
+            access_token:
+              type: string
+            refresh_token:
+              type: string
+            token_type:
+              type: string
+              const: Bearer
+            expires_in:
+              type: integer
+              const: 900
+      description: |
+        El registro por email puede crear la cuenta pendiente y devolver
+        verification_required=true sin campos de sesión. Sólo una identidad ya
+        verificada puede recibir tokens en producción.
+    EmailRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+    TokenConfirmationRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - token
+      properties:
+        token:
+          type: string
+          minLength: 32
+          maxLength: 512
+          description: Secreto de un uso; el servidor conserva únicamente su hash.
+    PasswordResetConfirmationRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - token
+        - new_password
+      properties:
+        token:
+          type: string
+          minLength: 32
+          maxLength: 512
+          description: Secreto de un uso; el servidor conserva únicamente su hash.
+        new_password:
+          type: string
+          minLength: 10
+          maxLength: 128
+          format: password
+    GenericAcceptedResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - accepted
+        - request_id
+      properties:
+        accepted:
+          type: boolean
+          const: true
+        request_id:
+          $ref: '#/components/schemas/RequestId'
+    EmailVerificationResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - verified
+        - request_id
+      properties:
+        verified:
+          type: boolean
+          const: true
+        request_id:
+          $ref: '#/components/schemas/RequestId'
+    PasswordResetResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - password_reset
+        - sessions_revoked
+        - request_id
+      properties:
+        password_reset:
+          type: boolean
+          const: true
+        sessions_revoked:
+          type: boolean
+          const: true
+        request_id:
+          $ref: '#/components/schemas/RequestId'
     BackofficeLoginRequest:
       type: object
       additionalProperties: false
@@ -5146,3 +5406,4 @@ x-puntazo-release-profile:
     - PR-06
     - PR-07
     - PR-08
+    - PR-09

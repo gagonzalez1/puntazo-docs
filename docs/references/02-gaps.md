@@ -20,6 +20,7 @@ summary: Diferencias que deben permanecer visibles para evitar documentar propue
 | Fidelidad | Servicios mock | API transaccional; Puntos manuales `1..100000` y confirmación reforzada desde `10001` |
 | Datos | Sólo `users` | Modelo completo con marcas, programas y tarjetas |
 | Contrato HTTP | Cuatro rutas de autenticación/cuenta | OpenAPI aprobado parcialmente; sigue pendiente de implementación |
+| Identidad verificable | Registro inicia sesión; sin verificación ni reset | `PR-09`: email verificado, cuatro rutas target, tokens hasheados y mail provider |
 | PostgreSQL | Creación directa de `users` | Tipos, índices, migraciones y locks en `PC-09` a `PC-11` |
 | Ciclo de vida | Sin edición persistida ni cierre de cuenta | `If-Match`, baja lógica, snapshots y anonimización preservando ledger aprobados |
 | Clientes | Expo sin IDs nativos finales | PWA + iOS/Android con `com.puntazo.app` aprobados; publicación pendiente |
@@ -27,6 +28,6 @@ summary: Diferencias que deben permanecer visibles para evitar documentar propue
 
 Estas diferencias no son errores de la documentación: son la frontera entre **estado actual** y **dirección propuesta**.
 
-Las decisiones `PR-01` a `PR-08` están aprobadas como contrato objetivo, no como
+Las decisiones `PR-01` a `PR-09` están aprobadas como contrato objetivo, no como
 implementación. Las `PC-xx` no cubiertas continúan como `PROPUESTA CODEX`; consulte
 el [índice de backend](#/backend-review-index).

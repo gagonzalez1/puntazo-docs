@@ -13,13 +13,14 @@ diagram: true
 
 # Datos · Modelo objetivo v1.5-review
 
-> Este diagrama **no representa migraciones implementadas**. Combina el contrato aprobado `PR-01` a `PR-08` con detalles físicos todavía propuestos para orientar el desarrollo.
+> Este diagrama **no representa migraciones implementadas**. Combina el contrato aprobado `PR-01` a `PR-09` con detalles físicos todavía propuestos para orientar el desarrollo.
 
 ```mermaid
 erDiagram
     USUARIOS {
         int id_usuario PK
         string email UK
+        datetime email_verified_at
         string password_hash
         string google_id UK
         string nombre
@@ -147,6 +148,8 @@ erDiagram
 ## Decisiones que expresa
 
 - `usuarios` unifica identidad, autenticación, perfil y QR; no existe `clientes_finales`.
+- `email_verified_at` permanece nulo hasta confirmar un token de email o validar
+  `email_verified=true` en Google; producción bloquea login por contraseña mientras sea nulo.
 - `tipo_cuenta` no es un plan. Distingue `CLIENTE_FINAL` de `PERSONAL_MARCA`.
 - El rol operativo vive en `membresias_marca`: `PROPIETARIO`, `ADMINISTRADOR` u `OPERADOR`.
 - Una marca posee varias sucursales. En `FREE_ACCESS_V1` opera sin suscripción ni billing; las tablas comerciales quedan fuera del flujo de release.
@@ -172,5 +175,6 @@ erDiagram
 | Ítem facturable | Fuera de `FREE_ACCESS_V1`; único por suscripción y sucursal en una release comercial futura |
 | Movimiento | Saldo y auditoría dentro de la misma transacción |
 | Anonimización | Revoca acceso, elimina identificadores directos y no borra tarjetas ni movimientos del ledger |
+| Tokens de identidad | Sólo hash persistido; un uso; verificación 24 h y reset 1 h; reset revoca sesiones |
 
 La fuente de detalle contractual sigue siendo `docs/BACKEND_SPEC_CORREGIDO.md` del workspace; este mapa la resume sin presentarla como código existente.

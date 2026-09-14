@@ -37,6 +37,10 @@ sequenceDiagram
 
 La vinculación prioriza `google_id`, luego email. El usuario nuevo recibe también el rol fijo `CLIENTE_FINAL`.
 
+En el objetivo aprobado `PR-09`, el backend rechaza el alta o enlace si el ID token
+no confirma `email_verified=true`. Cuando sí lo confirma, registra la identidad local
+como verificada. Esta regla permanece `NOT_IMPLEMENTED` hasta contar con código y pruebas.
+
 ## Referencias de código
 
 - [Endpoint frontend Google](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/services/authService.ts#L96-L105)
