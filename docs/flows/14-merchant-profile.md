@@ -31,5 +31,5 @@ El flujo representa una tienda única. El modelo objetivo reemplaza este context
 
 ## Referencias de código
 
-- [Pantalla de perfil comercial](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/profile/index.tsx#L32-L119)
-- [Servicio de perfil local](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/profile/services/profileService.ts#L23-L88)
+- [Pantalla de perfil comercial](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/profile/index.tsx#L32-L119)
+- [Servicio de perfil local](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/profile/services/profileService.ts#L23-L88)

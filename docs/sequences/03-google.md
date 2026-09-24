@@ -39,6 +39,6 @@ La vinculación prioriza `google_id`, luego email. El usuario nuevo recibe tambi
 
 ## Referencias de código
 
-- [Endpoint frontend Google](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/services/authService.ts#L96-L105)
-- [Orquestación Google en servicio](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/internal/service/user.go#L60-L95)
-- [Validación de ID token](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/internal/auth/google.go#L13-L37)
+- [Endpoint frontend Google](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/services/authService.ts#L96-L105)
+- [Orquestación Google en servicio](https://github.com/am-p/app-loyalty/blob/main/internal/service/user.go#L60-L95)
+- [Validación de ID token](https://github.com/am-p/app-loyalty/blob/main/internal/auth/google.go#L13-L37)

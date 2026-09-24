@@ -31,8 +31,8 @@ No existe hoy un `POST` de suscripción. Tampoco se envía al backend si el regi
 
 ## Referencias de código
 
-- [Pantalla y opciones de plan](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(auth)/subscription.tsx#L10-L114)
-- [Suscripción local y cambio de rol](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/store/useAuthStore.ts#L66-L98)
+- [Pantalla y opciones de plan](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(auth)/subscription.tsx#L10-L114)
+- [Suscripción local y cambio de rol](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/store/useAuthStore.ts#L66-L98)
 
 ## Contrato objetivo
 

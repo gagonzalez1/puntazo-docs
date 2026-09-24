@@ -17,18 +17,17 @@ Este archivo es el **punto de entrada recomendado para cualquier LLM o persona**
 
 ## Antes de responder o modificar el proyecto
 
-1. Leer `docs/meta/source-lock.json` para identificar los commits exactos documentados.
-2. Leer esta guía y seleccionar únicamente los documentos relacionados con la tarea.
+1. Leer esta guía y seleccionar únicamente los documentos relacionados con la tarea.
+2. Consultar el HEAD remoto de la rama activa y, si se habla de testing, `/api/v1/version`.
 3. Distinguir siempre los estados `current`, `mixed`, `mock`, `gap` y `target`.
-4. Verificar en el código fijado a commit cualquier afirmación que vaya a convertirse en implementación.
+4. Verificar en el código actual cualquier afirmación que vaya a convertirse en implementación.
 5. No presentar el modelo objetivo ni el backend spec como funcionalidad ya implementada.
-6. Antes de sincronizar commits, leer [`docs/references/04-documentation-sync-plan.md`](#/documentation-sync-plan) y comprobar si el flujo sigue en estado propuesto o ya fue implementado.
 
 ## Lectura mínima recomendada
 
 Para obtener contexto suficiente sin cargar toda la documentación:
 
-1. [`docs/references/01-commits.md`](#/documented-commits) — fotografía exacta de frontend y backend.
+1. [`docs/references/01-commits.md`](#/documented-commits) — ramas fuente y comprobación de la versión actual.
 2. [`docs/references/03-documentation-rules.md`](#/documentation-rules) — reglas de precedencia y significado de los estados.
 3. [`docs/00-overview.md`](#/overview) — mapa general y accesos a cada dominio.
 4. [`docs/architecture/02-containers.md`](#/c4-containers) — límites entre app, API, base de datos y proveedores.
@@ -43,9 +42,9 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 ### 0. Entrada y reglas de verdad
 
 1. [`docs/00-llm-guide.md`](#/markdown-index) — esta guía y el índice completo.
-2. [`docs/references/01-commits.md`](#/documented-commits) — commits que sustentan la documentación.
+2. [`docs/references/01-commits.md`](#/documented-commits) — fuentes y versiones actuales.
 3. [`docs/references/03-documentation-rules.md`](#/documentation-rules) — cómo leer, verificar y actualizar los documentos.
-4. [`docs/references/04-documentation-sync-plan.md`](#/documentation-sync-plan) — plan propuesto para detectar cambios y preparar PR documentales sin API de OpenAI.
+4. [`docs/references/04-documentation-sync-plan.md`](#/documentation-sync-plan) — revisión documental al avanzar las ramas.
 5. [`docs/references/05-change-history.md`](#/documentation-change-history) — historial funcional de cada sincronización documental aceptada.
 6. [`docs/00-overview.md`](#/overview) — puerta de entrada al mapa completo.
 
@@ -106,6 +105,6 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 - **Cambio de backend:** reglas + índice de revisión + contrato API + PostgreSQL + componente backend + secuencia.
 - **Contrato frontend/backend:** matriz de integración + contrato API + secuencia + datos actuales + brechas.
 - **Decisión de negocio o modelo:** reglas + índice de revisión + brechas + modelo objetivo, conservando explícita la diferencia entre propuesta e implementación.
-- **Actualización documental:** commits + reglas + documentos afectados + validaciones del proyecto.
+- **Actualización documental:** ramas actuales + runtime + reglas + documentos afectados.
 
 Evitar cargar todos los archivos por defecto. La lectura selectiva reduce contexto irrelevante, pero esta lista completa permite comprobar que no falta ningún documento.

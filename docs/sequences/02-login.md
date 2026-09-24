@@ -36,6 +36,6 @@ Los fallos de credenciales se normalizan como `401`. Una cuenta creada sólo con
 
 ## Referencias de código
 
-- [Cliente auth del frontend](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/services/authService.ts#L82-L106)
-- [Login handler](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/internal/handler/user.go#L72-L111)
-- [Verificación bcrypt](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/internal/service/user.go#L40-L58)
+- [Cliente auth del frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/services/authService.ts#L82-L106)
+- [Login handler](https://github.com/am-p/app-loyalty/blob/main/internal/handler/user.go#L72-L111)
+- [Verificación bcrypt](https://github.com/am-p/app-loyalty/blob/main/internal/service/user.go#L40-L58)

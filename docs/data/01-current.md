@@ -37,5 +37,5 @@ PostgreSQL contiene una sola tabla creada al iniciar el servidor. Tiendas, clien
 
 ## Referencias de código
 
-- [DDL de users](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/internal/repository/user.go#L10-L15)
-- [Tipos de dominio del frontend](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/types/db.ts#L1-L89)
+- [DDL de users](https://github.com/am-p/app-loyalty/blob/main/internal/repository/user.go#L10-L15)
+- [Tipos de dominio del frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/types/db.ts#L1-L89)

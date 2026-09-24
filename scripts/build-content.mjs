@@ -14,7 +14,6 @@ const mermaidEngine = (await import("mermaid")).default;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const docsRoot = path.join(root, "docs");
 const outputPath = path.join(root, "public", "generated", "catalog.json");
-const sourceLockPath = path.join(docsRoot, "meta", "source-lock.json");
 const checkOnly = process.argv.includes("--check");
 
 async function walk(directory) {
@@ -92,8 +91,11 @@ for (const sourceFile of sourceFiles) {
       throw new Error(`${relativePath}: Mermaid inválido: ${error instanceof Error ? error.message : error}`);
     }
   }
-  if (metadata.codeRefs === "required" && !/github\.com\/.+\/blob\/[a-f0-9]{40}\//.test(prose)) {
-    throw new Error(`${relativePath}: requiere al menos una referencia de código fijada a commit`);
+  if (metadata.codeRefs === "required" && !/github\.com\/.+\/blob\/[^/]+\//.test(prose)) {
+    throw new Error(`${relativePath}: requiere al menos una referencia al código fuente`);
+  }
+  if (/github\.com\/.+?\/blob\/[a-f0-9]{7,40}\//.test(prose)) {
+    throw new Error(`${relativePath}: las referencias al código deben seguir una rama, no un commit fijo`);
   }
 
   docs.push({
@@ -141,32 +143,9 @@ for (const doc of docs) {
 }
 
 docs.sort(sortDocs);
-const sourceLock = JSON.parse(await readFile(sourceLockPath, "utf8"));
-if (!Array.isArray(sourceLock.repositories) || sourceLock.repositories.length !== 2) {
-  throw new Error("docs/meta/source-lock.json debe registrar exactamente frontend y backend");
-}
-for (const repository of sourceLock.repositories) {
-  if (!repository.name || !/^[a-f0-9]{40}$/.test(repository.commit)) {
-    throw new Error("source-lock contiene un repositorio o commit inválido");
-  }
-}
-const sourceKinds = new Set(sourceLock.repositories.map((repository) => repository.kind));
-if (!sourceKinds.has("frontend") || !sourceKinds.has("backend")) {
-  throw new Error("source-lock debe contener los kinds frontend y backend");
-}
-if (!Array.isArray(sourceLock.documents) || !sourceLock.documents.some((document) => document.name === "BACKEND_SPEC_CORREGIDO.md" && /^v[0-9.]+-review$/.test(document.version) && /^[a-f0-9]{64}$/.test(document.sha256))) {
-  throw new Error("source-lock debe fijar BACKEND_SPEC_CORREGIDO.md con versión review y SHA-256");
-}
-const lockedCommits = new Set(sourceLock.repositories.map((repository) => repository.commit));
-for (const doc of docs) {
-  for (const match of doc.sourceMarkdown.matchAll(/github\.com\/.+?\/blob\/([a-f0-9]{40})\//g)) {
-    if (!lockedCommits.has(match[1])) throw new Error(`${doc.sourcePath}: referencia un commit que no está en source-lock`);
-  }
-}
 const payload = {
   generatedAt: new Date().toISOString(),
   sourceHash: createHash("sha256").update(docs.map((doc) => `${doc.sourcePath}:${doc.mermaid}:${doc.bodyHtml}`).join("\n")).digest("hex"),
-  sourceLock,
   docs,
 };
 const serialized = `${JSON.stringify(payload, null, 2)}\n`;
