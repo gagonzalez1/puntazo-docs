@@ -4,14 +4,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-type SourceRepository = {
-  kind: "frontend" | "backend";
-  name: string;
-  url: string;
-  commit: string;
-  commitDate: string;
-};
-
 type Doc = {
   id: string;
   title: string;
@@ -31,7 +23,6 @@ type Doc = {
 type Catalog = {
   generatedAt: string;
   sourceHash: string;
-  sourceLock: { documentedAt: string; repositories: SourceRepository[] };
   docs: Doc[];
 };
 
@@ -361,13 +352,6 @@ export default function ArchitectureExplorer() {
               {breadcrumbs.map((doc, index) => <span key={doc.id}><button onClick={() => goTo(doc.id)}>{doc.title}</button>{index < breadcrumbs.length - 1 && <b>/</b>}</span>)}
             </div>
           </div>
-          <div className="commit-pills">
-            {catalog.sourceLock.repositories.map((repository) => (
-              <a key={repository.kind} href={`${repository.url}/commit/${repository.commit}`} target="_blank" rel="noreferrer">
-                {repository.kind === "frontend" ? "FE" : "BE"} <code>{repository.commit.slice(0, 8)}</code>
-              </a>
-            ))}
-          </div>
         </header>
 
         <article className="document-view">
@@ -452,9 +436,6 @@ export default function ArchitectureExplorer() {
               <section id="document-reference" className="prose-card" aria-label={`Referencia de ${activeDoc.title}`} dangerouslySetInnerHTML={{ __html: activeDoc.bodyHtml }} />
             )}
           </div>
-          <footer className="document-footer">
-            <span>Fotografía: {catalog.sourceLock.documentedAt}</span>
-          </footer>
         </article>
       </main>
       {mobileNav && <button className="sidebar-backdrop" onClick={() => setMobileNav(false)} aria-label="Cerrar navegación" />}

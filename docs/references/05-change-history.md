@@ -37,7 +37,7 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 | Frontend | [`99a350bd…afec4792`](https://github.com/gonzalotev/app-fidelidad/compare/99a350bd6e204a1f866d78dcfb20bd9bc108ffda...afec4792729b48de4646168846ab221c96352f51), un commit nuevo |
 | Backend | Sin cambios; continúa en `f03b9aa202587510508a6f2a094b808f5ed6353d` |
 | Cambios detectados | La barra inferior adopta la paleta fija de Puntazo, deja de consultar el perfil de tienda para colorearse y el botón QR reutiliza `getHardShadow()`; `.env.example` sólo cambia su final de línea |
-| Documentos modificados | Commits documentados, C4 de componentes frontend, navegación comercial, navegación de cliente, todas las referencias frontend, plan de sincronización y `source-lock.json` |
+| Documentos modificados | Referencias de código, C4 de componentes frontend, navegación comercial, navegación de cliente y plan de sincronización |
 | Decisiones | Cambio visual aprobado para documentación; sin decisiones nuevas de negocio, API o datos |
 | Validaciones | Detector remoto, catálogo Markdown, Mermaid, referencias, OpenAPI, lint, build y pruebas automatizadas |
 

@@ -31,6 +31,6 @@ El servicio usa sucursal `101` y tienda `1`. Sellos suma uno y reinicia a uno al
 
 ## Referencias de código
 
-- [Pantalla y captura](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/scanner/index.tsx#L10-L91)
-- [Mutación de escaneo](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/loyalty/hooks/useLoyalty.ts#L16-L30)
-- [Reglas mock](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/loyalty/services/loyaltyService.ts#L101-L147)
+- [Pantalla y captura](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/scanner/index.tsx#L10-L91)
+- [Mutación de escaneo](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/loyalty/hooks/useLoyalty.ts#L16-L30)
+- [Reglas mock](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/loyalty/services/loyaltyService.ts#L101-L147)

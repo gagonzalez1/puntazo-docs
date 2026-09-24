@@ -30,4 +30,4 @@ La barra inferior comparte la paleta fija de Puntazo con el recorrido comercial.
 
 ## Referencias de código
 
-- [Tabs, paleta y criterio de plan](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/_layout.tsx#L13-L139)
+- [Tabs, paleta y criterio de plan](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/_layout.tsx#L13-L139)

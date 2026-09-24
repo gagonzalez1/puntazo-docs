@@ -51,6 +51,6 @@ flowchart LR
 
 ## Referencias de código
 
-- [Providers y restauración de sesión](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/_layout.tsx#L42-L76)
-- [Persistencia del token](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/core/storage/tokenStorage.ts#L4-L32)
-- [Bootstrap de API y PostgreSQL](https://github.com/am-p/app-loyalty/blob/f03b9aa202587510508a6f2a094b808f5ed6353d/cmd/server/main.go#L18-L51)
+- [Providers y restauración de sesión](https://github.com/gonzalotev/app-fidelidad/blob/main/app/_layout.tsx#L42-L76)
+- [Persistencia del token](https://github.com/gonzalotev/app-fidelidad/blob/main/src/core/storage/tokenStorage.ts#L4-L32)
+- [Bootstrap de API y PostgreSQL](https://github.com/am-p/app-loyalty/blob/main/cmd/server/main.go#L18-L51)

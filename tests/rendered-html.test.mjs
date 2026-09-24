@@ -24,15 +24,13 @@ test("renderiza la entrada del mapa documental", async () => {
   assert.doesNotMatch(html, /Your site is taking shape|react-loading-skeleton/);
 });
 
-test("el catálogo contiene las vistas y commits documentados", async () => {
+test("el catálogo contiene las vistas documentales", async () => {
   const catalog = JSON.parse(await readFile(new URL("../public/generated/catalog.json", import.meta.url), "utf8"));
   const ids = new Set(catalog.docs.map((doc) => doc.id));
   for (const id of ["markdown-index", "overview", "c4-context", "flow-auth", "merchant-flows", "customer-flows", "data-current", "data-target", "integration-matrix"]) {
     assert.ok(ids.has(id), `falta la vista ${id}`);
   }
   assert.ok(catalog.docs.length >= 30);
-  assert.equal(catalog.sourceLock.repositories.length, 2);
-  assert.match(catalog.sourceLock.repositories[0].commit, /^[a-f0-9]{40}$/);
   assert.ok(catalog.docs.every((doc) => doc.sourceMarkdown.startsWith("---\n")));
 });
 

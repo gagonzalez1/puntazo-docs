@@ -39,8 +39,8 @@ flowchart LR
 
 ## Referencias de código
 
-- [Layout raíz](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/_layout.tsx#L27-L77)
-- [Store de autenticación](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/features/auth/store/useAuthStore.ts#L14-L107)
-- [QueryClient](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/core/queryClient.ts#L1-L10)
-- [Layout de tabs con paleta fija](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/app/(tabs)/_layout.tsx#L13-L139)
-- [Utilidades compartidas de sombras](https://github.com/gonzalotev/app-fidelidad/blob/afec4792729b48de4646168846ab221c96352f51/src/core/utils/shadow.ts#L1-L52)
+- [Layout raíz](https://github.com/gonzalotev/app-fidelidad/blob/main/app/_layout.tsx#L27-L77)
+- [Store de autenticación](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/store/useAuthStore.ts#L14-L107)
+- [QueryClient](https://github.com/gonzalotev/app-fidelidad/blob/main/src/core/queryClient.ts#L1-L10)
+- [Layout de tabs con paleta fija](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/_layout.tsx#L13-L139)
+- [Utilidades compartidas de sombras](https://github.com/gonzalotev/app-fidelidad/blob/main/src/core/utils/shadow.ts#L1-L52)

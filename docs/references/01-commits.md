@@ -1,28 +1,36 @@
 ---
 id: documented-commits
-title: Commits documentados
+title: Fuentes y versiones actuales
 group: 05 · Referencias
 order: 10
 parent: overview
 level: reference
 status: current
-summary: Revisión exacta de frontend y backend usada como base de todo el mapa.
+authority: source_code
+summary: Cómo resolver la última revisión de la rama activa y comprobar qué versión está desplegada.
 ---
+# Fuentes y versiones actuales
 
-# Commits documentados
+La documentación no bloquea ningún repositorio en un SHA. Una entrega toma el
+HEAD remoto de la rama de integración elegida en ese momento. Si hay una rama de
+trabajo más reciente todavía sin integrar, primero se decide su promoción; la
+fecha de un commit en otra rama no la convierte automáticamente en release.
 
-El contenido representa una fotografía del código. Toda afirmación sobre implementación debe poder rastrearse a estas revisiones.
+| Plano | Repositorio | Comprobación actual |
+|---|---|---|
+| Frontend | [app-fidelidad](https://github.com/gonzalotev/app-fidelidad) | HEAD remoto de la rama de integración seleccionada para la entrega |
+| Backend | [app-loyalty](https://github.com/gagonzalez1/app-loyalty) | HEAD remoto de la rama de integración seleccionada para la entrega |
+| Candidato de testing | [puntazo-preview, rama testing](https://github.com/gagonzalez1/puntazo-preview/tree/testing) | HEAD remoto de `testing` |
+| Runtime de testing | [`/api/v1/version`](https://testing.puntazo.pro/api/v1/version) | Commit y esquema informados por el servicio realmente desplegado |
 
-| Repositorio | Commit completo | Fecha del commit | Estado al analizar |
-|---|---|---|---|
-| `gonzalotev/app-fidelidad` | `afec4792729b48de4646168846ab221c96352f51` | 2026-08-20 | revisado; cambio visual aprobado |
-| `am-p/app-loyalty` | `f03b9aa202587510508a6f2a094b808f5ed6353d` | 2026-08-03 | limpio |
+Antes de construir o desplegar:
 
-## Regla de actualización
+1. Consultar el HEAD remoto de cada rama elegida y actualizar el checkout a esa revisión.
+2. Comparar el código integrado con el contrato y la documentación; resolver cualquier divergencia.
+3. Construir desde ese HEAD y comprobar que los metadatos del artefacto coincidan con él.
+4. Tras desplegar, comparar `/api/v1/version` y readiness con el despliegue realizado.
 
-1. Actualizar los hashes después de revisar ambos repositorios.
-2. Corregir enlaces GitHub fijados al commit.
-3. Ejecutar `npm run content:build` y `npm run validate`.
-4. Revisar el documento de brechas antes de publicar.
-
-La documentación propuesta del backend se consulta como contexto, pero no se etiqueta como implementada hasta que exista código equivalente.
+Los SHA registrados en builds, releases o incidentes son evidencia histórica de
+lo que se publicó. No se reutilizan como selector de una entrega nueva. Los
+enlaces de código de este portal siguen ramas móviles y deben verificarse contra
+el HEAD vigente antes de afirmar implementación.
