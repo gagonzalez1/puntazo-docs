@@ -34,6 +34,7 @@ Para obtener contexto suficiente sin cargar toda la documentación:
 5. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — qué está conectado y qué continúa simulado.
 6. [`docs/references/02-gaps.md`](#/implementation-gaps) — brechas que no deben confundirse con comportamiento actual.
 7. [`docs/backend/00-review-index.md`](#/backend-review-index) — decisiones de backend propuestas por Codex que requieren aprobación.
+8. [`docs/delivery/05-referrals-backoffice-candidate.md`](#/referrals-backoffice-candidate) — implementación candidata de referidos y límites de lanzamiento.
 
 Después se debe abrir el flujo, la secuencia o el modelo de datos específico de la tarea.
 
@@ -47,6 +48,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 4. [`docs/references/04-documentation-sync-plan.md`](#/documentation-sync-plan) — revisión documental al avanzar las ramas.
 5. [`docs/references/05-change-history.md`](#/documentation-change-history) — historial funcional de cada sincronización documental aceptada.
 6. [`docs/00-overview.md`](#/overview) — puerta de entrada al mapa completo.
+7. [`docs/delivery/05-referrals-backoffice-candidate.md`](#/referrals-backoffice-candidate) — cambios de referidos en ramas y gates pendientes.
 
 ### 1. Arquitectura del sistema
 

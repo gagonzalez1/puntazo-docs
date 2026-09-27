@@ -12,6 +12,10 @@ diagram: true
 
 # Datos · Matriz pantalla–API
 
+Esta matriz conserva la línea base previa. Para el alta con código, el panel
+de referidos de la marca y el Backoffice en ramas de trabajo, consultar
+[Referidos · candidato de Backoffice](#/referrals-backoffice-candidate).
+
 ```mermaid
 flowchart LR
     AUTH["Auth"] -->|"real"| AUTHAPI["/auth/* y /me"]

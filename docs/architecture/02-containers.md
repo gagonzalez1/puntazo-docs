@@ -13,6 +13,10 @@ codeRefs: required
 
 # C4 · Contenedores
 
+Este diagrama describe la línea base anterior al candidato de referidos. El
+contenedor React de Backoffice y su relación con API, PostgreSQL y Mercado Pago
+figuran en [Referidos · candidato de Backoffice](#/referrals-backoffice-candidate).
+
 La separación por contenedores evidencia el límite actual: sólo autenticación atraviesa la API; el resto vuelve a servicios locales de la aplicación.
 
 ```mermaid

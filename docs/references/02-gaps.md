@@ -12,6 +12,10 @@ summary: Diferencias que deben permanecer visibles para evitar documentar propue
 
 # Brechas entre código y spec
 
+La tabla de abajo es una línea base histórica. El candidato de referidos
+implementado en ramas de trabajo y sus límites operativos se documentan en
+[Referidos · candidato de Backoffice](#/referrals-backoffice-candidate).
+
 | Área | Código actual | Spec propuesto |
 |---|---|---|
 | Cuenta | `rol: CLIENTE_FINAL \| TIENDA` | `tipo_cuenta` y membresías por marca |

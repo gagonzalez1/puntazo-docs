@@ -16,6 +16,11 @@ Documentación independiente y navegable del estado real de Puntazo. Los archivo
 
 El mapa distingue **implementado**, **mock** y **propuesto** para no confundir el código actual con el spec de destino.
 
+La [entrega candidata de referidos](#/referrals-backoffice-candidate) documenta
+por separado el trabajo en ramas de septiembre de 2026. Las vistas históricas
+de este mapa conservan su línea base y no implican que ese candidato esté
+desplegado.
+
 ```mermaid
 flowchart LR
     CTX["C4 · Contexto"]
