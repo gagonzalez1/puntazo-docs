@@ -24,7 +24,8 @@ Cambios fuente revisables: `app-loyalty`
 `78108b6a0b61c2d338de77dbbf349f70e19da94d` y `app-fidelidad`
 `91d7731a12e9051c0f1284bcc9ec04f5fb1887ab`. La rama
 `puntazo-preview/feat/referrals-preview` los integra con su código propio
-de preview. Estos identificadores son de código, no de una versión servida.
+de preview en `6518020ac68f17231f266884bcd6a359ef872cc1`. Estos
+identificadores son de código, no de una versión servida.
 
 La decisión de este piloto sólo abarca **referidos para Sellos**. No aprueba las
 reglas generales de suscripciones y Backoffice marcadas `PROPUESTA CODEX`
