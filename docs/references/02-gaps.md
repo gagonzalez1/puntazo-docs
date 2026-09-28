@@ -21,7 +21,7 @@ summary: Diferencias que deben permanecer visibles para evitar documentar propue
 | Datos | Sólo `users` | Modelo completo con marcas, programas y tarjetas |
 | Contrato HTTP | Cuatro rutas de autenticación/cuenta | `openapi.yaml` formaliza 57 rutas objetivo pendientes de implementación |
 | PostgreSQL | Creación directa de `users` | Tipos, índices, migraciones y locks en `PC-09` a `PC-11` |
-| Reseñas de Google | Desplegada en testing (`0.7.0-testing`, schema `0022`); aceptación web pública FULL PASS; fuentes aún no están en `main` | Falta terminar apertura/retorno de cliente nuevo en Android; iOS y dispositivo físico no verificados. Ver [estado y commits](#/google-reviews-contract) |
+| Reseñas de Google | Desplegada en testing (`0.8.0-testing`, schema `0028`); web pública y Android emulator FULL PASS; fuentes aún no están en `main` | iOS y dispositivo físico no verificados; la cobertura web combina casos locales aprobados y PWA pública, con 2 errores de configuración local separados. Ver [estado y commits](#/google-reviews-contract) |
 
 Estas diferencias no son errores de la documentación: son la frontera entre **estado actual** y **dirección propuesta**.
 

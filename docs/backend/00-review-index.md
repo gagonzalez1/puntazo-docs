@@ -71,4 +71,4 @@ La versión detallada y normativa está en el [spec completo `v1.5-review`](#/ba
 
 ### Acuerdo específico posterior
 
-El contrato de [reseñas de Google v1](#/google-reviews-contract) fue aprobado el 2026-09-28 para ese alcance únicamente. Sus reglas son `ACORDADO`; la implementación existe en ramas de feature y en un candidato de integración local verificado. Esto no aprueba ni reemplaza las demás propuestas `PC-xx`.
+El contrato de [reseñas de Google v1](#/google-reviews-contract) fue aprobado el 2026-09-28 para ese alcance únicamente. Sus reglas son `ACORDADO`; la implementación está desplegada en testing y tiene aceptación FULL PASS en web público y emulador Android. Esto no aprueba ni reemplaza las demás propuestas `PC-xx`.
