@@ -21,9 +21,8 @@ summary: Diferencias que deben permanecer visibles para evitar documentar propue
 | Datos | Sólo `users` | Modelo completo con marcas, programas y tarjetas |
 | Contrato HTTP | Cuatro rutas de autenticación/cuenta | `openapi.yaml` formaliza 57 rutas objetivo pendientes de implementación |
 | PostgreSQL | Creación directa de `users` | Tipos, índices, migraciones y locks en `PC-09` a `PC-11` |
-| Reseñas de Google | Implementada en ramas feature; candidato local de integración verificado | Falta merge a `main`, revisión/PR de preview y despliegue; el contrato está acordado. Ver [estado y commits](#/google-reviews-contract) |
+| Reseñas de Google | Desplegada en testing (`0.7.0-testing`, schema `0022`); fuentes aún no están en `main` | Falta comprobar no repetición entre dispositivos para cerrar aceptación end-to-end. Ver [estado y commits](#/google-reviews-contract) |
 
 Estas diferencias no son errores de la documentación: son la frontera entre **estado actual** y **dirección propuesta**.
 
-La dirección ya tiene suficiente detalle técnico para revisión, pero continúa siendo
-`PROPUESTA CODEX` hasta que el equipo apruebe cada punto del [índice de backend](#/backend-review-index).
+El resto de la dirección de backend continúa como `PROPUESTA CODEX` hasta que el equipo apruebe cada punto del [índice de backend](#/backend-review-index). El contrato de reseñas tiene acuerdo y evidencia de testing propios, enlazados arriba.

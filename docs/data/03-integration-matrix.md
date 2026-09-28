@@ -42,9 +42,9 @@ flowchart LR
 | Analíticas | Mock | No existe | Endpoints de métricas por marca/sucursal |
 | Pasaporte QR | Parcial | Usuario básico | QR opaco persistido en `usuarios` |
 | Tarjetas del cliente | Mock | No existe | `GET /clientes/me/tarjetas` |
-| Configuración de reseñas de sucursal | Implementada en rama de feature | Backend/frontend presentes en sus commits de feature; merge e integración pendientes | [`Reseñas de Google v1`](#/google-reviews-contract) |
-| Invitaciones de reseña del cliente | Implementadas en rama de feature | Backend/frontend presentes en sus commits de feature; merge e integración pendientes | [`Reseñas de Google v1`](#/google-reviews-contract) |
+| Configuración de reseñas de sucursal | Desplegada en testing | API `0.7.0-testing`, schema `0022`, readiness `ok`; fuentes feature aún sin merge a `main` | [`Reseñas de Google v1`](#/google-reviews-contract) |
+| Invitaciones de reseña del cliente | Desplegadas en testing | Navegador verificado; no repetición desde segundo dispositivo pendiente | [`Reseñas de Google v1`](#/google-reviews-contract) |
 
 ## ¿Se pueden conectar hoy?
 
-La rama base `main` de esta matriz sólo documenta autenticación y `GET /me`. La funcionalidad de reseñas ya está implementada en las ramas de feature y verificada en el candidato local de integración; aún no está desplegada. Ver [evidencia y commits](#/google-reviews-contract) antes de atribuirla a `main` o al runtime.
+La rama base `main` de esta matriz sólo documenta autenticación y `GET /me`; la rama remota `testing` ya despliega reseñas en API `0.7.0-testing`, schema `0022` y readiness `ok`. La prueba de no repetición entre dispositivos sigue pendiente. Ver [evidencia, fuentes y release](#/google-reviews-contract) para separar ambos planos.
