@@ -7,14 +7,14 @@ parent: backend-review-index
 level: contract
 status: mixed
 authority: mixed
-summary: Reglas acordadas e implementación en ramas fuente de reseñas de Google; integración y despliegue pendientes.
+summary: Contrato acordado, desplegado en testing y flujo web público FULL PASS; continúa la validación nativa.
 diagram: true
 codeRefs: optional
 ---
 
 # Reseñas de Google · Contrato acordado v1
 
-> **ACORDADO para esta funcionalidad el 2026-09-28. Implementación pendiente de evidencia en los repositorios fuente.** Esta aprobación tiene alcance específico; no aprueba el resto de las propuestas `PC-xx`, ni convierte rutas objetivo de OpenAPI en rutas implementadas.
+> **ACORDADO para esta funcionalidad el 2026-09-28.** El código está implementado en ramas feature y desplegado en testing; el flujo web público tiene FULL PASS. La verificación nativa de cliente nuevo continúa y se detalla abajo. Esta aprobación tiene alcance específico; no aprueba el resto de las propuestas `PC-xx` ni convierte otras rutas objetivo de OpenAPI en rutas implementadas.
 
 Este documento es la referencia del contrato congelado para la funcionalidad. Enlaces relacionados: [flujo del comercio](#/flow-merchant-profile), [flujo de tarjetas del cliente](#/flow-customer-cards), [matriz de integración](#/integration-matrix), [brechas](#/implementation-gaps) y [índice de revisión backend](#/backend-review-index).
 
@@ -80,7 +80,7 @@ Se difiere el intento sin conexión o si el proveedor no resuelve el destino, y 
 
 **Contrato:** acordado el 2026-09-28. **Fuente:** implementado en ramas feature aún no fusionadas a los `main` fuente: backend [`b16371f`](https://github.com/am-p/app-loyalty/commit/b16371f9be8bc5008262234c51fed18298f93e13) (handlers, servicios, persistencia, migración `0022`, Places y OpenAPI) y frontend [`629a27b`](https://github.com/gonzalotev/app-fidelidad/commit/629a27bc4b1ada9602fb21f78006371818b7f935). Sus PRs están en borrador: [backend #13](https://github.com/am-p/app-loyalty/pull/13) y [frontend #18](https://github.com/gonzalotev/app-fidelidad/pull/18). **Pruebas de fuente:** backend Go/PostgreSQL 16, `go vet`, race, migraciones, proveedor, HTTP, permisos y cuotas; frontend 88 unitarias, TypeScript, Expo Doctor 18/18 y escenarios de navegador. Búsqueda y detalle de Places reales desde el servidor devolvieron HTTP 200. Places API y billing están habilitados en el proyecto de testing; la clave es privada, limitada al servidor por IP (IPv4 e IPv6) y API, y su valor no se registra.
 
-**Integración y despliegue de testing:** [PR de preview #10](https://github.com/gagonzalez1/puntazo-preview/pull/10) se fusionó a `testing` en `a6f4d50f440a07d66197257f2cddd46ea92adbb1`; el ajuste de fixtures/navegación es `d8edd8ea69125d980fec7599e9019a6cb44853e7`, actualmente en la rama remota `testing`. El runtime público de testing reportó API commit `d8edd8e`, versión `0.7.0-testing`, schema `0022` y readiness `ok`. El despliegue de `a6f4d50` terminó el 2026-09-28 16:16:04 UTC; el despliegue posterior asociado al estado actual terminó 16:19:28 UTC (deployment `swvwtefm3udx9nxjcf0zufvl`). La copia cifrada `initialpuntazo-preview-20260928T155941Z.dump.enc` se verificó antes del cambio; también se verificó la ruta de actualización `0020 → 0021 → 0022`, las versiones de migración y la salud de los servicios.
+**Integración y despliegue de testing:** [PR de preview #10](https://github.com/gagonzalez1/puntazo-preview/pull/10) se fusionó a `testing` en `a6f4d50f440a07d66197257f2cddd46ea92adbb1`; el ajuste de fixtures/navegación es `d8edd8ea69125d980fec7599e9019a6cb44853e7`, actualmente en la rama remota `testing`. El runtime público de testing reportó API commit `d8edd8e`, versión `0.7.0-testing`, schema `0022` y readiness `ok`. El despliegue de `a6f4d50` terminó el 2026-09-28 16:16:04 UTC; el despliegue posterior asociado al estado actual terminó 16:19:28 UTC (deployment `swvwtefm3udx9nxjcf0zufvl`). La copia cifrada `puntazo-preview-20260928T155941Z.dump.enc` se verificó antes del cambio. El registro de verificación del backup de guardia `161917` es de `2026-09-28T16:19:30Z`. También se verificó la ruta de actualización `0020 → 0021 → 0022`, las versiones de migración y la salud de los servicios.
 
 **Verificación de release:** build web desde el checkout remoto limpio `a6f4d50`, Compose, backend Go/PostgreSQL, `go vet`, TypeScript, 82 pruebas frontend de preview y Expo Doctor 18/18 pasaron; los 33 escenarios de navegador y el smoke público pasaron. La comprobación del bundle servido confirmó que su SHA-256 `e3934a26917224d49009ee17f3f810f12f773df4ad2b212602e6c9b4bd0b4cf4` coincide con el build local de `a6f4d50`; no contiene la clave privada de Places ni el nombre de su variable de entorno. El prefijo genérico de clave Google detectado corresponde a la configuración Firebase pública ya existente; la clave privada exacta fue comprobada aparte y está ausente.
 
