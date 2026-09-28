@@ -47,6 +47,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 4. [`docs/references/04-documentation-sync-plan.md`](#/documentation-sync-plan) — revisión documental al avanzar las ramas.
 5. [`docs/references/05-change-history.md`](#/documentation-change-history) — historial funcional de cada sincronización documental aceptada.
 6. [`docs/00-overview.md`](#/overview) — puerta de entrada al mapa completo.
+7. [`docs/references/05-source-workflow.md`](#/source-workflow) — repos oficiales, selección de worktree, PR fuente y ensamblado de testing.
 
 ### 1. Arquitectura del sistema
 
