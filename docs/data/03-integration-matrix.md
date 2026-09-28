@@ -42,9 +42,9 @@ flowchart LR
 | Analíticas | Mock | No existe | Endpoints de métricas por marca/sucursal |
 | Pasaporte QR | Parcial | Usuario básico | QR opaco persistido en `usuarios` |
 | Tarjetas del cliente | Mock | No existe | `GET /clientes/me/tarjetas` |
-| Configuración de reseñas de sucursal | Implementación no verificada | Pendiente de verificación | Contrato aprobado pendiente: [`reseñas de Google v1`](#/google-reviews-contract) |
-| Invitaciones de reseña del cliente | Implementación no verificada | Pendiente de verificación | Contrato aprobado pendiente: lista, reserva y eventos en [`reseñas de Google v1`](#/google-reviews-contract) |
+| Configuración de reseñas de sucursal | Implementada en rama de feature | Backend/frontend presentes en sus commits de feature; merge e integración pendientes | [`Reseñas de Google v1`](#/google-reviews-contract) |
+| Invitaciones de reseña del cliente | Implementadas en rama de feature | Backend/frontend presentes en sus commits de feature; merge e integración pendientes | [`Reseñas de Google v1`](#/google-reviews-contract) |
 
 ## ¿Se pueden conectar hoy?
 
-Sí, **sólo para autenticación y `GET /me`**, según el estado documentado en esta matriz; verificar source antes de usarlo como afirmación actual. El contrato de reseñas está acordado, pero no cambia esa brecha hasta verificar la implementación de backend y frontend en sus commits seleccionados. Antes de reemplazar cada mock se necesita implementar su contrato backend y adaptar el frontend al modelo marca–sucursal.
+La rama base `main` de esta matriz sólo documenta autenticación y `GET /me`. La funcionalidad de reseñas ya está implementada en las ramas de feature y verificada en el candidato local de integración; aún no está desplegada. Ver [evidencia y commits](#/google-reviews-contract) antes de atribuirla a `main` o al runtime.
