@@ -43,8 +43,8 @@ flowchart LR
 | Pasaporte QR | Parcial | Usuario básico | QR opaco persistido en `usuarios` |
 | Tarjetas del cliente | Mock | No existe | `GET /clientes/me/tarjetas` |
 | Configuración de reseñas de sucursal | Desplegada en testing | API `0.7.0-testing`, schema `0022`, readiness `ok`; fuentes feature aún sin merge a `main` | [`Reseñas de Google v1`](#/google-reviews-contract) |
-| Invitaciones de reseña del cliente | Desplegadas en testing | Navegador verificado; no repetición desde segundo dispositivo pendiente | [`Reseñas de Google v1`](#/google-reviews-contract) |
+| Invitaciones de reseña del cliente | Desplegadas en testing | Browser acceptance FULL PASS; recarga y segunda sesión no repiten diálogo | [`Reseñas de Google v1`](#/google-reviews-contract) |
 
 ## ¿Se pueden conectar hoy?
 
-La rama base `main` de esta matriz sólo documenta autenticación y `GET /me`; la rama remota `testing` ya despliega reseñas en API `0.7.0-testing`, schema `0022` y readiness `ok`. La prueba de no repetición entre dispositivos sigue pendiente. Ver [evidencia, fuentes y release](#/google-reviews-contract) para separar ambos planos.
+La rama base `main` de esta matriz sólo documenta autenticación y `GET /me`; la rama remota `testing` despliega reseñas en API `0.7.0-testing`, schema `0022` y readiness `ok`. El flujo web público pasó la aceptación de configuración, compra idempotente, SSE, apertura Google, métricas y no repetición tras recarga/segunda sesión. La prueba de apertura y retorno en Android de cliente nuevo continúa; iOS y dispositivo físico no se verificaron. Ver [evidencia, fuentes y release](#/google-reviews-contract) para separar esos alcances.
