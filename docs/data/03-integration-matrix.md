@@ -42,7 +42,9 @@ flowchart LR
 | Analíticas | Mock | No existe | Endpoints de métricas por marca/sucursal |
 | Pasaporte QR | Parcial | Usuario básico | QR opaco persistido en `usuarios` |
 | Tarjetas del cliente | Mock | No existe | `GET /clientes/me/tarjetas` |
+| Configuración de reseñas de sucursal | Implementación no verificada | Pendiente de verificación | Contrato aprobado pendiente: [`reseñas de Google v1`](#/google-reviews-contract) |
+| Invitaciones de reseña del cliente | Implementación no verificada | Pendiente de verificación | Contrato aprobado pendiente: lista, reserva y eventos en [`reseñas de Google v1`](#/google-reviews-contract) |
 
 ## ¿Se pueden conectar hoy?
 
-Sí, **sólo para autenticación y `GET /me`**. Antes de reemplazar cada mock se necesita implementar su contrato backend y adaptar el frontend al modelo marca–sucursal. No hay todavía compatibilidad funcional para fidelidad, suscripciones, tarjetas, perfil comercial ni analíticas.
+Sí, **sólo para autenticación y `GET /me`**, según el estado documentado en esta matriz; verificar source antes de usarlo como afirmación actual. El contrato de reseñas está acordado, pero no cambia esa brecha hasta verificar la implementación de backend y frontend en sus commits seleccionados. Antes de reemplazar cada mock se necesita implementar su contrato backend y adaptar el frontend al modelo marca–sucursal.

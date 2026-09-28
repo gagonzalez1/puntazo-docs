@@ -68,6 +68,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 14. [`docs/backend/02-database-physical.md`](#/backend-database-physical) — tipos PostgreSQL, integridad, índices y concurrencia.
 15. [`docs/backend/03-operations.md`](#/backend-operations) — sesiones, storage, migraciones y observabilidad.
 16. [`docs/backend/04-backend-spec.md`](#/backend-full-spec) — spec normativo completo `v1.5-review`, con acuerdos y propuestas diferenciados.
+17. [`docs/backend/05-google-reviews.md`](#/google-reviews-contract) — contrato aprobado de reseñas de Google, con rutas objetivo y límites explícitos de implementación.
 
 ### 4. Flujos del frontend
 
@@ -86,6 +87,8 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 24. [`docs/flows/23-customer-cards.md`](#/flow-customer-cards) — tarjetas de fidelidad.
 25. [`docs/flows/24-customer-profile.md`](#/flow-customer-profile) — perfil real y campos derivados.
 
+Para el acuerdo de reseñas de Google, consultar [`docs/backend/05-google-reviews.md`](#/google-reviews-contract) junto con el flujo comercial y el de tarjetas; verificar los commits fuente antes de atribuir estado implementado.
+
 ### 5. Secuencias de ejecución
 
 26. [`docs/sequences/00-index.md`](#/sequences) — índice de interacciones temporales.
@@ -98,6 +101,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 ### 6. Diseño objetivo
 
 32. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
+33. [`docs/backend/05-google-reviews.md`](#/google-reviews-contract) — contrato funcional, API y datos acordado; implementación pendiente.
 
 ## Estrategia de carga para un LLM
 

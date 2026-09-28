@@ -68,3 +68,7 @@ flowchart LR
 5. Aprobar PostgreSQL, seguridad y operación antes de crear migraciones.
 
 La versión detallada y normativa está en el [spec completo `v1.5-review`](#/backend-full-spec).
+
+### Acuerdo específico posterior
+
+El contrato de [reseñas de Google v1](#/google-reviews-contract) fue aprobado el 2026-09-28 para ese alcance únicamente. Sus reglas son `ACORDADO`; sus rutas, migración y comportamiento permanecen pendientes de implementación y no aprueban ni reemplazan las demás propuestas `PC-xx`.

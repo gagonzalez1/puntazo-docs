@@ -21,6 +21,7 @@ summary: Diferencias que deben permanecer visibles para evitar documentar propue
 | Datos | Sólo `users` | Modelo completo con marcas, programas y tarjetas |
 | Contrato HTTP | Cuatro rutas de autenticación/cuenta | `openapi.yaml` formaliza 57 rutas objetivo pendientes de implementación |
 | PostgreSQL | Creación directa de `users` | Tipos, índices, migraciones y locks en `PC-09` a `PC-11` |
+| Reseñas de Google | Implementación no verificada para este acuerdo | Contrato funcional/API aprobado; requiere configuración, migración, proveedor y flujos de cliente según [`contrato v1`](#/google-reviews-contract) |
 
 Estas diferencias no son errores de la documentación: son la frontera entre **estado actual** y **dirección propuesta**.
 
