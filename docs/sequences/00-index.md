@@ -26,3 +26,6 @@ flowchart LR
     click RESTORE href "#/sequence-restore" "Abrir restauración"
     click SCAN href "#/sequence-scan" "Abrir escaneo"
 ```
+
+- [Invitación y código de empleado](#/sequence-invitation).
+- [Estado de entrega de códigos](#/user-codes-reconciliation).

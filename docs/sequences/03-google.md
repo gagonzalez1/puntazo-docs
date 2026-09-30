@@ -5,13 +5,30 @@ group: 03 · Secuencias
 order: 30
 parent: sequences
 level: sequence
-status: current
+status: mixed
 summary: Verifica el ID token, enlaza por email o crea un usuario y devuelve un JWT propio.
 diagram: true
 codeRefs: required
 ---
 
 # Secuencia · Acceso con Google
+
+## Actualización de códigos · rama pendiente de integrar
+
+Google nuevo devuelve primero ACCOUNT_TYPE_REQUIRED con nombre/apellido de los
+claims verificados y campos faltantes. El selector completa sólo lo faltante;
+reenvía identidad, perfil y tipo. El backend prioriza given_name/family_name del
+token y asigna código en la transacción de creación. Cuenta ya existente: login
+directo, conserva código y no exige nuevos campos.
+
+Fuente y estado: [reconciliación de códigos](#/user-codes-reconciliation).
+Implementado y probado en las ramas seleccionadas; no desplegado.
+
+## Referencia histórica anterior a esta entrega
+
+El material siguiente describe la revisión documental anterior. No confirma
+el estado actual de main ni del runtime; contrastar con la rama elegida.
+
 
 ```mermaid
 sequenceDiagram

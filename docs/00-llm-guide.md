@@ -99,6 +99,11 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 
 32. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
 
+### 7. Entrega de códigos públicos pendiente de integración
+
+- [`docs/references/06-user-codes-reconciliation.md`](#/user-codes-reconciliation) — decisión aprobada, implementación en ramas, pruebas y activación pendiente.
+- [`docs/sequences/06-invitation.md`](#/sequence-invitation) — apellido y código compartido en altas de personal.
+
 ## Estrategia de carga para un LLM
 
 - **Cambio de frontend:** reglas + contenedores + componente frontend + flujo afectado + secuencia relacionada.

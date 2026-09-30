@@ -5,13 +5,30 @@ group: 03 · Secuencias
 order: 10
 parent: sequences
 level: sequence
-status: current
+status: mixed
 summary: Registro conectado de punta a punta, con rol CLIENTE_FINAL fijo en el backend actual.
 diagram: true
 codeRefs: required
 ---
 
 # Secuencia · Registro por email
+
+## Actualización de códigos · rama pendiente de integrar
+
+El alta candidata recibe `name` y `apellido` separados, valida letras en ambos,
+y usa `RegisterCustomer` → `CreateCustomer` → `allocateUserCode` en la transacción.
+El alta de propietarios recibe `owner_name` y `owner_last_name` y usa el mismo
+contador. La respuesta pública contiene `user_code`. Sin apellido: 422
+REGISTRATION_PROFILE_REQUIRED y mensaje para actualizar la aplicación.
+
+Fuente y estado: [reconciliación de códigos](#/user-codes-reconciliation).
+Implementado y probado en las ramas seleccionadas; no desplegado.
+
+## Referencia histórica anterior a esta entrega
+
+El material siguiente describe la revisión documental anterior. No confirma
+el estado actual de main ni del runtime; contrastar con la rama elegida.
+
 
 ```mermaid
 sequenceDiagram

@@ -13,6 +13,22 @@ codeRefs: required
 
 # Frontend · Acceso y onboarding
 
+## Actualización de códigos · rama pendiente de integrar
+
+Nombre y apellido se capturan por separado y permanecen en memoria durante la
+elección del tipo. Clientes envían apellido; propietarios owner_last_name;
+Google completa faltantes del perfil verificado. Los logins existentes no piden
+apellido ni convierten tipo de cuenta.
+
+Fuente y estado: [reconciliación de códigos](#/user-codes-reconciliation).
+Implementado y probado en las ramas seleccionadas; no desplegado.
+
+## Referencia histórica anterior a esta entrega
+
+El material siguiente describe la revisión documental anterior. No confirma
+el estado actual de main ni del runtime; contrastar con la rama elegida.
+
+
 ```mermaid
 flowchart LR
     FORM["Pantalla auth"] --> STORE["useAuthStore"]

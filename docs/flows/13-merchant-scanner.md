@@ -13,6 +13,21 @@ codeRefs: required
 
 # Comercio · Escaneo QR
 
+## Actualización de códigos · rama pendiente de integrar
+
+Identificación manual: teclado alfanumérico, GG-1 y código anterior, # opcional.
+Normaliza para customer_code y usa coincidencia exacta para búsqueda comercial.
+El preview y el resultado muestran user_code emitido por la API.
+
+Fuente y estado: [reconciliación de códigos](#/user-codes-reconciliation).
+Implementado y probado en las ramas seleccionadas; no desplegado.
+
+## Referencia histórica anterior a esta entrega
+
+El material siguiente describe la revisión documental anterior. No confirma
+el estado actual de main ni del runtime; contrastar con la rama elegida.
+
+
 ```mermaid
 flowchart LR
     CAMERA["Expo Camera real"] --> TOKEN["QR token leído"]

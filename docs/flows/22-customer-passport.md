@@ -13,6 +13,21 @@ codeRefs: required
 
 # Cliente · Pasaporte QR
 
+## Actualización de códigos · rama pendiente de integrar
+
+Mi Pasaporte consume user_code y qr_token de la API; muestra GG-1 en altas
+nuevas o #USER-0001 en cuentas previas. No construye el nuevo código desde el ID
+numérico ni usa el código público como credencial de autorización.
+
+Fuente y estado: [reconciliación de códigos](#/user-codes-reconciliation).
+Implementado y probado en las ramas seleccionadas; no desplegado.
+
+## Referencia histórica anterior a esta entrega
+
+El material siguiente describe la revisión documental anterior. No confirma
+el estado actual de main ni del runtime; contrastar con la rama elegida.
+
+
 ```mermaid
 flowchart LR
     SCREEN["Mi Tarjeta"] --> QUERY["getMyProfile"]
