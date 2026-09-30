@@ -5,13 +5,30 @@ group: 04 · Datos
 order: 10
 parent: overview
 level: data
-status: current
+status: mixed
 summary: Tabla users real y estructuras mock que viven dentro del frontend.
 diagram: true
 codeRefs: required
 ---
 
 # Datos · Estado implementado
+
+## Actualización de códigos · rama pendiente de integrar
+
+Persistencia del candidato: `usuarios.codigo_usuario` nullable y único, tabla
+`contadores_codigo_usuario` por prefijo y trigger de inmutabilidad (0033 tras
+0032). El UPSERT y el INSERT del usuario comparten transacción. No se hace
+backfill; la API publica el código efectivo anterior si la columna es NULL.
+PK/FK y tiendas mantienen sus IDs numéricos.
+
+Fuente y estado: [reconciliación de códigos](#/user-codes-reconciliation).
+Implementado y probado en las ramas seleccionadas; no desplegado.
+
+## Referencia histórica anterior a esta entrega
+
+El material siguiente describe la revisión documental anterior. No confirma
+el estado actual de main ni del runtime; contrastar con la rama elegida.
+
 
 ```mermaid
 erDiagram

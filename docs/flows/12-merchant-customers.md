@@ -5,13 +5,28 @@ group: 02 · Flujos frontend
 order: 120
 parent: merchant-flows
 level: flow
-status: mock
+status: mixed
 summary: Listado, búsqueda y acciones visuales sobre tarjetas cargadas desde arrays locales.
 diagram: true
 codeRefs: required
 ---
 
 # Comercio · Clientes
+
+## Actualización de códigos · rama pendiente de integrar
+
+El listado muestra user_code y busca su coincidencia exacta normalizada;
+conserva ID numérico y búsqueda parcial por nombre/email. Sólo clientes activos
+del comercio son visibles al actor autorizado.
+
+Fuente y estado: [reconciliación de códigos](#/user-codes-reconciliation).
+Implementado y probado en las ramas seleccionadas; no desplegado.
+
+## Referencia histórica anterior a esta entrega
+
+El material siguiente describe la revisión documental anterior. No confirma
+el estado actual de main ni del runtime; contrastar con la rama elegida.
+
 
 ```mermaid
 flowchart LR

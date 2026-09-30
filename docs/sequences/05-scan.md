@@ -5,13 +5,29 @@ group: 03 · Secuencias
 order: 50
 parent: sequences
 level: sequence
-status: mock
+status: mixed
 summary: Secuencia local del scan actual y punto de corte donde debe incorporarse la API transaccional.
 diagram: true
 codeRefs: required
 ---
 
 # Secuencia · Escaneo actual
+
+## Actualización de códigos · rama pendiente de integrar
+
+La API candidata admite customer_code GG-1 o #USER-0001, minúsculas y # opcional.
+El código nuevo se resuelve consultando el usuario activo CLIENTE_FINAL. Preview
+retorna customer.user_code; confirmación conserva permiso de operador, sucursal,
+saldo, preview e idempotencia. El frontend muestra el código del servidor.
+
+Fuente y estado: [reconciliación de códigos](#/user-codes-reconciliation).
+Implementado y probado en las ramas seleccionadas; no desplegado.
+
+## Referencia histórica anterior a esta entrega
+
+El material siguiente describe la revisión documental anterior. No confirma
+el estado actual de main ni del runtime; contrastar con la rama elegida.
+
 
 ```mermaid
 sequenceDiagram

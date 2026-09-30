@@ -14,6 +14,23 @@ codeRefs: optional
 
 # Backend · Contrato API propuesto
 
+## Actualización de códigos · rama pendiente de integrar
+
+El OpenAPI de la rama backend es el contrato implementado para este cambio:
+apellido/owner_last_name obligatorios al registrar, user_code en vistas de
+usuario y REGISTRATION_PROFILE_REQUIRED para aplicaciones anteriores. El
+OpenAPI objetivo de este portal conserva su condición de propuesta y no debe
+usarse como evidencia de rutas actuales.
+
+Fuente y estado: [reconciliación de códigos](#/user-codes-reconciliation).
+Implementado y probado en las ramas seleccionadas; no desplegado.
+
+## Referencia histórica anterior a esta entrega
+
+El material siguiente describe la revisión documental anterior. No confirma
+el estado actual de main ni del runtime; contrastar con la rama elegida.
+
+
 > **PROPUESTA CODEX `PC-02` a `PC-08`, `PC-12` a `PC-14`.** El archivo
 > [`openapi.yaml`](/openapi.yaml) es el contrato formal de transporte y debe revisarse
 > antes de generar handlers o SDK.
