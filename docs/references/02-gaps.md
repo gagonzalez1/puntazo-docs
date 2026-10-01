@@ -34,8 +34,8 @@ decisiones de producto ni rutas de `openapi.yaml` etiquetadas como propuestas.
 | Datos | Sólo `users` | Modelo completo con marcas, programas y tarjetas |
 | Contrato HTTP | Cuatro rutas de autenticación/cuenta | `openapi.yaml` formaliza 57 rutas objetivo pendientes de implementación |
 | PostgreSQL | Creación directa de `users` | Tipos, índices, migraciones y locks en `PC-09` a `PC-11` |
+| Reseñas de Google | Desplegada en testing (`0.8.0-testing`, schema `0028`); web pública y Android emulator FULL PASS; fuentes aún no están en `main` | iOS y dispositivo físico no verificados; la cobertura web combina casos locales aprobados y PWA pública, con 2 errores de configuración local separados. Ver [estado y commits](#/google-reviews-contract) |
 
 Estas diferencias no son errores de la documentación: son la frontera entre **estado actual** y **dirección propuesta**.
 
-La dirección ya tiene suficiente detalle técnico para revisión, pero continúa siendo
-`PROPUESTA CODEX` hasta que el equipo apruebe cada punto del [índice de backend](#/backend-review-index).
+El resto de la dirección de backend continúa como `PROPUESTA CODEX` hasta que el equipo apruebe cada punto del [índice de backend](#/backend-review-index). El contrato de reseñas tiene acuerdo y evidencia de testing propios, enlazados arriba.

@@ -30,6 +30,8 @@ flowchart LR
 
 El usuario autenticado no determina las tarjetas mostradas. El ID `501` es constante hasta que exista un endpoint de tarjetas del cliente.
 
+El diálogo de reseña es un recorrido adicional al carrusel: se revisan invitaciones al entrar en QR/tarjetas y después de la cola de celebración. El contrato y la verificación FULL PASS web pública y Android en emulador están en [Reseñas de Google v1](#/google-reviews-contract).
+
 ## Referencias de código
 
 - [Pantalla de tarjetas](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/my-loyalty-cards/index.tsx#L1-L120)

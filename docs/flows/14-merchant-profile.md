@@ -29,6 +29,8 @@ flowchart LR
 
 El flujo representa una tienda única. El modelo objetivo reemplaza este contexto implícito por una marca explícita y sus sucursales.
 
+La configuración de reseñas vive en la edición de la sucursal desde **Mi Tienda → Sucursales**. El contrato, el recorrido desplegado y la evidencia de testing están en [Reseñas de Google v1](#/google-reviews-contract).
+
 ## Referencias de código
 
 - [Pantalla de perfil comercial](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/profile/index.tsx#L32-L119)

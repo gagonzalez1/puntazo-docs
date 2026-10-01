@@ -61,7 +61,9 @@ flowchart LR
 | Analíticas | Mock | No existe | Endpoints de métricas por marca/sucursal |
 | Pasaporte QR | Parcial | Usuario básico | QR opaco persistido en `usuarios` |
 | Tarjetas del cliente | Mock | No existe | `GET /clientes/me/tarjetas` |
+| Configuración de reseñas de sucursal | Desplegada en testing | API `0.8.0-testing`, schema `0028`, readiness `ok`; fuente aún sin merge a `main` | [`Reseñas de Google v1`](#/google-reviews-contract) |
+| Invitaciones de reseña del cliente | Desplegadas en testing | Web pública y Android emulator FULL PASS; relanzar no repite | [`Reseñas de Google v1`](#/google-reviews-contract) |
 
 ## ¿Se pueden conectar hoy?
 
-Sí, **sólo para autenticación y `GET /me`**. Antes de reemplazar cada mock se necesita implementar su contrato backend y adaptar el frontend al modelo marca–sucursal. No hay todavía compatibilidad funcional para fidelidad, suscripciones, tarjetas, perfil comercial ni analíticas.
+La rama base `main` de esta matriz sólo documenta autenticación y `GET /me`; la rama remota `testing` despliega reseñas en API `0.8.0-testing`, schema `0028` y readiness `ok`. El flujo web público y el flujo Android en emulador API 36 pasaron, incluida la no repetición después de relanzar. iOS y dispositivo físico no se verificaron. Ver [evidencia, fuentes y release](#/google-reviews-contract) para separar esos alcances.
