@@ -5,12 +5,31 @@ group: 04 · Datos
 order: 30
 parent: data-current
 level: integration
-status: gap
-summary: Qué pantallas ya cruzan la API y qué contratos faltan para conectar ambos proyectos.
+status: mixed
+summary: Integración de testing observada al 01/10/2026 y matriz histórica previa.
 diagram: true
 ---
 
 # Datos · Matriz pantalla–API
+
+## Entorno de testing observado · 01/10/2026
+
+La web desplegada desde `gonzalotev/app-fidelidad:testing` (`fc737a2`) usa
+`https://api-testing.puntazo.pro/v1`, atendido por
+`gagonzalez1/app-loyalty:testing` (`ecd69be`, esquema `0033`). `/api/v1` sigue
+como proxy compatible; MinIO y PostgreSQL son recursos separados del Compose
+anterior. La URL de medios firmados respondió 200 y sin firma 403. Se verificó
+CORS desde la web y el transporte de versión, SSE sin sesión (401) y rechazo
+de webhook sin firma (401) en rutas directa/heredada. Login/refresh con una
+cuenta sintética de testing respondió 200 en ambas rutas, incluidas cookies
+con sus rutas correctas; la cuenta se anonimizó al terminar. Aún no se
+verificó un evento firmado de Mercado Pago.
+
+La matriz siguiente corresponde al estado anterior de la documentación, no
+atribuye implementaciones ni mocks al runtime actual. Revisar las rutas y
+reglas en los HEAD remotos de las fuentes dueñas antes de actualizar cada fila.
+
+## Matriz anterior (histórica)
 
 ```mermaid
 flowchart LR

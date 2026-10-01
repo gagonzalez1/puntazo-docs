@@ -12,6 +12,19 @@ summary: Diferencias que deben permanecer visibles para evitar documentar propue
 
 # Brechas entre código y spec
 
+## Alcance de esta comparación · 01/10/2026
+
+El runtime de testing sirve `gagonzalez1/app-loyalty:testing` (`ecd69be`,
+esquema `0033`) y la web de `gonzalotev/app-fidelidad:testing` (`fc737a2`).
+El Compose `puntazo-preview:testing` está detenido y retenido. La tabla de
+abajo es una comparación histórica, no un inventario actual de diferencias
+frente a `am-p/app-loyalty:main`. Para abrir PR a Ariel hay que volver a
+obtener los HEAD remotos, comparar código/patch y contratos y preservar las
+funciones más recientes de main. El cambio de infraestructura no aprueba
+decisiones de producto ni rutas de `openapi.yaml` etiquetadas como propuestas.
+
+## Comparación anterior (histórica)
+
 | Área | Código actual | Spec propuesto |
 |---|---|---|
 | Cuenta | `rol: CLIENTE_FINAL \| TIENDA` | `tipo_cuenta` y membresías por marca |
