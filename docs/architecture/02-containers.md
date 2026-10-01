@@ -42,8 +42,9 @@ flowchart LR
 verifica por CA con profundidad 4 para su cadena actual. Los puertos de datos
 no están publicados. Se comprobaron el mismo commit/esquema por las rutas
 directa y heredada, la lectura de un medio firmado (200) y el rechazo sin
-firma (403). Login/refresh con cuenta real y un evento firmado de Mercado Pago
-de prueba permanecen pendientes de verificación externa.
+firma (403). Login/refresh directo y heredado se probaron con una cuenta
+sintética de testing luego anonimizada; un evento firmado de Mercado Pago de
+prueba permanece pendiente de verificación externa.
 
 ## Documento anterior (histórico)
 

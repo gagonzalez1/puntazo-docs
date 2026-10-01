@@ -20,8 +20,10 @@ La web desplegada desde `gonzalotev/app-fidelidad:testing` (`fc737a2`) usa
 como proxy compatible; MinIO y PostgreSQL son recursos separados del Compose
 anterior. La URL de medios firmados respondió 200 y sin firma 403. Se verificó
 CORS desde la web y el transporte de versión, SSE sin sesión (401) y rechazo
-de webhook sin firma (401) en rutas directa/heredada. No se verificaron aún
-login/refresh con una cuenta real ni un evento firmado de Mercado Pago.
+de webhook sin firma (401) en rutas directa/heredada. Login/refresh con una
+cuenta sintética de testing respondió 200 en ambas rutas, incluidas cookies
+con sus rutas correctas; la cuenta se anonimizó al terminar. Aún no se
+verificó un evento firmado de Mercado Pago.
 
 La matriz siguiente corresponde al estado anterior de la documentación, no
 atribuye implementaciones ni mocks al runtime actual. Revisar las rutas y
