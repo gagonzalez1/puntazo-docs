@@ -5,13 +5,19 @@ group: 01 · Arquitectura C4
 order: 30
 parent: c4-containers
 level: component
-status: current
-summary: Router, pantallas, estado, hooks, servicios y cliente HTTP de la aplicación Expo.
+status: mixed
+summary: Arquitectura histórica y nueva entrega analítica por períodos pendiente de promoción.
 diagram: true
 codeRefs: required
 ---
 
 # C4 · Componentes del frontend
+
+## Analíticas por período · entrega 01/10/2026
+
+La rama `feat/analytics-periods-20261001` incorpora la selección diaria, semanal y mensual, navegación de fecha, estado de carga/error/vacío y gráfico de actividad. La pantalla consume el servicio de comercio y TanStack Query; la clave incluye marca, período y fecha, bajo el prefijo ya invalidado por operaciones de fidelidad. Conserva Históricas para resumen y actividad reciente. Esta entrega usa Expo SDK 54 y los tokens existentes. Está pendiente de integración y despliegue; el diagrama anterior describe la arquitectura documental histórica, no el estado completo actual.
+
+Ver [el flujo y sus límites](#/flow-merchant-analytics). No hay fallback de métricas simuladas.
 
 ```mermaid
 flowchart LR

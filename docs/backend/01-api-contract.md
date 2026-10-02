@@ -7,12 +7,18 @@ parent: backend-review-index
 level: api
 status: target
 authority: proposal_codex
-summary: Mapa de dominios, convenciones HTTP y operaciones formalizadas en OpenAPI.
+summary: Contrato documental objetivo y lectura analítica por períodos en una entrega separada.
 diagram: true
 codeRefs: optional
 ---
 
 # Backend · Contrato API propuesto
+
+## Lectura analítica por períodos · entrega 01/10/2026
+
+La ruta fuente de esta entrega es `GET /v1/marcas/{brand_id}/metricas/periodo` con `period` requerido (`day`, `week`, `month`) y `date` opcional (`YYYY-MM-DD`, default hoy en zona de la marca). La respuesta usa el envelope existente y expone período/fecha/zona, límites inclusivo/exclusivo, tipo de programa, clientes atendidos, conteos y cantidades, y `series` de acumulaciones/canjes con ceros.
+
+Esta ruta conserva propietario vigente y rechaza fechas futuras o inputs inválidos. No cambia `metricas/resumen`, no introduce writes ni migraciones y no equivale a aprobar o implementar todo `PC-08`. El contrato completo reside en `openapi.yaml` de la rama `feat/analytics-periods-20261001` del backend dueño; integración y runtime pendientes. Ver [el flujo](#/flow-merchant-analytics).
 
 > **PROPUESTA CODEX `PC-02` a `PC-08`, `PC-12` a `PC-14`.** El archivo
 > [`openapi.yaml`](/openapi.yaml) es el contrato formal de transporte y debe revisarse

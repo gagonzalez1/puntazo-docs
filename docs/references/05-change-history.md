@@ -12,6 +12,12 @@ summary: Registro funcional de las actualizaciones de documentación y de los co
 
 # Historial de sincronizaciones documentales
 
+## 01/10/2026 · Recuperación analítica por períodos en fuente
+
+Se documenta la nueva lectura operativa diaria, semanal y mensual seleccionada por el usuario, con consolidación de marca, calendario de su zona horaria, autorización de propietario y series con ceros. Se preserva el resumen histórico. La implementación vive en ramas de los repositorios dueños y aún requiere integración y verificación de runtime; no se atribuye a testing ni se aprueba el alcance amplio `PC-08`.
+
+Se actualizan el flujo analítico, componentes frontend/backend, datos, matriz de integración, brechas y nota de contrato HTTP. Se conservan explícitos los documentos y diagramas históricos y el límite de métricas antiguas mock.
+
 Este historial explica **qué cambió y qué documentación se revisó**. No reemplaza a `git log`: agrega contexto funcional para humanos y LLM.
 
 ## Cómo registrar una actualización

@@ -5,13 +5,19 @@ group: 04 · Datos
 order: 10
 parent: overview
 level: data
-status: current
-summary: Tabla users real y estructuras mock que viven dentro del frontend.
+status: mixed
+summary: Modelo documental histórico y lecturas del ledger real para la entrega analítica.
 diagram: true
 codeRefs: required
 ---
 
 # Datos · Estado implementado
+
+## Lectura analítica por período · entrega 01/10/2026
+
+Esta entrega agrega lecturas reales de `historial_movimientos`, `tarjetas`, `marcas` y membresías vigentes. No crea tablas ni cambia saldos. Clientes atendidos es un conteo distinto de la identidad de cliente referida por la tarjeta; no equivale a tarjetas actualmente activas. Desactivar un cliente no borra las operaciones históricas del período. Las series cuentan acumulaciones y canjes confirmados, con ceros en intervalos sin actividad.
+
+El esquema y párrafos anteriores corresponden al estado histórico del portal; no describen la base actual de testing. Ver [el flujo implementado en la rama de trabajo](#/flow-merchant-analytics), pendiente de integración y despliegue.
 
 ```mermaid
 erDiagram

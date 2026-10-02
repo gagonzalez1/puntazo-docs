@@ -12,6 +12,12 @@ summary: Diferencias que deben permanecer visibles para evitar documentar propue
 
 # Brechas entre código y spec
 
+## Analíticas · entrega 01/10/2026
+
+La nueva rama de trabajo agrega vistas con datos operativos confirmados por día, semana y mes; su despliegue sigue pendiente. El resumen histórico ya existe en las fuentes actuales. El diseño antiguo de tres hojas usaba mocks: retención, fuga, frecuencia, recordatorios, importes y drill-down no forman parte de esta entrega real. Tampoco hay filtro por sucursal: el alcance es la marca completa y se informa en pantalla. `PC-08` permanece propuesta en su alcance amplio.
+
+Ver [el flujo y evidencia de fuente](#/flow-merchant-analytics). La tabla histórica de abajo no debe volver a usarse como inventario actual.
+
 ## Alcance de esta comparación · 01/10/2026
 
 El runtime de testing sirve `gagonzalez1/app-loyalty:testing` (`ecd69be`,
