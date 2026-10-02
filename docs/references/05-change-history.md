@@ -36,6 +36,7 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 - Actualizados C4, datos, matriz, brechas, flujos, secuencias, guía y fuentes. Agregadas arquitectura Backoffice y evidencia de runtime; conservados los slugs existentes.
 - Corregida propiedad de backend: `am-p/app-loyalty` integra producto; el fork testing publica. Preview Compose detenido queda como histórico.
 - Documentadas diferencias entre HEAD e imagen testing y configuración productiva pendiente. Spec/OpenAPI/PC-xx permanecen propuestos; ninguna decisión nueva de producto se aprueba en esta entrega.
+- Detectado y corregido catálogo retenido por caché del navegador: lectura con `cache: no-store` para mostrar una publicación nueva al recargar.
 - Portal versionado y catálogo regenerado; validaciones y publicación se registran también en el runbook operativo de la entrega.
 
 
