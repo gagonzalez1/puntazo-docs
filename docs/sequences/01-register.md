@@ -6,37 +6,47 @@ order: 10
 parent: sequences
 level: sequence
 status: current
-summary: Registro conectado de punta a punta, con rol CLIENTE_FINAL fijo en el backend actual.
+summary: Registro de cliente o comercio y verificación de email según configuración.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Secuencia · Registro por email
+# Registro por email
 
 ```mermaid
 sequenceDiagram
-    actor U as Usuario
-    participant UI as Pantalla auth
-    participant S as useAuthStore
-    participant API as API Go
-    participant DB as PostgreSQL
-    U->>UI: nombre, email, password
-    UI->>S: register(...)
-    S->>API: POST /auth/register
-    API->>API: valida + bcrypt
-    API->>DB: INSERT users rol CLIENTE_FINAL
-    DB-->>API: id_usuario
-    API->>API: firma JWT 24 h
-    API-->>S: 201 {token, usuario}
-    S->>S: guarda token + usuario
-    S-->>UI: usuario
-    UI->>UI: navega a subscription
+ participant U as Persona
+ participant F as Frontend
+ participant A as API
+ participant P as PostgreSQL
+ participant W as Outbox SMTP
+ U->>F: Datos y tipo de alta
+ alt Cliente
+ F->>A: POST /v1/auth/register
+ else Comercio
+ F->>A: POST /v1/demo/comercios + Idempotency-Key
+ end
+ A->>P: Usuario y datos de alta transaccionales
+ opt Verificación requerida
+ A->>P: Token hash y correo en outbox
+ W->>P: Leer y procesar correo
+ W-->>U: Enlace de verificación
+ end
+ A-->>F: Resultado y verification_required
+ alt Pendiente verificación
+ F-->>U: Verificar y luego ingresar
+ else Sesión emitida
+ F->>A: GET /v1/me y contextos
+ end
 ```
 
-El request sólo admite nombre, email y contraseña. El backend asigna `CLIENTE_FINAL`; por eso todavía no implementa el alta separada de `PERSONAL_MARCA` definida en el spec.
+El registro comercial crea contexto de marca/sucursal y programa. Una respuesta pendiente no se convierte en login. La configuración de altas y correo se verifica por ambiente; esta revisión no generó usuarios ni envió correos.
+
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Pantalla de autenticación](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(auth)/index.tsx#L31-L76)
-- [Handler RegisterUser](https://github.com/am-p/app-loyalty/blob/main/internal/handler/user.go#L23-L70)
-- [Hash y creación de usuario](https://github.com/am-p/app-loyalty/blob/main/internal/service/user.go#L19-L38)
+- [Implementación backend](https://github.com/am-p/app-loyalty/blob/main/internal/service/auth.go)
+- [Servicio frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/demo/services/demoService.ts)
+- [Cliente y refresh](https://github.com/gonzalotev/app-fidelidad/blob/main/src/core/api/client.ts)

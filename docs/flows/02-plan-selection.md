@@ -5,35 +5,35 @@ group: 02 · Flujos frontend
 order: 20
 parent: flow-auth
 level: flow
-status: mock
-summary: La selección de Gratis, Sellos o Puntos modifica Zustand y el perfil mock, sin persistencia backend.
+status: mixed
+summary: Tipo de cuenta, programa de fidelidad y suscripción tienen persistencia y responsabilidades distintas.
 diagram: true
 codeRefs: required
+authority: mixed
 ---
 
-# Frontend · Selección de plan
+# Programa y suscripción comercial
 
 ```mermaid
-flowchart LR
-    USER["Usuario elige plan"] --> SCREEN["subscription.tsx"]
-    SCREEN --> STORE["subscribe(plan)"]
-    STORE --> ROLE["Asigna rol local\nCLIENTE_FINAL o TIENDA"]
-    STORE --> SUB["Crea suscripción local"]
-    STORE --> PROFILE["Cambia beneficio mock"]
-    ROLE --> TABS["Tabs según GRATIS / comercio"]
-    SUB --> TABS
-
-    click TABS href "#/flow-merchant-navigation" "Ver navegación comercio"
-    click TABS href "#/flow-customer-navigation" "Ver navegación cliente"
+flowchart TD
+ A[Tipo de cuenta] --> C[Cliente final]
+ A --> M[Personal de marca]
+ M --> P[Programa SELLOS o PUNTOS]
+ P --> API[Alta o actualización en API]
+ API --> T[Trial y acceso de marca]
+ T --> S[Consulta de suscripción]
+ S --> CH[Checkout cuando proveedor disponible]
+ CH --> MP[Mercado Pago]
+ MP --> R[Resultado y webhook en API]
 ```
 
-No existe hoy un `POST` de suscripción. Tampoco se envía al backend si el registro corresponde a cliente final o personal de marca. Ésta es una diferencia deliberadamente visible con el contrato objetivo.
+Las pantallas de selección ya no modifican un plan mock global. El alta comercial y la edición del programa se persisten; la suscripción consulta `/v1/marcas/:id/suscripcion`. Checkout/cancelación usan claves idempotentes y el resultado se obtiene del servidor. El cobro depende de la configuración de Mercado Pago: testing lo habilita y producción observada lo deshabilita. No se confirma una suscripción sólo por navegar de regreso a la app.
+
+Cuenta, rol de membresía, programa y estado de cobro no son sinónimos. No se fijan precios comerciales en esta documentación.
+
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Pantalla y opciones de plan](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(auth)/subscription.tsx#L10-L114)
-- [Suscripción local y cambio de rol](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/store/useAuthStore.ts#L66-L98)
-
-## Contrato objetivo
-
-En el spec `v1.5-review`, el tipo de cuenta se declara al registrar; un cliente final no contrata una suscripción. La marca se crea en un paso posterior y Backoffice administra su suscripción por sucursales. Los precios, períodos y cambios están en `PROPUESTA CODEX PC-03`, todavía pendiente de aprobación.
+- [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/merchant/services/subscriptionService.ts)
+- [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)

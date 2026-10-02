@@ -5,43 +5,43 @@ group: 03 · Secuencias
 order: 50
 parent: sequences
 level: sequence
-status: mock
-summary: Secuencia local del scan actual y punto de corte donde debe incorporarse la API transaccional.
+status: current
+summary: Preview, escritura transaccional, idempotencia y actualización de tarjetas.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Secuencia · Escaneo actual
+# Confirmación de acumulación o canje
 
 ```mermaid
 sequenceDiagram
-    actor O as Operador
-    participant CAM as Expo Camera
-    participant HOOK as useProcessQrScan
-    participant MOCK as loyaltyService
-    participant MEM as Arrays en memoria
-    O->>CAM: escanea QR
-    CAM->>HOOK: token
-    HOOK->>MOCK: processQrScan(token, 101, 1, tipo)
-    MOCK->>MEM: buscar cliente y tarjeta
-    alt tarjeta ausente
-      MOCK->>MEM: crear tarjeta local
-    end
-    alt Sellos
-      MOCK->>MEM: +1 y reinicia al superar meta
-    else Puntos
-      MOCK->>MEM: +10 fijo
-    end
-    MOCK->>MEM: insertar movimiento local
-    MOCK-->>HOOK: movimiento
-    HOOK-->>O: éxito
+ participant F as Scanner
+ participant A as API
+ participant P as PostgreSQL
+ participant C as Cliente
+ F->>A: POST /v1/movimientos/preview con identidad y sucursal
+ A->>P: Validar permisos, saldo, programa y beneficio
+ A-->>F: Preview con vencimiento y saldos
+ F->>A: POST scan o canje + Idempotency-Key
+ A->>P: Transacción: validar preview, actualizar tarjeta y ledger
+ A->>P: Guardar respuesta idempotente y notificar tarjetas
+ A-->>F: Movimiento confirmado
+ opt Respuesta incierta
+ F->>A: GET /v1/movimientos/idempotencia/:key
+ A-->>F: Resultado persistido
+ end
+ P-->>A: Notificación de tarjeta
+ A-->>C: Evento SSE web autenticado
+ C->>A: Releer tarjetas y movimientos
 ```
 
-## Diferencia con el objetivo
+El saldo no se actualiza de forma autoritativa en memoria frontend. Se conserva la misma clave para resolver un resultado incierto. Los eventos avisan que hay que releer; no reemplazan el ledger ni permiten escribir offline.
 
-El futuro `POST /movimientos/scan` debe identificar marca y sucursal autorizadas, calcular puntos desde el importe, bloquear duplicados mediante idempotencia y escribir saldo más movimiento en una transacción.
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Hook de mutación](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/loyalty/hooks/useLoyalty.ts#L16-L30)
-- [Algoritmo local completo](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/loyalty/services/loyaltyService.ts#L101-L147)
+- [Implementación backend](https://github.com/am-p/app-loyalty/blob/main/internal/repository/movement.go)
+- [Servicio frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/demo/services/demoService.ts)
+- [Cliente y refresh](https://github.com/gonzalotev/app-fidelidad/blob/main/src/core/api/client.ts)

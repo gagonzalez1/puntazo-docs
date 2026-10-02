@@ -13,6 +13,9 @@ diagram: true
 
 # Datos · Modelo objetivo v1.5-review
 
+> **Alcance del 02/10/2026:** este diseño conserva sus acuerdos y propuestas originales. La implementación evolucionó: consultar [datos actuales](#/data-current), [integración real](#/integration-matrix) y [estado observado](#/runtime-snapshot). La coincidencia con código no aprueba automáticamente una decisión `PC-xx` ni convierte todo el spec/OpenAPI en contrato desplegado.
+
+
 > Este diagrama **no representa migraciones implementadas**. Es la propuesta consolidada en `BACKEND_SPEC_CORREGIDO.md` para orientar el desarrollo.
 
 ```mermaid

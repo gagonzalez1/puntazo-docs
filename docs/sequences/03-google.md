@@ -6,39 +6,36 @@ order: 30
 parent: sequences
 level: sequence
 status: current
-summary: Verifica el ID token, enlaza por email o crea un usuario y devuelve un JWT propio.
+summary: Google ID token, validación backend y sesión propia con tipo de cuenta.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Secuencia · Acceso con Google
+# Acceso con Google
 
 ```mermaid
 sequenceDiagram
-    actor U as Usuario
-    participant APP as App Expo
-    participant API as API Go
-    participant G as Google Identity
-    participant DB as PostgreSQL
-    U->>APP: continuar con Google
-    APP->>API: POST /auth/google {id_token}
-    API->>G: validar token + audience
-    G-->>API: sub, email verificado, nombre
-    API->>DB: buscar por google_id
-    alt ya vinculado
-      DB-->>API: usuario
-    else existe el email
-      API->>DB: vincular google_id
-    else usuario nuevo
-      API->>DB: INSERT sin password_hash
-    end
-    API-->>APP: {token, usuario}
+ participant F as Frontend
+ participant G as Google
+ participant A as API
+ participant P as PostgreSQL
+ F->>G: Obtener ID token
+ G-->>F: ID token
+ F->>A: POST /v1/auth/google y opciones de alta
+ A->>G: Validar identidad y audiencia
+ A->>P: Resolver cuenta o alta según reglas
+ A->>P: Persistir sesión
+ A-->>F: Sesión propia y resultado de cuenta
+ F->>A: GET /v1/me y marcas si corresponden
 ```
 
-La vinculación prioriza `google_id`, luego email. El usuario nuevo recibe también el rol fijo `CLIENTE_FINAL`.
+La API distingue cuenta existente y alta, incluidos datos comerciales cuando el flujo los requiere. Los fallbacks legacy no aceptan degradar una selección de tipo/alta comercial a un contrato que no la soporta. No se probó una autenticación Google real durante este corte.
+
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Endpoint frontend Google](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/services/authService.ts#L96-L105)
-- [Orquestación Google en servicio](https://github.com/am-p/app-loyalty/blob/main/internal/service/user.go#L60-L95)
-- [Validación de ID token](https://github.com/am-p/app-loyalty/blob/main/internal/auth/google.go#L13-L37)
+- [Implementación backend](https://github.com/am-p/app-loyalty/blob/main/internal/service/auth.go)
+- [Servicio frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/demo/services/demoService.ts)
+- [Cliente y refresh](https://github.com/gonzalotev/app-fidelidad/blob/main/src/core/api/client.ts)

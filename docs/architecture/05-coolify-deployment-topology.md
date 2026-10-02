@@ -14,8 +14,7 @@ diagram: true
 # Topología desplegada · Coolify
 
 Esta vista resume cómo están distribuidos los recursos de Puntazo en Coolify.
-La información corresponde al inventario operativo del **2 de octubre de
-2026**; describe ese corte y no reemplaza una lectura en vivo del panel.
+La distribución se volvió a comprobar el **02/10/2026, 22:10 UTC**, mediante API oficial de Coolify y runtime Docker. Describe ese corte; el panel puede cambiar después. Ver [versiones y configuración observadas](#/runtime-snapshot).
 
 El portal es público. Por eso muestra funciones y conexiones, pero omite IP de
 administración, credenciales, UUID de Coolify, nombres de redes internas y otros
@@ -108,3 +107,9 @@ identificadores y procedimientos internos. Al cambiar un recurso, actualizar
 primero el inventario de Coolify y después esta página para conservar sus
 relaciones y estados. Las ramas y SHA de builds son evidencia de cada despliegue;
 no son selectores para el siguiente.
+
+## Configuración de API por ambiente
+
+Testing usa Redis, media S3/MinIO, SMTP y Mercado Pago configurado. En producción, las variables de rate limit, media y cobro están ausentes y el código aplica `memory`, `disabled` y `disabled`; SMTP está configurado. `APP_ENV` tampoco está declarado como producción. La existencia de los recursos de datos no demuestra consumo por la API. Ambos `/version` informan esquema `0033`.
+
+La UI testing y su landing tienen cambios PWA integrados en las ramas que aún no están en las imágenes de este corte. Docs/legal tienen ciclo de publicación independiente. [Procedimiento para actualizar Docs](#/documentation-sync-plan).

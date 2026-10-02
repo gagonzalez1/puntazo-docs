@@ -14,6 +14,9 @@ codeRefs: optional
 
 # Backend para Puntazo — spec corregido
 
+> **Alcance del 02/10/2026:** este diseño conserva sus acuerdos y propuestas originales. La implementación evolucionó: consultar [datos actuales](#/data-current), [integración real](#/integration-matrix) y [estado observado](#/runtime-snapshot). La coincidencia con código no aprueba automáticamente una decisión `PC-xx` ni convierte todo el spec/OpenAPI en contrato desplegado.
+
+
 Estado: **borrador consolidado para revisión del equipo**  
 Versión: `v1.5-review`  
 Fecha: **19 de agosto de 2026**

@@ -5,29 +5,28 @@ group: 02 · Flujos frontend
 order: 210
 parent: customer-flows
 level: flow
-status: mixed
-summary: El plan GRATIS habilita Mi Tarjeta, Tarjetas y Mi Perfil.
+status: current
+summary: Navegación del cliente por tipo de cuenta, sin un plan Gratis local como permiso.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Cliente · Navegación
+# Navegación del cliente
 
 ```mermaid
-flowchart LR
-    SESSION["Usuario con suscripción local GRATIS"] --> QR["Mi Tarjeta"]
-    SESSION --> CARDS["Tarjetas"]
-    SESSION --> PROFILE["Mi Perfil"]
-
-    click QR href "#/flow-customer-passport" "Abrir pasaporte QR"
-    click CARDS href "#/flow-customer-cards" "Abrir tarjetas"
-    click PROFILE href "#/flow-customer-profile" "Abrir perfil"
+flowchart TD
+ ME[Cuenta activa CLIENTE_FINAL] --> QR[Mi Tarjeta]
+ ME --> C[Tarjetas de fidelidad]
+ ME --> P[Mi Perfil]
+ C --> H[Actividad de movimientos]
 ```
 
-La navegación funciona, aunque el guard depende de una suscripción `GRATIS` creada localmente. En el modelo objetivo el cliente final es gratuito y no tiene suscripción.
+El layout usa `account_type` y sesión activa. El perfil comercial no se habilita con un cambio local de plan. Las lecturas cliente se hacen con la sesión autenticada y el servidor restringe usuario y tarjeta.
 
-La barra inferior comparte la paleta fija de Puntazo con el recorrido comercial. El cambio `afec4792` no altera las tres tabs del cliente ni su lógica de selección; sólo unifica la presentación visual.
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Tabs, paleta y criterio de plan](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/_layout.tsx#L13-L139)
+- [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/_layout.tsx)
+- [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)

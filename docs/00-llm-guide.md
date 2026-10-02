@@ -32,9 +32,11 @@ Para obtener contexto suficiente sin cargar toda la documentación:
 3. [`docs/00-overview.md`](#/overview) — mapa general y accesos a cada dominio.
 4. [`docs/architecture/02-containers.md`](#/c4-containers) — límites entre app, API, base de datos y proveedores.
 5. [`docs/architecture/05-coolify-deployment-topology.md`](#/coolify-deployment-topology) — recursos desplegados por ambiente y sus conexiones.
-6. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — qué está conectado y qué continúa simulado.
+6. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — conexiones reales y configuración por ambiente.
 7. [`docs/references/02-gaps.md`](#/implementation-gaps) — brechas que no deben confundirse con comportamiento actual.
 8. [`docs/backend/00-review-index.md`](#/backend-review-index) — decisiones de backend propuestas por Codex que requieren aprobación.
+
+El corte actual es del **02/10/2026**: [estado observado](#/runtime-snapshot) y [topología](#/coolify-deployment-topology). La implementación funcional reemplazó la antigua base de mocks; los documentos objetivo siguen propuestos.
 
 Después se debe abrir el flujo, la secuencia o el modelo de datos específico de la tarea.
 
@@ -49,6 +51,8 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 5. [`docs/references/05-change-history.md`](#/documentation-change-history) — historial funcional de cada sincronización documental aceptada.
 6. [`docs/00-overview.md`](#/overview) — puerta de entrada al mapa completo.
 
+7. [`docs/references/06-runtime-snapshot.md`](#/runtime-snapshot) — versiones, configuración y diferencias de publicación verificadas.
+
 ### 1. Arquitectura del sistema
 
 5. [`docs/architecture/01-context.md`](#/c4-context) — actores, Puntazo y sistemas externos.
@@ -57,9 +61,11 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 8. [`docs/architecture/04-backend-components.md`](#/backend-components) — capas y componentes implementados en Go.
 9. [`docs/architecture/05-coolify-deployment-topology.md`](#/coolify-deployment-topology) — topología desplegada en VPS, corte operativo del 02/10/2026.
 
+10. [`docs/architecture/06-backoffice.md`](#/backoffice-architecture) — UI interna, sesiones, API y límites por ambiente.
+
 ### 2. Estado real de datos e integración
 
-9. [`docs/data/01-current.md`](#/data-current) — tabla real y estructuras mock actuales.
+9. [`docs/data/01-current.md`](#/data-current) — modelo persistido en PostgreSQL 0033.
 10. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — relación pantalla–API y contratos faltantes.
 11. [`docs/references/02-gaps.md`](#/implementation-gaps) — diferencias entre código, documentación y propuesta.
 
@@ -75,7 +81,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 
 12. [`docs/flows/00-frontend-flows.md`](#/frontend-flows) — índice de recorridos del frontend.
 13. [`docs/flows/01-auth.md`](#/flow-auth) — acceso, onboarding y restauración.
-14. [`docs/flows/02-plan-selection.md`](#/flow-plan-selection) — selección de plan todavía local.
+14. [`docs/flows/02-plan-selection.md`](#/flow-plan-selection) — programa y suscripción con persistencia y proveedor configurable.
 15. [`docs/flows/10-merchant-index.md`](#/merchant-flows) — índice del personal del comercio.
 16. [`docs/flows/11-merchant-navigation.md`](#/flow-merchant-navigation) — navegación comercial.
 17. [`docs/flows/12-merchant-customers.md`](#/flow-merchant-customers) — clientes del comercio.
@@ -86,7 +92,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 22. [`docs/flows/21-customer-navigation.md`](#/flow-customer-navigation) — navegación del cliente.
 23. [`docs/flows/22-customer-passport.md`](#/flow-customer-passport) — identidad y pasaporte QR.
 24. [`docs/flows/23-customer-cards.md`](#/flow-customer-cards) — tarjetas de fidelidad.
-25. [`docs/flows/24-customer-profile.md`](#/flow-customer-profile) — perfil real y campos derivados.
+25. [`docs/flows/24-customer-profile.md`](#/flow-customer-profile) — perfil versionado, foto, cambio de email y baja.
 
 ### 5. Secuencias de ejecución
 
@@ -95,7 +101,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 28. [`docs/sequences/02-login.md`](#/sequence-login) — login por email.
 29. [`docs/sequences/03-google.md`](#/sequence-google) — acceso con Google.
 30. [`docs/sequences/04-restore.md`](#/sequence-restore) — restauración de sesión.
-31. [`docs/sequences/05-scan.md`](#/sequence-scan) — escaneo actual y corte hacia la futura API.
+31. [`docs/sequences/05-scan.md`](#/sequence-scan) — preview, confirmación transaccional e idempotencia.
 
 ### 6. Diseño objetivo
 

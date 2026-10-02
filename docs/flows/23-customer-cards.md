@@ -5,36 +5,30 @@ group: 02 · Flujos frontend
 order: 230
 parent: customer-flows
 level: flow
-status: mock
-summary: Las tarjetas pertenecen siempre al cliente mock 501 y se combinan con marcas locales.
+status: current
+summary: Tarjetas del usuario, beneficios y movimientos con lectura real y actualización.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Cliente · Tarjetas de fidelidad
+# Tarjetas de fidelidad
 
 ```mermaid
-flowchart LR
-    SCREEN["Tarjetas"] --> SERVICE["getMyLoyaltyCards"]
-    SERVICE --> CLIENT["Cliente fijo 501"]
-    SERVICE --> OWN["Perfil de tienda local"]
-    SERVICE --> ASSOCIATED["Marcas asociadas mock"]
-    CLIENT --> JOIN["Une tarjetas + apariencia"]
-    OWN --> JOIN
-    ASSOCIATED --> JOIN
-    JOIN --> CAROUSEL["Tarjetas visibles"]
-
-    click SERVICE href "#/data-current" "Ver estructuras mock"
-    click JOIN href "#/data-target" "Ver tarjeta objetivo usuario–marca"
+flowchart TD
+ U[Usuario autenticado] --> API[GET /v1/clientes/me/tarjetas]
+ API --> C[Tarjetas de sus marcas]
+ C --> B[Saldo SELLOS/PUNTOS y beneficios]
+ C --> H[Historial por tarjeta]
+ H --> M[GET movimientos de tarjeta]
+ E[SSE web o refresco de consultas] --> API
 ```
 
-El usuario autenticado no determina las tarjetas mostradas. El ID `501` es constante hasta que exista un endpoint de tarjetas del cliente.
+El servicio recorre páginas de tarjetas del usuario. El historial consulta una tarjeta autorizada; sus saldos y snapshots provienen del ledger. Logos/imágenes usan URLs temporales cuando media está disponible, con fallback visual si la firma falla. No hay un cliente fijo `501` compartido por las cuentas.
+
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Pantalla de tarjetas](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/my-loyalty-cards/index.tsx#L1-L120)
-- [Cliente fijo y composición local](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/services/authService.ts#L42-L150)
-
-## API objetivo
-
-`GET /clientes/me/tarjetas` debe resolver la identidad desde el JWT y devolver una tarjeta por marca, con saldos compartidos entre sus sucursales.
+- [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/demo/services/demoService.ts)
+- [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)

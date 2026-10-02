@@ -6,23 +6,25 @@ order: 0
 parent: overview
 level: hub
 status: current
-summary: Interacciones temporales relevantes entre pantalla, frontend, API, proveedores y datos.
+summary: Secuencias actuales de identidad, sesión y movimientos persistidos.
 diagram: true
+authority: source_code
 ---
 
-# Secuencias principales
+# Secuencias de ejecución
 
 ```mermaid
 flowchart LR
-    REGISTER["Registro"]
-    LOGIN["Login"]
-    GOOGLE["Google Auth"]
-    RESTORE["Restaurar sesión"]
-    SCAN["Escaneo QR"]
-
-    click REGISTER href "#/sequence-register" "Abrir registro"
-    click LOGIN href "#/sequence-login" "Abrir login"
-    click GOOGLE href "#/sequence-google" "Abrir Google"
-    click RESTORE href "#/sequence-restore" "Abrir restauración"
-    click SCAN href "#/sequence-scan" "Abrir escaneo"
+ A[Secuencias actuales] --> R[Registro]
+ A --> L[Login]
+ A --> G[Google]
+ A --> S[Restauración]
+ A --> M[Acumulación y canje]
+ click R href "#/sequence-register" "Abrir registro"
+ click L href "#/sequence-login" "Abrir login"
+ click G href "#/sequence-google" "Abrir Google"
+ click S href "#/sequence-restore" "Abrir restauración"
+ click M href "#/sequence-scan" "Abrir movimientos"
 ```
+
+Estas vistas describen las rutas reales de las fuentes revisadas. Para saber qué configuración está publicada, leer [Estado observado](#/runtime-snapshot).

@@ -6,41 +6,41 @@ order: 10
 parent: overview
 level: context
 status: current
-summary: Personas, sistema Puntazo y dependencias externas observadas en el código.
+summary: Clientes, personal de comercios, administración y proveedores del sistema actual.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# C4 · Contexto del sistema
+# C4 · Contexto
 
-Puntazo conecta clientes finales y comercios mediante una aplicación Expo. El backend Go ofrece hoy únicamente identidad y sesión. Las funciones de fidelidad continúan dentro de servicios mock del frontend.
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ```mermaid
 flowchart LR
-    CUSTOMER["Persona · Cliente final"]
-    STAFF["Persona · Personal del comercio"]
-    PUNTAZO["Sistema · Puntazo\nApp móvil/web + API"]
-    GOOGLE["Sistema externo · Google Identity"]
-    POSTGRES["Sistema externo · PostgreSQL 16"]
-
-    CUSTOMER -->|"consulta QR y tarjetas"| PUNTAZO
-    STAFF -->|"gestiona clientes, marca y escaneos"| PUNTAZO
-    PUNTAZO -->|"valida ID token"| GOOGLE
-    PUNTAZO -->|"persiste usuarios"| POSTGRES
-
-    click PUNTAZO href "#/c4-containers" "Ver contenedores"
-    click CUSTOMER href "#/customer-flows" "Ver flujos de cliente"
-    click STAFF href "#/merchant-flows" "Ver flujos de comercio"
+ C[Cliente final] --> P[Puntazo · fidelidad]
+ M[Personal de marca] --> P
+ A[Administración interna] --> B[Backoffice]
+ B --> P
+ P --> G[Google Identity]
+ P --> E[Correo SMTP]
+ P --> MP[Mercado Pago · según configuración]
+ P --> GP[Google Places y reseñas · según configuración]
+ P --> X[Expo Push · dispositivos registrados]
+ D[Portal Docs] -. describe .-> P
+ L[Sitio legal] -. documentos publicados .-> P
+ click P href "#/c4-containers" "Ver contenedores"
+ click B href "#/backoffice-architecture" "Ver Backoffice"
 ```
 
-## Estado observado
+- El cliente consulta su QR, tarjetas y movimientos. El personal acumula sellos/puntos y confirma canjes según su membresía y sucursal.
+- `tipo_cuenta` identifica la cuenta; el rol pertenece a una membresía. El programa de fidelidad y la suscripción comercial son conceptos distintos.
+- Backoffice administra clientes comerciales, precios y referidos con sesiones y roles propios.
+- Google autentica identidad. Places ayuda a configurar el destino de reseñas; abrir ese destino no demuestra una reseña publicada.
+- Docs y legales tienen despliegues independientes. Publicar un documento legal no acredita aprobación jurídica.
 
-- La app llama realmente a `/auth/register`, `/auth/login`, `/auth/google` y `/me`.
-- Tarjetas, tienda, escaneo, perfil y analíticas se resuelven en memoria dentro del frontend.
-- El backend sólo crea y consulta la tabla `users`.
 
 ## Referencias de código
 
-- [Registro de rutas HTTP del backend](https://github.com/am-p/app-loyalty/blob/main/cmd/server/main.go#L43-L51)
-- [Cliente HTTP central del frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/core/api/client.ts#L25-L84)
-- [Servicios mock de fidelidad](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/loyalty/services/loyaltyService.ts#L84-L146)
+- [Rutas y límites de acceso](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
+- [Integraciones y workers](https://github.com/am-p/app-loyalty/blob/main/cmd/server/main.go)

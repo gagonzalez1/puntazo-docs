@@ -5,33 +5,32 @@ group: 02 · Flujos frontend
 order: 240
 parent: customer-flows
 level: flow
-status: mixed
-summary: Lee identidad real desde GET /me y completa alias, foto y fechas con valores derivados.
+status: current
+summary: Perfil versionado, foto, cambio de email, exportación y baja persistidos.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Cliente · Perfil
+# Perfil del cliente
 
 ```mermaid
-flowchart LR
-    SCREEN["Mi Perfil"] --> SERVICE["getMyProfile"]
-    SERVICE --> ME["GET /me real"]
-    ME --> MAP["clienteFromUsuario"]
-    MAP --> REAL["id, email, nombre"]
-    MAP --> DERIVED["apellido, alias, QR"]
-    MAP --> EMPTY["foto y fecha vacías"]
-    REAL --> VIEW["Perfil visible"]
-    DERIVED --> VIEW
-    EMPTY --> VIEW
-
-    click ME href "#/backend-components" "Ver backend"
-    click MAP href "#/implementation-gaps" "Ver campos pendientes"
+flowchart TD
+ P[Mi Perfil] --> ME[GET /v1/me]
+ ME --> E[Editar nombre, apellido o alias]
+ E --> U[PATCH /v1/me con versión]
+ ME --> F[Consultar o subir foto]
+ ME --> C[Cambio de email con confirmación]
+ ME --> X[Exportar cuenta]
+ ME --> D[Baja con confirmación]
+ D --> B[Anonimizar, revocar acceso y conservar ledger]
 ```
 
-La lectura básica está conectada. La edición completa y los campos específicos de cliente aún no tienen contrato persistente.
+`profileService` consulta identidad real y envía mutaciones con precondición de versión. El cambio de email requiere autenticación reciente y correo de confirmación. La baja no borra el ledger; el backend puede detenerla si hay un cobro pendiente de conciliación. Foto depende del proveedor de media del ambiente. Las fechas/identidad no se rellenan como fixtures compartidas.
+
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Pantalla Mi Perfil](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/my-profile/index.tsx#L1-L140)
-- [Mapeo híbrido desde usuario](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/services/authService.ts#L46-L62)
+- [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/profile/services/profileService.ts)
+- [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)

@@ -29,6 +29,16 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-02 — Arquitectura vigente y topología por ambiente
+
+- Revisión desde ramas actuales en checkouts limpios; API oficial de Coolify, imágenes, endpoints de versión y 41 tablas por base comprobados. [Evidencia completa](#/runtime-snapshot).
+- Reemplazados los flujos y diagramas del baseline de agosto con servicios reales de comercio, fidelidad, sesiones, datos, suscripción y administración.
+- Actualizados C4, datos, matriz, brechas, flujos, secuencias, guía y fuentes. Agregadas arquitectura Backoffice y evidencia de runtime; conservados los slugs existentes.
+- Corregida propiedad de backend: `am-p/app-loyalty` integra producto; el fork testing publica. Preview Compose detenido queda como histórico.
+- Documentadas diferencias entre HEAD e imagen testing y configuración productiva pendiente. Spec/OpenAPI/PC-xx permanecen propuestos; ninguna decisión nueva de producto se aprueba en esta entrega.
+- Portal versionado y catálogo regenerado; validaciones y publicación se registran también en el runbook operativo de la entrega.
+
+
 ### 2026-08-21 — Paleta fija en la navegación del frontend
 
 | Campo | Registro |

@@ -6,26 +6,30 @@ order: 40
 parent: documented-commits
 level: reference
 status: current
-summary: Revisar cambios en los repositorios fuente sin bloquear la documentación a un SHA.
+summary: Edición compartida de Markdown en GitHub y publicación del portal desde main.
+authority: source_code
+diagram: false
 ---
-# Actualización documental con ramas vigentes
 
-El portal documental sigue el código y las decisiones aceptadas; no define la
-versión que se compila o despliega. No existe un archivo de bloqueo de fuentes ni
-un job que compare las ramas con un SHA guardado en este repositorio.
+# Actualizar el recurso compartido Puntazo Docs
 
-## Flujo de revisión
+La fuente compartida es el [repositorio puntazo-docs](https://github.com/gagonzalez1/puntazo-docs) y la publicación es [docs.puntazo.pro](https://docs.puntazo.pro). El contenido se puede leer como Markdown o navegar en el portal. La VPS ejecuta una copia construida desde GitHub.
 
-1. Consultar los HEAD remotos de las ramas activas de frontend, backend y preview.
-2. Consultar `/api/v1/version` y `/api/v1/health/ready` cuando la afirmación
-   se refiera al ambiente de testing.
-3. Revisar diffs desde la última revisión documental y abrir un PR con las
-   vistas C4, flujos, secuencias, datos y brechas realmente afectadas.
-4. Mantener `ACORDADO`, `PROPUESTA CODEX`, `target`, `mixed` y `gap` con su
-   significado original; un cambio de código no aprueba una decisión de producto.
-5. Regenerar el catálogo a partir de Markdown. Los enlaces a código apuntan a
-   ramas móviles y se revisan durante el PR.
+## Actualización simple
 
-El historial de un build o despliegue conserva su SHA como evidencia de
-trazabilidad. La siguiente entrega vuelve a resolver el HEAD remoto de su rama;
-nunca lee ese SHA histórico como entrada.
+1. Editar el Markdown en `docs/` desde un checkout actual o el editor de GitHub en una rama. Conservar el `id` para mantener enlaces compartidos.
+2. Verificar las fuentes dueñas y el runtime del ambiente afectado. Actualizar vistas C4, flujos, secuencias, datos e integraciones cuya verdad cambió.
+3. Mantener el índice `docs/00-llm-guide.md` completo, con cada ruta documental. Registrar fuentes y evidencia fechada; omitir secretos y datos personales.
+4. En un checkout limpio de la rama publicada, instalar dependencias con `npm ci`. Regenerar `npm run content:build` y revisar el diff. El catálogo no se edita a mano.
+5. Versionar Markdown/catálogo; ejecutar `npm test` desde el HEAD remoto limpio y comprobar navegación escritorio/móvil. Proponer e integrar la rama en `main` según el flujo de revisión vigente.
+6. El webhook de `main` solicita el build en Coolify. Confirmar finalización e imagen del commit, salud y catálogo público; un webhook 200 sólo acredita recepción.
+7. Registrar la entrega y el rollback en el runbook privado de infraestructura. El acceso operativo de Coolify queda fuera del portal público.
+
+## Recuperación y lectura por agentes
+
+- Rollback: revertir el cambio documental en una rama, integrar a `main`, resolver su nuevo HEAD y redesplegar. No reutilizar un SHA histórico como fuente de una entrega nueva.
+- Para contexto: empezar por [guía LLM](#/markdown-index), [fuentes](#/documented-commits), [estado observado](#/runtime-snapshot) y el Markdown específico. GitHub conserva versiones y permite edición compartida.
+- El portal genera [catálogo navegable](https://docs.puntazo.pro/generated/catalog.json) con el Markdown fuente, los metadatos y diagramas. Leerlo no reemplaza la comprobación del código y runtime.
+- `openapi.yaml` y el spec objetivo mantienen su autoridad propuesta hasta una reconciliación explícita. No se aprueban decisiones por copiar una implementación.
+
+No hay sincronización automática de arquitectura con Coolify: las publicaciones son automáticas desde main, pero el contenido requiere esta revisión de evidencia.

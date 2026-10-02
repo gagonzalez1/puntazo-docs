@@ -23,9 +23,9 @@ summary: Cómo interpretar estados, trazabilidad y precedencia sin confundir có
 | Estado | Interpretación |
 |---|---|
 | Implementado | Existe en el código y, cuando corresponde, cruza la API o persiste |
-| Mixto | Parte real y parte mock/derivada |
+| Mixto | La vista combina implementación, configuración por ambiente o elementos pendientes |
 | Mock | Funciona sólo con estado o datos locales |
-| Propuesto | Contrato o modelo objetivo sin implementación equivalente |
+| Propuesto | Diseño objetivo cuya aprobación y equivalencia con implementación deben comprobarse |
 | Brecha | Comparación que requiere una decisión o desarrollo |
 
 ## Significado de autoridad
@@ -42,7 +42,7 @@ summary: Cómo interpretar estados, trazabilidad y precedencia sin confundir có
 
 - No inferir que un endpoint del spec existe: confirmarlo en C4 Backend o la matriz pantalla–API.
 - No usar `rol`, `plan` y `tipo_cuenta` como sinónimos.
-- No traducir automáticamente `tienda` mock a `marca`: el modelo objetivo agrega sucursales, membresías y permisos.
+- Verificar los límites marca–sucursal, membresías y permisos en el modelo implementado; no trasladar automáticamente contratos legacy.
 - Cada afirmación técnica debería enlazar al código de la rama vigente o declararse expresamente como propuesta.
 - Al actualizar un flujo, revisar sus vistas hijas, la matriz de integración y el documento de brechas.
 - No presentar una `PROPUESTA CODEX PC-xx` como decisión del equipo aunque figure en OpenAPI.

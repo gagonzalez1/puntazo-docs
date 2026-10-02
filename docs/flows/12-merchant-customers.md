@@ -5,36 +5,30 @@ group: 02 · Flujos frontend
 order: 120
 parent: merchant-flows
 level: flow
-status: mock
-summary: Listado, búsqueda y acciones visuales sobre tarjetas cargadas desde arrays locales.
+status: current
+summary: Clientes reales por marca con búsqueda, paginación y acciones hacia el scanner.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Comercio · Clientes
+# Clientes del comercio
 
 ```mermaid
 flowchart LR
-    SCREEN["Pantalla Clientes"] --> QUERY["useStoreCustomers(1)"]
-    QUERY --> SERVICE["loyaltyService"]
-    SERVICE --> CARDS["mockCards"]
-    SERVICE --> PEOPLE["mockCustomers"]
-    CARDS --> JOIN["Une tarjeta + cliente"]
-    PEOPLE --> JOIN
-    JOIN --> LIST["Lista buscable"]
-    LIST --> ACTIONS["Ver / agregar / canjear\nUI sin contrato persistido"]
-
-    click SERVICE href "#/data-current" "Ver datos actuales"
-    click ACTIONS href "#/integration-matrix" "Ver matriz de integración"
+ C[Marca seleccionada] --> Q[Consulta paginada con búsqueda]
+ Q --> API[GET /v1/marcas/:id/clientes]
+ API --> P[(Tarjetas y usuarios)]
+ API --> L[Listado, vacío o error]
+ L --> S[Identificar y operar en Scanner]
+ click S href "#/flow-merchant-scanner" "Ver scanner"
 ```
 
-La tienda está fijada a `id_tienda = 1`; los filtros y los cambios sólo afectan la experiencia local.
+`merchantService.customers` envía `page`, `page_size` y búsqueda acotada. El listado pertenece a la marca autorizada y proviene de PostgreSQL. Las acciones de acumulación/canje terminan en el flujo transaccional; editar el listado no cambia el saldo.
+
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Pantalla de clientes](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/customers/index.tsx#L78-L155)
-- [Join sobre mocks](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/loyalty/services/loyaltyService.ts#L87-L99)
-
-## API objetivo
-
-`GET /marcas/{id_marca}/clientes` deberá devolver tarjetas y saldos consolidados de la marca, con autorización por membresía.
+- [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/merchant/services/merchantService.ts)
+- [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)

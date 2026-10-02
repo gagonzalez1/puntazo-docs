@@ -5,31 +5,38 @@ group: 02 · Flujos frontend
 order: 10
 parent: frontend-flows
 level: flow
-status: mixed
-summary: Registro, login, Google, selección de plan y restauración de sesión.
+status: current
+summary: Acceso e identidad con API, verificación y selección de contexto.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Frontend · Acceso y onboarding
+# Autenticación y onboarding
 
 ```mermaid
-flowchart LR
-    FORM["Pantalla auth"] --> STORE["useAuthStore"]
-    STORE --> SERVICE["authService"]
-    SERVICE --> API["API Go real"]
-    API --> PLAN["Pantalla subscription"]
-    PLAN --> LOCAL["subscribe() local\nrol + plan en memoria"]
-    LOCAL --> TABS["Tabs según plan"]
-
-    click API href "#/sequence-register" "Ver registro backend"
-    click PLAN href "#/flow-plan-selection" "Ver selección de plan"
+flowchart TD
+ A[Login] --> E[Email y contraseña]
+ A --> G[Google ID token]
+ A --> R[Alta cliente o comercio]
+ R --> V[Verificación cuando se requiere]
+ E --> API[API · sesión]
+ G --> API
+ V --> E
+ API --> ME[GET /v1/me]
+ ME --> C{Tipo de cuenta y membresías}
+ C --> U[Cliente · Mi Tarjeta]
+ C --> M[Comercio · contexto y sucursal]
+ M --> P[Programa o acceso comercial pendiente]
 ```
 
-La autenticación es real. La selección de plan posterior al login es local y todavía no llama al backend.
+El alta de cliente usa `/v1/auth/register`; el alta comercial usa `/v1/demo/comercios`, con clave idempotente. Google tiene su propia validación y selección de tipo cuando corresponde. Si la respuesta requiere verificar email, el frontend conserva el resultado pendiente y no inventa una sesión. Tras login consulta identidad y marcas. Primer login/trial se registran en backend; no se reinician desde una selección local.
+
+Ver [registro](#/sequence-register), [login](#/sequence-login), [Google](#/sequence-google) y [restauración](#/sequence-restore).
+
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [La pantalla navega siempre a suscripción](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(auth)/index.tsx#L31-L76)
-- [Auth service conectado](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/services/authService.ts#L82-L121)
-- [Mutación local de plan y rol](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/store/useAuthStore.ts#L66-L98)
+- [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/store/useAuthStore.ts)
+- [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)

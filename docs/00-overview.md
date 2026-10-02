@@ -14,7 +14,7 @@ diagram: true
 
 Documentación independiente y navegable del estado real de Puntazo. Los archivos Markdown y sus bloques Mermaid son la fuente de verdad; la aplicación web sólo los transforma en una experiencia visual.
 
-El mapa distingue **implementado**, **mock** y **propuesto** para no confundir el código actual con el spec de destino.
+El mapa distingue **implementado**, **desplegado**, **pendiente** y **propuesto** para no confundir el código actual con el spec de destino.
 
 ```mermaid
 flowchart LR
@@ -57,3 +57,7 @@ Use los nodos del diagrama para profundizar. La barra lateral permite saltar dir
 La [topología desplegada en Coolify](#/coolify-deployment-topology) resume los
 recursos de producción y testing, incluidos los servicios separados de
 Backoffice.
+
+## Corte actual · 02/10/2026
+
+API y bases en esquema `0033`, servicios funcionales de comercio/fidelidad y UI Backoffice testing activa. Hay diferencias de configuración y publicación entre ambientes. Empezar por [estado observado](#/runtime-snapshot), [matriz de integración](#/integration-matrix) y [brechas](#/implementation-gaps). Para editar y compartir este recurso, ver [actualización documental](#/documentation-sync-plan).

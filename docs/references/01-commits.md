@@ -7,30 +7,29 @@ parent: overview
 level: reference
 status: current
 authority: source_code
-summary: Cómo resolver la última revisión de la rama activa y comprobar qué versión está desplegada.
+summary: Repositorios dueños, ramas por ambiente y evidencia separada del runtime.
+diagram: false
 ---
+
 # Fuentes y versiones actuales
 
-La documentación no bloquea ningún repositorio en un SHA. Una entrega toma el
-HEAD remoto de la rama de integración elegida en ese momento. Si hay una rama de
-trabajo más reciente todavía sin integrar, primero se decide su promoción; la
-fecha de un commit en otra rama no la convierte automáticamente en release.
+Las ramas seleccionan fuentes; los SHA registran lo inspeccionado o desplegado. Un checkout histórico, una rama de trabajo o el tag `latest` no prueba integración ni publicación.
 
-| Plano | Repositorio | Comprobación actual |
+| Plano | Repositorio y ramas | Responsabilidad |
 |---|---|---|
-| Frontend | [app-fidelidad](https://github.com/gonzalotev/app-fidelidad) | HEAD remoto de la rama de integración seleccionada para la entrega |
-| Backend | [app-loyalty](https://github.com/gagonzalez1/app-loyalty) | HEAD remoto de la rama de integración seleccionada para la entrega |
-| Candidato de testing | [puntazo-preview, rama testing](https://github.com/gagonzalez1/puntazo-preview/tree/testing) | HEAD remoto de `testing` |
-| Runtime de testing | [`/api/v1/version`](https://testing.puntazo.pro/api/v1/version) | Commit y esquema informados por el servicio realmente desplegado |
+| Frontend | [gonzalotev/app-fidelidad](https://github.com/gonzalotev/app-fidelidad), `main` / `testing` | Producto Expo y web de cada ambiente |
+| Backend dueño | [am-p/app-loyalty](https://github.com/am-p/app-loyalty), `main` | API, Backoffice API y migraciones; destino de promoción funcional |
+| Backend publicación testing | [gagonzalez1/app-loyalty](https://github.com/gagonzalez1/app-loyalty/tree/testing), `testing` | Fork de build/publicación; diferencias comparadas con el dueño |
+| Landing | [gagonzalez1/puntazo-landing](https://github.com/gagonzalez1/puntazo-landing), `main` / `testing` | Marketing y entrada/proxy a Expo |
+| Backoffice UI | `gagonzalez1/puntazo-backoffice` (privado), `testing` / `main` | UI interna; main preparada sin publicación activa |
+| Docs | [gagonzalez1/puntazo-docs](https://github.com/gagonzalez1/puntazo-docs), `main` | Portal público separado; Markdown y catálogo generado |
+| Legales | [gagonzalez1/puntazo-legal](https://github.com/gagonzalez1/puntazo-legal), `main` | Publicación legal con estado de revisión propio |
+| Preview histórico | [gagonzalez1/puntazo-preview](https://github.com/gagonzalez1/puntazo-preview/tree/testing), `testing` | Integración anterior retenida; su Compose ya no atiende el tráfico actual |
 
-Antes de construir o desplegar:
+La revisión del [estado observado](#/runtime-snapshot) registra HEAD, imágenes y configuración del 02/10/2026. Los enlaces de código siguen ramas móviles: hay que fetched/leer el HEAD vigente antes de afirmar una implementación nueva.
 
-1. Consultar el HEAD remoto de cada rama elegida y actualizar el checkout a esa revisión.
-2. Comparar el código integrado con el contrato y la documentación; resolver cualquier divergencia.
-3. Construir desde ese HEAD y comprobar que los metadatos del artefacto coincidan con él.
-4. Tras desplegar, comparar `/api/v1/version` y readiness con el despliegue realizado.
-
-Los SHA registrados en builds, releases o incidentes son evidencia histórica de
-lo que se publicó. No se reutilizan como selector de una entrega nueva. Los
-enlaces de código de este portal siguen ramas móviles y deben verificarse contra
-el HEAD vigente antes de afirmar implementación.
+1. Seleccionar repositorio dueño y rama de integración explícitamente.
+2. Fetch y comparar checkout; preservar trabajo local si está sucio o desactualizado.
+3. Comparar fuente con runtime y con decisiones aprobadas. Un PR cerrado o un conteo ahead no prueba promoción funcional.
+4. Antes del build/deploy, verificar checkout limpio en el HEAD remoto actual.
+5. Después, comprobar imagen, salud y versión pública. Registrar SHA como evidencia, nunca como selector de la próxima entrega.

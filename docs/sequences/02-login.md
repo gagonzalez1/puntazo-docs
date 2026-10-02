@@ -6,36 +6,37 @@ order: 20
 parent: sequences
 level: sequence
 status: current
-summary: Verificación bcrypt, emisión de JWT y persistencia local de la sesión.
+summary: Login con sesión persistida y recuperación de usuario y contextos.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Secuencia · Login por email
+# Login por email
 
 ```mermaid
 sequenceDiagram
-    actor U as Usuario
-    participant UI as Pantalla auth
-    participant S as authService
-    participant API as API Go
-    participant DB as PostgreSQL
-    U->>UI: email + password
-    UI->>S: login(payload)
-    S->>API: POST /auth/login
-    API->>DB: SELECT user por email
-    DB-->>API: usuario + password_hash
-    API->>API: bcrypt Compare
-    API->>API: firma JWT
-    API-->>S: 200 {token, usuario}
-    S->>S: tokenStorage.set(token)
-    S-->>UI: usuario mapeado
+ participant F as Frontend
+ participant A as API
+ participant P as PostgreSQL
+ F->>A: POST /v1/auth/login
+ A->>P: Cuenta, bcrypt y estado de identidad
+ A->>P: Sesión y primer login/trial cuando corresponde
+ A-->>F: Access token y transporte de refresh
+ F->>F: Access en memoria, refresh según plataforma
+ F->>A: GET /v1/me
+ opt Contexto comercial
+ F->>A: GET /v1/marcas
+ end
+ F->>F: Elegir marca/sucursal autorizadas
 ```
 
-Los fallos de credenciales se normalizan como `401`. Una cuenta creada sólo con Google no puede ingresar con contraseña hasta que exista un flujo explícito para definirla.
+El servidor controla cuenta activa y verificación. La cookie web y el refresh nativo no se tratan como un JWT permanente en localStorage. La fecha histórica de primer login puede estar marcada como estimada por migración.
+
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Cliente auth del frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/services/authService.ts#L82-L106)
-- [Login handler](https://github.com/am-p/app-loyalty/blob/main/internal/handler/user.go#L72-L111)
-- [Verificación bcrypt](https://github.com/am-p/app-loyalty/blob/main/internal/service/user.go#L40-L58)
+- [Implementación backend](https://github.com/am-p/app-loyalty/blob/main/internal/service/auth.go)
+- [Servicio frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/demo/services/demoService.ts)
+- [Cliente y refresh](https://github.com/gonzalotev/app-fidelidad/blob/main/src/core/api/client.ts)

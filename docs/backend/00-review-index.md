@@ -14,6 +14,9 @@ codeRefs: optional
 
 # Backend · Índice de revisión
 
+> **Alcance del 02/10/2026:** este diseño conserva sus acuerdos y propuestas originales. La implementación evolucionó: consultar [datos actuales](#/data-current), [integración real](#/integration-matrix) y [estado observado](#/runtime-snapshot). La coincidencia con código no aprueba automáticamente una decisión `PC-xx` ni convierte todo el spec/OpenAPI en contrato desplegado.
+
+
 > **PROPUESTA CODEX — NO APROBADA TODAVÍA.** Este bloque completa los huecos del
 > backend para poder discutir un contrato concreto. No representa código implementado
 > ni reemplaza una decisión del equipo.

@@ -14,6 +14,9 @@ codeRefs: optional
 
 # Backend · Contrato API propuesto
 
+> **Alcance del 02/10/2026:** este diseño conserva sus acuerdos y propuestas originales. La implementación evolucionó: consultar [datos actuales](#/data-current), [integración real](#/integration-matrix) y [estado observado](#/runtime-snapshot). La coincidencia con código no aprueba automáticamente una decisión `PC-xx` ni convierte todo el spec/OpenAPI en contrato desplegado.
+
+
 > **PROPUESTA CODEX `PC-02` a `PC-08`, `PC-12` a `PC-14`.** El archivo
 > [`openapi.yaml`](/openapi.yaml) es el contrato formal de transporte y debe revisarse
 > antes de generar handlers o SDK.

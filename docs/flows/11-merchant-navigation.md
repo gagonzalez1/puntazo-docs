@@ -5,37 +5,30 @@ group: 02 · Flujos frontend
 order: 110
 parent: merchant-flows
 level: flow
-status: mock
-summary: El plan comercial habilita Clientes, Estadísticas, Scanner y Mi Tienda.
+status: current
+summary: Pestañas comerciales determinadas por cuenta activa y contexto de marca.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Comercio · Navegación
+# Navegación comercial
 
 ```mermaid
-flowchart LR
-    SESSION["Usuario con suscripción activa"] --> CHECK{"plan = GRATIS?"}
-    CHECK -->|"No"| CUSTOMER["Clientes"]
-    CHECK -->|"No"| ANALYTICS["Estadísticas"]
-    CHECK -->|"No"| SCAN["Scanner"]
-    CHECK -->|"No"| PROFILE["Mi Tienda"]
-    CHECK -->|"Sí"| CLIENT["Tabs cliente final"]
-
-    click CUSTOMER href "#/flow-merchant-customers" "Abrir Clientes"
-    click ANALYTICS href "#/flow-merchant-analytics" "Abrir Estadísticas"
-    click SCAN href "#/flow-merchant-scanner" "Abrir Scanner"
-    click PROFILE href "#/flow-merchant-profile" "Abrir Mi Tienda"
-    click CLIENT href "#/flow-customer-navigation" "Abrir navegación cliente"
+flowchart TD
+ ME[Usuario y membresías] --> CTX[Marca y sucursal seleccionadas]
+ CTX --> A{Acceso activo y setup completo}
+ A --> C[Clientes]
+ A --> E[Estadísticas]
+ A --> S[Scanner]
+ A --> P[Mi Tienda]
 ```
 
-El guard se basa en `suscripcion.plan`, no en el rol ni en una membresía a marca. Esto funciona para el prototipo, pero no representa varias marcas, sucursales o permisos internos.
+El layout exige usuario activo y usa `PERSONAL_MARCA` para la navegación comercial. El setup y el acceso de marca pueden bloquear la entrada. La selección de marca/sucursal se recuerda localmente; la API sigue verificando el alcance de cada operación. Las restricciones por rol no se deducen de que una pestaña esté visible.
 
-Desde `afec4792`, la barra inferior usa siempre la paleta fija de Puntazo (`colors.primary` y `colors.surface`). El layout ya no consulta `usePerfilTienda()` para obtener `color_marca` o `color_secundario`; esos colores continúan disponibles para representar la tarjeta de fidelización, pero no personalizan el chrome de navegación.
-
-El cambio es exclusivamente visual: no modifica las tabs habilitadas, la autenticación, los endpoints ni el contrato con el backend. El botón QR también adopta el helper compartido `getHardShadow()` para unificar la sombra entre web, iOS y Android.
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Guard, paleta fija y visibilidad de tabs](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/_layout.tsx#L13-L139)
-- [Sombra compartida del botón QR](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/LayoutStyle.ts#L37-L52)
+- [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/_layout.tsx)
+- [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)

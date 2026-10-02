@@ -5,20 +5,33 @@ group: 02 · Flujos frontend
 order: 200
 parent: frontend-flows
 level: hub
-status: mixed
-summary: Pasaporte QR, tarjetas de fidelidad y perfil del cliente final.
+status: current
+summary: Recorridos implementados con servicios reales y límites por ambiente.
 diagram: true
+authority: source_code
 ---
 
-# Flujos · Cliente final
+# Flujos del cliente
 
 ```mermaid
 flowchart LR
-    QR["Mi Tarjeta / QR"]
-    CARDS["Tarjetas"]
-    PROFILE["Mi Perfil"]
-
-    click QR href "#/flow-customer-passport" "Abrir QR"
-    click CARDS href "#/flow-customer-cards" "Abrir tarjetas"
-    click PROFILE href "#/flow-customer-profile" "Abrir perfil"
+ HUB[Flujos del cliente] --> N0[Navegación]
+ HUB[Flujos del cliente] --> N1[Pasaporte QR]
+ HUB[Flujos del cliente] --> N2[Tarjetas]
+ HUB[Flujos del cliente] --> N3[Perfil]
+ click N0 href "#/flow-customer-navigation" "Abrir Navegación"
+ click N1 href "#/flow-customer-passport" "Abrir Pasaporte QR"
+ click N2 href "#/flow-customer-cards" "Abrir Tarjetas"
+ click N3 href "#/flow-customer-profile" "Abrir Perfil"
 ```
+
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
+
+- [Navegación](#/flow-customer-navigation)
+- [Pasaporte QR](#/flow-customer-passport)
+- [Tarjetas](#/flow-customer-cards)
+- [Perfil](#/flow-customer-profile)
+
+## Referencias de código
+
+- [Router y navegación](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/_layout.tsx)

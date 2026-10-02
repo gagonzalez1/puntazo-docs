@@ -6,40 +6,40 @@ order: 40
 parent: sequences
 level: sequence
 status: current
-summary: Al abrir la app, recupera el JWT local y consulta GET /me protegido.
+summary: Refresh por plataforma, rotación de sesión y recuperación de contexto.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Secuencia · Restaurar sesión
+# Restauración de sesión
 
 ```mermaid
 sequenceDiagram
-    participant ROOT as Root layout
-    participant STORE as useAuthStore
-    participant TOKEN as SecureStore/localStorage
-    participant API as GET /me
-    participant AUTH as RequireAuth
-    ROOT->>STORE: restoreSession()
-    STORE->>TOKEN: get()
-    alt no hay token
-      STORE->>STORE: isRestoring = false
-    else token presente
-      STORE->>API: Authorization Bearer
-      API->>AUTH: ParseToken
-      AUTH-->>API: userID + rol
-      API-->>STORE: usuario
-      STORE->>STORE: set usuario
-    end
-    opt token inválido o vencido
-      STORE->>TOKEN: clear()
-    end
+ participant F as Frontend
+ participant T as Memoria y transporte de refresh
+ participant A as API
+ participant P as PostgreSQL
+ F->>T: Buscar access o capacidad de refresh
+ opt Sin access y refresh disponible
+ F->>A: POST /v1/auth/refresh
+ A->>P: Validar y rotar sesión
+ A-->>F: Nueva sesión
+ end
+ F->>A: GET /v1/me
+ opt Access vencido recuperable
+ F->>A: Refresh y un solo reintento
+ end
+ F->>A: GET /v1/marcas si corresponde
+ F->>F: Restaurar contexto autorizado
 ```
 
-La llamada se dispara en el layout raíz. El layout de tabs decide redirecciones por `usuario` y `suscripcion`; conviene mantener visible este acoplamiento al diagnosticar saltos de navegación al inicio.
+Web usa cookie HttpOnly y access en memoria; nativo guarda refresh en SecureStore. Un fallo definitivo invalida sesión y caché; un error de red se distingue de una revocación. No se restaura un permiso comercial a partir de un plan local.
+
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Disparo de restauración](https://github.com/gonzalotev/app-fidelidad/blob/main/app/_layout.tsx#L48-L51)
-- [Restauración y descarte de token](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/store/useAuthStore.ts#L50-L65)
-- [Middleware de autenticación](https://github.com/am-p/app-loyalty/blob/main/internal/middleware/auth.go#L12-L34)
+- [Implementación backend](https://github.com/am-p/app-loyalty/blob/main/internal/service/auth.go)
+- [Servicio frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/demo/services/demoService.ts)
+- [Cliente y refresh](https://github.com/gonzalotev/app-fidelidad/blob/main/src/core/api/client.ts)

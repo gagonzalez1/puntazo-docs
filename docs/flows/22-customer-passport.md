@@ -5,31 +5,33 @@ group: 02 · Flujos frontend
 order: 220
 parent: customer-flows
 level: flow
-status: mixed
-summary: La identidad llega desde GET /me, pero el QR se deriva de un patrón predecible.
+status: current
+summary: QR emitido por servidor, código de cliente y actualización de movimientos.
 diagram: true
 codeRefs: required
+authority: source_code
 ---
 
-# Cliente · Pasaporte QR
+# Pasaporte QR del cliente
 
 ```mermaid
 flowchart LR
-    SCREEN["Mi Tarjeta"] --> QUERY["getMyProfile"]
-    QUERY --> ME["GET /me real"]
-    ME --> USER["Usuario autenticado"]
-    USER --> MAP["clienteFromUsuario"]
-    MAP --> TOKEN["QR_USER_id"]
-    TOKEN --> QR["QR visible"]
-
-    click ME href "#/sequence-restore" "Ver sesión y GET /me"
-    click TOKEN href "#/implementation-gaps" "Ver brecha de QR"
+ P[Mi Tarjeta] --> API[GET /v1/clientes/me]
+ API --> U[Identidad y código]
+ API --> QR[qr_token derivado con HMAC en servidor]
+ QR --> S[Scanner del comercio]
+ S --> M[Preview y confirmación]
+ M --> H[(Ledger)]
+ H --> R[Actualizar tarjetas y movimientos]
 ```
 
-El QR no es todavía un token opaco emitido por backend. Por ser derivable desde el ID del usuario, sólo sirve para el prototipo y no debe utilizarse como credencial de autorización.
+La pantalla renderiza el `qr_token` recibido. El QR no es el ID visible ni se reconstruye con un patrón frontend. PostgreSQL conserva el hash y la API valida la identidad para operar. El código humano es una alternativa manual: los nuevos códigos son inmutables y los anteriores conservan el formato heredado. Mostrar un QR no autentica al operador.
+
+La detección de movimientos prepara una lectura base, compara saldos y valida movimientos antes de celebrar; web dispone además de eventos SSE autenticados para refrescar tarjetas.
+
+Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 
-- [Pantalla Mi Tarjeta](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/my-card/index.tsx#L10-L50)
-- [Derivación del perfil y QR](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/services/authService.ts#L46-L62)
-- [Lectura real de usuario](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/services/authService.ts#L107-L121)
+- [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/my-card/index.tsx)
+- [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
