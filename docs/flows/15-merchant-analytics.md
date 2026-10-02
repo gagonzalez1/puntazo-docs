@@ -21,7 +21,7 @@ La nueva ruta `GET /v1/marcas/{brand_id}/metricas/periodo` acepta `period=day|we
 
 Las vistas permiten navegar hacia períodos anteriores y volver al actual. Muestran clientes atendidos distintos, acumulaciones, canjes, operaciones totales, cantidades emitidas/canjeadas y una serie de actividad. Diaria agrupa por hora local; semanal y mensual por fecha local. Se incluyen intervalos sin actividad con cero. En cambios de horario de verano, una hora repetida se consolida y una hora inexistente queda en cero.
 
-La autorización coincide con el resumen histórico: personal de marca con membresía activa `PROPIETARIO`, usuario y marca vigentes. No se amplía acceso a administradores u operadores. No se filtra por la sucursal operativa seleccionada; la UI informa el alcance de todas las sucursales. El ledger histórico sigue contado aunque se desactive o anonimice un cliente.
+La autorización coincide con el resumen histórico: personal de marca con membresía activa `PROPIETARIO`, usuario y marca vigentes. No se amplía acceso a administradores u operadores. No se filtra por la sucursal operativa seleccionada; los datos abarcan todas las sucursales. El ledger histórico sigue contado aunque se desactive o anonimice un cliente.
 
 ```mermaid
 flowchart LR
@@ -47,6 +47,10 @@ La entrega queda en [PR frontend #38](https://github.com/gonzalotev/app-fidelida
 La CI de frontend aprueba TypeScript/tests/doctor/build pero falla la auditoría de dependencias por `GHSA-86w9-cpqp-85rv` en `node-forge`, heredado de la base. El advisory revisado al 01/10/2026 afecta hasta 1.4.0 y no lista una versión corregida. Después de la divulgación del advisory, el usuario autorizó una vez continuar con la integración y el despliegue exclusivo a testing. La autorización no resuelve la vulnerabilidad ni aprueba producción. La auditoría continúa fallida y sin modificar: no se agregó allowlist, override ni excepción al chequeo, y se conserva Expo SDK 54. [Advisory](https://github.com/advisories/GHSA-86w9-cpqp-85rv).
 
 En el navegador integrado se verificaron las cuatro vistas Diaria, Semanal, Mensual e Históricas con respuestas reales vacías de un comercio sintético existente, navegación al mes anterior y restauración de sesión después de recarga, sin errores JavaScript en consola. No se crearon movimientos de fidelidad para esta comprobación. La sesión sintética se cerró al terminar; la sesión previa del usuario había vuelto al login al recargar. La validación pública confirma carga y estados vacíos; los conteos no vacíos se verificaron previamente con datos persistidos sintéticos en la integración local. No se probó un dispositivo físico.
+
+## Ajuste visual solicitado · 02/10/2026
+
+La [PR frontend #41](https://github.com/gonzalotev/app-fidelidad/pull/41), integrada en `testing` en `615af6fed1b676c1ad24179793b30de01748bb5f`, elimina la línea de sucursales/zona horaria y el botón “Actualizar estadísticas”; también elimina la línea duplicada de alcance de Históricas. Se conserva el cálculo por zona horaria de la marca, las consultas automáticas, la navegación de períodos, pull-to-refresh y los reintentos de error. TypeScript, 113 tests, Doctor18/18, build web/PWA y cuatro pruebas de navegador pasaron. Despliegue web `8y576ligqsireuvsmgxkjfi6` finalizado a las 13:28:03 UTC, contenedor saludable y bundle público `entry-39b961d147e6ecad4f69ce61873bf906.js` coincidente con el del contenedor (SHA-256 `02703d34c59faec12df7eb7daef60874147f81985f0fc5accc380e24412d073c`). Se comprobó en el navegador integrado la ausencia de ambos elementos y la línea duplicada histórica; no hubo errores JavaScript. La sesión previa volvió al login al activar la PWA; se verificó con una cuenta ficticia existente y se cerró al terminar. API y contratos sin cambios.
 
 ## Datos y límites
 
