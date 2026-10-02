@@ -17,7 +17,7 @@ diagram: true
 | Vista | Fuente real en la entrega | Estado de promoción |
 | --- | --- | --- |
 | Históricas | `GET /v1/marcas/{id}/metricas/resumen` y movimientos recientes | Existente en fuentes actuales; captura de testing compatible |
-| Diaria / Semanal / Mensual | `GET /v1/marcas/{id}/metricas/periodo?period=day|week|month&date=YYYY-MM-DD` | Nueva rama de trabajo; pendiente de integración y despliegue |
+| Diaria / Semanal / Mensual | `GET /v1/marcas/{id}/metricas/periodo?period=day|week|month&date=YYYY-MM-DD` | API y web desplegadas y verificadas en testing; promoción oficial backend abierta |
 
 La ruta por período consolida todas las sucursales y exige propietario vigente; no usa los mocks antiguos. No implementa las rutas separadas o drill-down propuestos en `PC-08`. Ver [el flujo](#/flow-merchant-analytics). La topología y evidencia del runtime conservan su fecha propia.
 

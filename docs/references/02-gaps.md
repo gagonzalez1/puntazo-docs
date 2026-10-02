@@ -14,7 +14,7 @@ summary: Diferencias que deben permanecer visibles para evitar documentar propue
 
 ## Analíticas · entrega 01/10/2026
 
-La nueva rama de trabajo agrega vistas con datos operativos confirmados por día, semana y mes; su despliegue sigue pendiente. El resumen histórico ya existe en las fuentes actuales. El diseño antiguo de tres hojas usaba mocks: retención, fuga, frecuencia, recordatorios, importes y drill-down no forman parte de esta entrega real. Tampoco hay filtro por sucursal: el alcance es la marca completa y se informa en pantalla. `PC-08` permanece propuesta en su alcance amplio.
+Las vistas con datos operativos confirmados por día, semana y mes están integradas en frontend `testing` y fork backend `testing`; la API de testing ya reporta el commit integrado y readiness HTTP 200; la web también está desplegada y verificada, con bundle público idéntico al del contenedor. La comprobación pública confirmó las cuatro vistas con datos vacíos; las cantidades no vacías tienen validación local previa. La PR oficial del backend #26 permanece abierta; la integración del fork no implica integración en `am-p/app-loyalty:main`. El resumen histórico ya existe en las fuentes actuales. El diseño antiguo de tres hojas usaba mocks: retención, fuga, frecuencia, recordatorios, importes y drill-down no forman parte de esta entrega real. Tampoco hay filtro por sucursal: el alcance es la marca completa y se informa en pantalla. `PC-08` permanece propuesta en su alcance amplio.
 
 Ver [el flujo y evidencia de fuente](#/flow-merchant-analytics). La tabla histórica de abajo no debe volver a usarse como inventario actual.
 

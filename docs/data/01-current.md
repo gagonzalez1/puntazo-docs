@@ -17,7 +17,7 @@ codeRefs: required
 
 Esta entrega agrega lecturas reales de `historial_movimientos`, `tarjetas`, `marcas` y membresías vigentes. No crea tablas ni cambia saldos. Clientes atendidos es un conteo distinto de la identidad de cliente referida por la tarjeta; no equivale a tarjetas actualmente activas. Desactivar un cliente no borra las operaciones históricas del período. Las series cuentan acumulaciones y canjes confirmados, con ceros en intervalos sin actividad.
 
-El esquema y párrafos anteriores corresponden al estado histórico del portal; no describen la base actual de testing. Ver [el flujo implementado en la rama de trabajo](#/flow-merchant-analytics), pendiente de integración y despliegue.
+El esquema y párrafos siguientes corresponden al estado histórico del portal; no describen la base actual de testing. La nueva lectura está integrada en el fork backend `testing`, con promoción oficial aún abierta. La API de testing reporta `f18ff083666e70954bfe8474a228dcca365f40bb`, esquema `0033` y readiness HTTP 200; la web de testing también se verificó sirviendo el frontend integrado `b712c5d5e10154021955ae677935372eafdbdff5`. La comprobación pública usó respuestas vacías de un comercio sintético existente y no creó movimientos; las cantidades no vacías se comprobaron en la integración local anterior. Ver [el flujo y evidencia](#/flow-merchant-analytics).
 
 ```mermaid
 erDiagram

@@ -6,7 +6,7 @@ order: 30
 parent: c4-containers
 level: component
 status: mixed
-summary: Arquitectura histórica y nueva entrega analítica por períodos pendiente de promoción.
+summary: Arquitectura histórica y analíticas por períodos desplegadas y verificadas en testing.
 diagram: true
 codeRefs: required
 ---
@@ -15,7 +15,7 @@ codeRefs: required
 
 ## Analíticas por período · entrega 01/10/2026
 
-La rama `feat/analytics-periods-20261001` incorpora la selección diaria, semanal y mensual, navegación de fecha, estado de carga/error/vacío y gráfico de actividad. La pantalla consume el servicio de comercio y TanStack Query; la clave incluye marca, período y fecha, bajo el prefijo ya invalidado por operaciones de fidelidad. Conserva Históricas para resumen y actividad reciente. Esta entrega usa Expo SDK 54 y los tokens existentes. Está pendiente de integración y despliegue; el diagrama anterior describe la arquitectura documental histórica, no el estado completo actual.
+La rama `feat/analytics-periods-20261001` incorpora la selección diaria, semanal y mensual, navegación de fecha, estado de carga/error/vacío y gráfico de actividad. La pantalla consume el servicio de comercio y TanStack Query; la clave incluye marca, período y fecha, bajo el prefijo ya invalidado por operaciones de fidelidad. Conserva Históricas para resumen y actividad reciente. Esta entrega usa Expo SDK 54 y los tokens existentes. La PR #38 ya se integró en `gonzalotev/app-fidelidad:testing` (`b712c5d5e10154021955ae677935372eafdbdff5`); su despliegue en testing se verificó públicamente con `/analytics` HTTP 200 y bundle idéntico al del contenedor. Las cuatro vistas, navegación anterior y recarga de sesión se comprobaron en navegador con respuestas reales vacías; no se probó un dispositivo físico. El diagrama siguiente describe la arquitectura documental histórica, no el estado completo actual. Producción no se modifica.
 
 Ver [el flujo y sus límites](#/flow-merchant-analytics). No hay fallback de métricas simuladas.
 

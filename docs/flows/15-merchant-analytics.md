@@ -6,14 +6,14 @@ order: 150
 parent: merchant-flows
 level: flow
 status: mixed
-summary: Resumen histórico real y nueva implementación por día, semana y mes pendiente de integración y despliegue.
+summary: Analíticas reales por día, semana y mes desplegadas y verificadas en testing; promoción oficial backend abierta.
 diagram: true
 codeRefs: required
 ---
 
 # Comercio · Analíticas
 
-## Implementación por períodos · rama de trabajo 01/10/2026
+## Implementación por períodos · integración testing 02/10/2026
 
 El pedido del usuario selecciona recuperar las vistas diaria, semanal y mensual con datos reales. El alcance de esta entrega es actividad operativa confirmada, consolidada para todas las sucursales de la marca. No aprueba el contrato analítico amplio `PC-08` ni sus métricas de retención, importes o recordatorios.
 
@@ -40,11 +40,13 @@ flowchart LR
 
 El commit histórico `a33036b` creó las tres hojas con constantes mock y se integró en la PR #1. En agosto se reemplazó por el resumen operativo conectado a datos reales. Las ramas fuente verificadas al empezar esta entrega fueron frontend `origin/testing` en `845658b` y backend oficial `origin/main` en `df04f62`.
 
-La captura de testing muestra totales históricos y “Hasta hoy”; no demuestra que esta nueva ruta o las nuevas vistas estén desplegadas. La entrega se prepara en `feat/analytics-periods-20261001` de ambos repositorios dueños. La promoción a testing y el commit del frontend servido requieren verificación separada.
+La captura anterior de testing muestra totales históricos y “Hasta hoy”; no demuestra la nueva ruta ni las nuevas vistas. El frontend se integró mediante la [PR #38](https://github.com/gonzalotev/app-fidelidad/pull/38) en `gonzalotev/app-fidelidad:testing`, HEAD `b712c5d5e10154021955ae677935372eafdbdff5`. El backend se promovió mediante la [PR #9 del fork](https://github.com/gagonzalez1/app-loyalty/pull/9) a `gagonzalez1/app-loyalty:testing`, HEAD `f18ff083666e70954bfe8474a228dcca365f40bb`. Estos SHAs registran la integración observada; no seleccionan futuros builds. La API de testing se verificó en `https://api-testing.puntazo.pro/v1/version`: commit `f18ff083666e70954bfe8474a228dcca365f40bb`, esquema `0033`; readiness respondió HTTP 200. El despliegue Coolify `o9busnp3snb29gtnsilozook` finalizó. La web se desplegó mediante `tdjvihwta92rholokxhsojmt`, finalizado a las 03:35:32 UTC del 02/10/2026. El contenedor saludable sirve `b712c5d5e10154021955ae677935372eafdbdff5`. La ruta pública `/analytics` respondió HTTP 200; su bundle `entry-02cfe92eb90cf2efc068d0e7613e66cb.js` coincide con el del contenedor (SHA-256 `05ce4299b27a747084b13499404c373025fcc2e8fa0730dd671bf37062621a28`). El manifest respondió HTTP 200 y declara `standalone`; el service worker respondió HTTP 200 con `no-store`. Tras repetir el gate de fuentes remotas vigentes y checkouts limpios antes de los builds, se verificó el runtime público y no se reutilizaron SHAs históricos como selectores. La [PR oficial #26](https://github.com/am-p/app-loyalty/pull/26) sigue abierta: no se atribuye esta implementación a `am-p/app-loyalty:main`. Producción no se modifica.
 
-La entrega queda en [PR frontend #38](https://github.com/gonzalotev/app-fidelidad/pull/38), commit `05418d0`, y [PR backend oficial #26](https://github.com/am-p/app-loyalty/pull/26), commit `e62c2f5`. Se comprobó TypeScript, 113 tests unitarios, Expo Doctor 18/18, build web/PWA y cuatro pruebas de navegador. La lectura PostgreSQL tiene pruebas de permisos, marcas, sucursales, límites y DST. Además se verificó el frontend exportado con API Go y PostgreSQL 16 locales, datos sintéticos persistidos y recarga de sesión; no se probó un dispositivo nativo ni se desplegó. La suite completa del backend con PostgreSQL y detector de carreras pasó. Se corrigió únicamente la fecha del fixture previo `TestPostgresAuthenticatedDemoRegistrationStartsTrial`, que había vencido y fallaba también en la base limpia; se conservaron sus assertions y el comportamiento de suscripciones.
+La entrega queda en [PR frontend #38](https://github.com/gonzalotev/app-fidelidad/pull/38), commit `05418d0`, y [PR backend oficial #26](https://github.com/am-p/app-loyalty/pull/26), commit `e62c2f5`. Se comprobó TypeScript, 113 tests unitarios, Expo Doctor 18/18, build web/PWA y cuatro pruebas de navegador. La lectura PostgreSQL tiene pruebas de permisos, marcas, sucursales, límites y DST. Además se verificó el frontend exportado con API Go y PostgreSQL 16 locales, datos sintéticos persistidos y recarga de sesión; no se probó un dispositivo nativo. Estas validaciones locales preceden al despliegue solicitado y no prueban el runtime público. La suite completa del backend con PostgreSQL y detector de carreras pasó. Se corrigió únicamente la fecha del fixture previo `TestPostgresAuthenticatedDemoRegistrationStartsTrial`, que había vencido y fallaba también en la base limpia; se conservaron sus assertions y el comportamiento de suscripciones.
 
-La CI de frontend aprueba TypeScript/tests/doctor/build pero falla la auditoría de dependencias por `GHSA-86w9-cpqp-85rv` en `node-forge`, heredado de la base. El advisory revisado al 01/10/2026 afecta hasta 1.4.0 y no lista una versión corregida. No se cambió Expo SDK 54 ni se agregó una excepción: la promoción sigue bloqueada por ese chequeo. [Advisory](https://github.com/advisories/GHSA-86w9-cpqp-85rv).
+La CI de frontend aprueba TypeScript/tests/doctor/build pero falla la auditoría de dependencias por `GHSA-86w9-cpqp-85rv` en `node-forge`, heredado de la base. El advisory revisado al 01/10/2026 afecta hasta 1.4.0 y no lista una versión corregida. Después de la divulgación del advisory, el usuario autorizó una vez continuar con la integración y el despliegue exclusivo a testing. La autorización no resuelve la vulnerabilidad ni aprueba producción. La auditoría continúa fallida y sin modificar: no se agregó allowlist, override ni excepción al chequeo, y se conserva Expo SDK 54. [Advisory](https://github.com/advisories/GHSA-86w9-cpqp-85rv).
+
+En el navegador integrado se verificaron las cuatro vistas Diaria, Semanal, Mensual e Históricas con respuestas reales vacías de un comercio sintético existente, navegación al mes anterior y restauración de sesión después de recarga, sin errores JavaScript en consola. No se crearon movimientos de fidelidad para esta comprobación. La sesión sintética se cerró al terminar; la sesión previa del usuario había vuelto al login al recargar. La validación pública confirma carga y estados vacíos; los conteos no vacíos se verificaron previamente con datos persistidos sintéticos en la integración local. No se probó un dispositivo físico.
 
 ## Datos y límites
 
