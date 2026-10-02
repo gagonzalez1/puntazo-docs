@@ -27,9 +27,9 @@ flowchart LR
 
 Main publicado muestra resumen operativo y movimientos recientes. Testing publicado añade consulta por `period=day|week|month` y fecha. El backend de períodos ya está en main y testing. Agrega acumulaciones/canjes, clientes atendidos, sellos y puntos a partir del historial; no usa constantes locales. La autorización de períodos exige propietario y la lectura usa un snapshot `REPEATABLE READ`.
 
-La rama testing incorpora además mejoras PWA aún ausentes en su imagen observada. Consultar [versiones](#/runtime-snapshot) antes de afirmar publicación.
+La rama testing incorpora además mejoras PWA, ahora presentes en su imagen observada. Consultar [versiones](#/runtime-snapshot) antes de afirmar publicación.
 
-Revisión de fuentes y runtime del **02/10/2026, 22:10 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
+Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 

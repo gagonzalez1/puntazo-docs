@@ -14,7 +14,7 @@ diagram: true
 # Topología desplegada · Coolify
 
 Esta vista resume cómo están distribuidos los recursos de Puntazo en Coolify.
-La distribución se volvió a comprobar el **02/10/2026, 22:10 UTC**, mediante API oficial de Coolify y runtime Docker. Describe ese corte; el panel puede cambiar después. Ver [versiones y configuración observadas](#/runtime-snapshot).
+La distribución se volvió a comprobar el **02/10/2026, 22:30–22:33 UTC**, mediante API oficial de Coolify y runtime Docker. Describe ese corte; el panel puede cambiar después. Ver [versiones y configuración observadas](#/runtime-snapshot).
 
 El portal es público. Por eso muestra funciones y conexiones, pero omite IP de
 administración, credenciales, UUID de Coolify, nombres de redes internas y otros
@@ -63,6 +63,10 @@ flowchart LR
       TA --> TM
     end
 
+    subgraph DEV[Develop · proyecto Puntazo]
+      DW[Clon de web configurado<br/>sin contenedor activo]
+    end
+
     subgraph BO[Backoffice · proyecto separado]
       BUT[UI testing<br/>backoffice-testing.puntazo.pro]
       BUP[Producción preparada<br/>sin contenedor activo]
@@ -81,10 +85,11 @@ corte operativo; no se infiere sólo de que usen proyectos separados.
 | Producción Puntazo | Landing, web/PWA, API, PostgreSQL, Redis, MinIO, sitio de documentación y sitio legal | PostgreSQL guarda los datos de la API. Redis no tiene consumidor actual confirmado. MinIO está separado y la API productiva no está conectada a él. |
 | Testing Puntazo | Landing, web/PWA, API, PostgreSQL, Redis, MinIO y Compose anterior detenido | Base y objetos son propios de testing. Redis es efímero. El Compose anterior permanece detenido y sus volúmenes se conservan durante la ventana de retención documentada. |
 | Backoffice testing | UI de administración y conexión a la API de testing | Aplicación y ciclo de despliegue separados del proyecto Puntazo principal. |
+| Develop Puntazo | Copia de web configurada desde `app-fidelidad:develop`, sin contenedor activo | Recurso adicional creado durante esta revisión; no se atribuye tráfico público ni una conexión API validada. |
 | Backoffice producción | Recurso configurado, sin contenedor en ejecución | Preparado; no se considera un Backoffice productivo activo. |
 
-El inventario del corte registra **17 recursos principales**: 11 aplicaciones,
-4 servicios de datos y 2 servicios adicionales, distribuidos entre Puntazo y
+El inventario del corte registra **18 recursos configurados**: 12 aplicaciones,
+4 servicios de datos y 2 servicios adicionales, distribuidos entre Puntazo (production/testing/develop) y
 Backoffice. El Compose anterior detenido cuenta como recurso retenido, no como
 tráfico vigente. Los jobs puntuales ejecutados por Compose no se cuentan como
 aplicaciones permanentes.
@@ -112,4 +117,6 @@ no son selectores para el siguiente.
 
 Testing usa Redis, media S3/MinIO, SMTP y Mercado Pago configurado. En producción, las variables de rate limit, media y cobro están ausentes y el código aplica `memory`, `disabled` y `disabled`; SMTP está configurado. `APP_ENV` tampoco está declarado como producción. La existencia de los recursos de datos no demuestra consumo por la API. Ambos `/version` informan esquema `0033`.
 
-La UI testing y su landing tienen cambios PWA integrados en las ramas que aún no están en las imágenes de este corte. Docs/legal tienen ciclo de publicación independiente. [Procedimiento para actualizar Docs](#/documentation-sync-plan).
+La UI testing y su landing publicaron los cambios PWA mientras se actualizaba este portal; sus imágenes coinciden con los HEAD testing del corte final. Docs/legal tienen ciclo de publicación independiente. [Procedimiento para actualizar Docs](#/documentation-sync-plan).
+
+El inventario inicial tenía 17 recursos. Coolify creó una copia de web en `puntazo/develop` a las 22:10 UTC; el corte final incluye ese recurso sin contenedor y no lo considera una web disponible. La documentación privada de infraestructura debe conciliar ese ambiente adicional con la convención testing/production.

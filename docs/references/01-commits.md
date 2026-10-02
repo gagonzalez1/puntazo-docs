@@ -17,7 +17,7 @@ Las ramas seleccionan fuentes; los SHA registran lo inspeccionado o desplegado. 
 
 | Plano | Repositorio y ramas | Responsabilidad |
 |---|---|---|
-| Frontend | [gonzalotev/app-fidelidad](https://github.com/gonzalotev/app-fidelidad), `main` / `testing` | Producto Expo y web de cada ambiente |
+| Frontend | [gonzalotev/app-fidelidad](https://github.com/gonzalotev/app-fidelidad), `main` / `testing`; `develop` sólo para el clon observado | Producto Expo y web de cada ambiente |
 | Backend dueño | [am-p/app-loyalty](https://github.com/am-p/app-loyalty), `main` | API, Backoffice API y migraciones; destino de promoción funcional |
 | Backend publicación testing | [gagonzalez1/app-loyalty](https://github.com/gagonzalez1/app-loyalty/tree/testing), `testing` | Fork de build/publicación; diferencias comparadas con el dueño |
 | Landing | [gagonzalez1/puntazo-landing](https://github.com/gagonzalez1/puntazo-landing), `main` / `testing` | Marketing y entrada/proxy a Expo |
