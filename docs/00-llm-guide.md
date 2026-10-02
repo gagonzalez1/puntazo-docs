@@ -31,9 +31,10 @@ Para obtener contexto suficiente sin cargar toda la documentación:
 2. [`docs/references/03-documentation-rules.md`](#/documentation-rules) — reglas de precedencia y significado de los estados.
 3. [`docs/00-overview.md`](#/overview) — mapa general y accesos a cada dominio.
 4. [`docs/architecture/02-containers.md`](#/c4-containers) — límites entre app, API, base de datos y proveedores.
-5. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — qué está conectado y qué continúa simulado.
-6. [`docs/references/02-gaps.md`](#/implementation-gaps) — brechas que no deben confundirse con comportamiento actual.
-7. [`docs/backend/00-review-index.md`](#/backend-review-index) — decisiones de backend propuestas por Codex que requieren aprobación.
+5. [`docs/architecture/05-coolify-deployment-topology.md`](#/coolify-deployment-topology) — recursos desplegados por ambiente y sus conexiones.
+6. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — qué está conectado y qué continúa simulado.
+7. [`docs/references/02-gaps.md`](#/implementation-gaps) — brechas que no deben confundirse con comportamiento actual.
+8. [`docs/backend/00-review-index.md`](#/backend-review-index) — decisiones de backend propuestas por Codex que requieren aprobación.
 
 Después se debe abrir el flujo, la secuencia o el modelo de datos específico de la tarea.
 
@@ -54,6 +55,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 6. [`docs/architecture/02-containers.md`](#/c4-containers) — frontend, backend, PostgreSQL y proveedores.
 7. [`docs/architecture/03-frontend-components.md`](#/frontend-components) — router, estado, servicios y pantallas Expo.
 8. [`docs/architecture/04-backend-components.md`](#/backend-components) — capas y componentes implementados en Go.
+9. [`docs/architecture/05-coolify-deployment-topology.md`](#/coolify-deployment-topology) — topología desplegada en VPS, corte operativo del 02/10/2026.
 
 ### 2. Estado real de datos e integración
 

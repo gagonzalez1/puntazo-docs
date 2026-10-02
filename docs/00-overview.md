@@ -20,6 +20,7 @@ El mapa distingue **implementado**, **mock** y **propuesto** para no confundir e
 flowchart LR
     CTX["C4 · Contexto"]
     CNT["C4 · Contenedores"]
+    DEP["Topología en Coolify"]
     FEF["Flujos del frontend"]
     SEQ["Secuencias"]
     DATA["Datos"]
@@ -27,6 +28,7 @@ flowchart LR
     BE["Backend · revisión"]
 
     CTX --> CNT
+    CNT --> DEP
     CNT --> BE
     CNT --> FEF
     CNT --> SEQ
@@ -35,6 +37,7 @@ flowchart LR
 
     click CTX href "#/c4-context" "Abrir contexto"
     click CNT href "#/c4-containers" "Abrir contenedores"
+    click DEP href "#/coolify-deployment-topology" "Abrir despliegues en Coolify"
     click FEF href "#/frontend-flows" "Abrir flujos"
     click SEQ href "#/sequences" "Abrir secuencias"
     click DATA href "#/data-current" "Abrir datos"
@@ -50,3 +53,7 @@ flowchart LR
 - **Rojo:** brecha o contrato pendiente.
 
 Use los nodos del diagrama para profundizar. La barra lateral permite saltar directamente a cualquier vista.
+
+La [topología desplegada en Coolify](#/coolify-deployment-topology) resume los
+recursos de producción y testing, incluidos los servicios separados de
+Backoffice.

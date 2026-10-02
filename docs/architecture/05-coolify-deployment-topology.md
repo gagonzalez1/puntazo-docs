@@ -1,0 +1,110 @@
+---
+id: coolify-deployment-topology
+title: Topología desplegada · Coolify
+group: 01 · Arquitectura C4
+order: 50
+parent: overview
+level: map
+status: mixed
+authority: mixed
+summary: Inventario público de alto nivel de Puntazo en producción y testing, según el corte operativo del 2 de octubre de 2026.
+diagram: true
+---
+
+# Topología desplegada · Coolify
+
+Esta vista resume cómo están distribuidos los recursos de Puntazo en Coolify.
+La información corresponde al inventario operativo del **2 de octubre de
+2026**; describe ese corte y no reemplaza una lectura en vivo del panel.
+
+El portal es público. Por eso muestra funciones y conexiones, pero omite IP de
+administración, credenciales, UUID de Coolify, nombres de redes internas y otros
+datos de operación. Los procedimientos detallados siguen en la documentación
+privada de infraestructura. Para la arquitectura interna de la aplicación,
+consultar [C4 · Contenedores](#/c4-containers).
+
+## Mapa de ambientes
+
+```mermaid
+flowchart LR
+    CLIENT[Personas usuarias]
+
+    subgraph PROD[Producción · proyecto Puntazo]
+      PL[Landing pública<br/>puntazo.pro]
+      PW[Web/PWA<br/>/login]
+      PA[API<br/>api.puntazo.pro]
+      PDB[(PostgreSQL)]
+      PR[(Redis separado)]
+      PM[MinIO separado]
+      DOCS[Documentación<br/>docs.puntazo.pro]
+      LEGAL[Legales<br/>legal.puntazo.pro]
+      CLIENT --> PL
+      PL -->|/login| PW
+      PW --> PA
+      PA --> PDB
+      PR -. sin consumidor confirmado .- PA
+      PM -. API no conectada .- PA
+      CLIENT --> DOCS
+      CLIENT --> LEGAL
+    end
+
+    subgraph TEST[Testing · proyecto Puntazo]
+      TL[Landing<br/>testing.puntazo.pro]
+      TW[Web/PWA<br/>/login]
+      TA[API<br/>api-testing.puntazo.pro]
+      TDB[(PostgreSQL 16)]
+      TR[(Redis efímero)]
+      TM[MinIO testing]
+      LEGACY[Compose anterior<br/>detenido y retenido]
+      CLIENT --> TL
+      TL -->|/login| TW
+      TW --> TA
+      TA --> TDB
+      TA --> TR
+      TA --> TM
+    end
+
+    subgraph BO[Backoffice · proyecto separado]
+      BUT[UI testing<br/>backoffice-testing.puntazo.pro]
+      BUP[Producción preparada<br/>sin contenedor activo]
+      BUT -->|API testing| TA
+    end
+```
+
+La flecha del Backoffice representa su integración con la API de testing. El
+aislamiento estricto de red entre ambos proyectos no está confirmado en el
+corte operativo; no se infiere sólo de que usen proyectos separados.
+
+## Recursos por ambiente
+
+| Ámbito | Recursos activos o preparados | Persistencia e integración |
+|---|---|---|
+| Producción Puntazo | Landing, web/PWA, API, PostgreSQL, Redis, MinIO, sitio de documentación y sitio legal | PostgreSQL guarda los datos de la API. Redis no tiene consumidor actual confirmado. MinIO está separado y la API productiva no está conectada a él. |
+| Testing Puntazo | Landing, web/PWA, API, PostgreSQL, Redis, MinIO y Compose anterior detenido | Base y objetos son propios de testing. Redis es efímero. El Compose anterior permanece detenido y sus volúmenes se conservan durante la ventana de retención documentada. |
+| Backoffice testing | UI de administración y conexión a la API de testing | Aplicación y ciclo de despliegue separados del proyecto Puntazo principal. |
+| Backoffice producción | Recurso configurado, sin contenedor en ejecución | Preparado; no se considera un Backoffice productivo activo. |
+
+El inventario del corte registra **17 recursos principales**: 11 aplicaciones,
+4 servicios de datos y 2 servicios adicionales, distribuidos entre Puntazo y
+Backoffice. El Compose anterior detenido cuenta como recurso retenido, no como
+tráfico vigente. Los jobs puntuales ejecutados por Compose no se cuentan como
+aplicaciones permanentes.
+
+## Entrada y tráfico
+
+- El dominio público `puntazo.pro` sirve la landing y conserva la aplicación
+  web bajo `/login`.
+- `testing.puntazo.pro` sirve la landing de testing y `/login` para su web/PWA.
+- Las APIs de producción y testing se publican por HTTPS en dominios separados.
+- Los sitios de documentación y legales son recursos web independientes.
+- PostgreSQL, Redis y MinIO no publican puertos de datos directamente a
+  Internet. La aplicación y sus servicios de datos se comunican mediante las
+  redes administradas para cada entorno.
+
+## Actualización de esta vista
+
+Este resumen se genera a partir del inventario operativo, luego de quitar los
+identificadores y procedimientos internos. Al cambiar un recurso, actualizar
+primero el inventario de Coolify y después esta página para conservar sus
+relaciones y estados. Las ramas y SHA de builds son evidencia de cada despliegue;
+no son selectores para el siguiente.
