@@ -34,7 +34,7 @@ El alta de cliente usa `/v1/auth/register`; el alta comercial usa `/v1/demo/come
 
 Ver [registro](#/sequence-register), [login](#/sequence-login), [Google](#/sequence-google) y [restauración](#/sequence-restore).
 
-Revisión base de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**; remediación de identidad integrada en candidato backend al **07/10/2026**, API testing desplegada como `3d77120b…`, ready/healthy schema0035; pruebas de flujo Google completas en runtime siguen pendientes. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura, integración y health del servicio; no certifica todos los invariantes de negocio ni implica una prueba Google real en runtime.
+Revisión base de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**; remediación de identidad integrada en candidato backend al **07/10/2026**, API testing desplegada como `3d77120b…`, ready/healthy schema0035; flujo de Google real todavía no probado. Un ejercicio de recent-auth/delete registró 401 `RECENT_AUTH_REQUIRED` para sesión antigua, reauth 200, token anterior 401 y delete 202 con `access_revoked=true`; `ledger_preserved=false` es el resultado esperado del privacy overlay testing `0035` (borra historial/tarjetas propias, conserva ledger ajeno con operador anonimizado; fuente legacy sin overlay difiere). La secuencia queda pendiente de verificación SQL read-only para 4 inactive/0 sessions antes de dar PASS completo. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura, integración y health del servicio; no certifica todos los invariantes de negocio ni implica una prueba Google real en runtime.
 
 ## Referencias de código
 

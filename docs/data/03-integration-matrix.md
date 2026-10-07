@@ -29,7 +29,7 @@ flowchart LR
 
 | Flujo | Integración verificada en código | Límite del despliegue observado |
 |---|---|---|
-| Registro y acceso | `/auth/register`, `/demo/comercios`, `/auth/login`, `/auth/google`; además `/auth/google/link` y `/auth/reauthenticate` en el candidato backend integrado. Sin vinculación automática por email; conflicto `409` | API testing `3d77120b…` desplegada healthy/readiness schema0035; flujo Google y aceptación funcional completa siguen pendientes. CAPTCHA desactivado porque falta widget Turnstile |
+| Registro y acceso | `/auth/register`, `/demo/comercios`, `/auth/login`, `/auth/google`; además `/auth/google/link` y `/auth/reauthenticate` en el candidato backend integrado. Sin vinculación automática por email; conflicto `409` | API testing `3d77120b…` healthy/readiness schema0035. Recent-auth/delete parcialmente verificado; contar 4 inactive/0 sessions por SQL read-only antes del PASS completo. Cuota IP (11×401; se esperaba 429 en la última) inconclusa; no cambiar límites. Google runtime pendiente; CAPTCHA apagado por falta de widget Turnstile |
 | Sesión y perfil | `/auth/refresh`, `/auth/logout`, `/me`, foto, export/baja y cambio de email | SMTP configurado en ambos; no se enviaron correos en esta revisión |
 | Contexto y personal | `/marcas`, sucursales, `/personal`, `/invitaciones` | Permisos se deciden en API, no por la pestaña visible |
 | Clientes | `/marcas/:id/clientes`, búsqueda y paginación | Datos reales, no arrays de ejemplo |
@@ -40,9 +40,9 @@ flowchart LR
 | Suscripciones | Consulta, checkout, resultado, confirmación por email y cancelación | Mercado Pago configurado en testing; deshabilitado en producción |
 | Referidos / Backoffice | Campañas, códigos, atribuciones, recompensas, precios e historial | UI testing activa; producción preparada sin contenedor |
 | Push / reseñas | Token Expo, worker; configuración Places e invitaciones/eventos de reseña | Existencia en código no prueba entrega push ni reseña publicada |
-| Instalación PWA asistida | Helper integrado en ramas testing frontend/landing | Integración frontend desplegada; landing deployment pendiente de retry de healthcheck; instalación física no verificada |
+| Instalación PWA asistida | Helper integrado en ramas testing frontend/landing | Integración frontend desplegada; landing healthy en `9d17179b…`; instalación física no verificada |
 
-Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. Su existencia se comprobó en el router real y las llamadas frontend. No se sustituyó por el OpenAPI objetivo. La revisión base comprobó versiones, salud, configuración no secreta y estructura de las bases. En el corte intermedio la API está desplegada healthy y el frontend está en `0fc06edc…`; landing continúa en imagen vieja tras fallar healthcheck y mantiene retry en cola; las métricas k6 y el backup/restore aislado se detallan en el plan de remediación.
+Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. Su existencia se comprobó en el router real y las llamadas frontend. No se sustituyó por el OpenAPI objetivo. La revisión base comprobó versiones, salud, configuración no secreta y estructura de las bases. En el corte intermedio la API está desplegada healthy y el frontend está en `0fc06edc…`; landing `9d17179b…` healthy tras el retry del healthcheck IPv6; las métricas k6 y el backup/restore aislado se detallan en el plan de remediación.
 
 
 ## Referencias de código
