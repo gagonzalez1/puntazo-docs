@@ -34,7 +34,7 @@ El alta de cliente usa `/v1/auth/register`; el alta comercial usa `/v1/demo/come
 
 Ver [registro](#/sequence-register), [login](#/sequence-login), [Google](#/sequence-google) y [restauración](#/sequence-restore).
 
-Revisión base de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**; remediación de identidad integrada en candidato backend al **07/10/2026**, runtime pendiente de confirmar deployment. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
+Revisión base de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**; remediación de identidad integrada en candidato backend al **07/10/2026**, API testing desplegada como `3d77120b…`, ready/healthy schema0035; pruebas de flujo Google completas en runtime siguen pendientes. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura, integración y health del servicio; no certifica todos los invariantes de negocio ni implica una prueba Google real en runtime.
 
 ## Referencias de código
 
