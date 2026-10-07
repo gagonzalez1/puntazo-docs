@@ -29,7 +29,7 @@ flowchart LR
 
 | Flujo | Integración verificada en código | Límite del despliegue observado |
 |---|---|---|
-| Registro y acceso | `/auth/register`, `/demo/comercios`, `/auth/login`, `/auth/google`; además `/auth/google/link` y `/auth/reauthenticate` en el candidato backend integrado. Sin vinculación automática por email; conflicto `409` | API testing `3d77120b…` healthy/readiness schema0035. Recent-auth/delete parcialmente verificado; contar 4 inactive/0 sessions por SQL read-only antes del PASS completo. Cuota IP (11×401; se esperaba 429 en la última) inconclusa; no cambiar límites. Google runtime pendiente; CAPTCHA apagado por falta de widget Turnstile |
+| Registro y acceso | `/auth/register`, `/demo/comercios`, `/auth/login`, `/auth/google`; además `/auth/google/link` y `/auth/reauthenticate` en el candidato backend integrado. Sin vinculación automática por email; conflicto `409` | API testing `3d77120b…` healthy/readiness schema0035. Recent-auth/delete verificado por SQL (4 inactive/0 sesiones no revocadas, credenciales limpiadas, journal 1/cards 0/operator attribution 0); no se hizo GET bearer tras delete. Presupuestos direct/web independientes dieron 429 en sus límites; cadena alternada cross-route (11×401, último esperado 429) sigue en investigación; cuotas sin cambios. Google runtime pendiente; CAPTCHA apagado por falta de widget Turnstile |
 | Sesión y perfil | `/auth/refresh`, `/auth/logout`, `/me`, foto, export/baja y cambio de email | SMTP configurado en ambos; no se enviaron correos en esta revisión |
 | Contexto y personal | `/marcas`, sucursales, `/personal`, `/invitaciones` | Permisos se deciden en API, no por la pestaña visible |
 | Clientes | `/marcas/:id/clientes`, búsqueda y paginación | Datos reales, no arrays de ejemplo |
