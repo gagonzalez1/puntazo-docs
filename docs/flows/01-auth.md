@@ -30,11 +30,11 @@ flowchart TD
  M --> P[Programa o acceso comercial pendiente]
 ```
 
-El alta de cliente usa `/v1/auth/register`; el alta comercial usa `/v1/demo/comercios`, con clave idempotente. Google tiene su propia validación y selección de tipo cuando corresponde. Si la respuesta requiere verificar email, el frontend conserva el resultado pendiente y no inventa una sesión. Tras login consulta identidad y marcas. Primer login/trial se registran en backend; no se reinician desde una selección local.
+El alta de cliente usa `/v1/auth/register`; el alta comercial usa `/v1/demo/comercios`, con clave idempotente. Google valida el ID token y resuelve la cuenta sin autovincular por coincidencia de email. El candidato backend añade vinculación explícita (`POST /v1/auth/google/link`, contraseña Puntazo + ID token) y reautenticación (`POST /v1/auth/reauthenticate`, contraseña o ID token del mismo `sub`); una colisión requiere acción explícita y no reemplaza identidades. Si la respuesta requiere verificar email, el frontend conserva el resultado pendiente y no inventa una sesión. Tras login consulta identidad y marcas. Primer login/trial se registran en backend; no se reinician desde una selección local.
 
 Ver [registro](#/sequence-register), [login](#/sequence-login), [Google](#/sequence-google) y [restauración](#/sequence-restore).
 
-Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
+Revisión base de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**; remediación de identidad integrada en candidato backend al **07/10/2026**, runtime pendiente de confirmar deployment. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código
 

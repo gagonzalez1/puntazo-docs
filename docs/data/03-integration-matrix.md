@@ -13,7 +13,7 @@ authority: mixed
 
 # Datos · Matriz pantalla–API
 
-Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
+Revisión base de fuentes/runtime del **02/10/2026, 22:30–22:33 UTC**, actualizada para identidad y remediación de estrés al **07/10/2026**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ```mermaid
 flowchart LR
@@ -29,7 +29,7 @@ flowchart LR
 
 | Flujo | Integración verificada en código | Límite del despliegue observado |
 |---|---|---|
-| Registro y acceso | `/auth/register`, `/demo/comercios`, `/auth/login`, `/auth/google`; todos bajo `/v1` | Configuración de altas/verificación y Google condiciona su ejecución |
+| Registro y acceso | `/auth/register`, `/demo/comercios`, `/auth/login`, `/auth/google`; además `/auth/google/link` y `/auth/reauthenticate` en el candidato backend integrado. Sin vinculación automática por email; conflicto `409` | Job Coolify API QUEUED; verificar versión/readiness y flujo Google en runtime tras completar deploy. CAPTCHA desactivado porque falta widget Turnstile |
 | Sesión y perfil | `/auth/refresh`, `/auth/logout`, `/me`, foto, export/baja y cambio de email | SMTP configurado en ambos; no se enviaron correos en esta revisión |
 | Contexto y personal | `/marcas`, sucursales, `/personal`, `/invitaciones` | Permisos se deciden en API, no por la pestaña visible |
 | Clientes | `/marcas/:id/clientes`, búsqueda y paginación | Datos reales, no arrays de ejemplo |
@@ -42,7 +42,7 @@ flowchart LR
 | Push / reseñas | Token Expo, worker; configuración Places e invitaciones/eventos de reseña | Existencia en código no prueba entrega push ni reseña publicada |
 | Instalación PWA asistida | Helper integrado en ramas testing frontend/landing | Publicado en las imágenes actuales de testing; instalación física no verificada |
 
-Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. Su existencia se comprobó en el router real y las llamadas frontend. No se sustituyó por el OpenAPI objetivo. La revisión runtime comprobó versiones, salud, configuración no secreta y estructura de las bases; no creó movimientos, cobros ni sesiones de usuarios.
+Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. Su existencia se comprobó en el router real y las llamadas frontend. No se sustituyó por el OpenAPI objetivo. La revisión base comprobó versiones, salud, configuración no secreta y estructura de las bases. Para este corte el deployment API está QUEUED y la verificación posterior de runtime está pendiente; las métricas k6 y el backup/restore aislado se detallan en el plan de remediación.
 
 
 ## Referencias de código

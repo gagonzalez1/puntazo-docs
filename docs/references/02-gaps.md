@@ -13,7 +13,7 @@ diagram: false
 
 # Brechas y límites actuales
 
-Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
+Revisión base de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**, con actualización de brechas de estrés al **07/10/2026**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 La comparación inicial de agosto —sólo `users`, cuatro rutas y fidelidad mock— fue superada por el código actual. El historial de Git conserva esa revisión. Estas son las diferencias que afectan la lectura de la arquitectura hoy:
 
@@ -27,6 +27,8 @@ La comparación inicial de agosto —sólo `users`, cuatro rutas y fidelidad moc
 | Analíticas entre UIs | Backend de períodos en ambos; UI de períodos en testing, resumen operativo en main | Promoción de frontend según alcance de producto |
 | Proveedores externos | SMTP configurado; Mercado Pago testing configurado; push/Places implementados | Esta revisión no comprobó entrega de correo, evento de cobro firmado, entrega push ni publicación de reseña |
 | Contrato objetivo | `openapi.yaml`, spec y `PC-xx` conservan propuestas históricas | Reconciliación ruta/regla por ruta/regla con la implementación; similitud no acredita aprobación |
+| Vinculación Google | Contrato explícito implementado e integrado en candidato backend: link con contraseña + ID token, reauth con contraseña o mismo `sub`; conflictos `409`, sin autolink por email | Deployment Coolify sigue QUEUED; smoke de runtime pendiente. CAPTCHA no se activa: falta widget Turnstile. No hay alcance de recuperación/reclamación histórica |
+| Estrés y alertas | Smoke, sustained 5 min y spike local PASS; soak de 2 h en curso; monitor 10 pruebas PASS con receptor loopback | Terminar soak, validar candidato en testing y configurar/probar receiver externo; resultados locales no acreditan capacidad de VPS |
 | Legales | Sitio publicado y saludable | Mantener estado de revisión jurídica del contenido |
 
 La auditoría anterior de testing registró un pendiente de dependencias; esta revisión documental no repitió esa auditoría ni lo declara resuelto. Los respaldos y la restauración de producción se documentaron en el registro operativo privado: este portal no certifica una nueva restauración.
