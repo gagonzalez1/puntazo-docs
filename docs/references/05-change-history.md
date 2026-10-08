@@ -29,6 +29,18 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-07 (23:20 ART / 02:20 UTC) — Reconciliación final del source backend de remediación
+
+| Campo | Registro |
+|---|---|
+| PR documental | PR #10, rama `docs/stress-remediation-20261007` (draft al momento de este corte) |
+| Backend | `am-p/app-loyalty` `main` en `582499ce9623e176d416ecc63d7c1f62cf25fcec`, merge de PR30 a las 01:52:49 UTC. El fix de remediación trabajado en PR31 quedó cubierto funcionalmente por este `main`; PR31 se cerró a las 02:19 UTC, sin borrar su rama. |
+| Comparación local | Merge local `84421a96c7ac54a30fba62cdf9435d253b23048d` conserva el árbol `2f9cc555fd71135abcfde199643e97bfef58a929`, idéntico al árbol remoto de `main`, con diff vacío. No se hizo push de la rama de remediación. |
+| Cambios funcionales | La corrección de seguridad/admisión de estrés quedó en el source owner `main`. El runtime testing siguió en API `3d77120b…`/schema `0035`; no hubo nuevo deploy del API. El workflow de producción `37715104289` detuvo el deploy en el guard porque el schema actual de producción es `0033` y el código requiere `0035`; deploy step SKIP, producción sin cambios. |
+| Documentos actualizados | `docs/delivery/05-stress-remediation-plan.md` y este historial. Se distinguen source, candidato/runtime, cierre de PR y resultado del guard de producción. |
+| Validaciones | 442 pruebas Go/race PASS, 0 skips con PostgreSQL temporal aislado y Redis vacío; `go vet`, Redocly y 16 tests Node PASS. Backend workflow `37715103954` SUCCESS en SHA `582499ce…`. Freshness documental online: branch `docs/stress-remediation-20261007` en `13377454…`, 43 documentos indexados, 0 omisiones y 0 referencias rotas. |
+| Estado | Documentación local pendiente de revisión; no se promovió producción ni se modificó el runtime testing. |
+
 ### 2026-10-02 — Arquitectura vigente y topología por ambiente
 
 - Revisión desde ramas actuales en checkouts limpios; API oficial de Coolify, imágenes, endpoints de versión y 41 tablas por base comprobados. [Evidencia completa](#/runtime-snapshot).
