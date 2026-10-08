@@ -51,7 +51,7 @@ Los defaults se resolvieron contra `internal/config/config.go` de la imagen fuen
 
 ## Runtime comprobado y límites
 
-- Producción y testing: `/v1/version` devuelve los SHA/esquemas anteriores; la ruta compatible testing `/api/v1/version` informa la misma API.
+- Producción y testing: `/api/v1/version` devuelve los SHA/esquemas anteriores; la ruta compatible testing `/api/v1/version` informa la misma API.
 - Las dos bases presentan las mismas 41 tablas públicas, con dominios de fidelidad, identidad, referidos y administración. No se consultaron filas personales.
 - API, web, landing, Docs, legales y Backoffice testing están saludables; el Compose anterior permanece detenido y Backoffice producción sin contenedor.
 - PostgreSQL/Redis/MinIO de ambos ambientes no publican puertos de datos al host. Esto no prueba aislamiento estricto entre redes Docker.
@@ -59,8 +59,8 @@ Los defaults se resolvieron contra `internal/config/config.go` de la imagen fuen
 
 ## Consulta pública
 
-- [Versión producción](https://api.puntazo.pro/v1/version) · [readiness producción](https://api.puntazo.pro/v1/health/ready).
-- [Versión testing](https://api-testing.puntazo.pro/v1/version) · [readiness testing](https://api-testing.puntazo.pro/v1/health/ready).
+- [Versión producción](https://api.puntazo.pro/api/v1/version) · [readiness producción](https://api.puntazo.pro/api/v1/health/ready).
+- [Versión testing](https://api-testing.puntazo.pro/api/v1/version) · [readiness testing](https://api-testing.puntazo.pro/api/v1/health/ready).
 - [Entrada producción](https://puntazo.pro/login) · [entrada testing](https://testing.puntazo.pro/login).
 
 
@@ -76,20 +76,35 @@ Este corte complementa, no reescribe, la observación histórica del 02/10/2026.
 | Servicio | Artefacto esperado/observado | Estado comprobado |
 |---|---|---|
 | API testing | Integración `closed-test-readiness` `3d77120b…`; runtime reportó commit `3d77120b…`, schema `0035` | Coolify job `nbt4ijbrqaya8rbkzeedtrjl` FINISHED; ready/healthy, liveness 200; 1 CPU y 768 MiB. CAPTCHA `false`; concurrencia 2 y trusted proxy CIDRs canónicos. |
-| Web testing | Fuente `0ec8cc8`, integración `3adc150`, deploy `0fc06edc0b62308ade33b535a8e784087586c019` | PR 47 merged; deployment healthy, 0,5 CPU y 384 MiB. CI `37694621541` PASS, 150 unit tests y cinco fixtures adult-gate nuevos confirmados. |
+| Web testing | Fuente `43c55125001a81582908b5a5a970a74973f167cd`, PR48 integración producto `50e6f76b18707b9b6c931cd5036c15452c7a00b0`, runtime `636bc89…` | PR48 producto desplegado y healthy, 0,5 CPU/384 MiB; preview PR18 fue configuración únicamente. Las métricas actuales se documentan abajo; coldUsable corresponde al `/login` público. |
 | Landing testing | PR 9 merged; runtime tag `9d17179b38bace95d2e3a8fa97d5307dc92675eb` | Retry `bgumk2rrvmcgqeieo72e2rxq` FINISHED 22:32 UTC, healthy, 0,5 CPU/256 MiB. Healthcheck corregido a `127.0.0.1` tras resolver `localhost` a IPv6 en BusyBox. |
-| Monitor de readiness | Imagen mínima `sha256:365dc3e24ad6bf96c1b94a74a6abb65c812c45d705d43c5fe889e9e148a7b714`, idéntica en local/VPS | 25 paquetes, Scout 0 HIGH/CRITICAL; UID 65534, capabilities none, sin secretos ni puertos; VPS 96 MiB/0,1 CPU, JSON journal, receiver externo pendiente. |
+| Monitor de readiness · actualización 07/10 | Fix oficial `e58f64851a191e3f0a0f4a318d279716bd47b51f`; build de testing `34099e42d17c1fe50da22d60964b32fd57627407`; imagen `sha256:2e421f1ee4ae94bec41b67bae93c711f349e5eda98aadecc40dc7cbc05eb94bf` | Container `27e3232f3ae7` healthy, restart 0, 96 MiB/0,1 CPU, root read-only, UID 65534, caps ALL dropped, sin puertos/secrets. Tres probes readiness/version 200 (API `3d77120`, schema0035); sólo reinició el monitor, API/DB no reiniciaron. Digest `365dc3e…` queda supersedido. |
 
-### Pruebas y límites del corte
+### Pruebas y límites del corte del 07/10/2026
+
+Los cinco resultados históricos que siguen listados a continuación pertenecen al corte anterior y no describen el frontend actual `636bc89…`.
 
 - API testing: smoke 287 requests, 0 errores/checks 100%, lecturas p95 315,434 ms/p99 361,148 ms; sustained 1.751 requests/5 min, p95 280,856/p99 352,141 ms; spike 319 requests, p95 260,379/p99 298,087 ms. Los tres escenarios terminaron con 0 errores y 100% checks.
 - Dataset de testing contiene fixtures con tarjetas vacías y cinco fixtures nuevos adult-gate; no se modificaron entidades históricas. No equivale al dataset local de 100 marcas/10.000 clientes/10.000 tarjetas/100.000 movimientos con ledger conservado.
-- EXPLAIN de 11 lecturas quedó durable en `artifacts/stress-remediation-20261007/final-readonly-query-plans.json`. Máximo observado offset 980: 2.425 ms; 1.000 movimientos de una marca/tarjeta no tuvieron spill. No es un test de 100.000 movimientos por marca.
+- Evidencia de campaña añadida 07/10/2026: EXPLAIN de 11 lecturas en `artifacts/stress-remediation-20261007/puntazo-final-readonly-query-plans.json`. Sobre `puntazo_load`: 100 marcas, 100.000 movimientos, 10.000 tarjetas; marca seleccionada con 1.000 movimientos y 10 por tarjeta. Máximo observado offset 980: 2,425 ms; no hubo spill. No es un test de 100.000 movimientos por marca.
 - Cinco mediciones frías web dieron LCP 3.516–3.996 ms (no cumple <2,5 s); caliente 340–360 ms. CLS 0,023–0,027 pasa en el build desplegado. Una variante de optimización detectó regresión CLS y no fue promovida. EventTiming 40–48 ms no es INP de campo.
-- Soak Go 1.26 de 2 h (inicio 22:13 UTC) y SSE local 90 min (inicio 22:29 UTC) siguen en progreso. SSE proxy público PASS por 19,953 s con heartbeat, `no-store/private`, HSTS simple y logout 204/revocación 401; browser dos pestañas y logout offline PASS sin refresh posterior al marker. El primer harness SSE se descartó: coincidió con tres logins (uno rate-limited) y no reintentaba recuperación de LISTEN tras 503; no es evidencia de regresión API.
-- Health local ejercitó readiness 503/200 con PostgreSQL/Redis aislados y cuatro transiciones/deduplicación; suite monitor 12 tests PASS. PR 15 merged: fuente monitor `9a52e8` → `closed-test-readiness` `00f6b31`; respecto de API runtime `3d77120b…` el delta se limita a scripts/README/Dockerfile.monitor, sin diferencias de inputs API. La fuente oficial `70e7b08` / owner PR31 sigue draft.
-- Scout de imágenes API/web/landing y monitor: cero HIGH/CRITICAL. La imagen mínima de monitor usa 25 paquetes; mismo digest local/VPS, UID 65534, capabilities none, sin secretos ni puertos. Logs JSON locales al journal; webhook externo pendiente.
+- En aquel corte, el soak Go de 2 h y los soaks SSE estaban en progreso; sus resultados finales están en la actualización del 08/10/2026 al final de este registro. SSE proxy público PASS por 19,953 s con heartbeat, `no-store/private`, HSTS simple y logout 204/revocación 401; browser dos pestañas y logout offline PASS sin refresh posterior al marker. El primer harness SSE se descartó: coincidió con tres logins (uno rate-limited) y no reintentaba recuperación de LISTEN tras 503; no es evidencia de regresión API.
+- La prueba previa con readiness 503/200, 12 tests y PR15 (`9a52e8` → `00f6b31`) corresponde al monitor intermedio y queda como historial. El fix de leak de abort listeners está en owner source `e58f64851a191e3f0a0f4a318d279716bd47b51f` (PR31, CI `37703238898` PASS); PR testing #16 merged a build `34099e42d17c1fe50da22d60964b32fd57627407`. 16 tests pasan en Node22/26; antes 25 waits secuenciales dejaban 25 listeners, después 2.000 ciclos dejan 0 listeners y heap baja 2.312 bytes. API inputs son equivalentes a runtime `3d77120b…`; el delta sólo incluye scripts/README/Dockerfiles, sin redeploy API.
+- Imagen final del monitor: `sha256:2e421f1ee4ae94bec41b67bae93c711f349e5eda98aadecc40dc7cbc05eb94bf`, Node22.23.3/Alpine3.24.2, 25 paquetes, Scout 0 HIGH/CRITICAL. En el VPS, tras el reemplazo, hubo tres probes consecutivos healthy/version/readiness 200; el API container conservó restart 0 y siguió healthy. El startup frío emitió `startup_failure` y luego `recovery` por el timeout de 3 s; transición temporal observada, no hubo notificaciones externas configuradas. Receiver externo pendiente. Evidencia completa en `artifacts/stress-remediation-20261007/puntazo-monitor-wait-fix-verification.json` y artefactos asociados.
 
 La verificación de reauth/baja observó sesión antigua 401 `RECENT_AUTH_REQUIRED`, reauth 200, token previo 401 y delete 202 con `access_revoked=true`, `ledger_preserved=false`, resultado esperado por overlay privacy testing `0035` (borra historial/tarjetas propias, conserva ledger ajeno y anonimiza operador; fuente legacy difiere). SQL read-only confirmó el fixture 4 (una cuenta sintética) inactiva, password/Google/QR limpiados y `auth_version>1`; cuatro sesiones totales y cero no revocadas (dos de login/reauth), journal 1, cards 0 y operator attribution 0. No se hizo GET bearer tras delete; revocación confirmada por SQL y middleware. Evidencias: `artifacts/testing-sensitive-action-acceptance.json` y `artifacts/recent-auth-fixture4-readonly.jsonl`. Evidencias reproducibles: `artifacts/stress-remediation-20261007`.
 
 No se modificaron datos históricos ni recursos de producción. El estado del VPS de testing y las pruebas descritas no acreditan aceptación final ni capacidad de producción.
+
+
+## Corte final de campañas de estrés · 08/10/2026 00:14–00:15 UTC
+
+API testing `3d77120b…` (schema `0035`), web `636bc89…`, landing `9d17179b…`, PostgreSQL, Redis, MinIO y monitor estaban running/healthy con restart 0 (`artifacts/stress-remediation-20261007/testing-final-runtime-health.json`); no se promovió producción. Los probes externos documentados son `/api/v1/health/ready` y `/api/v1/version`.
+
+- **Soak local k6, 2 h:** `artifacts/stress-remediation-20261007/puntazo-local-soak-2h-final.json`, exit 0; 84.671 HTTP requests, 11,758 req/s, 21.198 iteraciones, 105.828 checks PASS/0 FAIL, `api_error_rate=0`, `http_failed=0`, lecturas p95 6,656 ms/p99 8,499 ms, workflow p95 20 ms, tres logouts; gate de resumen PASS.
+- **SSE 90 min:** local 5.419,44 s y testing 5.422,73 s; en cada ambiente 3 workers × 235 heartbeats = 705, 18 refreshes, cero errores, logout 204 y bearer revocado 401 al cierre por worker. Evidencias de campaña se conservaron como `/tmp/puntazo-local-sse-soak.json` y `/tmp/puntazo-testing-sse-soak.json` en la máquina ejecutora.
+- **Ledger y sesiones:** `artifacts/stress-remediation-20261007/local-final-ledger-after-soak-readonly.json` a 00:13:40 UTC confirma 100 marcas, 10.100 usuarios, 10.000 tarjetas, 100.000 movimientos, invariantes sin brechas y cero mutaciones/familias activas locales. `fixture-session-final-readonly.json` confirma cero sesiones/familias activas para los tres fixtures por ambiente. Las 158 familias históricas globales de testing se preservaron; no hubo limpieza histórica.
+- **Capacidad observada:** `artifacts/stress-remediation-20261007/soak-memory-capacity-summary.json`: local 120 muestras/121,07 min, RSS 17,188–29,375 MiB, último cuartil 22,898 MiB frente a 23,398 MiB en el primero; testing 70 muestras/76,21 min, RSS Docker API 9,461–17,82 MiB, último cuartil 17,73 MiB, cero muestras unhealthy y cero errores del muestreador. No comparar entornos como equivalentes: runtime, dataset y límites difieren. El monitor tuvo exposición aparte de 28,74 min, no certificación de dos horas.
+- **Estado inmediato testing** (`testing-post-campaign-capacity-current-date.json`, 00:13:51 UTC): API healthy/restart 0, `sse_active=0`, `sse_ready=true`, errores Redis 0 y fallos de escritura SSE 0. `bcrypt_rejected=1` es acumulado de un harness descartado; `db_canceled=2` ocurrió en una ventana de navegador y no tiene atribución confirmada, no se presenta como error de estas campañas.
+
+Las campañas automatizadas de fase 7 finalizaron PASS dentro de las cargas, identidades y recursos medidos; no certifican capacidad máxima ni sizing de producción. Integración/código de autenticación Google desplegados no significan aceptación con proveedor e identidades reales; esa prueba sigue pendiente. También siguen pendientes INP de campo/QA nativa física, receptor externo de alertas y activación Siteverify, que permanece apagada al no existir widget Turnstile.
