@@ -102,6 +102,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 29. [`docs/sequences/03-google.md`](#/sequence-google) — acceso con Google.
 30. [`docs/sequences/04-restore.md`](#/sequence-restore) — restauración de sesión.
 31. [`docs/sequences/05-scan.md`](#/sequence-scan) — preview, confirmación transaccional e idempotencia.
+32. [`docs/sequences/10-android-flexible-update.md`](#/sequence-android-flexible-update) — actualización flexible Android implementada en rama fuente; integración y publicación pendientes.
 
 ### 6. Diseño objetivo
 

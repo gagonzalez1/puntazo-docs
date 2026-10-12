@@ -41,6 +41,8 @@ flowchart LR
 | Referidos / Backoffice | Campañas, códigos, atribuciones, recompensas, precios e historial | UI testing activa; producción preparada sin contenedor |
 | Push / reseñas | Token Expo, worker; configuración Places e invitaciones/eventos de reseña | Existencia en código no prueba entrega push ni reseña publicada |
 | Instalación PWA asistida | Helper integrado en ramas testing frontend/landing | Publicado en las imágenes actuales de testing; instalación física no verificada |
+| Actualización flexible Android | Módulo Expo local → Google Play In-App Updates, en `codex/android-flexible-updates-20261012` (12/10/2026) | Incluido en AAB 1.0.0 (16), internal publicado; mismo AAB promovido a pruebas cerradas `testing` a las 17:48 UTC, en revisión de Google. Integración a main/testing y QA física pendientes. Sin ruta backend nueva. |
+| Confirmación 18+ Android | `/me` y `/me/age-confirmation` existentes; cliente en `release/android-internal-20261012` (PR #61) | AAB interno 1.0.0 (16); aceptación no se infiere de Google. Ruta testing responde 401 sin autenticación. Integración del cliente a main/testing pendiente. |
 
 Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. Su existencia se comprobó en el router real y las llamadas frontend. No se sustituyó por el OpenAPI objetivo. La revisión runtime comprobó versiones, salud, configuración no secreta y estructura de las bases; no creó movimientos, cobros ni sesiones de usuarios.
 

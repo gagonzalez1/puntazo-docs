@@ -58,6 +58,13 @@ La landing sirve `/` y redirige las antiguas páginas divididas a secciones de l
 
 Producción informa esquema `0033`, pero eso no implica paridad de configuración con testing. Ver [integraciones](#/integration-matrix) y [brechas operativas](#/implementation-gaps).
 
+El cambio Android del 12/10/2026 agrega una comunicación directa app nativa →
+Google Play para consultar e instalar actualizaciones flexibles. Está implementado
+en la rama frontend `codex/android-flexible-updates-20261012`, pendiente de integrar
+y publicar; no se atribuye al despliegue anterior. El detalle y la secuencia están
+en [Componentes frontend](#/frontend-components). No requiere un nuevo contenedor
+propio, endpoint de API ni cambio de datos.
+
 
 ## Referencias de código
 

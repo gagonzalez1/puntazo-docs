@@ -28,3 +28,6 @@ flowchart LR
 ```
 
 Estas vistas describen las rutas reales de las fuentes revisadas. Para saber qué configuración está publicada, leer [Estado observado](#/runtime-snapshot).
+
+La [actualización flexible Android](#/sequence-android-flexible-update) documenta
+el cambio fuente del 12/10/2026, pendiente de integrar y publicar en Google Play.
