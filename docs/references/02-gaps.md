@@ -28,7 +28,7 @@ La comparación inicial de agosto —sólo `users`, cuatro rutas y fidelidad moc
 | Proveedores externos | SMTP configurado; Mercado Pago testing configurado; push/Places implementados | Esta revisión no comprobó entrega de correo, evento de cobro firmado, entrega push ni publicación de reseña |
 | Contrato objetivo | `openapi.yaml`, spec y `PC-xx` conservan propuestas históricas | Reconciliación ruta/regla por ruta/regla con la implementación; similitud no acredita aprobación |
 | Legales | Sitio publicado y saludable | Mantener estado de revisión jurídica del contenido |
-| Actualizaciones Android · 12/10/2026 | Flujo flexible implementado en `app-fidelidad:codex/android-flexible-updates-20261012`; pruebas unitarias y tipos verificados | Integrar y publicar el nuevo binario; verificar desde Play con dos versiones elegibles. No hay evidencia de instalación real en celulares. |
+| Actualizaciones Android · 12/10/2026 | Flujo flexible implementado en `app-fidelidad:codex/android-flexible-updates-20261012`; pruebas unitarias y tipos verificados | AAB interno 1.0.0 (16) confirmado completed en Play desde release/android-internal-20261012. Integrar las ramas habituales y verificar con dos versiones elegibles; sin evidencia de instalación real en celulares. |
 
 La auditoría anterior de testing registró un pendiente de dependencias; esta revisión documental no repitió esa auditoría ni lo declara resuelto. Los respaldos y la restauración de producción se documentaron en el registro operativo privado: este portal no certifica una nueva restauración.
 

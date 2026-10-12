@@ -48,8 +48,10 @@ flowchart TD
 
 Implementada en la rama fuente `codex/android-flexible-updates-20261012` de
 `gonzalotev/app-fidelidad`, basada en `main` remoto `2871299`. La integración a
-main y su publicación en Google Play están pendientes; esta sección no amplía
-la certificación del runtime observado el 02/10.
+main/testing sigue pendiente. El código fue incluido en el candidato Android
+`release/android-internal-20261012`, AAB 1.0.0 (16), confirmado en Google Play
+internal como completed el 12/10; no se acredita instalación en teléfonos ni
+un cambio de la web observada el 02/10.
 
 El layout monta `AndroidUpdatePrompt` sólo para Android. Tras restaurar la
 sesión y cuando no hay otro diálogo registrado, presenta **Actualizar** y
@@ -75,6 +77,15 @@ La validación de distribución/instalación real requiere una versión que incl
 el módulo instalada desde Play y otra con `versionCode` mayor disponible para
 la cuenta. Las versiones previas a la integración requieren instalar primero
 esa nueva compilación nativa; no se agrega vía OTA.
+
+El candidato Android `release/android-internal-20261012` compone los PR #57,
+#58 y #59 desde testing `d2fd8c6`, preservando historial y acumulación. Agrega
+la confirmación 18+ descrita en [Acceso con Google](#/sequence-google), con el
+navegador raíz montado y un diálogo registrado que coordina el aviso opcional
+de actualización. Recupera además la restricción previa de checkout externo
+Android en UI y servicio; las plataformas web/iOS conservan ese flujo. No se
+copió el árbol completo de `closed-test-readiness` ni se integró el PR #60 de
+precios, cuya API testing todavía responde 404.
 
 ## Referencias de código
 

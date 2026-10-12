@@ -16,7 +16,9 @@ codeRefs: required
 
 Solicitud aprobada por el usuario el 12/10/2026. Implementación en
 `gonzalotev/app-fidelidad:codex/android-flexible-updates-20261012`, basada en
-`main` remoto `2871299`. Integración y publicación pendientes. El flujo usa
+`main` remoto `2871299`. Integración a main/testing pendiente. Publicado en el AAB 1.0.0 (16) de
+`release/android-internal-20261012`, Google Play internal completed el 12/10/2026;
+instalación y ciclo completo en teléfono aún no acreditados. El flujo usa
 Expo SDK 54 y Google Play; no modifica API ni datos de Puntazo.
 
 ```mermaid
