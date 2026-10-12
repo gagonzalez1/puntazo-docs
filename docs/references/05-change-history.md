@@ -29,6 +29,15 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-12 — Aviso opcional de actualización Android · rama fuente pendiente
+
+- Frontend: [PR #57](https://github.com/gonzalotev/app-fidelidad/pull/57), rama `codex/android-flexible-updates-20261012`, commit funcional `464db14`, HEAD verificado `5e2d5e0`, basado en main remoto `2871299`. Los SHA son evidencia del cambio revisado y no seleccionan builds futuros.
+- El usuario aprobó el flujo flexible con **Actualizar** y **Más tarde**; al descargar se solicita reinicio explícito. Google Play coordina consentimiento, descarga y actualización.
+- Backend, contrato HTTP, esquema y runtime: sin cambios ni publicación.
+- Actualizados contenedores, componentes frontend, matriz de integración, brechas, índice de secuencias y guía. Agregada secuencia Android. README fuente incluye requisitos y procedimiento de prueba desde Play.
+- Tipos, 133 pruebas unitarias (13 del flujo nuevo), Expo Doctor 18/18 y autolinking Android verificados. Exportación Android, build web/PWA y compilación Kotlin release del módulo verificados; para Gradle 8.14.3 se usó el JDK 17 instalado. Catálogo y Mermaid validados con 43 documentos.
+- La publicación del nuevo binario y la instalación real con dos versiones elegibles de Play quedan pendientes; el código de esta rama no se presenta como disponible en celulares.
+
 ### 2026-10-02 — Arquitectura vigente y topología por ambiente
 
 - Revisión desde ramas actuales en checkouts limpios; API oficial de Coolify, imágenes, endpoints de versión y 41 tablas por base comprobados. [Evidencia completa](#/runtime-snapshot).
