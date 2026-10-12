@@ -47,6 +47,13 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 - Google validó/confirmó la edición `12554666965124270906`; lectura nueva de internal confirmó `Puntazo (16)`, versionCodes `[16]`, completed. No acredita instalación por testers ni publicación pública. El primer intento EAS falló antes de crear job y reservó 15; se reintentó sin cambiar fuente/firma.
 - Integración a main/testing y QA de instalación, firma de Play/Google login y actualización flexible entre dos versiones quedan pendientes. Los SHA y el build ID son evidencia de esta entrega; futuras compilaciones deben resolver otra vez las ramas remotas actuales.
 
+### 2026-10-12 — Promoción del AAB 16 a pruebas cerradas
+
+- Por solicitud explícita del usuario, el mismo AAB `1.0.0 (16)` se promovió de `internal` al canal cerrado existente `testing`; no se recompiló ni se subió otro archivo. Se verificó el SHA-256 local contra el bundle guardado por Google.
+- Antes de la promoción se resolvieron nuevamente los HEAD remotos de `app-fidelidad:release/android-internal-20261012` (`a1e0622`) y docs `main` (`12ba775`), con fuente limpia y cobertura del índice válida. La rama base frontend `testing` también fue fetched (`d2fd8c6`). Checkout fuente: `.worktrees/android-internal-20261012/frontend`.
+- Google validó y confirmó la edición `00206849744240804998` a las 17:48 UTC. Una edición nueva confirmó `testing`, versión `[16]`, estado de rollout `completed`; la API de ciclo de publicación confirmó `RELEASE_LIFECYCLE_STATE_IN_REVIEW`. El rollout configurado no equivale a aprobación: la versión 14 continuaba `PUBLISHED` y disponible para ese grupo.
+- Se verificó que los otros canales y la configuración de testers no cambiaron. Backend, esquema, web y producción pública: sin cambios. La disponibilidad de 16 para testers cerrados queda pendiente de la revisión de Google; instalación física aún no acreditada.
+
 ### 2026-10-02 — Arquitectura vigente y topología por ambiente
 
 - Revisión desde ramas actuales en checkouts limpios; API oficial de Coolify, imágenes, endpoints de versión y 41 tablas por base comprobados. [Evidencia completa](#/runtime-snapshot).

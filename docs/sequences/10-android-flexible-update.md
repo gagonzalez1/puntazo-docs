@@ -7,7 +7,7 @@ parent: sequences
 level: sequence
 status: mixed
 authority: source_code
-summary: Aviso opcional y reinicio explícito incluidos en AAB interno 16; integración a main/testing y QA física pendientes.
+summary: Aviso opcional incluido en AAB 16; pruebas cerradas en revisión de Google, integración a main/testing y QA física pendientes.
 diagram: true
 codeRefs: required
 ---
@@ -20,6 +20,12 @@ Solicitud aprobada por el usuario el 12/10/2026. Implementación en
 `release/android-internal-20261012`, Google Play internal completed el 12/10/2026;
 instalación y ciclo completo en teléfono aún no acreditados. El flujo usa
 Expo SDK 54 y Google Play; no modifica API ni datos de Puntazo.
+
+El 12/10/2026 a las 17:48 UTC, el mismo AAB 16 se promovió al canal cerrado
+`testing`. La edición nueva registra rollout `completed`, pero el ciclo de
+publicación está `IN_REVIEW`: la versión 14 sigue `PUBLISHED` para los testers
+cerrados hasta que Google apruebe el cambio. No se recompiló ni se modificaron
+los testers. `internal` conserva la versión 16 publicada.
 
 ```mermaid
 sequenceDiagram
