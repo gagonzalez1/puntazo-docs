@@ -7,7 +7,7 @@ parent: sequences
 level: sequence
 status: mixed
 authority: source_code
-summary: Aviso opcional, descarga flexible y reinicio explícito mediante Google Play; implementación en rama fuente, publicación pendiente.
+summary: Aviso opcional y reinicio explícito incluidos en AAB interno 16; integración a main/testing y QA física pendientes.
 diagram: true
 codeRefs: required
 ---

@@ -36,7 +36,7 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 - Backend, contrato HTTP, esquema y runtime: sin cambios ni publicación.
 - Actualizados contenedores, componentes frontend, matriz de integración, brechas, índice de secuencias y guía. Agregada secuencia Android. README fuente incluye requisitos y procedimiento de prueba desde Play.
 - Tipos, 133 pruebas unitarias (13 del flujo nuevo), Expo Doctor 18/18 y autolinking Android verificados. Exportación Android, build web/PWA y compilación Kotlin release del módulo verificados; para Gradle 8.14.3 se usó el JDK 17 instalado. Catálogo y Mermaid validados con 43 documentos.
-- La publicación del nuevo binario y la instalación real con dos versiones elegibles de Play quedan pendientes; el código de esta rama no se presenta como disponible en celulares.
+- En este registro inicial quedaban pendientes la publicación y la instalación real. La entrega Android internal posterior del mismo día se registra debajo; no acredita instalación en celulares.
 
 ### 2026-10-12 — AAB interno 1.0.0 (16) y confirmación 18+
 
