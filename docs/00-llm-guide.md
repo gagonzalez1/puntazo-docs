@@ -94,6 +94,8 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 24. [`docs/flows/23-customer-cards.md`](#/flow-customer-cards) — tarjetas de fidelidad.
 25. [`docs/flows/24-customer-profile.md`](#/flow-customer-profile) — perfil versionado, foto, cambio de email y baja.
 
+25. [`docs/flows/25-customer-map-menu.md`](#/flow-customer-map-menu) — mapa de sucursales, plan V1 PDF e idea futura V2.
+
 ### 5. Secuencias de ejecución
 
 26. [`docs/sequences/00-index.md`](#/sequences) — índice de interacciones temporales.

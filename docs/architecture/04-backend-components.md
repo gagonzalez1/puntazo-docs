@@ -58,3 +58,8 @@ Las migraciones se ejecutan con `cmd/migrate`; `0033` es el esquema observado. N
 - [Movimientos](https://github.com/am-p/app-loyalty/blob/main/internal/repository/movement.go)
 - [Workers y proveedores](https://github.com/am-p/app-loyalty/blob/main/cmd/server/main.go)
 - [Migrador](https://github.com/am-p/app-loyalty/blob/main/cmd/migrate/main.go)
+
+
+## Descubrimiento de sucursales · 17/10/2026
+
+La corrección conserva handler → service → repository: validación y permisos de cliente, búsqueda literal, consulta de marcas/sucursales elegibles y persistencia transaccional de favoritos. El orden de locks coincide con las operaciones comerciales: usuario, marca y sucursal. Los medios reutilizan la firma del storage existente; no se introduce otro servicio. [Contrato y promoción](#/flow-customer-map-menu).

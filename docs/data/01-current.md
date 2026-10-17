@@ -59,3 +59,8 @@ La baja conserva el ledger y anonimiza según el código de cuenta. La auditorí
 - [Trial](https://github.com/am-p/app-loyalty/blob/main/migrations/0032_first_login_trial.up.sql)
 - [Códigos](https://github.com/am-p/app-loyalty/blob/main/migrations/0033_user_codes.up.sql)
 - [Baja y exportación](https://github.com/am-p/app-loyalty/blob/main/internal/repository/account.go)
+
+
+## Favoritos del mapa · candidato del 17/10/2026
+
+La migración0040 agrega `sucursales_favoritas(usuario_id,sucursal_id,created_at)`, clave primaria compuesta y referencias con borrado en cascada. La API también elimina preferencias al anonimizar una cuenta, cuya fila de usuario se conserva. Las migraciones0036–0040 se toman sin alterar de PR34, preservando sus números, restricciones e índices. El esquema observado por ambiente y su publicación se registran en [Estado observado](#/runtime-snapshot); los modelos objetivo de menús digitales no se incorporan. [Contrato de mapa y plan V1](#/flow-customer-map-menu).

@@ -37,3 +37,8 @@ La auditoría anterior de testing registró un pendiente de dependencias; esta r
 - [Defaults y validación de entorno](https://github.com/am-p/app-loyalty/blob/main/internal/config/config.go)
 - [Router Backoffice](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
 - [UI por períodos en testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/app/(tabs)/analytics/index.tsx)
+
+
+## Mapa y menús · 17/10/2026
+
+La corrección del mapa se trabaja como una entrega independiente en PR38 backend y PR66 frontend. El inventario real de testing contiene 37 sucursales elegibles, de las cuales 34 no tienen coordenadas completas: deben permanecer en la lista con ubicación pendiente. El catálogo de sucursales no acredita ubicaciones que no fueron cargadas. Ver [alcance y contrato](#/flow-customer-map-menu) y [verificación runtime](#/runtime-snapshot). V1 PDF es el siguiente desarrollo; V2 IA queda fuera del alcance actual y solo documentada como idea.

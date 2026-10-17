@@ -11,7 +11,31 @@ summary: Corte fechado con SHA completos, deriva de publicación y configuració
 diagram: false
 ---
 
-# Estado observado · 02/10/2026
+# Estado observado
+
+## Actualización acotada · 17/10/2026, 22:04–22:10 UTC
+
+Corrección del mapa del cliente publicada exclusivamente en testing. Los SHA siguientes son evidencia, nunca selectores de futuros builds: se debe renovar el fetch de las ramas y comprobar las fuentes limpias antes de cada publicación.
+
+| Componente | Fuente de integración seleccionada | Runtime observado |
+|---|---|---|
+| API testing | `gagonzalez1/app-loyalty:closed-test-readiness` | `4640caf95d6a00fb1567d8e2eeaacd0981b324e1`, esquema `0040`, healthy |
+| Web testing | `gonzalotev/app-fidelidad:testing` | `6a90482ad79166bcdea51402055c2d1a23109daf`, healthy |
+| API producción | `am-p/app-loyalty:main` | `dbeb03cff69ec512cb7f59f0a92fe8c8bfd9d181`, esquema `0035`; sin cambios en esta entrega |
+| Web producción | `gonzalotev/app-fidelidad:main` | `34bbcb7`; sin cambios en esta entrega |
+
+La API testing contiene el main oficial observado de Ariel, más la corrección de dos fixtures de fecha y el mapa/favoritos. [PR37](https://github.com/am-p/app-loyalty/pull/37) y [PR38](https://github.com/am-p/app-loyalty/pull/38) continúan abiertas hacia el propietario backend. [PR66 frontend](https://github.com/gonzalotev/app-fidelidad/pull/66) está integrada en `testing`. No se promovió este trabajo a producción. `puntazo-preview` está retirado.
+
+- Coolify API `szhzwdwrsop0sykx5ltijjkz`: finished 21:59:34 UTC. Web `onfl5ucvjykzuzpqioy5bafs`: finished 22:04:00 UTC. Las imágenes corresponden a los SHA anteriores; API 768 MiB/1 CPU y web 384 MiB/0,5 CPU, sin reinicios. Se conservaron redes privadas, alias y montajes de API.
+- Versión API directa y por el proxy `/api` coincidentes. La consulta autenticada real devuelve **37 sucursales elegibles, 3 con coordenadas y 34 con ubicación pendiente**. Se comprobaron búsqueda, validación de longitud, rechazo sin sesión, favoritos idempotentes y persistencia al iniciar otra sesión. Se restauró el favorito original del usuario QA y se cerraron las sesiones de prueba.
+- Pantalla publicada comprobada contra API real, sin respuestas simuladas, en navegador emulado de 390×844 y 1440×1000: carga de Google Maps, lista, búsqueda, ficha sin coordenadas y acción de mapa deshabilitada. No se atribuye QA físico Android/iOS a esta comprobación.
+- Migraciones 0036–0040 idénticas a las reservadas en PR34. Se restauró el respaldo cifrado de testing en una base aislada y se verificaron subida 0035→0040 e idempotencia. Los agregados de usuarios/marcas/sucursales/tarjetas/movimientos se conservaron. El trabajo separado de turnos con otras 0036–0038 debe conciliarse antes de integrar.
+- Recuperación disponible con imágenes anteriores y respaldo verificado. Un rollback de aplicación conserva esquema `0040` y `EXPECTED_SCHEMA_VERSION=0040`; no se revierte la base viva como parte de ese rollback.
+- CI backend y frontend aprobados, junto con pruebas locales de integración/race, contrato OpenAPI, calidad Expo y build. V1 PDF sigue pendiente; V2 se conserva solamente como idea en [Mapa y menú](#/flow-customer-map-menu).
+
+La documentación de esta actualización está propuesta en una rama dedicada; crear su PR no acredita publicación del portal. Los cortes anteriores mantienen su fecha y no describen el runtime actual.
+
+## Corte histórico · 02/10/2026
 
 Corte de consulta **22:30–22:33 UTC (19:30–19:33 Argentina)**. Fuentes seleccionadas por rama y fetched en checkouts limpios; API oficial de Coolify, imágenes/health de Docker, endpoints públicos y nombres de tablas consultados sin leer datos de usuarios. Este registro es evidencia fechada, no un pin para futuros builds.
 
