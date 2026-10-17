@@ -13,7 +13,7 @@ diagram: false
 
 # Estado observado
 
-## Actualización acotada · 17/10/2026, 22:04–22:10 UTC
+## Actualización acotada · 17/10/2026, 22:04–22:12 UTC
 
 Corrección del mapa del cliente publicada exclusivamente en testing. Los SHA siguientes son evidencia, nunca selectores de futuros builds: se debe renovar el fetch de las ramas y comprobar las fuentes limpias antes de cada publicación.
 
@@ -28,7 +28,7 @@ La API testing contiene el main oficial observado de Ariel, más la corrección 
 
 - Coolify API `szhzwdwrsop0sykx5ltijjkz`: finished 21:59:34 UTC. Web `onfl5ucvjykzuzpqioy5bafs`: finished 22:04:00 UTC. Las imágenes corresponden a los SHA anteriores; API 768 MiB/1 CPU y web 384 MiB/0,5 CPU, sin reinicios. Se conservaron redes privadas, alias y montajes de API.
 - Versión API directa y por el proxy `/api` coincidentes. La consulta autenticada real devuelve **37 sucursales elegibles, 3 con coordenadas y 34 con ubicación pendiente** en la aceptación inicial. Una lectura agregada posterior a las 22:09 UTC confirmó 37 elegibles, 13 con coordenadas válidas y 24 pendientes; los datos se actualizaron durante la comprobación, sin modificaciones de coordenadas por esta tarea. Se comprobaron búsqueda, validación de longitud, rechazo sin sesión, favoritos idempotentes y persistencia al iniciar otra sesión. Se restauró el favorito original del usuario QA y se cerraron las sesiones de prueba.
-- Pantalla publicada comprobada contra API real, sin respuestas simuladas, en navegador emulado de 390×844 y 1440×1000: carga de Google Maps, lista, búsqueda, ficha sin coordenadas y acción de mapa deshabilitada. No se atribuye QA físico Android/iOS a esta comprobación.
+- Pantalla publicada comprobada contra API real, sin respuestas simuladas, en navegador emulado de 390×844 y 1440×1000: carga de Google Maps, lista, búsqueda, ficha sin coordenadas y acción de mapa deshabilitada. La revalidación final de las 22:12 UTC mostró 37 sucursales, 13 marcadores y 24 ubicaciones pendientes en ambos tamaños, con una sola sesión y logout desde UI. No se atribuye QA físico Android/iOS ni PWA instalada a esta comprobación.
 - Migraciones 0036–0040 idénticas a las reservadas en PR34. Se restauró el respaldo cifrado de testing en una base aislada y se verificaron subida 0035→0040 e idempotencia. Los agregados de usuarios/marcas/sucursales/tarjetas/movimientos se conservaron. El trabajo separado de turnos con otras 0036–0038 debe conciliarse antes de integrar.
 - Recuperación disponible con imágenes anteriores y respaldo verificado. Un rollback de aplicación conserva esquema `0040` y `EXPECTED_SCHEMA_VERSION=0040`; no se revierte la base viva como parte de ese rollback.
 - CI backend y frontend aprobados, junto con pruebas locales de integración/race, contrato OpenAPI, calidad Expo y build. V1 PDF sigue pendiente; V2 se conserva solamente como idea en [Mapa y menú](#/flow-customer-map-menu).

@@ -31,6 +31,8 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ### 2026-10-17 — Mapa del cliente y alcance de menús
 
+- Actualización propuesta en [PR12](https://github.com/gagonzalez1/puntazo-docs/pull/12); portal todavía sin publicar desde esta rama.
+
 - Backend testing pasa de `f568686`/0035 a `4640caf`/0040; frontend testing de `66cf859` a `6a90482` (PR66). Producción sin cambios. Fuente backend oficial `am-p/app-loyalty:main@dbeb03c` contenida en el candidato.
 - Implementados descubrimiento de sucursales activas y favoritos propios persistidos, sin requisito de tarjeta previa. La UI conserva los locales sin coordenadas, separa estados y calcula distancia solo con ubicación real.
 - Actualizados guía, flujo de cliente, componentes backend, datos, matriz, brechas y estado observado. Nuevo flujo dedicado [Mapa y menú](#/flow-customer-map-menu).
