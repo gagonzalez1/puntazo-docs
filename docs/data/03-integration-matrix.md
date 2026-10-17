@@ -52,3 +52,8 @@ Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. S
 - [Suscripción](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/merchant/services/subscriptionService.ts)
 - [Rutas reales](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
 - [Analíticas de testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/services/merchantService.ts)
+
+
+## Corrección del mapa · 17/10/2026
+
+El candidato agrega el descubrimiento autenticado `/v1/clientes/me/tiendas` y `PUT/DELETE` de favoritos por sucursal. El frontend conserva todas las filas, incluidas las de ubicación pendiente, y separa error de ausencia de locales. Contrato, alcance y promoción en [Mapa y menú PDF](#/flow-customer-map-menu); evidencia runtime y límites en [Estado observado](#/runtime-snapshot). El menú PDF V1 sigue pendiente y V2 es una idea futura.

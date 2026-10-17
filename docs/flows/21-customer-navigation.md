@@ -30,3 +30,8 @@ Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y 
 
 - [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/_layout.tsx)
 - [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
+
+
+## Mapa del cliente · 17/10/2026
+
+La navegación de testing incluye Mapa para descubrir sucursales, consultar fichas y guardar favoritos. La autorización sigue el tipo de cuenta del servidor. El [flujo del mapa y plan PDF](#/flow-customer-map-menu) distingue la corrección actual, V1 pendiente y V2 como idea futura; no cambia el permiso de los saldos o canjes personales.
