@@ -39,7 +39,7 @@ flowchart TD
 
 La pantalla separa carga, error con reintento, listado vacío y búsqueda sin coincidencias. Los locales sin coordenadas conservan ficha y favoritos; solo los pares finitos y en rango generan marcadores. Sin permiso de ubicación se ordena por nombre y no se calcula una distancia desde Buenos Aires u otra referencia. Volver al mapa revalida datos y ubicación.
 
-Inventario agregado autenticado de testing: 37 sucursales elegibles, 3 con coordenadas completas y 34 sin ellas. No se crean sucursales ni se asignan posiciones supuestas para llenar el mapa. La verificación del despliegue y sus límites se registra en [Estado observado](#/runtime-snapshot).
+Inventario agregado autenticado inicial: 37 sucursales elegibles, 3 con coordenadas completas y 34 sin ellas. Corte posterior de las 22:09 UTC: 37 elegibles, 13 con coordenadas válidas y 24 pendientes; los datos cambiaron durante la comprobación. No se crean sucursales ni se asignan posiciones supuestas para llenar el mapa. La verificación del despliegue y sus límites se registra en [Estado observado](#/runtime-snapshot).
 
 ## V1 PDF: siguiente entrega, todavía no implementada
 
