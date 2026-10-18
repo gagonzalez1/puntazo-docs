@@ -41,4 +41,20 @@ La auditoría anterior de testing registró un pendiente de dependencias; esta r
 
 ## Mapa y menús · 17/10/2026
 
-La corrección del mapa se trabaja como una entrega independiente en PR38 backend y PR66 frontend. El inventario real de testing contiene 37 sucursales elegibles, de las cuales 34 no tienen coordenadas completas: deben permanecer en la lista con ubicación pendiente. El catálogo de sucursales no acredita ubicaciones que no fueron cargadas. Ver [alcance y contrato](#/flow-customer-map-menu) y [verificación runtime](#/runtime-snapshot). V1 PDF es el siguiente desarrollo; V2 IA queda fuera del alcance actual y solo documentada como idea.
+La corrección del mapa tiene su entrega independiente en PR38 backend y PR66 frontend. El inventario de testing de esa revisión registró 37 sucursales elegibles, de las cuales 34 no tenían coordenadas completas: deben permanecer en la lista con ubicación pendiente. Es un corte histórico, no un recuento vigente. El catálogo no acredita ubicaciones que no fueron cargadas. Ver [alcance y contrato](#/flow-customer-map-menu) y [verificación runtime](#/runtime-snapshot).
+
+## Menú PDF V1 · entrega de testing del 18/10/2026
+
+Backend `c12c94da5c62fcaf062a0094109ed47fc2dedc90`, frontend `72cf2229f8f732d705a63641692aff26481d5047` y landing `f22bc86ac41e07a28c203f0dc3cb0e4d4b49f32c` están desplegados y saludables. La QA real cubrió tienda, cliente desde mapa y visitante sin sesión, además del proxy con PDF de 3 MB, validaciones negativas y conservación de publicación. [Estado observado](#/runtime-snapshot) conserva fuentes y alcance.
+
+| Área | Resultado | Pendiente |
+|---|---|---|
+| V1 PDF | Carga, borrador privado, revisión, publicación, retiro, reemplazo y consulta pública verificados | Sin bloqueo conocido en el recorrido probado |
+| Promoción | Frontend PR67/68 y landing PR10 integradas en testing; backend PR39 abierta | Integrar backend en propietario y preparar promoción productiva; main oficial observado continúa en 0035 |
+| Plataformas | Navegador Chromium 390×844 y 1440×1000, export JS Android aprobada | QA física Android/iOS y PWA instalada |
+| V2 | Idea futura documentada | Sin editor, IA, buscador de productos, proveedor ni tablas implementadas |
+
+`puntazo-preview` está retirado. El OpenAPI objetivo y las propuestas históricas PC-xx conservan su autoridad; esta entrega no las aprueba. Las filas iniciales de esta página mantienen el corte histórico de octubre indicado allí.
+
+- [Persistencia PDF](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu.go)
+- [Editor y estados](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/components/CommercialBranchMenuEditor.tsx)

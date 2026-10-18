@@ -6,7 +6,7 @@ order: 230
 parent: customer-flows
 level: flow
 status: current
-summary: Tarjetas del usuario, beneficios y movimientos con lectura real y actualización.
+summary: Tarjetas del usuario, beneficios, movimientos y acceso al menú PDF de cada sucursal.
 diagram: true
 codeRefs: required
 authority: source_code
@@ -20,6 +20,9 @@ flowchart TD
  API --> C[Tarjetas de sus marcas]
  C --> B[Saldo SELLOS/PUNTOS y beneficios]
  C --> H[Historial por tarjeta]
+ C --> PDF[Ver menú]
+ PDF --> S[Elegir sucursal si hay varias]
+ S --> V[Publicación PDF vigente]
  H --> M[GET movimientos de tarjeta]
  E[SSE web o refresco de consultas] --> API
 ```
@@ -28,7 +31,15 @@ El servicio recorre páginas de tarjetas del usuario. El historial consulta una 
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
+## Acceso a menú PDF V1 · 18/10/2026
+
+La acción **Ver menú** consulta las sucursales activas de la marca. Con varias sucursales ofrece selección explícita en orden alfabético; el selector de tarjetas no solicita ubicación. Una única sucursal abre su página pública. La consulta no crea una tarjeta ni cambia saldos o beneficios; sin publicación presenta un estado vacío claro. La URL firmada se renueva al abrir el PDF en el visor del navegador o dispositivo.
+
+[Flujo PDF](#/flow-branch-menu-pdf) · [Fuente y despliegue verificados](#/runtime-snapshot). El corte anterior de esta página conserva su fecha histórica.
+
 ## Referencias de código
 
 - [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/demo/services/demoService.ts)
 - [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
+
+- [Acción de menú de una tarjeta](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/demo/components/CardMenuAction.tsx)

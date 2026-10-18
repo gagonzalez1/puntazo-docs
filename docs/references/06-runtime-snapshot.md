@@ -13,7 +13,26 @@ diagram: false
 
 # Estado observado
 
-## Actualización acotada · 17/10/2026, 22:04–22:12 UTC
+## Menú PDF V1 · corte 18/10/2026, 16:21 UTC
+
+| Componente testing | Rama seleccionada | Runtime observado |
+|---|---|---|
+| API | gagonzalez1/app-loyalty:closed-test-readiness | `c12c94da5c62fcaf062a0094109ed47fc2dedc90`, esquema 0041, healthy |
+| Web | gonzalotev/app-fidelidad:testing | `72cf2229f8f732d705a63641692aff26481d5047`, healthy |
+| Landing | gagonzalez1/puntazo-landing:testing | `f22bc86ac41e07a28c203f0dc3cb0e4d4b49f32c`, healthy |
+
+Las ramas se obtuvieron nuevamente y los checkouts de build se verificaron limpios. Estos SHA son evidencia, nunca selectores para nuevos builds. Producción conserva API `dbeb03c`/esquema `0035` y web `34bbcb7`; no se modificó. El candidato backend contiene el main oficial observado, sin commits detrás, y se propone al propietario mediante [PR39](https://github.com/am-p/app-loyalty/pull/39), con las dependencias PR37/38. Frontend [PR67](https://github.com/gonzalotev/app-fidelidad/pull/67) y [PR68](https://github.com/gonzalotev/app-fidelidad/pull/68), y landing [PR10](https://github.com/gagonzalez1/puntazo-landing/pull/10), están integradas en testing. El portal de esta rama documental aún no se publicó.
+
+La prueba real, sin mocks ni sesión inyectada, confirmó carga con selector de archivos, borrador oculto, revisión PDF HTTP 200, publicación y persistencia tras recarga, rechazo de protegido con indicación clara, retiro y reemplazo. Cliente desde mapa y visitante sin sesión abrieron el PDF con respuesta HTTP 200 application/pdf. Siete capturas y mediciones en 390×844 y 1440×1000 no muestran desbordamiento horizontal. La fixture de menú está identificada como prueba y no acredita afiliación comercial ni domicilio. [Demostración testing](https://testing.puntazo.pro/menu/29).
+
+La API verificó If-Match 428/412, aislamiento, PDF falso/protegido/31 páginas/excedido y conservación del estado ante rechazo. El PDF válido de 3.040.417 bytes pasó por landing y proxy como borrador privado y se descartó conservando la publicación. El PDF público coincidió por SHA256 con el original; firma de 300 s, sin caché de las respuestas API. El bundle público coincide con el contenedor. Los límites generales e imágenes se conservan; solo el POST PDF admite el margen de 11 MiB en proxies y 10 MiB + 64 KiB en la API.
+
+Respaldo cifrado con descifrado/checksum y restore completo aislado aprobados; upgrade 0040→0041 e idempotencia dos veces, agregados de usuarios/marcas/sucursales/tarjetas/movimientos preservados. El rollback de aplicación conserva 0041 y `EXPECTED_SCHEMA_VERSION=0041`; no ejecutar DOWN en la base viva. Se preservan imágenes/configuración previas. API 768 MiB/1 CPU, web 384 MiB/0,5 CPU y landing 256 MiB/0,5 CPU, saludables sin reinicios.
+
+Checks de backend/race/migraciones/OpenAPI/Docker y frontend 131 unitarias/typecheck/Doctor/build/browser/export JS aprobados; auditorías dentro de sus políticas existentes. Los tres casos browser de contrato usan fixtures y se distinguen de la QA real anterior. No se acredita QA física Android/iOS ni instalación de PWA. La V2 digital/IA permanece idea futura. [Recorrido y contrato](#/flow-branch-menu-pdf).
+
+
+## Corte histórico del mapa · 17/10/2026, 22:04–22:12 UTC
 
 Corrección del mapa del cliente publicada exclusivamente en testing. Los SHA siguientes son evidencia, nunca selectores de futuros builds: se debe renovar el fetch de las ramas y comprobar las fuentes limpias antes de cada publicación.
 

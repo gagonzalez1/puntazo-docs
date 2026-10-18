@@ -5,11 +5,11 @@ group: 03 · Backend objetivo
 order: 40
 parent: backend-review-index
 level: operations
-status: target
-authority: proposal_codex
-summary: Sesiones, migraciones, imágenes, auditoría, observabilidad y recuperación del backend objetivo.
+status: mixed
+authority: mixed
+summary: Operación objetivo histórica y anexo implementado de validación, storage y limpieza PDF V1 candidata.
 diagram: true
-codeRefs: optional
+codeRefs: required
 ---
 
 # Backend · Seguridad y operación propuestas
@@ -66,3 +66,26 @@ flowchart TB
 
 Toda mutación de Backoffice registra actor, motivo y estados anterior/posterior en
 una auditoría inmutable.
+
+## Anexo implementado · operación PDF V1 candidata
+
+Backend `c12c94da5c62fcaf062a0094109ed47fc2dedc90` y frontend `72cf2229f8f732d705a63641692aff26481d5047`, ramas de integración `closed-test-readiness` y `testing`. [PR39 backend](https://github.com/am-p/app-loyalty/pull/39) abierta; [PR67](https://github.com/gonzalotev/app-fidelidad/pull/67) y [PR68](https://github.com/gonzalotev/app-fidelidad/pull/68) integradas en testing. Código implementado, **desplegado y verificado en testing**. El resto del documento conserva su condición propuesta; este anexo no acredita una nueva prueba de proveedores ni cambia producción.
+
+La carga privada autoriza antes de leer multipart, reutiliza el semáforo y rate limits de medios y exige un único campo `archivo`. El límite de archivo PDF es 10 MiB, con margen de cuerpo de 64 KiB; la entrada landing y el proxy web de testing permiten 11 MiB solo en la ruta exacta de documentos (archivo hasta 10 MiB más multipart). No se amplía el límite de imágenes. pdfcpu opera en modo stateless, validación estricta, sin validar enlaces de red y con timeout de tres segundos, límites de objetos/streams/decodificación y 1–30 páginas. Rechaza cifrado y contraseña; admite escaneos y no extrae productos/precios.
+
+El storage existente recibe objetos privados inmutables con checksum SHA-256. Se persiste `UPLOAD_PENDING` antes de cargar; solo la activación autorizada y versionada cambia el borrador. Los fallos anteriores al commit mantienen la publicación. Si la respuesta del commit es incierta, el cliente reconsulta; no hay rollback de una publicación posterior por un error de transporte.
+
+Las URLs HTTPS duran como máximo 300 segundos y las respuestas JSON emiten `no-store`. La firma ocurre con locks, antes del commit de lectura/publicación; retirar impide nuevas firmas. La desvinculación programa borrado mediante `clock_timestamp()+6 minutes`, sin prometer revocación instantánea de URLs ya emitidas.
+
+El worker de mantenimiento existente reclama documentos desvinculados con lease de cinco minutos y `FOR UPDATE SKIP LOCKED`. Una carga pendiente abandonada es elegible tras 15 minutos. El fallo de borrado libera el lease y reprograma el intento una hora después; el éxito marca `DELETED`. Los triggers cubren baja de sucursal/marca y cierre real de marca al anonimizar su último propietario. No se retiran menús si otro propietario mantiene activa la marca.
+
+La versión requerida del candidato es `0041`; la publicación debe aplicar antes la migración 0041 sobre las 0040 existentes y verificar versión/readiness del proceso nuevo. El main oficial observado termina en 0035: para promover hay que incluir la dependencia 0036–0040, sin reutilizar versiones. El DOWN de 0041 elimina las tablas de menús y sus datos; no es una recuperación de aplicación con documentos en uso. Conservar el esquema expandido y alinear `EXPECTED_SCHEMA_VERSION` al revertir solo el binario.
+
+El circuito de testing usa API y frontend separados; `puntazo-preview` está retirado. El acceso real al PDF, el QR, roles, reemplazo fallido, limpieza y consulta sin sesión requieren aceptación contra testing; exportar JS nativo o ejecutar navegador no acredita QA físico Android/iOS. [Flujo V1](#/flow-branch-menu-pdf) y [evidencia por ambiente](#/runtime-snapshot). V2 digital/IA no añade proveedores ni procesos operativos.
+
+- [Parser y storage del candidato](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/service/menu.go)
+- [Límites HTTP y errores](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/handler/menu.go)
+- [Worker de limpieza PDF](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/maintenance/worker.go)
+- [Proxy multipart de testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/nginx/default.conf)
+
+- [Límite de entrada PDF en landing testing](https://github.com/gagonzalez1/puntazo-landing/blob/testing/nginx/default.conf.template)

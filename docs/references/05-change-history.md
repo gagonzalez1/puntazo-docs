@@ -29,6 +29,15 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-18 — Menú PDF V1 implementado y verificado en testing
+
+- Ampliación de [PR12 documental](https://github.com/gagonzalez1/puntazo-docs/pull/12); portal aún sin publicar.
+- API0041, editor PDF por sucursal, enlace/QR público y entradas desde mapa/tarjetas; V2 conservada únicamente como idea.
+- Actualizados C4, topología, flujos comercio/cliente, datos, contrato implementado, matriz, brechas, operación y estado observado. Nuevo flujo Menú PDF V1.
+- Corregidas las incidencias detectadas en QA: clasificación de cifrado, modal del mapa y límites del cuerpo en landing/API. SQL previo preservado.
+- Backend PR39 abierta al propietario; frontend PR67/68 y landing PR10 integradas en testing. Producción sin cambios. [Fuentes y validaciones](#/runtime-snapshot).
+
+
 ### 2026-10-17 — Mapa del cliente y alcance de menús
 
 - Actualización propuesta en [PR12](https://github.com/gagonzalez1/puntazo-docs/pull/12); portal todavía sin publicar desde esta rama.

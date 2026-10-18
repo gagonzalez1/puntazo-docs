@@ -5,8 +5,8 @@ group: 04 · Datos
 order: 10
 parent: overview
 level: data
-status: current
-summary: Modelo persistido en PostgreSQL 0033; dominios comerciales, fidelidad y operación interna.
+status: mixed
+summary: Modelo histórico observado y ampliación candidata 0041 para borrador/publicación PDF por sucursal.
 diagram: true
 codeRefs: required
 authority: source_code
@@ -16,7 +16,7 @@ authority: source_code
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
-Ambas bases observadas contienen **41 tablas públicas**, incluida `schema_migrations`. Este DER muestra el núcleo y omite columnas/tablas auxiliares; no es un DDL completo.
+Ambas bases observadas en ese corte del 02/10 contienen **41 tablas públicas**, incluida `schema_migrations`; el número no describe la ampliación candidata 0041. Este DER muestra el núcleo y omite columnas/tablas auxiliares; no es un DDL completo.
 
 ```mermaid
 erDiagram
@@ -33,6 +33,8 @@ erDiagram
  sucursales ||--o{ historial_movimientos : origina
  marcas ||--o| suscripciones_marca : factura
  usuarios ||--o{ sesiones_auth : autentica
+ sucursales ||--o{ branch_menu_documents : candidato_PDF
+ sucursales ||--o| branch_menus : candidato_estado_PDF
 ```
 
 | Grupo | Tablas principales y función |
@@ -64,3 +66,19 @@ La baja conserva el ledger y anonimiza según el código de cuenta. La auditorí
 ## Favoritos del mapa · candidato del 17/10/2026
 
 La migración0040 agrega `sucursales_favoritas(usuario_id,sucursal_id,created_at)`, clave primaria compuesta y referencias con borrado en cascada. La API también elimina preferencias al anonimizar una cuenta, cuya fila de usuario se conserva. Las migraciones0036–0040 se toman sin alterar de PR34, preservando sus números, restricciones e índices. El esquema observado por ambiente y su publicación se registran en [Estado observado](#/runtime-snapshot); los modelos objetivo de menús digitales no se incorporan. [Contrato de mapa y plan V1](#/flow-customer-map-menu).
+
+## Menú PDF V1 · esquema 0041 de testing
+
+Implementado en backend `c12c94da5c62fcaf062a0094109ed47fc2dedc90`, desplegado y verificado en testing; pendiente de promoción por [PR39](https://github.com/am-p/app-loyalty/pull/39). `0041_branch_pdf_menus` agrega dos tablas, sin alterar migraciones previas ni introducir categorías/productos de V2.
+
+| Tabla | Persistencia e integridad implementadas |
+|---|---|
+| `branch_menu_documents` | UUID, marca/sucursal, nombre saneado, MIME PDF, tamaño, páginas, SHA-256, clave de objeto única, estado de carga y campos de gracia/lease |
+| `branch_menus` | Una fila por sucursal, versión positiva, punteros nullable al borrador y a la publicación; ambos no pueden señalar el mismo documento |
+
+Las FKs compuestas `(document_id,sucursal_id,marca_id)` impiden asignar a una sucursal el PDF de otra, incluso dentro de la misma marca. Documentos y estado también referencian la relación real sucursal–marca. El estado lógico inicial es versión 1 con ambos punteros null; GET no crea filas. Una carga confirmada crea/reemplaza el borrador y aumenta la versión sin reemplazar la publicación. Los estados del documento son `UPLOAD_PENDING`, `READY`, `DELETE_PENDING` y `DELETED`.
+
+Publicación/retiro/descarte modifican punteros y versión bajo transacción. Los documentos retirados dejan de ser públicos y se programan para borrado físico tras seis minutos; URLs emitidas previamente vencen en hasta 300 segundos. Los triggers cubren baja efectiva de marca/sucursal, incluido cierre de marca al anonimizar su último propietario. Si otro propietario mantiene la marca activa, los menús permanecen. [Flujo V1](#/flow-branch-menu-pdf); el esquema efectivamente desplegado pertenece a [Estado observado](#/runtime-snapshot).
+
+- [DDL 0041 y triggers](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0041_branch_pdf_menus.up.sql)
+- [Lecturas, versiones y publicación](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu.go)

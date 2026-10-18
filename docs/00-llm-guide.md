@@ -96,6 +96,8 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 
 25. [`docs/flows/25-customer-map-menu.md`](#/flow-customer-map-menu) — mapa de sucursales, plan V1 PDF e idea futura V2.
 
+26. [`docs/flows/26-branch-menu-pdf.md`](#/flow-branch-menu-pdf) — borrador/publicación PDF por sucursal y consulta pública V1.
+
 ### 5. Secuencias de ejecución
 
 26. [`docs/sequences/00-index.md`](#/sequences) — índice de interacciones temporales.
