@@ -29,6 +29,15 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-19 — Confirmación explícita de edad y sesión compartida entre pestañas
+
+- PR73 integra en testing `ae706dda` el flujo de edad que faltaba: no se montan lecturas privadas/contextos/SSE con flag false; cliente/comercio restaurados sin onboarding esperan y `/menu/*` permanece público. Contrato backend existente, sin nueva API, migración ni confirmación administrativa.
+- Confirmación manual humana a las 04:05:58 UTC y tarjeta 200; después se reportó cierre inesperado. Se registra como incidencia de sesión independiente, sin atribuir logs agregados a una cuenta o una revocación concreta.
+- PR74 integrada en `testing` `7dfa39a` implementa conservación de credenciales/cooldown, recuperación de restore, Web Locks y renovación SSE por expiración, con CI y despliegue aprobados a las 04:26:46 UTC. La QA real de tres pestañas no repitió logout, pero agotó cuota por rotaciones repetidas y dejó el QR cargando; PR75 integra coordinación de access en memoria entre pestañas en `testing` `ed9b9fa`, con CI aprobada y aceptación real de tres pestañas limitada a la ventana posterior de 242,73 s. Pruebas locales 144 unidades, typecheck/Doctor/build/export y 15 casos simulados edad/sesión más cuatro regresiones de menú aprobados; guardias de ID/sesión sólo revisadas estáticamente.
+- PR75: BroadcastChannel del mismo origen, marcador opaco/no secreto en localStorage y Web Locks, sin persistir tokens. 153 unidades (nueve de protocolo), typecheck/Doctor/build/export y 19 browser en 80,97 s aprobados; pruebas simuladas de tres pestañas, SID antiguos, expiración, reload/logout y cambio de identidad. Desplegada a las 04:46:56 UTC; QA real aprobada durante 242,73 s en tres pestañas sin login/spinner/error. Una renovación 200 y cero refresh 401/429 en logs agregados, recuperación visible ante reconexiones SSE y recorrido mapa → Amalia → PDF → tarjeta aprobados.
+- Actualizados auth/pasaporte, login/restauración, C4 frontend, matriz, brechas y corte de runtime. La aceptación se limita a esa ventana; no acredita nuevo binario distribuido ni QA física; portal sin publicar. [Estado observado](#/runtime-snapshot).
+
+
 ### 2026-10-19 — Nombres y ubicaciones de los fixtures CABA en el mapa
 
 - Solicitud explícita de añadir nombres/ubicaciones a los tres registros QA ya cargados. A las 03:33:14 UTC se actualizaron tres marcas y tres sucursales con sufijo - TESTING, domicilios y puntos aproximados Georef corroborados por USIG. Piegari Carnes corresponde a Posadas 1089; no se usa la dirección Ristorante 1042.

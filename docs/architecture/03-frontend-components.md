@@ -47,6 +47,12 @@ flowchart TD
 - Web puede abrir SSE autenticado de tarjetas; el cliente combina actualización de consultas y comprobación de movimientos para las celebraciones.
 - El helper de instalación PWA está integrado y publicado en las imágenes actuales de testing y landing testing. El corte final acredita sus SHA y salud; la instalación física en cada dispositivo no se verificó en esta revisión.
 
+## Gate de edad y recuperación de sesión · 19/10/2026
+
+PR73, desplegada en `ae706dda`, coloca la confirmación explícita antes de montar auth/pestañas y efectos privados (SSE, reseñas y asistente) cuando el servidor informa `adult_confirmed=false`; el menú público queda exento. El store difiere contextos y comprueba identidad/sesión antes de adoptar la respuesta. [Flujo de acceso](#/flow-auth).
+
+La recuperación transitoria y el lock de cookie entre pestañas están **desplegados en PR74 `7dfa39a` con aceptación real parcial**: `SessionRecovery` ofrece reintento sin login prematuro, `sessionLock` usa Web Locks donde están disponibles y el cliente valida credenciales/cooldown. SSE sólo habilita refresh al expirar; el menú público directo omite restore/stream. Access en memoria, cookie HttpOnly web y SecureStore nativo se mantienen. PR74 no comparte el access vigente entre pestañas: la QA de tres pestañas volvió a rotar repetidamente, agotó cuota y dejó el QR cargando. PR75, integrada en `testing` `ed9b9fa`, añade coordinación de access sólo en memoria vía BroadcastChannel del mismo origen, marcador opaco/no secreto de autoridad en localStorage y Web Locks. Valida autoridad, destinatario, correlación y expiración original; descarta publicaciones antiguas y el access recién rechazado. El cambio de identidad invalida el contexto local y el logout propaga una nueva marca de cierre. CI, nueve unidades de protocolo y 19 casos browser aprobaron; despliegue observado a las 04:46:56 UTC y QA real de tres pestañas aprobada durante 242,73 s, con recuperación SSE y regreso desde mapa/PDF sin logout ni error de tarjeta. No hay backend ni esquema nuevo; evidencia y límites en [Estado observado](#/runtime-snapshot).
+
 ## Menú PDF V1 · corte inicial del 18/10/2026
 
 Fuente: frontend `72cf2229f8f732d705a63641692aff26481d5047`, rama `testing`, [PR67](https://github.com/gonzalotev/app-fidelidad/pull/67) y [PR68](https://github.com/gonzalotev/app-fidelidad/pull/68) integradas en testing. Implementación desplegada y verificada en testing; el corte vigente está en [Estado observado](#/runtime-snapshot).

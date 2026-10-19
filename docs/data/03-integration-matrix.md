@@ -48,6 +48,19 @@ flowchart LR
 Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. Su existencia se comprobó en el router real y las llamadas frontend. No se sustituyó por el OpenAPI objetivo. La revisión runtime comprobó versiones, salud, configuración no secreta y estructura de las bases; no creó movimientos, cobros ni sesiones de usuarios.
 
 
+## Edad y sesión · corte del 19/10/2026
+
+| Flujo | Contrato/implementación | Estado de este corte |
+|---|---|---|
+| Confirmación explícita | GET `/v1/me` → `adult_confirmed`; POST `/v1/me/age-confirmation` con `{confirmed:true}` | Contrato existente en API `64bb3fc`/0042; UI PR73 desplegada `ae706dda` |
+| Pasaporte, tarjetas, mapa y contextos | Esperan aceptación; auth/pestañas/SSE no montan con flag false | Confirmación manual real 04:05:58 UTC y lecturas 200; no se confirma por SQL |
+| Menú público | `/menu/*` exento del modal de edad | Acceso conservado en PR73; omitir restore/SSE en carga pública está desplegado en PR74 |
+| Refresh/restore transitorio | Preserva credenciales, cooldown/Retry-After y UI Reintentar; 401 definitivo invalida | PR74 desplegada `7dfa39a`; QA real parcial: refresh repetido entre tres pestañas agota cuota |
+
+Coordinación adicional de access en memoria entre pestañas: PR75 integrada en `testing` `ed9b9fa`, con CI y 19 casos browser aprobados. BroadcastChannel comparte access del mismo origen; localStorage sólo conserva un marcador opaco/no secreto de autoridad, nunca tokens. Web Locks serializa cookie y consulta peers antes de renovar. Desplegada a las 04:46:56 UTC; QA real aprobada en tres pestañas durante 242,73 s, con una renovación 200 y sin refresh 401/429 en logs agregados. La aceptación se limita a esa ventana, sin atribuir cada request a una cuenta. Web Locks de PR74 por sí solo no evitaba invalidaciones sucesivas de access en otras pestañas.
+
+No agrega endpoints ni migraciones. Los ensayos de errores/reintentos y restauración entre pestañas usan respuestas simuladas; las guardias de ID/sesión de la confirmación de edad se revisaron estáticamente. La prueba nueva de tres pestañas sí cubre logout y reingreso con otra identidad mediante respuestas simuladas. [Acceso](#/flow-auth), [restauración](#/sequence-restore) y [evidencia de runtime](#/runtime-snapshot).
+
 ## Referencias de código
 
 - [Servicios cliente y movimientos](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/demo/services/demoService.ts)
