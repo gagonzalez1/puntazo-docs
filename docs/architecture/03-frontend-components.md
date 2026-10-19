@@ -47,6 +47,10 @@ flowchart TD
 - Web puede abrir SSE autenticado de tarjetas; el cliente combina actualización de consultas y comprobación de movimientos para las celebraciones.
 - El helper de instalación PWA está integrado y publicado en las imágenes actuales de testing y landing testing. El corte final acredita sus SHA y salud; la instalación física en cada dispositivo no se verificó en esta revisión.
 
+## Acciones del resumen del mapa · testing PR77
+
+PR77, integrada/desplegada en frontend testing `50d56b9`, añade Ver menú directo y `useBranchReviewDestination` para la sucursal seleccionada, con caché de cinco minutos. `storeMapService` obtiene `review_url` de la API `ea831cf` y reutiliza el adaptador `openReviewURL`; no consulta Places desde el cliente ni resuelve todos los locales del listado. Carga, destino no configurado y error/reintento tienen estados distintos. La QA real comprobó menú interno y apertura del formulario Google sin enviar opinión; la configuración QA de Amalia se escribió por separado en testing, sin convertir la consulta en mutación de invitaciones. [Contrato y alcance](#/integration-matrix).
+
 ## Gate de edad y recuperación de sesión · 19/10/2026
 
 PR73, desplegada en `ae706dda`, coloca la confirmación explícita antes de montar auth/pestañas y efectos privados (SSE, reseñas y asistente) cuando el servidor informa `adult_confirmed=false`; el menú público queda exento. El store difiere contextos y comprueba identidad/sesión antes de adoptar la respuesta. [Flujo de acceso](#/flow-auth).

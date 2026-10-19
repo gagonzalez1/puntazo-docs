@@ -61,6 +61,16 @@ Coordinación adicional de access en memoria entre pestañas: PR75 integrada en 
 
 No agrega endpoints ni migraciones. Los ensayos de errores/reintentos y restauración entre pestañas usan respuestas simuladas; las guardias de ID/sesión de la confirmación de edad se revisaron estáticamente. La prueba nueva de tres pestañas sí cubre logout y reingreso con otra identidad mediante respuestas simuladas. [Acceso](#/flow-auth), [restauración](#/sequence-restore) y [evidencia de runtime](#/runtime-snapshot).
 
+## Reseña manual desde el mapa · testing PR77 y API ea831cf
+
+| Acción | Contrato implementado | Estado y límite |
+|---|---|---|
+| Ver menú del resumen | Navega a `/menu/:branchId` si hay publicación | Acción publicada en `50d56b9`; reutiliza consulta pública/visor existentes |
+| Resolver destino Google | GET `/v1/clientes/me/tiendas/:branch_id/resena-google` → envelope `{branch_id, review_url:null|string}` | Cliente/edad y elegibilidad del mapa; 404 inelegible, 503 Places no disponible; sin exigir compra/tarjeta |
+| Abrir destino | `openReviewURL` existente; sólo HTTPS Google validado en servidor | Una sucursal al abrir resumen/detalle, caché cinco minutos; no N+1 del listado |
+
+La fuente es la configuración de reseñas existente `MANUAL_LINK`/`GOOGLE_PLACE`. El flag `enabled` conserva su significado para invitaciones automáticas; esta acción manual no reserva/consume invitaciones ni escribe sus eventos. Endpoint publicado en API `ea831cf`/0042 y frontend PR77 `50d56b9`, con QA real de menú y apertura de formulario Google aprobada. API responde `Cache-Control: no-store`; los cinco minutos corresponden a la caché del cliente. Se autorizó por separado un INSERT de configuración QA para Amalia/sucursal 1, `MANUAL_LINK`, `enabled=false`; no cambia el carácter de sólo lectura del GET ni prueba publicación de una opinión. No se modifica el OpenAPI objetivo de este portal. [Recorrido](#/flow-customer-map-menu).
+
 ## Referencias de código
 
 - [Servicios cliente y movimientos](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/demo/services/demoService.ts)

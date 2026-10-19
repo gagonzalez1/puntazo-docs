@@ -29,6 +29,13 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-19 — Ver menú y reseña Google desde el resumen
+
+- Frontend PR77 integrada en testing `50d56b9`, API `ea831cf`/0042 publicada en `fork/closed-test-readiness`; PR39 al propietario sigue abierta. Ver menú directo y resolución autenticada del destino Google para una sucursal elegible, sin exigir tarjeta/compra ni mutar invitaciones. Configuración existente y consulta de una sucursal, caché cinco minutos; sin N+1 ni URL inventada.
+- Despliegues API/web terminados a las 13:03:11/13:06:13 UTC, CI/assets aprobados. Se autorizó por separado un INSERT QA de configuración manual de Amalia/sucursal 1 a las 13:06:47 UTC, `enabled=false`, con backup/checksum e inversa comprobada; otros fingerprints/producción preservados. El endpoint permanece de sólo lectura.
+- Backend race/vet/OpenAPI y frontend 153 unidades/typecheck/Doctor/build/export JS aprobados; 13 browser en 28,60 s aprobados. QA real: cuatro acciones, PDF interno de ocho páginas/regreso con búsqueda y formulario Google Amalia con estrellas/texto vacíos y Publicar deshabilitado, sin enviar opinión.
+- Actualizados flujo 25, matriz, componentes frontend y corte de runtime. No cambia el OpenAPI objetivo del portal ni V2; Android sólo export JS, sin binario distribuido/QA física. Portal sin publicar. [Fuentes y evidencia](#/runtime-snapshot).
+
 ### 2026-10-19 — Opciones del local desde la tarjeta del mapa
 
 - Aclaración del usuario: la tarjeta del carrusel debe abrir el resumen existente con Mostrar en mapa y Conoce más. PR76, fuente `4461c4d`, integrada en testing `bbbe9c8`, limita el resumen al local seleccionado y conserva el regreso desde el detalle; contador/favoritos/cierre limpian ese filtro.
