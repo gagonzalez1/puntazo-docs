@@ -31,9 +31,9 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ### 2026-10-19 — Unificación de PR y limpieza de ramas frontend
 
-Las PR66–80 y65 están integradas; al iniciar, main/testing coincidían en29f91e9. Se retiraron31ramas propias remotas cuyos HEAD eran ancestros de testing, con gitbundle verificado para recuperar referencias y leases por SHA para evitar borrar avances concurrentes. Quedan14ramas reales; las de contenido único y los worktrees locales se conservaron.
+Las PR66–80 y65 están integradas; al iniciar, main/testing coincidían en29f91e9. Se retiraron31ramas propias remotas cuyos HEAD eran ancestros de testing, con gitbundle verificado para recuperar referencias y leases por SHA para evitar borrar avances concurrentes. La primera pasada dejó14ramas. Por pedido posterior de conservar sólo principales, se archivaron y retiraron también las restantes ramas propias; todo el contenido único conserva referencias y gitbundle verificable. Worktrees locales preservados. La rama ajena identificada requiere autorización específica; estado final en la reconciliación.
 
-[PR81](https://github.com/gonzalotev/app-fidelidad/pull/81), destino testing, reemplaza60/61 (cerradas). Su candidato6c8d1f7 extrae precios públicos del alta y tres guards de checkout Android; conserva edad, updates, canje, apellido, sesión, PDF/mapa/cardA actuales. APIprecios HTTP200,166unitarias/Doctor18/18/web/PWA/exportJSAndroid/23browser PASS. No se fusionó ni desplegó esta candidata, no hay binario nuevo; no cambia la evidencia runtime anterior.
+[PR82](https://github.com/gonzalotev/app-fidelidad/pull/82), desde el fork gagonzalez1/app-fidelidad y destino testing, reemplaza60/61/81 (cerradas). El traslado81→82 conserva exactamente el candidato. Su candidato6c8d1f7 extrae precios públicos del alta y tres guards de checkout Android; conserva edad, updates, canje, apellido, sesión, PDF/mapa/cardA actuales. APIprecios HTTP200,166unitarias/Doctor18/18/web/PWA/exportJSAndroid/23browser PASS. No se fusionó ni desplegó esta candidata, no hay binario nuevo; no cambia la evidencia runtime anterior.
 
 
 ### 2026-10-19 — Card con pie A reemplaza composición C
