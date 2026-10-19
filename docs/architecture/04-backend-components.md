@@ -49,6 +49,8 @@ REST tiene plazo de 12 segundos; el stream SSE se registra por separado y revali
 
 Las migraciones se ejecutan con `cmd/migrate`; `0033` es el esquema observado. No se crea una única tabla `users` al iniciar el servidor.
 
+**Acuerdo en implementación · 19/10/2026:** el [código de registro](#/sequence-registration-email-code) reutiliza servicios, repositorios y worker SMTP. Añade validación transaccional, intentos persistidos y descarte de correos sustituidos; `EMAIL_VERIFICATION_REQUIRED` controla las altas nuevas y producción exige su activación. La migración reservada `0043` debe reconciliarse con el historial del main oficial y de la rama de publicación testing; no forma parte del esquema observado en el corte anterior.
+
 
 ## Referencias de código
 

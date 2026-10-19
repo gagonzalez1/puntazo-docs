@@ -31,6 +31,10 @@ La comparación inicial de agosto —sólo `users`, cuatro rutas y fidelidad moc
 
 La auditoría anterior de testing registró un pendiente de dependencias; esta revisión documental no repitió esa auditoría ni lo declara resuelto. Los respaldos y la restauración de producción se documentaron en el registro operativo privado: este portal no certifica una nueva restauración.
 
+## Acuerdo posterior · 19/10/2026
+
+La [verificación de registro con código de seis dígitos](#/sequence-registration-email-code) está aprobada y en implementación. Quedan pendientes la evidencia de código y migración, pruebas de las dos altas y del cambio de variable, recepción SMTP real y comprobación del runtime. Testing debe comenzar con `EMAIL_VERIFICATION_REQUIRED=true`; tras la aceptación podrá desactivarse para altas nuevas. Producción debe mantenerla obligatoria. No se considera cerrado este pendiente por documentar las rutas ni por configurar el proveedor.
+
 
 ## Referencias de código
 

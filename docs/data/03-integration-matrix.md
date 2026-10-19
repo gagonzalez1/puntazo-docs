@@ -44,6 +44,10 @@ flowchart LR
 
 Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. Su existencia se comprobó en el router real y las llamadas frontend. No se sustituyó por el OpenAPI objetivo. La revisión runtime comprobó versiones, salud, configuración no secreta y estructura de las bases; no creó movimientos, cobros ni sesiones de usuarios.
 
+## Integración acordada posterior · 19/10/2026
+
+El [código de verificación del registro](#/sequence-registration-email-code) añade a la app nueva `verification_method: "code"` y las operaciones `/v1/auth/email-verification/code/request` y `/v1/auth/email-verification/code/confirm`. El contrato acordado devuelve sesión sólo después de verificar desde el contexto del mismo registro. La variable del backend estará primero en `true` en testing y podrá pasar a `false` para altas nuevas; producción la exige. Este cambio está en implementación y no se suma a la tabla de integración verificada hasta revisar sus commits y pruebas. La entrega SMTP real y la configuración publicada requieren evidencia propia.
+
 
 ## Referencias de código
 

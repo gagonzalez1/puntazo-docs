@@ -36,6 +36,8 @@ flowchart TD
 
 `features/demo` conserva su nombre histórico, pero su servicio usa la API: no es prueba de datos simulados. Las pantallas muestran estados de carga, error y vacío a partir de respuestas del servidor.
 
+**Acuerdo en implementación · 19/10/2026:** el [código de registro](#/sequence-registration-email-code) amplía la pantalla de verificación y los servicios de identidad. El backend decide si se requiere mediante `verification_required`; el contexto temporal del registro se guarda fuera de URLs y logs para restaurar la pantalla y permitir acceso automático después de verificar. Se conserva el adaptador de sesión existente y la compatibilidad con enlaces. Esta ampliación no está acreditada por el corte runtime anterior.
+
 - Router separa login/onboarding y pestañas. El acceso depende de cuenta activa, tipo de cuenta, membresías y contexto comercial.
 - Zustand mantiene sesión, usuario, marcas y selección de sucursal. La selección local no otorga permisos en servidor.
 - TanStack Query cachea e invalida lecturas tras escrituras. Los saldos confirmados vienen de movimientos persistidos.
