@@ -29,6 +29,13 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-19 — Unificación de PR y limpieza de ramas frontend
+
+Las PR66–80 y65 están integradas; al iniciar, main/testing coincidían en29f91e9. Se retiraron31ramas propias remotas cuyos HEAD eran ancestros de testing, con gitbundle verificado para recuperar referencias y leases por SHA para evitar borrar avances concurrentes. Quedan14ramas reales; las de contenido único y los worktrees locales se conservaron.
+
+[PR81](https://github.com/gonzalotev/app-fidelidad/pull/81), destino testing, reemplaza60/61 (cerradas). Su candidato6c8d1f7 extrae precios públicos del alta y tres guards de checkout Android; conserva edad, updates, canje, apellido, sesión, PDF/mapa/cardA actuales. APIprecios HTTP200,166unitarias/Doctor18/18/web/PWA/exportJSAndroid/23browser PASS. No se fusionó ni desplegó esta candidata, no hay binario nuevo; no cambia la evidencia runtime anterior.
+
+
 ### 2026-10-19 — Card con pie A reemplaza composición C
 
 El usuario cambió su selección a A. [PR80](https://github.com/gonzalotev/app-fidelidad/pull/80)/testing `45ab3f972f7722bb8a208fdb00a39d7b65d8d7d6` publicada: identidad/progreso sobre color de marca completo, pie neutro con acciones iguales; funciones/editor comercial conservados.153unidades,Doctor18/18,10browser/cincoanchos,web/PWA/exportJSAndroid y QA real claro/oscuro PASS. SinAPI/DB/producción/APK/AAB nuevos; V2 idea, portal sin publicar. C queda como corte histórico.
