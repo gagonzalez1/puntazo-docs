@@ -59,6 +59,20 @@ Backend `c12c94da5c62fcaf062a0094109ed47fc2dedc90`, frontend `72cf2229f8f732d705
 - [Persistencia PDF](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu.go)
 - [Editor y estados](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/components/CommercialBranchMenuEditor.tsx)
 
+## Compatibilidad de PDFs reales · QA CABA del 19/10/2026
+
+La selección de cartas públicas encontró tres rechazos del validador estricto de la API testing `64bb3fc`/0042, reproducidos con la función fuente sin modificaciones. Los archivos estaban por debajo de 30 MiB y de 30 páginas; esas condiciones no bastan para superar la validación estructural.
+
+| Archivo real descartado | Diagnóstico observado |
+|---|---|
+| Baradentro (PDF 1.3) | Parámetro de transparencia BlendMode/BM que requiere PDF 1.4 |
+| Capitán Parrilla | Metadatos XMP con raíz RDF donde el parser espera xmpmeta |
+| FICO | XObject sin entrada obligatoria Subtype |
+
+Los tres PDFs rechazados **no se cargaron** ni sustituyeron una publicación. Amalia, Piegari y El Arte de la Pizza sí aprobaron el parser y se incorporaron al [dataset sintético de testing](#/flow-branch-menu-pdf). La descarga/visualización en otro lector no prueba conformidad con el validador del producto. No se modificaron límites ni parser ni se repararon los PDFs rechazados; una política de validación relajada o reparación automática no queda aprobada por esta QA.
+
+La carga del dataset por base de datos no ejercita el flujo de upload UI/HTTP, roles ni If-Match: su evidencia cubre persistencia/storage y consulta pública. La aceptación de API/storage y lectura pública de primera/última página de las tres cartas está aprobada, con contenido de texto e imagen; no amplía la evidencia del upload. [Suplemento de QA](#/runtime-snapshot).
+
 ## Cliente a pantalla completa · testing PR71/72
 
 [PR71 frontend](https://github.com/gonzalotev/app-fidelidad/pull/71) y [PR72](https://github.com/gonzalotev/app-fidelidad/pull/72), integradas y desplegadas en la rama seleccionada `testing` como `9074aa57fe84d8f0ec03d50898d532d4857ce4c3`. Implementación autorizada y lectura pública comprobada contra testing real; fuentes y límites de aceptación en [Estado observado](#/runtime-snapshot).

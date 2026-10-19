@@ -29,6 +29,14 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-19 — Dataset de cartas CABA para QA de consulta pública
+
+- Solicitud explícita: descargar tres PDFs y cargarlos por base de datos. Se publicaron fixtures Amalia, Piegari y El Arte de la Pizza en sucursales sintéticas 1/2/37, con nombres PRUEBA; catálogo y menú previo de sucursal 29 preservados. Sin cambio de código ni nuevo despliegue: frontend `9074aa57` y API `64bb3fc`/0042.
+- Backup cifrado/restore aislado aprobados; tres documentos READY y tres publicaciones v3. Parser fuente y entrega API/storage de los tres aprobados, con hash/tamaño/MIME y privacidad de firmas. CUA real de primera/última página de las tres cartas aprobada a las 03:21:33 UTC, con único Volver y sin desbordes; texto e imagen comprobados.
+- Actualizados flujo PDF, brechas de compatibilidad y suplemento del estado observado, sin modificar la aceptación histórica del visor de las 03:04 UTC. Baradentro/Capitán/FICO rechazados por el parser no se cargaron; no se aprueba validación relajada ni se amplían límites.
+- La carga por base de datos no acredita upload UI/HTTP, permisos/If-Match ni QA física. [Fuentes y alcance de la prueba](#/runtime-snapshot); portal sin publicar.
+
+
 ### 2026-10-19 — Cliente PDF a pantalla completa y título libre de Volver
 
 - [PR71](https://github.com/gonzalotev/app-fidelidad/pull/71) y [PR72](https://github.com/gonzalotev/app-fidelidad/pull/72) integradas en `testing` como `9074aa57fe84d8f0ec03d50898d532d4857ce4c3`. Fuente de app `8ac19ee`; ajuste posterior `bacf196` sólo de CSS servido y prueba. Backend y datos sin cambios.

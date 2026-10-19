@@ -13,6 +13,21 @@ diagram: false
 
 # Estado observado
 
+## Suplemento QA CABA · 19/10/2026 00:18–00:21 Argentina (03:18–03:21 UTC)
+
+Datos de prueba incorporados por instrucción explícita del usuario de descargar PDFs y cargarlos por base de datos. **No hubo nuevo despliegue**: frontend testing `9074aa57fe84d8f0ec03d50898d532d4857ce4c3` y API `64bb3fc901293791adcf7738c49d3bbf290c8a20`/0042 siguen siendo las fuentes del corte anterior. La publicación del visor a las 03:04 UTC conserva abajo su evidencia independiente.
+
+A las **03:18:19 UTC** se confirmó el seed tras backup cifrado con checksum/descifrado y restore aislado aprobados. Se agregaron tres documentos READY y se fijaron tres publicaciones en versión 3: sucursal/marca 1/1 (Amalia, 8 páginas, 457.295 bytes), 2/2 (Piegari, 9 páginas, 122.637 bytes) y 37/36 (El Arte de la Pizza, 8 páginas, 12.669.083 bytes). Los destinos son Brand Fixture y K6 Synthetic: no se escribieron catálogo de comercios, nombres, domicilios ni coordenadas, ni se infiere afiliación de los restaurantes. Documentos pasaron de 5 a 8; usuarios 102, marcas 38, sucursales 39, tarjetas 41 y movimientos 206 permanecieron iguales. Sucursal 29 conservó versión 12 y publicación `b4220335-ba40-436c-9e8f-bfa759104ae3`.
+
+El validador de la fuente testing `64bb3fc`, ejecutado mediante harness con función y dependencias verificadas, aprobó los tres archivos a las 03:17:22 UTC. No escribió base/storage durante esa validación. El seed posterior verificó hash y bytes en storage privado con cifrado AES256. La consulta pública a las **03:19:30 UTC** aprobó para los tres: JSON no-store, PDF HTTP 200 application/pdf con tamaño/SHA originales, firma de 300 segundos, acceso sin firma rechazado (403) y marca con `has_menu`. No se persistieron URLs firmadas.
+
+La QA CUA real, sin mocks ni sesión inyectada, se completó a las **03:21:33 UTC**: primera/última página de Amalia (8), Piegari (9) y El Arte (8) visibles, con un único Volver, frame/viewport de 1280×720 y sin desbordes. El Arte requirió scroll largo hasta la octava página, mostró su imagen y precios sin alertas y liberó el primer canvas. Se comprobó lectura de texto e imágenes; esto no afirma inspección exhaustiva de cada página ni de cada precio. Se rotula Piegari de forma genérica: el origen está en una página oficial Ristorante, pero el PDF dice CARNES. [Tabla, fuentes y tamaños](#/flow-branch-menu-pdf). No se presentan las cartas/precios como vigentes.
+
+La carga autorizada por base de datos no ejercita selección de archivo del comercio, POST multipart, roles/If-Match ni manejo de rechazo en ese endpoint. Los tres rechazos previos del parser (Baradentro, Capitán y FICO) se conservan en [brechas de compatibilidad](#/implementation-gaps), sin cargar esos documentos ni aprobar validación relajada. No se ampliaron límites ni se modificaron fuentes, migraciones o producción. QA física Android/iOS, PWA instalada y APK/AAB distribuido siguen sin acreditarse.
+
+Evidencia local: `artifacts/menu-pdf-caba-20261019/seed-evidence.json`, `seed-manifest.json`, `public-qa.json`, `validator-final-accepted-report.json`, `fixtures/sources.json` y `ui-qa.json`; capturas `amalia-client.png`, `piegari-client.png`, `pizza-client.png` y `pizza-last-page.png`. El reporte registra respaldo y rollback; esta documentación no aplica SQL ni modifica infraestructura.
+
+
 ## Cliente PDF a pantalla completa · 19/10/2026 00:04 Argentina (03:04 UTC)
 
 Fuente seleccionada y obtenida nuevamente: `gonzalotev/app-fidelidad:testing`, `9074aa57fe84d8f0ec03d50898d532d4857ce4c3`, checkout limpio y coincidente con el remoto. [PR71](https://github.com/gonzalotev/app-fidelidad/pull/71) y [PR72](https://github.com/gonzalotev/app-fidelidad/pull/72) integradas. La primera se desplegó como `910b0531ac5e22f83acbd6b11d918f094f85832d`; la segunda completa el margen inicial de lectura. Los SHA acreditan lo observado y nunca seleccionan un build futuro.

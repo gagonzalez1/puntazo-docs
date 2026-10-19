@@ -108,6 +108,22 @@ Los documentos públicos exponen nombre saneado, MIME, tamaño, cantidad de pág
 
 El candidato backend depende del trabajo de mapa 0036–0040 todavía propuesto al propietario: el main oficial observado termina en 0035 y testing requiere 0042 para la ampliación de tamaño de esta entrega. El trabajo separado de turnos con otras migraciones 0036–0038 debe conciliarse antes de su integración. `puntazo-preview` está retirado.
 
+## Dataset QA de cartas CABA · 19/10/2026
+
+Por instrucción explícita de descargar PDFs y cargarlos por base de datos se incorporaron tres cartas públicas como **fixtures de testing**, sin cambiar nombres, domicilios ni coordenadas del catálogo y sin atribuir afiliación con Puntazo. Sus precios/contenidos pueden ser históricos; Amalia identifica marzo de 2024. Frontend `9074aa57fe84d8f0ec03d50898d532d4857ce4c3` y API `64bb3fc901293791adcf7738c49d3bbf290c8a20`/0042 permanecen desplegados, sin release nuevo.
+
+| Fixture pública | Destino de prueba (sucursal / marca) | Páginas | Bytes | Consulta estable |
+|---|---|---|---|---|
+| Amalia | 1 / 1 · Brand Fixture | 8 | 457.295 | [Menú 1](https://testing.puntazo.pro/menu/1) |
+| Piegari | 2 / 2 · Brand Fixture | 9 | 122.637 | [Menú 2](https://testing.puntazo.pro/menu/2) |
+| El Arte de la Pizza | 37 / 36 · K6 Synthetic | 8 | 12.669.083 | [Menú 37](https://testing.puntazo.pro/menu/37) |
+
+Fuentes descargadas: [PDF de Amalia](https://amaliarestaurante.com.ar/wp-content/uploads/2024/03/Carta-Amalia-MARZO-2024.pdf), [PDF de Piegari](https://piegari.com.ar/menus/menu_ristorante_es_1792252960_7543.pdf), [PDF de El Arte de la Pizza](https://elartedelapizza.com.ar/wp-content/uploads/2026/09/Menu-descargable-3926_compressed.pdf). El enlace de Piegari procede de la página oficial rotulada Ristorante, pero el PDF se identifica internamente como CARNES: se usa el rótulo genérico Piegari sin acreditar que sea la carta Ristorante. La correspondencia de las filas es con sucursales sintéticas, no con esos restaurantes.
+
+Los tres archivos pasaron la función de validación del backend `64bb3fc`, reproducida sin modificaciones y con sus dependencias verificadas: bytes/hash y páginas coincidentes, sin ampliar los 30 MiB, 1–30 páginas ni timeout/caps. Antes de escribir se verificó un backup cifrado y su restauración aislada. La carga generó tres documentos READY y tres publicaciones en versión 3; la sucursal 29 conservó versión 12 y publicación `b4220335-ba40-436c-9e8f-bfa759104ae3`.
+
+Las consultas públicas de los tres menús aprobaron JSON sin caché, PDF HTTP 200 con MIME/tamaño/SHA esperados, firma de 300 segundos, objeto privado sin firma (403) y `has_menu`. CUA comprobó primera/última página de las tres cartas: Amalia (8), Piegari (9) y El Arte (8), sin alertas de error, con un único Volver y sin desbordes en 1280×720. El recorrido de El Arte liberó el primer canvas al avanzar hasta la última página. Esta carga por base de datos **no acredita subida desde el selector del comercio, multipart HTTP ni ejercicio de autorización/If-Match en una carga nueva**. [Evidencia y límites](#/runtime-snapshot); [compatibilidad de PDFs descartados](#/implementation-gaps).
+
 ## Criterios de aceptación
 
 Subida válida, vista previa, publicación, cliente y enlace sin sesión; sucursal correcta; roles y aislamiento; archivo falso/protegido/excedido/>30 páginas; fallo de reemplazo, carreras y respuesta incierta; retiro; URL renovada; migración limpia/upgraded e idempotencia. Comprobar móvil/escritorio contra testing real. Una prueba con API simulada o export JS nativo no acredita QA física Android/iOS ni PWA instalada.
