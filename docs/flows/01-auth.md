@@ -34,9 +34,9 @@ El alta de cliente usa `/v1/auth/register`; el alta comercial usa `/v1/demo/come
 
 Ver [registro](#/sequence-register), [login](#/sequence-login), [Google](#/sequence-google) y [restauración](#/sequence-restore).
 
-## Cambio acordado · 19/10/2026
+## Cambio implementado en fuentes · 19/10/2026
 
-El usuario aprobó [verificar los registros con un código de seis dígitos](#/sequence-registration-email-code), primero habilitado en testing y luego desactivable mediante `EMAIL_VERIFICATION_REQUIRED`. Producción debe exigirlo. Con la variable habilitada, la nueva app solicita código y no recibe sesión hasta confirmar; desde el mismo registro continuará automáticamente. Con la variable deshabilitada, sólo las altas nuevas acceden directamente. Google y enlaces anteriores conservan compatibilidad. Este acuerdo está en implementación y no reemplaza la evidencia del recorrido publicado descrito arriba.
+El usuario aprobó [verificar los registros con un código de seis dígitos](#/sequence-registration-email-code), primero habilitado en testing y luego desactivable mediante `EMAIL_VERIFICATION_REQUIRED`. Producción debe exigirlo. Con la variable habilitada, la nueva app solicita código y no recibe sesión hasta confirmar; desde el mismo registro continuará automáticamente. Con la variable deshabilitada, sólo las altas nuevas acceden directamente. Google y enlaces anteriores conservan compatibilidad. La implementación y sus pruebas están registradas en la secuencia enlazada; su publicación sigue pendiente y no reemplaza la evidencia del recorrido publicado descrito arriba.
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 

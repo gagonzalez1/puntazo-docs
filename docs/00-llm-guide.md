@@ -102,7 +102,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 29. [`docs/sequences/03-google.md`](#/sequence-google) — acceso con Google.
 30. [`docs/sequences/04-restore.md`](#/sequence-restore) — restauración de sesión.
 31. [`docs/sequences/05-scan.md`](#/sequence-scan) — preview, confirmación transaccional e idempotencia.
-32. [`docs/sequences/06-registration-email-code.md`](#/sequence-registration-email-code) — acuerdo del 19/10/2026 para código de registro configurable por ambiente; implementación y publicación requieren evidencia separada.
+32. [`docs/sequences/06-registration-email-code.md`](#/sequence-registration-email-code) — código de registro configurable por ambiente implementado en fuentes y probado localmente; publicación pendiente de evidencia propia.
 
 ### 6. Diseño objetivo
 
