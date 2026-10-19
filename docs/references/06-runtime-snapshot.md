@@ -15,7 +15,7 @@ diagram: false
 
 ## Suplemento QA CABA · 19/10/2026 00:18–00:21 Argentina (03:18–03:21 UTC)
 
-Datos de prueba incorporados por instrucción explícita del usuario de descargar PDFs y cargarlos por base de datos. **No hubo nuevo despliegue**: frontend testing `9074aa57fe84d8f0ec03d50898d532d4857ce4c3` y API `64bb3fc901293791adcf7738c49d3bbf290c8a20`/0042 siguen siendo las fuentes del corte anterior. La publicación del visor a las 03:04 UTC conserva abajo su evidencia independiente.
+Datos de prueba incorporados por instrucción explícita del usuario de descargar PDFs y cargarlos por base de datos. **No hubo nuevo despliegue**: frontend testing `9074aa57fe84d8f0ec03d50898d532d4857ce4c3` y API `64bb3fc901293791adcf7738c49d3bbf290c8a20`/0042 siguen siendo las fuentes del corte anterior. El corte de verificación del visor de las 03:04 UTC conserva abajo su evidencia independiente.
 
 A las **03:18:19 UTC** se confirmó el seed tras backup cifrado con checksum/descifrado y restore aislado aprobados. Se agregaron tres documentos READY y se fijaron tres publicaciones en versión 3: sucursal/marca 1/1 (Amalia, 8 páginas, 457.295 bytes), 2/2 (Piegari, 9 páginas, 122.637 bytes) y 37/36 (El Arte de la Pizza, 8 páginas, 12.669.083 bytes). Los destinos son Brand Fixture y K6 Synthetic: no se escribieron catálogo de comercios, nombres, domicilios ni coordenadas, ni se infiere afiliación de los restaurantes. Documentos pasaron de 5 a 8; usuarios 102, marcas 38, sucursales 39, tarjetas 41 y movimientos 206 permanecieron iguales. Sucursal 29 conservó versión 12 y publicación `b4220335-ba40-436c-9e8f-bfa759104ae3`.
 
