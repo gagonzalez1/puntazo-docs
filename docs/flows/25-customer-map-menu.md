@@ -41,6 +41,10 @@ La pantalla separa carga, error con reintento, listado vacío y búsqueda sin co
 
 Inventario agregado autenticado inicial: 37 sucursales elegibles, 3 con coordenadas completas y 34 sin ellas. Corte posterior de las 22:09 UTC: 37 elegibles, 13 con coordenadas válidas y 24 pendientes; los datos cambiaron durante la comprobación. No se crean sucursales ni se asignan posiciones supuestas para llenar el mapa. La verificación del despliegue y sus límites se registra en [Estado observado](#/runtime-snapshot).
 
+## Alineación responsive de las acciones · PR78
+
+La [PR78](https://github.com/gonzalotev/app-fidelidad/pull/78), integrada y desplegada en testing `4c1c3be`, coloca las acciones debajo de imagen/datos y aprovecha todo el ancho de la tarjeta. Los cuatro botones comparten tamaño mínimo, dos columnas iguales, separación uniforme y texto envolvente; el listado completo conserva sus dos acciones con la misma geometría. No cambia destinos, permisos, estados de Google ni contratos. Las pruebas de navegador comprobaron igualdad de medidas, alineación y separación en anchos320/390/519/768/1440px; la ficha real de Amalia aprobó519×730, botones de230×56px y gaps8px. [Publicación y límites](#/runtime-snapshot).
+
 ## Acciones Ver menú y Calificar en Google Maps · desplegadas en testing
 
 La continuación solicitada, [PR77 frontend](https://github.com/gonzalotev/app-fidelidad/pull/77), está integrada y desplegada en testing `50d56b9`, con API `ea831cf`/0042. Agrega **Ver menú** y **Calificar en Google Maps** al resumen del local seleccionado. Ver menú navega directamente a `/menu/:branchId` cuando hay publicación; no cambia el visor ni V2. La acción de Google consulta el destino de una sola sucursal al abrir su resumen o detalle, con caché de cinco minutos; el listado completo no dispara consultas por cada fila.

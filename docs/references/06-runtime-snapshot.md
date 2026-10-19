@@ -13,6 +13,14 @@ diagram: false
 
 # Estado observado
 
+## Acciones alineadas · 19/10/2026 10:25–10:27 Argentina (13:25–13:27 UTC)
+
+Frontend [PR78](https://github.com/gonzalotev/app-fidelidad/pull/78), candidato `751bb1fda3a60fdb8708719c32a3fc104a38d3d5`, integrado y desplegado desde `testing` **`4c1c3bef03b9063cd4dc48b00b9ae1fdfc20da07`**. Rama remota obtenida de nuevo y checkout limpio antes de build/export/deploy. Coolify `g6xp3qdlwizhnnzruyiuo0tn` finished13:25:52UTC, imagen `sha256:333d71e7e3b848217e5e517f6bfb9c3e87efbcddffbc014c5da708363d77b1f3`, healthy/cero reinicios,384MiB/0,5CPU y redes preservadas. Entry público `3d079f93e6074c4af262a16856f5cb6c`,SW y reader coinciden con contenedor; nuevo bundle observado en DOM tras recargas, conservando sesión.
+
+Las acciones del local ocupan dos columnas iguales a todo el ancho de la tarjeta. TypeScript,153unidades,Doctor18/18,web/PWA,exportJSAndroid y13browser PASS; el caso existente verifica dimensiones y gaps en320/390/519/768/1440px. CI [39259360326](https://github.com/gonzalotev/app-fidelidad/actions/runs/39259360326) y Deploy [39259740350](https://github.com/gonzalotev/app-fidelidad/actions/runs/39259740350) SUCCESS. CUA real519×730: búsquedaAmalia→resumen, cuatroacciones230×56px, separación8px y sin overflow. Se dejó la ficha abierta. Esta continuación visual no repitió PDF ni formulario Google reales; sus pruebas funcionales simuladas pasaron.
+
+API testingea831cf/0042, API productivadbeb03c/0035 y web productiva34bbcb7 preservadas con imágenes/versiones idénticas. Sin API,datos,migraciones,dependencias o permisos nuevos; Android sólo exportJS, sinAPK/AAB ni QA física/PWAinstalada. Rollback web50d56b9 disponible. Evidencia: `artifacts/map-card-actions-responsive-20261019/{context-deploy.json,runtime-after.json,public-assets.json,validation.json,live-layout.json,selected-store-final.png}`. Sólo cambia presentación; C4,secuencias y contrato siguen vigentes. Portal sin publicar; V2 sigue idea.
+
 ## Menú y reseña Google en el resumen · 19/10/2026 10:03–10:09 Argentina (13:03–13:09 UTC)
 
 Entrega desplegada y verificada en testing. Frontend [PR77](https://github.com/gonzalotev/app-fidelidad/pull/77), candidato `77e31dc7881428ffd22f2f825dc187a267c32ddb`, integrado en la rama seleccionada fresca `testing` como **`50d56b9bedb0fd4ad6ad2134e9497252535a791b`**. API **`ea831cf863b1e6852843198baa9ac4c4c134b4db`/0042**, rama seleccionada `fork/closed-test-readiness`, publicada para testing; [PR39 al propietario](https://github.com/am-p/app-loyalty/pull/39) sigue abierta y no se presenta como integrada en su main. Fuentes finales limpias e iguales a los remotos seleccionados; no hay migración nueva.

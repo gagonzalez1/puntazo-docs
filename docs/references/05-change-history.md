@@ -29,6 +29,12 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-19 — Alinear las cajas de acciones del local
+
+- [PR78 frontend](https://github.com/gonzalotev/app-fidelidad/pull/78) integrada/desplegada en testing4c1c3be: cuatro acciones a todo el ancho, dos columnas de igual tamaño y separación uniforme. Fuente candidata751bb1f, controles y publicación con ramas frescas/checkouts limpios. Backend sin cambios.
+- TypeScript,153unidades,Doctor18/18,web/PWA,exportJSAndroid y13browser PASS. Geometría comprobada en cinco anchos320–1440px y CUA real519×730 sobre Amalia: cuatrobotones230×56px/gaps8px. CI/Deploy PASS; producción preservada. Sin nuevo APK/AAB ni QA física.
+- Documentos: flujo25, corte runtime e historial. Aprobación visual explícita del usuario; sin decisión de negocio/contrato nueva, ni cambios de C4/secuencias. PR12 documental actualizada; portal sin publicar y V2 sólo idea.
+
 ### 2026-10-19 — Ver menú y reseña Google desde el resumen
 
 - Frontend PR77 integrada en testing `50d56b9`, API `ea831cf`/0042 publicada en `fork/closed-test-readiness`; PR39 al propietario sigue abierta. Ver menú directo y resolución autenticada del destino Google para una sucursal elegible, sin exigir tarjeta/compra ni mutar invitaciones. Configuración existente y consulta de una sucursal, caché cinco minutos; sin N+1 ni URL inventada.
