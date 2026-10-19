@@ -7,14 +7,14 @@ parent: sequences
 level: sequence
 status: mixed
 authority: mixed
-summary: Código de registro publicado y habilitado en testing con esquema 0043; recepción en bandeja real y QA física pendientes, sin promoción productiva.
+summary: Código publicado en testing con esquema 0043 y recepción real de cliente confirmada; sesión automática y uso único aprobados, sin promoción productiva.
 diagram: true
 codeRefs: optional
 ---
 
 # Código de verificación del registro
 
-**ACORDADO por el usuario el 19/10/2026, IMPLEMENTADO y PUBLICADO en testing.** API y frontend están saludables y el esquema `0043` está aplicado en testing. La pantalla pública y el bundle se verificaron; la recepción en una bandeja real sigue pendiente de una dirección de prueba libre elegida por el usuario. No se envió un correo a las cuentas existentes para cerrar esa aceptación. La captura local no acredita recepción mediante el proveedor SMTP público. Producción no recibió este cambio.
+**ACORDADO por el usuario el 19/10/2026, IMPLEMENTADO y PUBLICADO en testing.** API y frontend están saludables y el esquema `0043` está aplicado en testing. La pantalla pública y el bundle se verificaron. Un alta de cliente con alias nuevo elegido por el usuario confirmó recepción real, activación, sesión automática y uso único del código. Las cuentas existentes se preservaron; el alta comercial conserva cobertura automatizada y la QA física sigue pendiente. Producción no recibió este cambio.
 
 ## Política por ambiente
 
@@ -103,10 +103,14 @@ La exportación JavaScript Android no acredita una nueva compilación nativa ni 
 
 ## Aceptación pendiente y operación
 
-Falta completar el recorrido con entrega a una bandeja real usando una dirección de prueba libre elegida por el usuario, para clientes y comercios. No se modifican cuentas existentes ni se da por recibida una comunicación basándose en configuración SMTP, outbox o captura local. La evidencia local ya cubre bloqueo previo, acceso automático, variable deshabilitada, ceros iniciales, errores, vencimiento, intentos, reenvío, reutilización, concurrencia y aislamiento entre cuentas. La QA física/nativa y un nuevo AAB siguen fuera de lo verificado.
+El 19/10/2026 se completó el recorrido real de cliente con un alias nuevo elegido por el usuario: envío SMTP aceptado en el primer intento a las 17:06:43 Argentina, recepción confirmada por el usuario y activación a las 17:09 mediante el código recibido. Se verificaron sesión automática del mismo registro, identidad de `/me`, cookie web segura, rechazo de reutilización, logout y rechazo de la sesión revocada. La cuenta QA 110 quedó verificada y sin sesión de prueba abierta. El alta comercial conserva cobertura automatizada; no se acredita un segundo recorrido comercial con bandeja real. Las cuentas existentes se preservaron. La recepción real se acredita por el código recibido y confirmado por el usuario, sin basarse sólo en SMTP, outbox o captura local. La evidencia local ya cubre bloqueo previo, acceso automático, variable deshabilitada, ceros iniciales, errores, vencimiento, intentos, reenvío, reutilización, concurrencia y aislamiento entre cuentas. La QA física/nativa y un nuevo AAB siguen fuera de lo verificado.
 
 Tras la aceptación, testing puede volver a `EMAIL_VERIFICATION_REQUIRED=false` mediante API/UI oficial de Coolify y redespliegue; las cuentas pendientes conservarán el requisito. Producción debe exigir verificación cuando se promueva esta funcionalidad, con las validaciones y pruebas correspondientes. Los controles de Google, enlaces anteriores, recuperación e invitaciones se conservaron.
 
 Registro operativo privado: workspace Contabo, `puntazo/email-code-20261019.md`. Evidencia local: `Puntazo/artifacts/email-verification-20261019/`, incluida `verification-testing.png`. La propuesta documental es [PR #13](https://github.com/gagonzalez1/puntazo-docs/pull/13); publicar la funcionalidad no implica que este portal ya haya publicado la documentación.
 
 El código pertenece a `am-p/app-loyalty` y `gonzalotev/app-fidelidad`; el fork de backend es sólo fuente de publicación para testing. La incorporación a una rama no prueba despliegue ni entrega SMTP. Los SHA observados son evidencia histórica y no seleccionan una próxima compilación.
+
+### Actualización concurrente posterior
+
+La rama frontend `testing` avanzó mediante PR82 a `f209f639113a2a11c9c150dfce7b8d8b5a712fbd`, con precios de onboarding y restricciones Android; se revisó que conserva el flujo OTP y se observó ese runtime saludable durante la aceptación del correo real. El commit `c7b13f3` y su bundle anteriores conservan el carácter de evidencia de la publicación inicial de este cambio.
