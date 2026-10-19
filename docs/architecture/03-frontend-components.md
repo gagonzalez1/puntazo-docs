@@ -6,7 +6,7 @@ order: 30
 parent: c4-containers
 level: component
 status: mixed
-summary: Expo Router, sesiones y servicios reales; menú PDF V1 implementado en el candidato publicado en testing.
+summary: Expo Router, sesiones y servicios reales; lectura PDF de cliente a pantalla completa y vista previa del comercio en testing.
 diagram: true
 codeRefs: required
 authority: source_code
@@ -25,7 +25,7 @@ flowchart TD
  Q --> DS
  Q --> MS[Servicios comerciales, personal y suscripción]
  Q --> MENU[branchMenuService · PDF privado y público]
- R --> VIEWER[MenuPdfViewer · testing PR70]
+ R --> VIEWER[MenuPdfViewer · lectura cliente y comercio]
  VIEWER --> RENDER[PDF.js local · iframe o WebView]
  R --> PS[profileService y mediaService]
  R --> EV[Actualización de tarjetas y celebraciones]
@@ -61,15 +61,15 @@ Los permisos de la UI reflejan roles de propietario/administrador, pero el backe
 
 La ampliación a 30 MiB conserva Expo SDK 54 y el visor del dispositivo. El SW excluye el proxy de medios y `/api` del fallback de navegación; los documentos firmados no se precachean. Para un SW anterior ya activo, `signed-menu-pdf.mjs` usa un GET sin caché para URLs del mismo origen, limita el stream a 30 MiB, valida MIME y `%PDF-` y abre un Blob en una pestaña creada por el usuario. La liberación espera al cierre del visor; no se persiste el documento en almacenamiento del navegador. Las URLs HTTPS de storage externo mantienen navegación directa y no agregan una exigencia CORS. Native conserva WebBrowser/Linking. El estado de despliegue y la reproducción con perfil anterior se registran en [Estado observado](#/runtime-snapshot).
 
-## Cliente a pantalla completa · candidato PR71
+## Cliente a pantalla completa · testing PR71/72
 
-[PR71 frontend](https://github.com/gonzalotev/app-fidelidad/pull/71), rama seleccionada `feat/customer-menu-fullscreen-20261018`, fuente revisada `8ac19ee4a85392b22057fbbc7d668f364505dfaa`. Implementado como candidato autorizado por el usuario; el runtime confirmado sigue en PR70/`b7de8ec` hasta registrar el nuevo despliegue en [Estado observado](#/runtime-snapshot).
+[PR71 frontend](https://github.com/gonzalotev/app-fidelidad/pull/71) y [PR72](https://github.com/gonzalotev/app-fidelidad/pull/72), integradas y desplegadas en la rama seleccionada `testing` como `9074aa57fe84d8f0ec03d50898d532d4857ce4c3`. Implementación autorizada y lectura pública comprobada contra testing real; fuentes y límites de aceptación en [Estado observado](#/runtime-snapshot).
 
-`MenuPdfViewer` añade un modo de lectura usado sólo por la ruta pública de cliente: iframe web o WebView Android cargan `/pdf-viewer/read.html` con `reader.js`. La UI ocupa la pantalla con Volver superpuesto, sin metadatos ni herramientas. El reader dibuja páginas cercanas a la vista con scroll continuo y un presupuesto total compartido de seis millones de píxeles; cancela tareas y libera canvas fuera de vista. El fallo queda detenido y la ruta coordina como máximo una renovación de la firma, ignorando errores duplicados y respuestas de otra sucursal.
+`MenuPdfViewer` añade un modo de lectura usado sólo por la ruta pública de cliente: iframe web o WebView Android cargan `/pdf-viewer/read.html` con `reader.js`. La UI ocupa la pantalla con Volver superpuesto, sin metadatos ni herramientas; el scroll reserva 56 px al inicio para preservar el título. El reader dibuja páginas cercanas a la vista con scroll continuo y un presupuesto total compartido de seis millones de píxeles; cancela tareas y libera canvas fuera de vista. El fallo queda detenido y la ruta coordina como máximo una renovación de la firma, ignorando errores duplicados y respuestas de otra sucursal.
 
 `MenuPdfPreview` del comercio mantiene `index.html` con sus controles originales. El layout raíz omite `FirstLoginTutorial` sólo en `/menu/`; al regresar al mapa se conserva el onboarding. PDF.js, origen, CSP, storage y contrato permanecen como en PR70. [Recorrido y límites de plataforma](#/flow-branch-menu-pdf).
 
-## Búsqueda y renderer interno · testing PR70
+## Corte PR70 · búsqueda y renderer interno
 
 Implementación autorizada el **18/10/2026**, [PR70 frontend](https://github.com/gonzalotev/app-fidelidad/pull/70), integrada y desplegada en `testing` como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`. La aceptación del recorrido real se registra por separado en [Estado observado](#/runtime-snapshot).
 

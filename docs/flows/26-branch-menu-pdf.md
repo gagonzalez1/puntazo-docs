@@ -6,7 +6,7 @@ order: 260
 parent: customer-flows
 level: flow
 status: mixed
-summary: Publicación por sucursal con borrador, control de versión, enlace público y acceso desde mapa/tarjetas.
+summary: Publicación PDF por sucursal y lectura de cliente a pantalla completa, con controles separados para comercio.
 diagram: true
 codeRefs: required
 authority: mixed
@@ -47,11 +47,11 @@ El cliente abre el menú desde el mapa o las tarjetas. Cuando la tarjeta corresp
 
 El corte inicial de V1 usaba el visor del navegador/dispositivo con alternativa explícita; la lectura interna de testing se describe a continuación. No se incorpora un renderer PDF nativo pesado. La ficha modal del mapa se cierra antes de navegar, para mantener accionable el botón de apertura. Los archivos menores de 1 MiB muestran su tamaño en KiB. Cada apertura/vista previa resuelve una URL vigente; una URL vencida no equivale a un menú retirado. El QR del menú no reemplaza el QR de identidad del cliente.
 
-## Lectura de cliente a pantalla completa · candidato PR71
+## Lectura de cliente a pantalla completa · testing PR71/72
 
-[PR71 frontend](https://github.com/gonzalotev/app-fidelidad/pull/71), rama seleccionada `feat/customer-menu-fullscreen-20261018`, fuente revisada `8ac19ee4a85392b22057fbbc7d668f364505dfaa`. Implementado como candidato autorizado por el usuario; el runtime confirmado sigue en PR70/`b7de8ec` hasta registrar el nuevo despliegue en [Estado observado](#/runtime-snapshot).
+[PR71 frontend](https://github.com/gonzalotev/app-fidelidad/pull/71) y [PR72](https://github.com/gonzalotev/app-fidelidad/pull/72), integradas y desplegadas en la rama seleccionada `testing` como `9074aa57fe84d8f0ec03d50898d532d4857ce4c3`. Implementación autorizada y lectura pública comprobada contra testing real; fuentes y límites de aceptación en [Estado observado](#/runtime-snapshot).
 
-La consulta de cliente y visitante `/menu/:branchId` ocupa todo el ancho y alto útil, respeta las áreas seguras y presenta un único botón superpuesto «Volver». Quita marca/sucursal, nombre del archivo, cantidad de páginas, cabeceras y barras de herramientas. No muestra «Abrir aparte», recarga, zoom ni selector de página en el recorrido de lectura. Sin historial, Volver regresa a la entrada de la app. El asistente de primer ingreso se oculta sólo mientras la ruta comienza con `/menu/` y vuelve al salir; no se marca como completado por leer el PDF.
+La consulta de cliente y visitante `/menu/:branchId` ocupa todo el ancho y alto útil, respeta las áreas seguras y presenta un único botón superpuesto «Volver». PR72 reserva **56 px iniciales dentro del scroll** para que ese botón no tape el título, manteniendo el iframe a todo el ancho y alto. Quita marca/sucursal, nombre del archivo, cantidad de páginas, cabeceras y barras de herramientas. No muestra «Abrir aparte», recarga, zoom ni selector de página en el recorrido de lectura. Los estados de carga/error siguen informando el resultado sin añadir herramientas al documento. Sin historial, Volver regresa a la entrada de la app. El asistente de primer ingreso se oculta sólo mientras la ruta comienza con `/menu/` y vuelve al salir; no se marca como completado por leer el PDF.
 
 `/pdf-viewer/read.html` conserva el renderer local pero usa `reader.js` para recorrer todas las páginas con scroll continuo. Se preparan sus dimensiones y se dibujan de forma diferida las páginas cercanas al área visible. El presupuesto compartido de todos los canvas es de **seis millones de píxeles**; al alejarse una página se cancela su trabajo y se libera la superficie. El redimensionado vuelve a ajustar el ancho. El texto extraído queda disponible para accesibilidad sin añadir una barra visible.
 
@@ -59,10 +59,10 @@ Un fallo del visor solicita una sola renovación automática del enlace firmado.
 
 La vista previa del comercio conserva `/pdf-viewer/index.html`, controles de página/zoom/texto, «Recargar PDF» y «Abrir aparte». La lectura de cliente sigue exigiendo firma y renderer del mismo origen. No cambia API, base de datos, 30 MiB/1–30 páginas, permisos ni TTL. La exportación JS nativa pasó; no se generó ni distribuyó APK/AAB nuevo y no acredita QA física ni actualización del cliente instalado.
 
-- [Reader continuo](https://github.com/gonzalotev/app-fidelidad/blob/feat/customer-menu-fullscreen-20261018/public/pdf-viewer/reader.js)
-- [Ruta de cliente](https://github.com/gonzalotev/app-fidelidad/blob/feat/customer-menu-fullscreen-20261018/app/menu/%5BbranchId%5D.tsx)
+- [Reader continuo](https://github.com/gonzalotev/app-fidelidad/blob/testing/public/pdf-viewer/reader.js)
+- [Ruta de cliente](https://github.com/gonzalotev/app-fidelidad/blob/testing/app/menu/%5BbranchId%5D.tsx)
 
-## Lectura interna · testing del 18/10/2026
+## Corte PR70 · lectura interna del 18/10/2026
 
 Implementación autorizada el **18/10/2026**, [PR70 frontend](https://github.com/gonzalotev/app-fidelidad/pull/70), integrada y desplegada en `testing` como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`. La aceptación del recorrido real se registra por separado en [Estado observado](#/runtime-snapshot).
 

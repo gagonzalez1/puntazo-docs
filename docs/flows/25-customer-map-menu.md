@@ -41,13 +41,13 @@ La pantalla separa carga, error con reintento, listado vacío y búsqueda sin co
 
 Inventario agregado autenticado inicial: 37 sucursales elegibles, 3 con coordenadas completas y 34 sin ellas. Corte posterior de las 22:09 UTC: 37 elegibles, 13 con coordenadas válidas y 24 pendientes; los datos cambiaron durante la comprobación. No se crean sucursales ni se asignan posiciones supuestas para llenar el mapa. La verificación del despliegue y sus límites se registra en [Estado observado](#/runtime-snapshot).
 
-## Búsqueda y visor interno · testing del 18/10/2026
+## Corte PR70 · búsqueda y visor interno del 18/10/2026
 
 Implementación autorizada el **18/10/2026**, [PR70 frontend](https://github.com/gonzalotev/app-fidelidad/pull/70), integrada y desplegada en `testing` como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`. La aceptación del recorrido real se registra por separado en [Estado observado](#/runtime-snapshot).
 
 El mapa comparte una única consulta del inventario completo autorizado y filtra en el cliente por marca, sucursal, dirección, localidad y provincia. La coincidencia ignora mayúsculas, tildes y espacios repetidos; conserva las filas sin coordenadas. Mapa y lista usan el mismo resultado, muestran una búsqueda sin coincidencias y permiten limpiar el filtro. Los favoritos siguen usando el inventario completo.
 
-El menú se lee dentro de Puntazo mediante el visor descrito en [Menú PDF V1](#/flow-branch-menu-pdf); «Abrir aparte» queda como alternativa explícita. No cambia la API ni la base de datos. Los límites vigentes de archivo/páginas son **30 MiB y 1–30 páginas**; la sección siguiente conserva el corte inicial de 10 MiB.
+PR70 agregó la lectura dentro de Puntazo con alternativa externa. PR71/72 evolucionan la consulta del cliente a pantalla completa con un único Volver y scroll continuo; el comercio conserva sus controles. El recorrido vigente se describe en [Menú PDF V1](#/flow-branch-menu-pdf). No cambia la API ni la base de datos. Los límites vigentes de archivo/páginas son **30 MiB y 1–30 páginas**; la sección siguiente conserva el corte inicial de 10 MiB.
 
 ## V1 PDF: implementada y verificada en testing · 18/10/2026
 

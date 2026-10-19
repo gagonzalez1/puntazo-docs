@@ -29,6 +29,13 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-19 — Cliente PDF a pantalla completa y título libre de Volver
+
+- [PR71](https://github.com/gonzalotev/app-fidelidad/pull/71) y [PR72](https://github.com/gonzalotev/app-fidelidad/pull/72) integradas en `testing` como `9074aa57fe84d8f0ec03d50898d532d4857ce4c3`. Fuente de app `8ac19ee`; ajuste posterior `bacf196` sólo de CSS servido y prueba. Backend y datos sin cambios.
+- Cliente sin cabeceras, metadatos ni herramientas: un Volver y scroll continuo con canvas diferidos/presupuesto total de seis millones de píxeles; renovación de firma automática una vez. Asistente oculto sólo en `/menu/`; comercio conserva sus controles. La observación real detectó el título tapado por Volver: PR72 reserva 56 px al inicio del scroll sin reducir el iframe.
+- Actualizados flujo PDF, C4 frontend, matriz, brechas, flujo de mapa, guía y estado observado. Se conserva el corte de PR70 y la evidencia histórica de 30 MiB/PWA; V2 futura.
+- Build/typecheck aprobados; 14 casos browser en 32,5 s y selección de siete comprobaciones CSS en 20,3 s, sin sumarlos como casos únicos. Export JS nativo de `8ac19ee` aprobado; app/src no cambió después, sin APK/AAB distribuido. QA pública real y recursos del contenedor verificados; [fuentes, runtime y alcance](#/runtime-snapshot). No publica portal ni producción.
+
 ### 2026-10-18 — Búsqueda del mapa y lectura PDF dentro de Puntazo
 
 - Solicitud explícita de búsqueda funcional y lectura interna; frontend [PR70](https://github.com/gonzalotev/app-fidelidad/pull/70), fuente final `492282d83cd7812ab06a11c2da75ca7b18e1c1fd` sobre `067dc68`, integrada en testing como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`. Backend y datos sin cambios.

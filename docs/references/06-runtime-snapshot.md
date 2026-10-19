@@ -13,7 +13,27 @@ diagram: false
 
 # Estado observado
 
-## Búsqueda y PDF interno · 18/10/2026 21:49:35 Argentina (19/10/2026 00:49:35 UTC)
+## Cliente PDF a pantalla completa · 19/10/2026 00:04 Argentina (03:04 UTC)
+
+Fuente seleccionada y obtenida nuevamente: `gonzalotev/app-fidelidad:testing`, `9074aa57fe84d8f0ec03d50898d532d4857ce4c3`, checkout limpio y coincidente con el remoto. [PR71](https://github.com/gonzalotev/app-fidelidad/pull/71) y [PR72](https://github.com/gonzalotev/app-fidelidad/pull/72) integradas. La primera se desplegó como `910b0531ac5e22f83acbd6b11d918f094f85832d`; la segunda completa el margen inicial de lectura. Los SHA acreditan lo observado y nunca seleccionan un build futuro.
+
+| Componente | Runtime observado |
+|---|---|
+| Web testing | `9074aa57fe84d8f0ec03d50898d532d4857ce4c3`, healthy, cero reinicios, 384 MiB/0,5 CPU |
+| API testing | `64bb3fc901293791adcf7738c49d3bbf290c8a20`, esquema 0042, versión/readiness 200; sin cambios |
+| Web / API producción | `34bbcb798d1bd7fbcad76f13c2c9ecd1fc37ef1a` / `dbeb03cff69ec512cb7f59f0a92fe8c8bfd9d181`, esquema 0035; sin cambios, saludables |
+
+Coolify PR71 `abspprddi1zvfwhju6yzedhe` terminó el 19/10 a las 02:15:43 UTC (18/10 23:15:43 Argentina). La publicación final PR72 `xrhf9p0arjnmbhi1huwidroc` terminó a las **02:22:46 UTC (18/10 23:22:46 Argentina)**, imagen `sha256:581ce267db0cc0baf96e93c8085fc50e9158167aa369c13978d9864dc602ce6e`. Redes web conservadas: `coolify`, `dhzoesfa51iivxxrezzvz7wx`, `puntazo-backoffice-testing-api`. La lectura de runtime se registró a las 03:02 UTC.
+
+CI [PR71 39188565272](https://github.com/gonzalotev/app-fidelidad/actions/runs/39188565272), [PR72 39189303514](https://github.com/gonzalotev/app-fidelidad/actions/runs/39189303514) y [despliegue final 39189496930](https://github.com/gonzalotev/app-fidelidad/actions/runs/39189496930) aprobados. Typecheck y build web aprobados; 14 pruebas browser dirigidas en 32,5 s y una selección de siete pruebas CSS en 20,3 s, sin afirmar 21 casos únicos ni suite global. La exportación JS nativa pasó en `8ac19ee4a85392b22057fbbc7d668f364505dfaa`; el diff hasta la fuente final sólo afecta CSS servido y su prueba, sin cambios de app/src posteriores. No se generó/distribuyó APK/AAB nuevo.
+
+La QA pública anónima de las **03:04 UTC**, por CUA y sin mocks ni sesión inyectada, abrió `/menu/29`: PDF visible, título libre de Volver, un solo botón y ningún control adicional. En 1280×720 el iframe coincide con el viewport (x/y 0, ancho 1280, alto 720), sin desbordes; Volver llevó a login. La observación anterior había detectado el botón sobre parte del título y motivó PR72: se reservan 56 px al inicio del scroll, manteniendo el iframe a pantalla completa. El comercio conserva `index.html` y sus herramientas.
+
+Diez recursos públicos coincidieron por hash con el contenedor, incluidos bundle, reader, CSS, renderer, worker, decoder y SW. Renderer servido con `no-store`, SAMEORIGIN, `frame-ancestors self` y sin referrer; las páginas de app conservan DENY. Reader fuera del precache; sin herramientas para cliente y controles comerciales preservados. Evidencia de tarea: `artifacts/menu-fullscreen-20261018/runtime-final.json`, `public-assets.json`, `live-qa.json` y `menu-fullscreen-live.png`.
+
+El reader recorre todas las páginas con carga visual diferida y un presupuesto de canvas compartido de seis millones de píxeles. Renueva la firma una sola vez ante fallo e ignora errores repetidos durante la consulta; el cierre cancela trabajo. No cambia API, esquema, 30 MiB/1–30 páginas, permisos ni TTL. La comprobación de navegador no acredita QA física Android/iOS, APK/AAB distribuido ni PWA instalada. Portal y producción no se publican; V2 permanece futura.
+
+## Corte PR70 · búsqueda y PDF interno · 18/10/2026 21:49:35 Argentina (19/10/2026 00:49:35 UTC)
 
 [PR70](https://github.com/gonzalotev/app-fidelidad/pull/70) integrada en la rama seleccionada `gonzalotev/app-fidelidad:testing` como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`, desde la fuente final `492282d83cd7812ab06a11c2da75ca7b18e1c1fd`. La revisión final agrega safe areas nativas a las correcciones del visor y las fixtures codificadas. Fetch de testing confirmó la integración; estos SHA son evidencia, nunca selectores de futuros builds.
 
