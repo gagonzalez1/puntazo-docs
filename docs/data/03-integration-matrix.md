@@ -81,6 +81,18 @@ La carga usa el storage privado existente. No se incrementa el límite de imáge
 - [Rutas privadas reales](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/cmd/server/routes_merchant.go)
 - [Rutas públicas reales](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/cmd/server/routes_public.go)
 
+## Lectura de cliente · candidato PR71
+
+[PR71 frontend](https://github.com/gonzalotev/app-fidelidad/pull/71), rama seleccionada `feat/customer-menu-fullscreen-20261018`, fuente revisada `8ac19ee4a85392b22057fbbc7d668f364505dfaa`. Implementado como candidato autorizado por el usuario; el runtime confirmado sigue en PR70/`b7de8ec` hasta registrar el nuevo despliegue en [Estado observado](#/runtime-snapshot).
+
+| Pantalla/acción | Integración del candidato | Condición |
+|---|---|---|
+| Cliente / visitante → menú | Misma consulta pública y firma; `read.html` con scroll continuo | Pantalla completa, único Volver y sin metadatos/herramientas |
+| Fallo del PDF | Refetch público automático, máximo una vez | Ignora duplicados durante renovación; segundo visor fallido muestra error |
+| Comercio → vista previa | Consulta privada y `index.html` existentes | Conserva página/zoom/texto, recarga y apertura aparte |
+
+No agrega rutas API, migraciones ni cambios de permisos/TTL o límites de 30 MiB/1–30 páginas. El origen web sigue configurado por ambiente. La exportación nativa JS no distribuye un binario con WebView. [Alcance completo](#/flow-branch-menu-pdf).
+
 ## Búsqueda y lectura interna · testing PR70
 
 Implementación autorizada el **18/10/2026**, [PR70 frontend](https://github.com/gonzalotev/app-fidelidad/pull/70), integrada y desplegada en `testing` como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`. La aceptación del recorrido real se registra por separado en [Estado observado](#/runtime-snapshot).
