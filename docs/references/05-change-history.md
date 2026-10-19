@@ -29,6 +29,13 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-19 — Opción C: tarjeta, premios y menú unificados
+
+- [PR79](https://github.com/gonzalotev/app-fidelidad/pull/79) integrada/desplegada en testing `d20abd436ff935a346905a791f076017cbf96d4c`: card neutra con identidad, panel de progreso de marca y dos acciones iguales. Mis Tarjetas adopta la composición C elegida por el usuario; el editor comercial conserva sus plantillas. Backend sin cambios.
+- TypeScript,153 unidades,Doctor18/18,web/PWA,exportJSAndroid y10 browser PASS; Sellos/Puntos, cinco anchos, temas, premios/menú, plantillas, celebración y PDF. QA real en Comercio1 y evidencia del despliegue en runtime. Sin APK/AAB, QA física ni cambios de producción.
+- Documentos: flujo23, componentes frontend, runtime e historial. Aprobación visual explícita; sin nueva decisión de negocio/contrato, sin modificación de C4 de contenedores o secuencias. Portal sin publicar; V2 sigue idea.
+
+
 ### 2026-10-19 — Alinear las cajas de acciones del local
 
 - [PR78 frontend](https://github.com/gonzalotev/app-fidelidad/pull/78) integrada/desplegada en testing4c1c3be: cuatro acciones a todo el ancho, dos columnas de igual tamaño y separación uniforme. Fuente candidata751bb1f, controles y publicación con ramas frescas/checkouts limpios. Backend sin cambios.

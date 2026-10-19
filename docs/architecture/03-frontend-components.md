@@ -100,3 +100,7 @@ El contenedor web incorpora `/pdf-viewer/` y una CSP específica para permitir s
 - [Editor PDF y versiones](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/components/CommercialBranchMenuEditor.tsx)
 - [Servicio multipart y contratos](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/services/branchMenuService.ts)
 - [Ruta pública sin sesión](https://github.com/gonzalotev/app-fidelidad/blob/testing/app/menu/%5BbranchId%5D.tsx)
+
+## Card unificada C · testing
+
+`MyLoyaltyCardsScreen` compone una superficie neutra con `CustomerCardSummary` y dos acciones hermanas. El resumen reutiliza `LogoBadge` y `RewardDiamonds`, con datos/saldos y colores reales; `CardMenuAction` admite disposición inline sin cambiar su consulta pública o selector. `RewardsModal` conserva el catálogo y añade nombre accesible para cerrar. El renderizador de plantillas del editor comercial no cambia. Se mantiene el ref del bloque y el rango de sellos nuevos de la celebración. Es presentación de cliente dentro del contenedor Expo existente, sin nuevas fronteras/API; [flujo](#/flow-customer-cards) y [publicación](#/runtime-snapshot).

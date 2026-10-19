@@ -13,6 +13,15 @@ diagram: false
 
 # Estado observado
 
+## Card unificada C · testing
+
+Frontend [PR79](https://github.com/gonzalotev/app-fidelidad/pull/79), candidato `937ce40d7a78da99057523d14a9120865b0819d8`, integrado y desplegado desde la rama fresca `testing` **`d20abd436ff935a346905a791f076017cbf96d4c`**. Coolify `gtlm6nuibvay3r32yuzkbhcc` terminó `2026-10-19T15:32:30.000000Z`, imagen `sha256:ff9a44a9d4e7c4cd8807a35f13fdc218ac440dc4a49f2bf698071848100b076a`, healthy/cero reinicios, 384 MiB/0,5 CPU y redes conservadas. CI del candidato aprobado; Coolify finalizado (el workflow GitHub Deploy aún estaba en cola al cerrar la observación); el entry/SW/reader públicos corresponden al contenedor y el nuevo bundle se observó tras actualizar la PWA. Fuentes/checkouts limpios y remotos obtenidos antes de build/export/deploy; los SHA son evidencia, no selectores futuros.
+
+TypeScript, 153 unidades, Doctor18/18, web/PWA y export JS Android PASS. Diez casos browser sin fallos/skips/flaky: C de Sellos/Puntos y geometría320/390/519/768/1440px, temas claro/oscuro, premios con teclado, selector de menú y ausencia de publicación, plantillas comerciales, push/celebración y visor PDF. Se repitieron los dos casos nuevos tras corregir sólo el selector de pestaña y esperar el cierre de la animación antes de capturar el tema; el código de producto es idéntico al build local inicial. Los controles finales de CI acreditan el HEAD final.
+
+La QA real de la tarjeta Comercio1 está registrada en `artifacts/unified-customer-card-c-20261019/live-qa.json`, con capturas reales `customer-card-light.png`, `customer-card-dark.png`, `rewards-dark.png`, `menu-dark.png` y medidas `live-layout.json`. La composición y selector resultaron legibles en ambos temas. Hallazgo visual menor/preexistente: el catálogo aplica opacidad0,48 a premios todavía no alcanzables y quedan demasiado tenues en oscuro; pendiente de ajuste. Comercio1 no tiene menú publicado, por lo que la QA real comprobó el estado vacío del selector, sin añadir datos. API testing, producción y datos comerciales conservados; no se ejecutaron migraciones ni cambios de entorno. Android sólo export JS, sin APK/AAB ni aceptación física/PWA instalada. Evidencia adicional: `validation.json`, `context-deploy.json`, `runtime-after.json`, `public-assets.json`, `runtime-checks.json` y `reconciliation.json`. Portal sin publicar.
+
+
 ## Acciones alineadas · 19/10/2026 10:25–10:27 Argentina (13:25–13:27 UTC)
 
 Frontend [PR78](https://github.com/gonzalotev/app-fidelidad/pull/78), candidato `751bb1fda3a60fdb8708719c32a3fc104a38d3d5`, integrado y desplegado desde `testing` **`4c1c3bef03b9063cd4dc48b00b9ae1fdfc20da07`**. Rama remota obtenida de nuevo y checkout limpio antes de build/export/deploy. Coolify `g6xp3qdlwizhnnzruyiuo0tn` finished13:25:52UTC, imagen `sha256:333d71e7e3b848217e5e517f6bfb9c3e87efbcddffbc014c5da708363d77b1f3`, healthy/cero reinicios,384MiB/0,5CPU y redes preservadas. Entry público `3d079f93e6074c4af262a16856f5cb6c`,SW y reader coinciden con contenedor; nuevo bundle observado en DOM tras recargas, conservando sesión.

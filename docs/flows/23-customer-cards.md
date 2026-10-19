@@ -14,6 +14,13 @@ authority: source_code
 
 # Tarjetas de fidelidad
 
+## Card unificada C · testing
+
+La opción C fue seleccionada explícitamente por el usuario y está implementada y desplegada en [PR79](https://github.com/gonzalotev/app-fidelidad/pull/79), `testing` `d20abd436ff935a346905a791f076017cbf96d4c`. Mis Tarjetas agrupa nombre/logo, progreso de marca y acciones en una sola superficie neutra: `CustomerCardSummary` muestra sellos o puntos reales, reutilizando `LogoBadge`, `RewardDiamonds` y tokens de tema. Ver premios y Ver menú ocupan la misma fila con igual tamaño; la superficie se adapta al modo oscuro. Las vistas del editor comercial conservan sus renderers y plantillas; el listado de cliente usa esta presentación resumida.
+
+Tocar el resumen o el botón de premios abre el mismo catálogo, sin controles interactivos anidados. El menú conserva la consulta diferida de sucursales, apertura directa/selector y estados sin publicación/error. Se conservan saldos, beneficios, actualización por SSE y efectos de celebración; no hay API, datos, esquema, paquetes ni permisos nuevos. Dos casos nuevos verifican Sellos/Puntos, cinco anchos, temas, teclado, premios y menú; otras ocho regresiones cubren plantillas comerciales, push/celebración y PDF. QA real y límites en [Estado observado](#/runtime-snapshot). V2 digital/IA sigue idea.
+
+
 ```mermaid
 flowchart TD
  U[Usuario autenticado] --> API[GET /v1/clientes/me/tarjetas]
