@@ -14,7 +14,14 @@ authority: source_code
 
 # Tarjetas de fidelidad
 
-## Card unificada C · testing
+## Card con pie A · testing
+
+El usuario reemplazó la selección C por A: el color real del comercio cubre toda la parte superior, incluyendo nombre/logo y progreso; un pie neutro integrado contiene Ver premios y Ver menú con igual tamaño/separación. [PR80](https://github.com/gonzalotev/app-fidelidad/pull/80), `testing` `45ab3f972f7722bb8a208fdb00a39d7b65d8d7d6`. La composición anterior C queda como evidencia histórica, no como selección vigente.
+
+Se conservan datos/saldos, accesos, menú diferido, celebraciones y editor comercial. El contenedor recorta esquinas exteriores; el pie sigue el tema claro/oscuro y el texto superior contrasta con el color de marca. TypeScript,153unidades,Doctor18/18,web/PWA,exportJSAndroid y10browser/cincoanchos PASS; QA real de tarjeta175 claro/oscuro, premios y estado sin menú PASS. Hallazgo previo del catálogo con premios no alcanzables tenues permanece pendiente. V2 sigue idea.
+
+
+## Card unificada C · testing · histórico
 
 La opción C fue seleccionada explícitamente por el usuario y está implementada y desplegada en [PR79](https://github.com/gonzalotev/app-fidelidad/pull/79), `testing` `d20abd436ff935a346905a791f076017cbf96d4c`. Mis Tarjetas agrupa nombre/logo, progreso de marca y acciones en una sola superficie neutra: `CustomerCardSummary` muestra sellos o puntos reales, reutilizando `LogoBadge`, `RewardDiamonds` y tokens de tema. Ver premios y Ver menú ocupan la misma fila con igual tamaño; la superficie se adapta al modo oscuro. Las vistas del editor comercial conservan sus renderers y plantillas; el listado de cliente usa esta presentación resumida.
 

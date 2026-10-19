@@ -13,7 +13,14 @@ diagram: false
 
 # Estado observado
 
-## Card unificada C · testing
+## Card con pie A · testing
+
+[PR80](https://github.com/gonzalotev/app-fidelidad/pull/80) integrada y publicada desde `testing` fresca `45ab3f972f7722bb8a208fdb00a39d7b65d8d7d6`; Coolify `v7p8tdkaiiwycwzibz3oispc` finished `2026-10-19T15:50:57.000000Z`. Reemplaza la composición C por parte superior de color completo y pie neutro de acciones. Fuentes limpias y gates online antes de build/export/deploy; SHA como evidencia, no selector futuro. Runtime/publicbundle y QA real acreditados en `artifacts/unified-customer-card-a-20261019/`. API testingea831cf/0042 y producción preservadas; sin cambios de datos comerciales/contrato/esquema/permisos.
+
+TypeScript,153unidades,Doctor18/18,web/PWA,exportJSAndroid y10browser PASS; Sellos/Puntos, temas,320/390/519/768/1440px, color de borde a borde/pie/acciones y regresiones comerciales/celebración/PDF. Comercio1 no tienePDF; QA real acredita estado vacío del selector. Android sinAPK/AAB ni QA física/PWA instalada. Evidencia `validation.json`, `live-qa.json`, `live-layout.json`, `runtime-after.json`, `public-assets.json`, `reconciliation.json`; portal sin publicar. Detalle previo de bajo contraste en premios no alcanzables permanece documentado.
+
+
+## Card unificada C · testing · histórico
 
 Frontend [PR79](https://github.com/gonzalotev/app-fidelidad/pull/79), candidato `937ce40d7a78da99057523d14a9120865b0819d8`, integrado y desplegado desde la rama fresca `testing` **`d20abd436ff935a346905a791f076017cbf96d4c`**. Coolify `gtlm6nuibvay3r32yuzkbhcc` terminó `2026-10-19T15:32:30.000000Z`, imagen `sha256:ff9a44a9d4e7c4cd8807a35f13fdc218ac440dc4a49f2bf698071848100b076a`, healthy/cero reinicios, 384 MiB/0,5 CPU y redes conservadas. CI del candidato aprobado; Coolify finalizado (el workflow GitHub Deploy aún estaba en cola al cerrar la observación); el entry/SW/reader públicos corresponden al contenedor y el nuevo bundle se observó tras actualizar la PWA. Fuentes/checkouts limpios y remotos obtenidos antes de build/export/deploy; los SHA son evidencia, no selectores futuros.
 

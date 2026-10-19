@@ -29,6 +29,11 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-19 — Card con pie A reemplaza composición C
+
+El usuario cambió su selección a A. [PR80](https://github.com/gonzalotev/app-fidelidad/pull/80)/testing `45ab3f972f7722bb8a208fdb00a39d7b65d8d7d6` publicada: identidad/progreso sobre color de marca completo, pie neutro con acciones iguales; funciones/editor comercial conservados.153unidades,Doctor18/18,10browser/cincoanchos,web/PWA/exportJSAndroid y QA real claro/oscuro PASS. SinAPI/DB/producción/APK/AAB nuevos; V2 idea, portal sin publicar. C queda como corte histórico.
+
+
 ### 2026-10-19 — Opción C: tarjeta, premios y menú unificados
 
 - [PR79](https://github.com/gonzalotev/app-fidelidad/pull/79) integrada/desplegada en testing `d20abd436ff935a346905a791f076017cbf96d4c`: card neutra con identidad, panel de progreso de marca y dos acciones iguales. Mis Tarjetas adopta la composición C elegida por el usuario; el editor comercial conserva sus plantillas. Backend sin cambios.
