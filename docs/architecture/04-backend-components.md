@@ -49,7 +49,7 @@ REST tiene plazo de 12 segundos; el stream SSE se registra por separado y revali
 
 Las migraciones se ejecutan con `cmd/migrate`; `0033` es el esquema observado. No se crea una única tabla `users` al iniciar el servidor.
 
-**Implementado en fuentes · 19/10/2026:** el [código de registro](#/sequence-registration-email-code) reutiliza servicios, repositorios y worker SMTP. Añade validación transaccional, intentos persistidos y descarte de correos sustituidos; `EMAIL_VERIFICATION_REQUIRED` controla las altas nuevas y producción exige su activación. La migración `0043` y el manifest de readiness concilian el historial del main oficial con el de la rama de publicación testing. Se probaron en bases aisladas y aún no se aplicaron a live en este corte; las fuentes del PR #40 y la evidencia constan en la secuencia enlazada.
+**Publicado en testing · 19/10/2026:** el [código de registro](#/sequence-registration-email-code) reutiliza servicios, repositorios y worker SMTP. Añade validación transaccional, intentos persistidos y descarte de correos sustituidos; `EMAIL_VERIFICATION_REQUIRED` controla las altas nuevas y producción exige su activación. La migración `0043` y el manifest de readiness concilian el historial del main oficial con el de la rama de publicación testing. La migración se probó en restauración aislada y se aplicó dos veces en testing, preservando datos y menús. API `f976d29`/`0043` está healthy con verificación habilitada. El PR #40 al propietario continúa abierto y producción conserva `dbeb03c`/`0035`; evidencia y límites SMTP constan en la secuencia enlazada.
 
 
 ## Referencias de código

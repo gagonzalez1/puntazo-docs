@@ -31,9 +31,9 @@ La comparación inicial de agosto —sólo `users`, cuatro rutas y fidelidad moc
 
 La auditoría anterior de testing registró un pendiente de dependencias; esta revisión documental no repitió esa auditoría ni lo declara resuelto. Los respaldos y la restauración de producción se documentaron en el registro operativo privado: este portal no certifica una nueva restauración.
 
-## Implementación posterior · 19/10/2026
+## Publicación posterior en testing · 19/10/2026
 
-La [verificación de registro con código de seis dígitos](#/sequence-registration-email-code) está aprobada, implementada y probada en las fuentes enlazadas. La migración `0043`, pruebas locales y upgrade aislado están acreditados; quedan pendientes la validación final del candidato de integración, publicación, configuración efectiva y recepción mediante SMTP público. Testing debe comenzar con `EMAIL_VERIFICATION_REQUIRED=true`; tras la aceptación podrá desactivarse para altas nuevas. Producción debe mantenerla obligatoria. No se considera cerrado este pendiente por documentar las rutas ni por configurar el proveedor.
+La [verificación de registro con código de seis dígitos](#/sequence-registration-email-code) está aprobada, implementada y probada en las fuentes enlazadas. API `f976d29`/`0043` y frontend `c7b13f3` ya están publicados en testing, con datos/menús preservados, pruebas aprobadas y `EMAIL_VERIFICATION_REQUIRED=true` efectiva. Quedan pendientes la recepción en una bandeja real elegida por el usuario y la QA física/nativa; no se acredita una entrega por tener SMTP configurado. Tras la aceptación podrá desactivarse para altas nuevas. El backend propietario PR #40 sigue abierto y producción conserva `dbeb03c`/`0035`; al promover el cambio deberá mantener la verificación obligatoria.
 
 
 ## Referencias de código
