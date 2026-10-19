@@ -13,7 +13,7 @@ diagram: true
 
 # Topología desplegada · Coolify
 
-**18/10/2026 · V1 PDF en testing:** usa los recursos existentes de landing, web, API, PostgreSQL y MinIO. Las dos capas web admiten11 MiB únicamente en la ruta de carga del menú; la API limita archivo10 MiB y multipart10 MiB + 64 KiB. No agrega contenedores ni cambia producción. La ruta pública `/menu/:branchId` atraviesa la landing hacia la app. [Versiones y aceptación](#/runtime-snapshot). El inventario y las relaciones siguientes conservan el corte fechado de octubre que se indica abajo.
+**18/10/2026 · V1 PDF en testing:** usa los recursos existentes de landing, web, API, PostgreSQL y MinIO. Las dos capas web admiten 31 MiB únicamente en la ruta de carga del menú; la API limita archivo 30 MiB y multipart 30 MiB + 64 KiB. No agrega contenedores ni cambia producción. La ruta pública `/menu/:branchId` atraviesa la landing hacia la app. [Versiones y aceptación](#/runtime-snapshot). El inventario y las relaciones siguientes conservan el corte fechado de octubre que se indica abajo.
 
 Esta vista resume cómo están distribuidos los recursos de Puntazo en Coolify.
 La distribución se volvió a comprobar el **02/10/2026, 22:30–22:33 UTC**, mediante API oficial de Coolify y runtime Docker. Describe ese corte; el panel puede cambiar después. Ver [versiones y configuración observadas](#/runtime-snapshot).

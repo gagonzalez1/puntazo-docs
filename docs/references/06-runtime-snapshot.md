@@ -13,7 +13,25 @@ diagram: false
 
 # Estado observado
 
-## Menú PDF V1 · corte 18/10/2026, 16:21 UTC
+## PDF de 30 MiB y apertura con PWA · 18/10/2026 21:04 Argentina (19/10/2026 00:04 UTC)
+
+| Componente testing | Rama seleccionada | Runtime observado |
+|---|---|---|
+| API | gagonzalez1/app-loyalty:closed-test-readiness | `64bb3fc901293791adcf7738c49d3bbf290c8a20`, esquema 0042, healthy |
+| Web | gonzalotev/app-fidelidad:testing | `067dc68c78992f9c49f197eca72b7d685ba5da9e`, healthy |
+| Landing | gagonzalez1/puntazo-landing:testing | `6533196d148e9dfafa016618784a029dd0f2d87e`, healthy |
+
+El usuario amplió el PDF a 30 MB y reportó «Esta pantalla no existe». Se reprodujo con un SW real activo: fetch de la firma entregaba PDF correcto, pero navigate recibía el shell HTML. La corrección excluye medios/API del fallback y usa Blob validado para URLs del mismo origen, compatible con SW anterior; HTTPS externo no exige CORS nuevo. El perfil conservado demostró worker anterior activated→redundant y nuevo activated; navegación HTTPS al PDF 200 application/pdf, sin HTML del SPA. Descarga de 2.267 bytes, hash, texto y render local correctos. La inspección automatizada de la página blob en IAB fue bloqueada por la política de protocolo de CUA; no se eludió. Esa observación no se acredita: la verificación segura usó HTTPS/descarga y render del archivo.
+
+PDF válido de **31.457.280 bytes exactos** cargado desde el selector de tienda, revisado con respuesta PDF completa/hash esperado y descartado por UI, sin publicar ni retirar el menú existente. La comprobación independiente por `/api` repitió upload 201, borrador privado y descarte. Estado final versión 12, borrador null, publicación `b4220335-ba40-436c-9e8f-bfa759104ae3` intacta. Ocho negativos aprobados: 428/412, aislamiento y archivos falso/protegido/31 páginas/excedido; **30 MiB + 1 byte devuelve 413** sin cambiar estado. Apertura pública anónima con SW activo y cinco controles sin desbordes en 390×844/1440×1000; logout UI aprobado. Dos primeros intentos del helper necesitaron corregir expectativas de descarga headless y un selector ambiguo: se conservan como diagnóstico y el reporte final aprobado documenta revisión/descarte.
+
+Archivo 30 MiB, API multipart +64 KiB y proxies 31 MiB sólo en la ruta PDF. Páginas 1–30, parser 3 s/caps, firmas 300 s y permisos se conservan. Nueva 0042 amplía el CHECK; 0041 permanece intacta. Backup cifrado fresco verificado y restaurado en aislamiento; upgrade 0041→0042 y segundo pase aprobados en copia/live, con agregados y fingerprints de menús idénticos antes/después. Rollback de aplicación conserva 0042 y `EXPECTED_SCHEMA_VERSION=0042`; no DOWN live. API 768 MiB/1 CPU, global 2/actor 2 efectivos; web 384 MiB/0,5CPU, landing 256 MiB/0,5CPU, todos saludables sin reinicios. Imágenes, montajes y redes preservados; bundle público igual al contenedor.
+
+Backend race/vet/parser/migraciones/OpenAPI/Docker/CI aprobados. Frontend 137 unidades, typecheck, 5 PWA, build web, export AndroidJS y CI aprobados; Doctor/auditoría también verdes en CI final. La suite browser amplia se interrumpió: 9 pasaron, 3 fallaron fuera del flujo PDF, 1 interrumpida y 82 no ejecutadas, sin baseline comparativo; no se presenta como suite global aprobada. No se acredita QA física Android/iOS ni PWA instalada.
+
+[PR39 backend](https://github.com/am-p/app-loyalty/pull/39) sigue abierta al propietario, con main oficial observado contenido (0 detrás/7 delante) y dependencias PR37/38. [PR69 frontend](https://github.com/gonzalotev/app-fidelidad/pull/69) y [PR11 landing](https://github.com/gagonzalez1/puntazo-landing/pull/11) integradas en testing. Portal documental de PR12 aún sin publicar; producción API dbeb03c/0035 y web 34bbcb7 sin cambios. V2 sólo idea futura. Enlace estable: [menú de prueba](https://testing.puntazo.pro/menu/29); la firma copiada directamente caduca a los cinco minutos.
+
+## Corte histórico V1 PDF · 18/10/2026, 16:21 UTC
 
 | Componente testing | Rama seleccionada | Runtime observado |
 |---|---|---|

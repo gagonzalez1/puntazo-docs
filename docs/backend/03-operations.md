@@ -7,7 +7,7 @@ parent: backend-review-index
 level: operations
 status: mixed
 authority: mixed
-summary: Operación objetivo histórica y anexo implementado de validación, storage y limpieza PDF V1 candidata.
+summary: Operación histórica y ampliación PDF de 30 MiB, esquema 0042 y aceptación aprobada en testing.
 diagram: true
 codeRefs: required
 ---
@@ -89,3 +89,19 @@ El circuito de testing usa API y frontend separados; `puntazo-preview` está ret
 - [Proxy multipart de testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/nginx/default.conf)
 
 - [Límite de entrada PDF en landing testing](https://github.com/gagonzalez1/puntazo-landing/blob/testing/nginx/default.conf.template)
+
+## Ampliación operativa · 30 MiB y esquema 0042 · 18/10/2026
+
+La fuente backend `64bb3fc901293791adcf7738c49d3bbf290c8a20` implementa 30 MiB por archivo PDF y 30 MiB + 64 KiB por multipart. El middleware exceptúa sólo el POST de documentos del menú; los proxies web/landing coordinan 31 MiB para esa ruta. JSON e imágenes mantienen sus límites. La configuración seleccionada para testing es `MEDIA_UPLOAD_GLOBAL_CONCURRENCY=2` y `MEDIA_UPLOAD_ACTOR_CONCURRENCY=2`, para conservar margen en la API de 768 MiB; ambos valores se verificaron efectivos en el proceso nuevo.
+
+El parser sigue stateless, estricto, sin red y con timeout de 3 segundos. Entrada y stream se acotan al tamaño PDF de 30 MiB; los otros caps permanecen: objeto 2 MiB, decodificación 32 MiB, imagen 64 MiB y 25 millones de píxeles, además de los límites existentes de objetos, xref y recursión. No se amplía el parser de páginas (1–30), el TTL firmado (300 segundos), la gracia de limpieza ni los permisos. El escaneo RGB válido de 30 MiB y la frontera + 1 byte pasaron; race, vet, vulnerabilidades alcanzables, OpenAPI y Docker también.
+
+Readiness requiere 0042. Se aplicó `0042_branch_pdf_30mib` sobre 0041 sin alterar SQL aplicado. Restore aislado y base de testing aprobaron upgrade y segundo pase, con agregados y fingerprints de menús preservados. El DOWN nuevo aborta ante cualquier documento mayor de 10 MiB: **no usar DOWN en live**. El rollback de aplicación conserva 0042 y `EXPECTED_SCHEMA_VERSION=0042`; no restaura automáticamente la base. El anexo anterior de 10 MiB/0041 queda como corte histórico de las 16 UTC.
+
+**Runtime API confirmado:** Coolify `zlohkesbgfevzpxzdg7skgsx` terminó 23:47:39 UTC del 18/10/2026 para API `64bb3fc`; esquema 0042/42 migraciones, readiness 200, healthy y cero reinicios. Límites efectivos 768 MiB/1 CPU y concurrencia global 2 / actor 2 verificados. Landing `6533196`, PR11 integrada, terminó 23:43:33 UTC con proxy 31 MiB; frontend `067dc68` integra PR69, tiene CI aprobada y terminó su despliegue a las 23:53:18 UTC. Pasaron 137 unidades, cinco PWA, build web y export Android JS; este último no acredita un dispositivo físico.
+
+**Aceptación live de 30 MiB aprobada:** carga exacta por UI y API, revisión PDF HTTP 200 con tamaño/hash esperado y descarte de los borradores sin cambiar la publicación. El exceso de un byte fue rechazado; los ocho negativos conservaron estado. El perfil con SW anterior actualizó su worker y abrió el PDF real sin HTML del SPA. [Estado observado](#/runtime-snapshot) registra las fuentes y los límites de la evidencia; producción no recibe esta entrega.
+
+- [Middleware exacto de cuerpos](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/middleware/request.go)
+- [Caps del parser](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/service/menu.go)
+- [Expansión y recuperación 0042](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/README.md)

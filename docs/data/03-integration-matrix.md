@@ -6,7 +6,7 @@ order: 30
 parent: data-current
 level: integration
 status: mixed
-summary: Servicios frontend y rutas Go conectados; diferencias entre implementación y configuración publicada.
+summary: Integración por ambiente y contrato de fuente PDF de 30 MiB con esquema 0042.
 diagram: true
 authority: mixed
 ---
@@ -80,3 +80,24 @@ La carga usa el storage privado existente. No se incrementa el límite de imáge
 - [Servicios frontend PDF](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/services/branchMenuService.ts)
 - [Rutas privadas reales](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/cmd/server/routes_merchant.go)
 - [Rutas públicas reales](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/cmd/server/routes_public.go)
+
+## Ampliación de integración PDF · 30 MiB · 18/10/2026
+
+La fuente backend verificada `64bb3fc901293791adcf7738c49d3bbf290c8a20`, en `closed-test-readiness`, sustituye el límite de 10 MiB de la tabla histórica anterior por 30 MiB. No cambia rutas, roles, If-Match ni publicación/borrador. El prefijo del dominio es `/api/v1`; el router Go registra `/v1`.
+
+| Capa | Contrato de la ampliación |
+|---|---|
+| POST de documentos por sucursal | Un archivo PDF válido de hasta 30 MiB, multipart hasta 30 MiB + 64 KiB; 1–30 páginas, sin cifrado |
+| Proxies web/landing coordinados | 31 MiB sólo en la ruta de carga de menú; no ampliar imágenes ni JSON |
+| Servicio/parser | Tres segundos y caps de decodificación/imagen conservados; conserva la publicación previa ante fallo de carga |
+| Persistencia/readiness | 0041 intacta; 0042 amplía sólo CHECK de tamaño; esquema esperado 0042 |
+| Recursos de testing | Concurrencia global 2 y por actor 2 verificadas en el proceso final de 768 MiB |
+
+Restore y migración live 0041→0042 aprobaron los dos pases, con agregados y fingerprints de menú preservados. El DOWN de 0042 aborta si hay documentos mayores de 10 MiB; no usar DOWN live. TTL de 300 segundos, consultas públicas sin cuenta y cleanup no cambian.
+
+**Runtime confirmado:** testing ejecuta `64bb3fc`/0042 con 42 migraciones, readiness 200 y concurrencia efectiva global 2 / actor 2 desde 23:47:39 UTC. Landing `6533196`/PR11 está desplegada desde 23:43:33 UTC con 31 MiB. Frontend `067dc68` integra PR69, con CI aprobada y despliegue terminado a las 23:53:18 UTC.
+
+**Aceptación live de 30 MiB aprobada:** carga exacta por UI y API, revisión PDF HTTP 200 con tamaño/hash esperado y descarte de los borradores sin cambiar la publicación. El exceso de un byte fue rechazado; los ocho negativos conservaron estado. El perfil con SW anterior actualizó su worker y abrió el PDF real sin HTML del SPA. [Estado observado](#/runtime-snapshot) registra las fuentes y los límites de la evidencia; producción no recibe esta entrega.
+
+- [Límites comunes de API](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/config/config.go)
+- [Middleware de la ruta exacta](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/middleware/request.go)

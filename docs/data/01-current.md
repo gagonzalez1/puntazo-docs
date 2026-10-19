@@ -6,7 +6,7 @@ order: 10
 parent: overview
 level: data
 status: mixed
-summary: Modelo histórico observado y ampliación candidata 0041 para borrador/publicación PDF por sucursal.
+summary: Modelo histórico y expansión implementada 0042 del CHECK PDF a 30 MiB, sin reescritura de documentos.
 diagram: true
 codeRefs: required
 authority: source_code
@@ -82,3 +82,16 @@ Publicación/retiro/descarte modifican punteros y versión bajo transacción. Lo
 
 - [DDL 0041 y triggers](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0041_branch_pdf_menus.up.sql)
 - [Lecturas, versiones y publicación](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu.go)
+
+## Ampliación del límite PDF · esquema 0042 · 18/10/2026
+
+La fuente `closed-test-readiness` verificada en backend `64bb3fc901293791adcf7738c49d3bbf290c8a20` conserva 0041 intacta y agrega `0042_branch_pdf_30mib`: sólo amplía `branch_menu_documents_byte_size_check` a 1–31.457.280 bytes (30 MiB). No agrega tablas ni cambia punteros, versiones, checksums, metadatos o datos de otros dominios. Las relaciones del DER y el resto de invariantes del anexo anterior siguen vigentes; sus cifras históricas de 0041/10 MiB no son el límite actual de la fuente.
+
+La migración restore y live de 0041 a 0042 aprobó ambos pases preservando agregados y fingerprints de menús; readiness y el valor esperado de esquema pasan a 0042. El DOWN aborta si hay metadatos mayores de 10 MiB, incluidos retirados. No ejecutar DOWN en live ni eliminar documentos para forzar una reversión: el rollback de aplicación conserva el esquema expandido.
+
+**Runtime API confirmado:** testing ejecuta `64bb3fc`, esquema 0042/42 migraciones y readiness 200 desde el despliegue terminado 23:47:39 UTC del 18/10/2026. Se preserva la publicación anterior y la evidencia del corte histórico.
+
+**Aceptación live de 30 MiB aprobada:** carga exacta por UI y API, revisión PDF HTTP 200 con tamaño/hash esperado y descarte de los borradores sin cambiar la publicación. El exceso de un byte fue rechazado; los ocho negativos conservaron estado. El perfil con SW anterior actualizó su worker y abrió el PDF real sin HTML del SPA. [Estado observado](#/runtime-snapshot) registra las fuentes y los límites de la evidencia; producción no recibe esta entrega.
+
+- [CHECK de tamaño expandido](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0042_branch_pdf_30mib.up.sql)
+- [Regresión de conservación](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu_integration_test.go)

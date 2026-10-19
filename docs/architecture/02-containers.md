@@ -65,6 +65,10 @@ El candidato incorpora publicación de PDF por sucursal sin agregar contenedores
 La migración `0041_branch_pdf_menus` amplía el esquema candidato 0040. Este apartado acredita código **desplegado y verificado en testing**: backend `c12c94da5c62fcaf062a0094109ed47fc2dedc90`, frontend `72cf2229f8f732d705a63641692aff26481d5047`. La promoción al propietario backend sigue abierta mediante [PR39](https://github.com/am-p/app-loyalty/pull/39); frontend [PR67](https://github.com/gonzalotev/app-fidelidad/pull/67) y [PR68](https://github.com/gonzalotev/app-fidelidad/pull/68) ya están integradas en `testing`. El circuito usa los repositorios separados; `puntazo-preview` está retirado. La corrección no publica producción. [Recorrido y límites V1](#/flow-branch-menu-pdf); V2 digital/IA permanece como idea futura.
 
 
+## Ampliación de PDF y PWA · 18/10/2026
+
+La ampliación mantiene los mismos contenedores: API de testing con esquema 0042 y máximo de archivo 30 MiB; entrada multipart de 31 MiB en web/landing sólo en la ruta PDF. La nueva migración amplía el CHECK y no altera 0041 ni los documentos. El SW de Expo deja pasar navegación de medios/API a la red; la apertura web usa un Blob validado del mismo origen para evitar el fallback de un SW anterior ya instalado. El origen de storage y la firma no se reescriben; las URL externas HTTPS conservan su navegación. [Estado y verificación](#/runtime-snapshot). Producción permanece fuera de esta entrega.
+
 ## Referencias de código
 
 - [Bootstrap API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/main.go)

@@ -55,6 +55,10 @@ La ruta `/menu/:branchId` está fuera del guard de pestañas autenticadas y cons
 
 Los permisos de la UI reflejan roles de propietario/administrador, pero el backend es quien los exige; los operadores no reciben borradores. [Flujo V1 y contrato](#/flow-branch-menu-pdf). V2 digital/IA no introduce editor, extracción ni dependencias en este candidato. Las pruebas web no acreditan instalación física de PWA ni QA en dispositivos Android/iOS.
 
+## Corrección de apertura PDF con service worker activo
+
+La ampliación a 30 MiB conserva Expo SDK 54 y el visor del dispositivo. El SW excluye el proxy de medios y `/api` del fallback de navegación; los documentos firmados no se precachean. Para un SW anterior ya activo, `signed-menu-pdf.mjs` usa un GET sin caché para URLs del mismo origen, limita el stream a 30 MiB, valida MIME y `%PDF-` y abre un Blob en una pestaña creada por el usuario. La liberación espera al cierre del visor; no se persiste el documento en almacenamiento del navegador. Las URLs HTTPS de storage externo mantienen navegación directa y no agregan una exigencia CORS. Native conserva WebBrowser/Linking. El estado de despliegue y la reproducción con perfil anterior se registran en [Estado observado](#/runtime-snapshot).
+
 ## Referencias de código
 
 - [Layout y guards](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/_layout.tsx)

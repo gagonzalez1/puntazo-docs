@@ -7,7 +7,7 @@ parent: backend-review-index
 level: api
 status: mixed
 authority: mixed
-summary: Contrato objetivo histórico y anexo verificado del candidato menú PDF V1, publicado en testing.
+summary: Contrato objetivo histórico y ampliación implementada PDF de 30 MiB; cierre runtime separado.
 diagram: true
 codeRefs: required
 ---
@@ -97,3 +97,16 @@ Las URLs firmadas duran hasta 300 segundos. Retirar impide firmas nuevas; las ya
 - [Rutas públicas](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/cmd/server/routes_public.go)
 - [Handler, validación de versión y códigos](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/handler/menu.go)
 - [OpenAPI implementado del candidato](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/openapi.yaml)
+
+## Ampliación implementada · PDF de 30 MiB · 18/10/2026
+
+La fuente `closed-test-readiness` verificada en backend `64bb3fc901293791adcf7738c49d3bbf290c8a20` amplía el contrato del anexo anterior: PDF de hasta **30 MiB (31.457.280 bytes)** y cuerpo multipart de hasta **30 MiB + 64 KiB (31.522.816 bytes)**. El límite se aplica exclusivamente al POST de `/v1/marcas/:brand_id/sucursales/:branch_id/menu/documentos`; los proxies coordinados de esa ruta permiten 31 MiB. Imágenes, JSON, otros métodos y rutas vecinas conservan sus límites. Páginas 1–30, cifrado, roles, If-Match, errores estables, estado inicial y TTL de hasta 300 segundos no cambian. El mensaje de 413 indica 30 MiB.
+
+La ampliación requiere el esquema `0042`, que expande el CHECK de tamaño de 0041 sin alterar esa migración aplicada ni los documentos existentes. Parser real y fronteras exacta/+1 byte, multipart y rutas vecinas pasaron las pruebas de fuente; el timeout continúa en tres segundos. Los límites de 10 MiB/0041 del anexo anterior corresponden al corte histórico de las 16 UTC, no al contrato actual de esta fuente.
+
+**Runtime API confirmado:** `64bb3fc` está desplegado en testing con esquema 0042/42 migraciones, readiness 200 y contenedor healthy sin reinicios. La migración 0041→0042 en restore y live preservó agregados y fingerprints de menús. El cierre de API fue 23:47:39 UTC del 18/10/2026; no acredita promoción productiva.
+
+**Aceptación live de 30 MiB aprobada:** carga exacta por UI y API, revisión PDF HTTP 200 con tamaño/hash esperado y descarte de los borradores sin cambiar la publicación. El exceso de un byte fue rechazado; los ocho negativos conservaron estado. El perfil con SW anterior actualizó su worker y abrió el PDF real sin HTML del SPA. [Estado observado](#/runtime-snapshot) registra las fuentes y los límites de la evidencia; producción no recibe esta entrega.
+
+- [Límites implementados](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/config/config.go)
+- [Contrato OpenAPI de la fuente](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/openapi.yaml)

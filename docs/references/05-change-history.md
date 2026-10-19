@@ -29,6 +29,13 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-18 — Ampliación a 30 MiB y apertura con PWA activa
+
+- Solicitud explícita: ampliar el PDF a 30 MB y corregir «Esta pantalla no existe» al abrirlo.
+- Incidencia reproducida con SW real activo: la descarga era un PDF válido, mientras la navegación recibía el shell HTML. Se excluyen medios/API del fallback y se abre un Blob validado para firmas del mismo origen; HTTPS externo y native conservan sus visores.
+- Backend 30 MiB, multipart +64 KiB y proxies 31 MiB. Migración 0042 amplía sólo el CHECK; 0041 y los punteros/documentos previos se preservan. Respaldo/restauración y migración doble aprobados; concurrencia efectiva 2/2 dentro de 768 MiB de API.
+- Backend PR39 sigue propuesto al propietario; frontend PR69 y landing PR11 integradas en testing. [Fuentes, despliegue y aceptación final](#/runtime-snapshot) conservan los límites de evidencia. V2 futura y producción sin cambios.
+
 ### 2026-10-18 — Menú PDF V1 implementado y verificado en testing
 
 - Ampliación de [PR12 documental](https://github.com/gagonzalez1/puntazo-docs/pull/12); portal aún sin publicar.

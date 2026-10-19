@@ -7,7 +7,7 @@ parent: backend-review-index
 level: data
 status: mixed
 authority: mixed
-summary: Diseño físico propuesto y anexo implementado de esquema 0041 de testing para PDF por sucursal.
+summary: Diseño físico histórico y expansión implementada 0042 del límite PDF a 30 MiB.
 diagram: true
 codeRefs: required
 ---
@@ -97,3 +97,18 @@ Los triggers de baja efectiva de marca/sucursal desvinculan menús e incrementan
 - [DDL y triggers exactos](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0041_branch_pdf_menus.up.sql)
 - [Locks, versiones y compensación](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu.go)
 - [Regresiones de upgrade y concurrencia](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu_integration_test.go)
+
+## Expansión implementada · esquema 0042 · 18/10/2026
+
+Backend `64bb3fc901293791adcf7738c49d3bbf290c8a20`, rama `closed-test-readiness`, añade `0042_branch_pdf_30mib`. Reemplaza únicamente `branch_menu_documents_byte_size_check` por `byte_size BETWEEN 1 AND 31457280`. La migración 0041 se conserva byte a byte; no crea más tablas ni reescribe tamaños, checksums, estados, fechas o punteros. Las FKs de tenant/sucursal, versiones, 1–30 páginas y cola de limpieza permanecen iguales. El anexo 0041 anterior conserva el corte histórico previo.
+
+Readiness y `EXPECTED_SCHEMA_VERSION` requieren `0042`. El upgrade desde 0041 y su segundo pase, tanto sobre restore aislado como sobre la base de testing, preservaron agregados y fingerprints de los menús. Las pruebas cubren tamaño positivo, aceptación de 30 MiB, rechazo de 30 MiB + 1 y conservación de la publicación/versiones.
+
+El DOWN de 0042 comprueba primero que no exista ningún metadato `byte_size > 10485760`, incluso si el documento está retirado; en ese caso aborta, sin borrar o truncar. **No ejecutar DOWN en live.** El rollback de aplicación conserva 0042 y alinea el esquema esperado del binario anterior; restaurar datos es una operación distinta.
+
+**Runtime API confirmado:** el proceso `64bb3fc` de testing atiende con esquema 0042, 42 migraciones y readiness 200; el despliegue terminó 23:47:39 UTC del 18/10/2026. La base migrada y el esquema requerido del proceso coinciden.
+
+**Aceptación live de 30 MiB aprobada:** carga exacta por UI y API, revisión PDF HTTP 200 con tamaño/hash esperado y descarte de los borradores sin cambiar la publicación. El exceso de un byte fue rechazado; los ocho negativos conservaron estado. El perfil con SW anterior actualizó su worker y abrió el PDF real sin HTML del SPA. [Estado observado](#/runtime-snapshot) registra las fuentes y los límites de la evidencia; producción no recibe esta entrega.
+
+- [Expansión CHECK 0042](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0042_branch_pdf_30mib.up.sql)
+- [Guardia de DOWN](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0042_branch_pdf_30mib.down.sql)

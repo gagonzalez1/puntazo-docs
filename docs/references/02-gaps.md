@@ -7,7 +7,7 @@ parent: documented-commits
 level: reference
 status: gap
 authority: mixed
-summary: Pendientes observados de publicación, configuración y reconciliación del contrato objetivo.
+summary: Brechas históricas y ampliación PDF de 30 MiB implementada y verificada en testing.
 diagram: false
 ---
 
@@ -58,3 +58,22 @@ Backend `c12c94da5c62fcaf062a0094109ed47fc2dedc90`, frontend `72cf2229f8f732d705
 
 - [Persistencia PDF](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu.go)
 - [Editor y estados](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/components/CommercialBranchMenuEditor.tsx)
+
+## Ampliación PDF de 30 MiB · estado de fuente del 18/10/2026
+
+El corte anterior de las 16 UTC se conserva como histórico: no acredita el nuevo límite ni descarta la incidencia `/media` reportada después. Backend `64bb3fc901293791adcf7738c49d3bbf290c8a20`, rama `closed-test-readiness`, implementa 30 MiB de PDF y 30 MiB + 64 KiB de multipart; proxies coordinados 31 MiB. Conserva páginas, roles, ETags, TTL, parser de tres segundos y caps de decodificación. `0041` permanece intacta; `0042` amplía sólo el CHECK y exige readiness 0042. No usar DOWN live: la reversión nueva aborta si existen documentos mayores de 10 MiB.
+
+| Área | Evidencia disponible | Pendiente de esta ampliación |
+|---|---|---|
+| Código backend 30 MiB | Fronteras válida/exceso, rutas vecinas, race, vet, vulnerabilidades alcanzables, OpenAPI y Docker aprobados; PR39 continúa abierta | Integración del propietario y promoción productiva separadas |
+| Datos 0042 | Restore y migración live 0041→0042, ambos pases aprobados; agregados y fingerprints de menús preservados | Proceso/readiness 0042 ya confirmados; aceptación live del nuevo tamaño aprobada |
+| Recursos testing | Concurrencia global 2 / actor 2 y 768 MiB verificadas | Conservar margen al evaluar cargas concurrentes |
+| Apertura `/media` | Incidencia de entrega frontend/Service Worker coordinada | Corrección frontend verificada con SW anterior actualizado, PDF real y ausencia de HTML del SPA; no se atribuye al límite Go |
+| Plataformas | Se conserva la QA histórica del recorrido web pequeño | Aceptación live web de 30 MiB aprobada; QA física/PWA instalada no acreditada |
+
+**Runtime API confirmado:** `64bb3fc`/0042, 42 migraciones, readiness 200, healthy y cero reinicios, 768 MiB/1 CPU y concurrencia efectiva global 2 / actor 2. Coolify finalizó 23:47:39 UTC del 18/10/2026. Landing `6533196`/PR11 terminó 23:43:33 UTC; frontend `067dc68` integra PR69, con CI aprobada y despliegue terminado a las 23:53:18 UTC.
+
+**Aceptación live de 30 MiB aprobada:** carga exacta por UI y API, revisión PDF HTTP 200 con tamaño/hash esperado y descarte de los borradores sin cambiar la publicación. El exceso de un byte fue rechazado; los ocho negativos conservaron estado. El perfil con SW anterior actualizó su worker y abrió el PDF real sin HTML del SPA. [Estado observado](#/runtime-snapshot) registra las fuentes y los límites de la evidencia; producción no recibe esta entrega.
+
+- [Contrato implementado de fuente](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/openapi.yaml)
+- [Expansión compatible 0042](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0042_branch_pdf_30mib.up.sql)

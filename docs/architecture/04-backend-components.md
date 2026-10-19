@@ -6,7 +6,7 @@ order: 40
 parent: c4-containers
 level: component
 status: mixed
-summary: API por dominios y workers; candidato PDF V1 con validación, estado por sucursal y limpieza persistida.
+summary: Componentes backend y ampliación PDF de 30 MiB con esquema 0042, conservando parser y workers.
 diagram: true
 codeRefs: required
 authority: source_code
@@ -77,3 +77,18 @@ La consulta pública nunca selecciona el borrador ni datos personales. Las URLs 
 - [Handler y errores PDF](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/handler/menu.go)
 - [Parser y coordinación de storage](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/service/menu.go)
 - [Transacciones y limpieza PDF](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu.go)
+
+## Ampliación de componentes PDF · 30 MiB · 18/10/2026
+
+La fuente backend `64bb3fc901293791adcf7738c49d3bbf290c8a20`, rama `closed-test-readiness`, conserva handler → service → repository y amplía sólo el límite PDF a 30 MiB. Configuración/middleware y handler comparten ese máximo y un cuerpo multipart de 30 MiB + 64 KiB para el POST exacto de documentos; los proxies coordinan 31 MiB. Los límites de JSON e imágenes no cambian. El anexo anterior de 10 MiB/0041 conserva su corte histórico.
+
+El servicio mantiene parser real de tres segundos, sin red, 1–30 páginas y rechazo de cifrado. Caps de objeto 2 MiB, decodificación 32 MiB, imagen 64 MiB/25 millones de píxeles, xref y recursión siguen iguales; sólo entrada/stream siguen el nuevo máximo de archivo. Versiones, permisos, firma bajo locks, TTL 300 segundos y worker de limpieza conservan sus invariantes. Testing ejecuta concurrencia efectiva global 2 / actor 2 en la API de 768 MiB.
+
+`cmd/migrate` aplica 0042 sobre 0041 intacta para ampliar el CHECK de tamaño; readiness requiere 0042. Restore y migración live con segundo pase preservaron agregados y fingerprints de menú. El DOWN aborta con documentos mayores de 10 MiB: conservar 0042 en rollback de aplicación, sin DOWN live. No añade proveedores, componentes V2 ni otra API.
+
+**Runtime API confirmado:** `64bb3fc` está desplegado en testing desde 23:47:39 UTC del 18/10/2026, con 0042/42 migraciones, readiness 200, healthy y cero reinicios. Se verificaron 768 MiB/1 CPU y concurrencia efectiva global 2 / actor 2.
+
+**Aceptación live de 30 MiB aprobada:** carga exacta por UI y API, revisión PDF HTTP 200 con tamaño/hash esperado y descarte de los borradores sin cambiar la publicación. El exceso de un byte fue rechazado; los ocho negativos conservaron estado. El perfil con SW anterior actualizó su worker y abrió el PDF real sin HTML del SPA. [Estado observado](#/runtime-snapshot) registra las fuentes y los límites de la evidencia; producción no recibe esta entrega.
+
+- [Configuración y límites](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/config/config.go)
+- [Migración CHECK 0042](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0042_branch_pdf_30mib.up.sql)
