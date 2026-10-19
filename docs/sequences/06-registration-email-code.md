@@ -114,3 +114,9 @@ El código pertenece a `am-p/app-loyalty` y `gonzalotev/app-fidelidad`; el fork 
 ### Actualización concurrente posterior
 
 La rama frontend `testing` avanzó mediante PR82 a `f209f639113a2a11c9c150dfce7b8d8b5a712fbd`, con precios de onboarding y restricciones Android; se revisó que conserva el flujo OTP y se observó ese runtime saludable durante la aceptación del correo real. El commit `c7b13f3` y su bundle anteriores conservan el carácter de evidencia de la publicación inicial de este cambio.
+
+### Identidad visual del correo
+
+La plantilla del código incorpora el logo real de Puntazo y la imagen existente de Mr. Puntazo sonriente y saludando. Ambas imágenes viajan como partes PNG inline con Content-ID dentro de un mensaje multipart/related, sin depender de descargas externas para mostrarse. Se conserva el texto alternativo y la versión de texto plano, con el código de seis dígitos y su vencimiento de diez minutos. La huella, el envío y la confirmación del código mantienen el contrato anterior.
+
+Fuente propuesta al propietario en PR40: `69609d6`; integración testing `8f70ffb`. Pruebas de plantilla, integridad de los PNG, referencias CID y composición MIME aprobadas; vista previa HTML revisada. Esta presentación se publicó en testing el 19/10/2026 a las 17:18:20 Argentina, despliegue `mc17i9bjaowxhggm2nmcxquj`, API `8f70ffb` y esquema `0043` sin cambios. Se verificaron versión pública y readiness 200, SMTP y bandera preservados. El envío real de aceptación anterior corresponde a la plantilla previa; la presentación nueva se verificó mediante MIME y vista previa HTML, sin enviar otro mensaje real.
