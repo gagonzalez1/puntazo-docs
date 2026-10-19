@@ -13,6 +13,18 @@ diagram: false
 
 # Estado observado
 
+## Opciones del local desde el carrusel · 19/10/2026 09:27–09:29 Argentina (12:27–12:29 UTC)
+
+[PR76](https://github.com/gonzalotev/app-fidelidad/pull/76), fuente frontend `4461c4d5a593809cd2988ffb9cd621d4883a2afc` sobre la base `testing` `ed9b9fa`, se integró en la rama seleccionada fresca `testing` como **`bbbe9c891768aa0e7b65f0e5bafdb90721d42336`**. Modifica sólo la pantalla del mapa: tarjeta → resumen de la sucursal con Mostrar en mapa y Conoce más → detalle → Volver al local. Cerrar, Mostrar en mapa, contador y favoritos limpian el filtro individual. No cambia API, esquema, datos ni visor PDF.
+
+Coolify `oamkh19bdds8wpgj3kzbkxkv` terminó a las **12:27:38 UTC**, fuente `bbbe9c891768aa0e7b65f0e5bafdb90721d42336`, imagen `sha256:770cfcf270c92765c4709c7fcd41a4ab6b8e9fde7d0a4dbe4c8e348469f65b99`; healthy, cero reinicios, 384 MiB/0,5 CPU y redes conservadas. API testing `64bb3fc`/0042, web productiva `34bbcb7` y API productiva `dbeb03c`/0035 permanecen iguales y saludables. CI [39251467725](https://github.com/gonzalotev/app-fidelidad/actions/runs/39251467725) y workflow de despliegue [39251924246](https://github.com/gonzalotev/app-fidelidad/actions/runs/39251924246) aprobados.
+
+Validación local: 153 unidades, typecheck, Doctor 18/18, build web con API fixture, export JS Android y **seis casos browser existentes en 12,34 s**, sin fallos, flaky ni skips. El primer build se detuvo por configuración pública local ausente y se repitió con configuración explícita tras otro gate limpio, sin cambio de producto. Entry público `f80090c6d650879dab17ed22339079c9`, SW y reader PDF coinciden con el contenedor. La primera recarga conservó el bundle anterior; la segunda aplicó el nuevo, observado en DOM antes de la QA.
+
+La QA CUA real, sin mocks y con sesión existente, aprobó a las **12:29:17 UTC** en el navegador integrado (capturas de 573×730): tocar Amalia sin búsqueda abrió sólo su resumen; Conoce más abrió detalle con Ver menú, y Volver al local recuperó el resumen. Mostrar en mapa cerró/centró; el contador abrió las 37 tiendas; buscar Amalia dio un resultado; Enter abrió el resumen y volver al mapa conservó la búsqueda. La vista solicitada quedó abierta al finalizar. No hubo escrituras de datos/favoritos/auth/edad ni nueva QA de lectura PDF en esta continuación. Export JS Android no acredita APK/AAB distribuido ni dispositivo físico.
+
+Evidencia: `artifacts/map-card-local-view-20261019/scope.md`, `context-deploy.json`, `validation.json`, `browser-results.json`, `runtime-after.json`, `public-assets.json`, `live-qa.json` y `selected-store-final.png`. Portal sin publicar.
+
 ## Edad y estabilidad de sesión · corte del 19/10/2026 01:02–01:51 Argentina (04:02–04:51 UTC)
 
 [PR73](https://github.com/gonzalotev/app-fidelidad/pull/73) se integró en frontend testing `ae706dda013ed43881be623ed9236e5602c93d01`; Coolify `656lpyunnnsvbjp883dfnlml` terminó a las **04:02:51 UTC**, imagen `sha256:156ea6603170074ae654956219b8b5966e47a6a45d441a78275a96da670d3bb4`, healthy/cero reinicios y 384 MiB/0,5 CPU. API sigue en `64bb3fc901293791adcf7738c49d3bbf290c8a20`/0042; producción web `34bbcb7` y API `dbeb03c`/0035 permanecen sin cambios. No se agregó endpoint ni migración.

@@ -29,6 +29,12 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-19 — Opciones del local desde la tarjeta del mapa
+
+- Aclaración del usuario: la tarjeta del carrusel debe abrir el resumen existente con Mostrar en mapa y Conoce más. PR76, fuente `4461c4d`, integrada en testing `bbbe9c8`, limita el resumen al local seleccionado y conserva el regreso desde el detalle; contador/favoritos/cierre limpian ese filtro.
+- Actualizados sólo flujo 25 y corte de runtime; se conserva como histórica la QA CABA donde la tarjeta centraba el punto. No cambian API, esquema, datos, C4 ni visor PDF.
+- 153 unidades, typecheck, Doctor 18/18, build web, export JS Android y seis browser existentes aprobados. CI y despliegue aprobados a las 12:27:38 UTC; assets públicos coincidentes con el contenedor y bundle nuevo comprobado tras actualizar SW. QA real aprobada: resumen individual desde tarjeta, detalle/regreso, Mostrar en mapa, contador 37, búsqueda y Enter, sin escrituras ni nueva lectura PDF. Sin binario nativo distribuido ni publicación del portal.
+
 ### 2026-10-19 — Confirmación explícita de edad y sesión compartida entre pestañas
 
 - PR73 integra en testing `ae706dda` el flujo de edad que faltaba: no se montan lecturas privadas/contextos/SSE con flag false; cliente/comercio restaurados sin onboarding esperan y `/menu/*` permanece público. Contrato backend existente, sin nueva API, migración ni confirmación administrativa.

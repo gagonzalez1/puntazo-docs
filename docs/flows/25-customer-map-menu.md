@@ -41,6 +41,14 @@ La pantalla separa carga, error con reintento, listado vacío y búsqueda sin co
 
 Inventario agregado autenticado inicial: 37 sucursales elegibles, 3 con coordenadas completas y 34 sin ellas. Corte posterior de las 22:09 UTC: 37 elegibles, 13 con coordenadas válidas y 24 pendientes; los datos cambiaron durante la comprobación. No se crean sucursales ni se asignan posiciones supuestas para llenar el mapa. La verificación del despliegue y sus límites se registra en [Estado observado](#/runtime-snapshot).
 
+## Tarjeta del carrusel → opciones del local · PR76 desplegada
+
+Aclaración del usuario del **19/10/2026**: tocar la tarjeta del carrusel bajo el mapa debe abrir la vista existente del local, con **Mostrar en mapa** y **Conoce más**. [PR76](https://github.com/gonzalotev/app-fidelidad/pull/76), fuente `4461c4d5a593809cd2988ffb9cd621d4883a2afc`, está integrada en `testing` `bbbe9c891768aa0e7b65f0e5bafdb90721d42336` y desplegada/verificada el 19/10 a las 09:27–09:29 Argentina (12:27–12:29 UTC).
+
+La vista muestra sólo la sucursal tocada, también cuando tiene coordenadas. Conoce más abre su detalle y Volver al local regresa a las opciones de esa misma sucursal; Ver menú continúa disponible en el detalle. Mostrar en mapa cierra la vista y centra el punto. Cerrar o abrir el contador/listado completo o favoritos limpia la selección de vista, para no conservar el filtro de un local al cambiar de recorrido. Los locales sin coordenadas conservan el resumen con la acción de mapa deshabilitada.
+
+Sólo cambia la interacción de la pantalla; no cambia API, datos, permisos, favoritos ni visor PDF. El párrafo de QA CABA siguiente conserva el comportamiento histórico anterior, cuando la tarjeta sólo centraba el punto. La QA real comprobó tarjeta sin búsqueda, resumen individual, detalle/regreso, Mostrar en mapa, contador con 37 locales, búsqueda Amalia con un resultado y apertura con Enter; volver al mapa conservó la búsqueda. No repitió la lectura PDF ni modificó favoritos/datos. [Despliegue y alcance de validación](#/runtime-snapshot).
+
 ## Fixtures CABA encontrables en el mapa · 19/10/2026
 
 Por solicitud explícita del usuario, a las 03:33 UTC se actualizaron nombres de tres marcas/sucursales de testing (versión final 2) y sus domicilios/coordenadas para poder buscar los PDFs cargados previamente. Son registros QA con sufijo **- TESTING**, sin acreditar afiliación de los restaurantes. No hubo nuevo código, esquema ni despliegue: frontend `9074aa57` y API `64bb3fc`/0042. El inventario siguió en 37 sucursales elegibles; las que tienen coordenadas pasaron de 13 a 16.
