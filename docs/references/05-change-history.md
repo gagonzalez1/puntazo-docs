@@ -29,6 +29,14 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-19 — Nombres y ubicaciones de los fixtures CABA en el mapa
+
+- Solicitud explícita de añadir nombres/ubicaciones a los tres registros QA ya cargados. A las 03:33:14 UTC se actualizaron tres marcas y tres sucursales con sufijo - TESTING, domicilios y puntos aproximados Georef corroborados por USIG. Piegari Carnes corresponde a Posadas 1089; no se usa la dirección Ristorante 1042.
+- Backup y restauración aislada aprobados; snapshot/rollback cifrados. Marcas/sucursales en v2 y reejecución sin escrituras; estados de menú v3, documentos/hashes y publicación original de sucursal 29/v12 preservados. Continúan 37 tiendas elegibles, 16 con coordenadas (13 antes).
+- API y CUA real aprobaron búsquedas, marcador/centrado, listado → ficha → menú y Volver para las tres cartas. Actualizados flujos mapa/PDF y nuevo suplemento de runtime; corte anterior del seed sin nombres/coordenadas preservado íntegro.
+- Sin nuevo código, build, despliegue ni migraciones: frontend `9074aa57` y API `64bb3fc`/0042. No nueva subida comercial, QA nativa física ni publicación del portal. [Evidencia y alcance](#/runtime-snapshot).
+
+
 ### 2026-10-19 — Dataset de cartas CABA para QA de consulta pública
 
 - Solicitud explícita: descargar tres PDFs y cargarlos por base de datos. Se publicaron fixtures Amalia, Piegari y El Arte de la Pizza en sucursales sintéticas 1/2/37, con nombres PRUEBA; catálogo y menú previo de sucursal 29 preservados. Sin cambio de código ni nuevo despliegue: frontend `9074aa57` y API `64bb3fc`/0042.

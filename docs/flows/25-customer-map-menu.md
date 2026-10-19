@@ -41,6 +41,22 @@ La pantalla separa carga, error con reintento, listado vacío y búsqueda sin co
 
 Inventario agregado autenticado inicial: 37 sucursales elegibles, 3 con coordenadas completas y 34 sin ellas. Corte posterior de las 22:09 UTC: 37 elegibles, 13 con coordenadas válidas y 24 pendientes; los datos cambiaron durante la comprobación. No se crean sucursales ni se asignan posiciones supuestas para llenar el mapa. La verificación del despliegue y sus límites se registra en [Estado observado](#/runtime-snapshot).
 
+## Fixtures CABA encontrables en el mapa · 19/10/2026
+
+Por solicitud explícita del usuario, a las 03:33 UTC se actualizaron nombres de tres marcas/sucursales de testing (versión final 2) y sus domicilios/coordenadas para poder buscar los PDFs cargados previamente. Son registros QA con sufijo **- TESTING**, sin acreditar afiliación de los restaurantes. No hubo nuevo código, esquema ni despliegue: frontend `9074aa57` y API `64bb3fc`/0042. El inventario siguió en 37 sucursales elegibles; las que tienen coordenadas pasaron de 13 a 16.
+
+| Sucursal / marca | Nombre de prueba | Domicilio en CABA | Latitud / longitud almacenadas (redondeadas a seis decimales) |
+|---|---|---|---|
+| 1 / 1 | Amalia Restaurante & Cava - TESTING | Humberto 1° 299 | -34.620674 / -58.369974 |
+| 2 / 2 | Piegari Carnes - TESTING | Posadas 1089 | -34.590101 / -58.382582 |
+| 37 / 36 | El Arte de la Pizza - TESTING | Av. Donato Álvarez 587 | -34.618802 / -58.457173 |
+
+Los nombres/domicilios se contrastaron con [Amalia](https://amaliarestaurante.com.ar/), [contacto oficial de Piegari](https://www.piegari.com.ar/contacto) y [El Arte de la Pizza](https://elartedelapizza.com.ar/). Piegari Carnes corresponde a Posadas 1089; Posadas 1042 corresponde a Ristorante. Esto conserva la identidad CARNES del PDF sin atribuirle otra carta.
+
+Las coordenadas de base son las de **Georef Argentina guardadas en `plan.json` y `selected_for_db`**, en WGS84, aproximadas por dirección normalizada. USIG CABA se usó como corroboración independiente a 11,77 m, 1,55 m y 6,41 m respectivamente; su `proposed_point` no es el punto escrito en la base. En Piegari, dos respuestas Georef separadas 40,3 m se resolvieron a favor de la primera, corroborada por USIG a 1,55 m. No se acredita una entrada comercial relevada ni precisión de puerta de los puntos almacenados.
+
+La QA real autenticada de escritorio (1280×720) buscó Amalia, Piegari y El Arte: cada una dio un resultado, marcador y centrado correctos. El recorrido comprobado fue **Mapa → buscar → cantidad de tiendas encontradas → Conocé más → Ver menú → Volver**, con `/menu/1`, `/menu/2` y `/menu/37` mostrando su primera página y 8/9/8 contenedores. La tarjeta situada bajo el mapa centra el punto; el botón de cantidad abre el listado para entrar en la ficha. API también aprobó búsqueda por nombre/dirección y `has_menu`. [Evidencia y preservación de documentos](#/runtime-snapshot).
+
 ## Corte PR70 · búsqueda y visor interno del 18/10/2026
 
 Implementación autorizada el **18/10/2026**, [PR70 frontend](https://github.com/gonzalotev/app-fidelidad/pull/70), integrada y desplegada en `testing` como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`. La aceptación del recorrido real se registra por separado en [Estado observado](#/runtime-snapshot).

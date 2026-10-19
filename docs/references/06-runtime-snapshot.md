@@ -13,6 +13,21 @@ diagram: false
 
 # Estado observado
 
+## Suplemento mapa CABA · 19/10/2026 00:33–00:36 Argentina (03:33–03:36 UTC)
+
+Operación de datos autorizada para que las tres cartas QA pudieran encontrarse por nombre y ubicación. Confirmada a las **03:33:14 UTC**, con backup cifrado/descifrado/checksum y restauración aislada aprobados, snapshot previo y rollback cifrados. Se actualizaron tres marcas y tres sucursales (1/1, 2/2 y 37/36), con nombres **Amalia Restaurante & Cava - TESTING**, **Piegari Carnes - TESTING** y **El Arte de la Pizza - TESTING**, domicilios oficiales y coordenadas aproximadas. Las tres marcas y sucursales quedaron en versión 2; se preservaron los demás campos/registros y conteos. La reejecución confirmó ALREADY_APPLIED, sin nuevas escrituras. `operation-evidence.json` registra versiones de entrada 1; `idempotence-report.json` confirma las finales 2. El inventario elegible sigue en 37, ahora 16 con coordenadas (antes 13).
+
+Los puntos almacenados son los Georef del plan congelado, registrados también en `selected_for_db`; los valores USIG de `proposed_point` son corroboración y no sustituyen la base. USIG queda a 11,77/1,55/6,41 m de los puntos Georef. En Posadas 1089 se resolvió la ambigüedad de dos candidatos separados 40,3 m a favor del primero; sigue siendo una localización aproximada por altura, sin acreditar entrada relevada. El nombre Piegari Carnes y el número 1089 corresponden al contacto oficial y al PDF CARNES conservado. [Tabla de nombres, fuentes y coordenadas](#/flow-customer-map-menu).
+
+Los tres estados de menú permanecieron en versión 3 con los mismos document_id/punteros, bytes y SHA; la sucursal 29 siguió en versión 12 con su publicación `b4220335-ba40-436c-9e8f-bfa759104ae3`. La QA API de las **03:33:19 UTC** aprobó búsqueda por nombre y dirección, `has_menu`, hash/tamaño original de cada PDF y preservación de menú 29; logout del cliente QA devolvió 204.
+
+La QA CUA de las **03:36:40 UTC**, con login normal del cliente, API real y sin interceptar respuestas ni inyectar sesión, comprobó en escritorio 1280×720 los tres nombres: un resultado por búsqueda, marcador y centrado correctos. Desde el botón de cantidad se abrió el listado, luego Conocé más → Ver menú → Volver. `/menu/1`, `/menu/2` y `/menu/37` mostraron la primera página del PDF y 8/9/8 contenedores, con un único Volver. Tocar directamente la tarjeta bajo el mapa centra el punto; la ficha se alcanza desde el listado. La sesión QA cerró por UI y se cerró la pestaña temporal. Esta operación no repite subida por el editor/multipart ni acredita QA física Android/iOS.
+
+No hubo nuevo build o despliegue del producto: frontend testing `9074aa57fe84d8f0ec03d50898d532d4857ce4c3` y API `64bb3fc901293791adcf7738c49d3bbf290c8a20`/0042 permanecen como en los cortes previos. No cambia esquema, contrato PDF, límites ni producción. Son fixtures con nombres de prueba, sin afiliación comercial confirmada. La operación posterior de catálogo no altera la verdad histórica del seed de las 03:18 UTC, que no había cambiado esos campos.
+
+Evidencia: `artifacts/menu-caba-map-20261019/operation-evidence.json`, `api-qa.json`, `ui-qa.json`, `review.json`, `idempotence-report.json`, `plan.json` y `location-sources.json`. El material fuente diferencia las coordenadas escritas de su corroboración USIG. Esta actualización documental no ejecuta SQL ni modifica infraestructura.
+
+
 ## Suplemento QA CABA · 19/10/2026 00:18–00:21 Argentina (03:18–03:21 UTC)
 
 Datos de prueba incorporados por instrucción explícita del usuario de descargar PDFs y cargarlos por base de datos. **No hubo nuevo despliegue**: frontend testing `9074aa57fe84d8f0ec03d50898d532d4857ce4c3` y API `64bb3fc901293791adcf7738c49d3bbf290c8a20`/0042 siguen siendo las fuentes del corte anterior. El corte de verificación del visor de las 03:04 UTC conserva abajo su evidencia independiente.

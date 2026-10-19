@@ -108,6 +108,14 @@ Los documentos públicos exponen nombre saneado, MIME, tamaño, cantidad de pág
 
 El candidato backend depende del trabajo de mapa 0036–0040 todavía propuesto al propietario: el main oficial observado termina en 0035 y testing requiere 0042 para la ampliación de tamaño de esta entrega. El trabajo separado de turnos con otras migraciones 0036–0038 debe conciliarse antes de su integración. `puntazo-preview` está retirado.
 
+## Nombres y ubicaciones del dataset · actualización del 19/10/2026 03:33 UTC
+
+Una segunda operación autorizada añadió nombres **- TESTING**, domicilios y coordenadas aproximadas a los tres registros QA existentes, para [encontrarlos en el mapa](#/flow-customer-map-menu). Los destinos 1/1, 2/2 y 37/36 se presentan ahora como Amalia Restaurante & Cava, Piegari Carnes y El Arte de la Pizza, conservando su carácter de prueba y sin inferir afiliación. El sitio oficial distingue Piegari Carnes (Posadas 1089) de Ristorante (1042); se conservó el PDF CARNES previamente cargado.
+
+Se modificaron únicamente los datos de catálogo seleccionados y sus versiones (marcas/sucursales en 2); los tres estados de menú siguieron en versión 3, con document_id, publicación, bytes y SHA intactos. La sucursal 29 conservó versión 12 y su publicación original. Búsqueda autenticada por nombre/dirección, marcador/centrado, ficha y lectura de la primera página desde el mapa aprobaron contra testing real; no se ejercitó una nueva carga comercial ni QA nativa física.
+
+El corte inicial siguiente conserva lo observado a las 03:18–03:21 UTC, cuando se cargaron los PDFs sin tocar nombres ni coordenadas; esta actualización posterior no reescribe esa evidencia. [Suplemento de operación y QA](#/runtime-snapshot).
+
 ## Dataset QA de cartas CABA · 19/10/2026
 
 Por instrucción explícita de descargar PDFs y cargarlos por base de datos se incorporaron tres cartas públicas como **fixtures de testing**, sin cambiar nombres, domicilios ni coordenadas del catálogo y sin atribuir afiliación con Puntazo. Sus precios/contenidos pueden ser históricos; Amalia identifica marzo de 2024. Frontend `9074aa57fe84d8f0ec03d50898d532d4857ce4c3` y API `64bb3fc901293791adcf7738c49d3bbf290c8a20`/0042 permanecen desplegados, sin release nuevo.
