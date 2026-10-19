@@ -81,6 +81,18 @@ La carga usa el storage privado existente. No se incrementa el límite de imáge
 - [Rutas privadas reales](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/cmd/server/routes_merchant.go)
 - [Rutas públicas reales](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/cmd/server/routes_public.go)
 
+## Búsqueda y lectura interna · testing PR70
+
+Implementación autorizada el **18/10/2026**, [PR70 frontend](https://github.com/gonzalotev/app-fidelidad/pull/70), integrada y desplegada en `testing` como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`. La aceptación del recorrido real se registra por separado en [Estado observado](#/runtime-snapshot).
+
+| Pantalla/acción | Integración de testing | Límite |
+|---|---|---|
+| Búsqueda del mapa | GET existente del inventario completo y filtro local normalizado | Marca, sucursal, dirección, localidad y provincia; mapa/lista consistentes |
+| Vista previa y enlace público | Misma consulta privada/pública y URL firmada; renderer PDF.js local | iframe web / WebView Android; firma del mismo origen |
+| Recargar / abrir aparte | Refetch del enlace / apertura explícita existente | HTTPS externo conserva navegación directa; sin requisito CORS nuevo |
+
+No cambia contrato API, esquema ni migraciones; conserva 30 MiB, 1–30 páginas, permisos y TTL. Configuración Android y alcance de las pruebas en [Menú PDF V1](#/flow-branch-menu-pdf).
+
 ## Ampliación de integración PDF · 30 MiB · 18/10/2026
 
 La fuente backend verificada `64bb3fc901293791adcf7738c49d3bbf290c8a20`, en `closed-test-readiness`, sustituye el límite de 10 MiB de la tabla histórica anterior por 30 MiB. No cambia rutas, roles, If-Match ni publicación/borrador. El prefijo del dominio es `/api/v1`; el router Go registra `/v1`.

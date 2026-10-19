@@ -69,6 +69,10 @@ La migración `0041_branch_pdf_menus` amplía el esquema candidato 0040. Este ap
 
 La ampliación mantiene los mismos contenedores: API de testing con esquema 0042 y máximo de archivo 30 MiB; entrada multipart de 31 MiB en web/landing sólo en la ruta PDF. La nueva migración amplía el CHECK y no altera 0041 ni los documentos. El SW de Expo deja pasar navegación de medios/API a la red; la apertura web usa un Blob validado del mismo origen para evitar el fallback de un SW anterior ya instalado. El origen de storage y la firma no se reescriben; las URL externas HTTPS conservan su navegación. [Estado y verificación](#/runtime-snapshot). Producción permanece fuera de esta entrega.
 
+## Renderer PDF interno · testing PR70
+
+La [implementación de testing](#/flow-branch-menu-pdf) sirve PDF.js y sus recursos desde el contenedor web existente, sin nuevos contenedores ni proveedor. Web lo integra en iframe y Android mediante WebView; ambas plataformas descargan directamente el PDF firmado del mismo origen. El storage y la API conservan contrato, firma y esquema 0042. [Estado de publicación](#/runtime-snapshot).
+
 ## Referencias de código
 
 - [Bootstrap API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/main.go)

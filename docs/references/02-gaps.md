@@ -59,6 +59,10 @@ Backend `c12c94da5c62fcaf062a0094109ed47fc2dedc90`, frontend `72cf2229f8f732d705
 - [Persistencia PDF](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu.go)
 - [Editor y estados](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/components/CommercialBranchMenuEditor.tsx)
 
+## Búsqueda y visor interno · testing PR70
+
+La búsqueda normalizada del inventario completo y el renderer PDF.js local están implementados y desplegados en el [frontend de testing](#/flow-branch-menu-pdf); su aceptación del recorrido real está verificada en móvil/escritorio según [Estado observado](#/runtime-snapshot). Las pruebas locales cubren un escaneo CCITT Group 4 y otro de 35 MP. La configuración del origen web se exige en todos los perfiles Android, pero el nuevo módulo WebView requiere un binario nuevo y QA física. Un PDF con firma de origen externo conserva «Abrir aparte»; el visor interno sólo admite el mismo origen. No se añade API, migración ni capacidad V2.
+
 ## Ampliación PDF de 30 MiB · estado de fuente del 18/10/2026
 
 El corte anterior de las 16 UTC se conserva como histórico: no acredita el nuevo límite ni descarta la incidencia `/media` reportada después. Backend `64bb3fc901293791adcf7738c49d3bbf290c8a20`, rama `closed-test-readiness`, implementa 30 MiB de PDF y 30 MiB + 64 KiB de multipart; proxies coordinados 31 MiB. Conserva páginas, roles, ETags, TTL, parser de tres segundos y caps de decodificación. `0041` permanece intacta; `0042` amplía sólo el CHECK y exige readiness 0042. No usar DOWN live: la reversión nueva aborta si existen documentos mayores de 10 MiB.

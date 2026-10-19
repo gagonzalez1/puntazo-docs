@@ -29,6 +29,14 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-18 — Búsqueda del mapa y lectura PDF dentro de Puntazo
+
+- Solicitud explícita de búsqueda funcional y lectura interna; frontend [PR70](https://github.com/gonzalotev/app-fidelidad/pull/70), fuente final `492282d83cd7812ab06a11c2da75ca7b18e1c1fd` sobre `067dc68`, integrada en testing como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`. Backend y datos sin cambios.
+- Búsqueda local por marca/sucursal/dirección/localidad/provincia, normalizada y coherente entre mapa y lista. PDF.js 6.4.299 local compartido entre iframe web y WebView Android, controles de página/zoom/texto, renovación del enlace y alternativa externa explícita.
+- Actualizados flujos 25/26, C4 frontend/contenedores, operación CSP, matriz, brechas y estado observado. Se preservan los cortes históricos de 30 MiB/PWA y V2 futura.
+- Testing `b7de8ec` saludable desde las 21:49:35 Argentina; QA real aprobada a las 21:52:24 con búsqueda sobre 37 tiendas, mapa → menú interno y lectura pública móvil/escritorio. Sin respuestas simuladas ni escrituras comerciales.
+- Validación local: 140 unidades, typecheck, Doctor 18/18, auditoría, build web y export JS nativo aprobados; 14 casos browser dirigidos aprobados (12 de mapa/PDF/PWA y dos de scans codificados) según el reporte de la tarea. Scans genuinos Group 4 y 35 MP comprobados independientemente. [Publicación y límites de aceptación](#/runtime-snapshot); no acredita dispositivo físico ni publicación del portal.
+
 ### 2026-10-18 — Ampliación a 30 MiB y apertura con PWA activa
 
 - Solicitud explícita: ampliar el PDF a 30 MB y corregir «Esta pantalla no existe» al abrirlo.

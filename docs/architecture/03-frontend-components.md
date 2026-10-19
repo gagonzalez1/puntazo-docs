@@ -25,6 +25,8 @@ flowchart TD
  Q --> DS
  Q --> MS[Servicios comerciales, personal y suscripción]
  Q --> MENU[branchMenuService · PDF privado y público]
+ R --> VIEWER[MenuPdfViewer · testing PR70]
+ VIEWER --> RENDER[PDF.js local · iframe o WebView]
  R --> PS[profileService y mediaService]
  R --> EV[Actualización de tarjetas y celebraciones]
  EV --> Q
@@ -45,7 +47,7 @@ flowchart TD
 - Web puede abrir SSE autenticado de tarjetas; el cliente combina actualización de consultas y comprobación de movimientos para las celebraciones.
 - El helper de instalación PWA está integrado y publicado en las imágenes actuales de testing y landing testing. El corte final acredita sus SHA y salud; la instalación física en cada dispositivo no se verificó en esta revisión.
 
-## Menú PDF V1 · candidato del 18/10/2026
+## Menú PDF V1 · corte inicial del 18/10/2026
 
 Fuente: frontend `72cf2229f8f732d705a63641692aff26481d5047`, rama `testing`, [PR67](https://github.com/gonzalotev/app-fidelidad/pull/67) y [PR68](https://github.com/gonzalotev/app-fidelidad/pull/68) integradas en testing. Implementación desplegada y verificada en testing; el corte vigente está en [Estado observado](#/runtime-snapshot).
 
@@ -55,9 +57,20 @@ La ruta `/menu/:branchId` está fuera del guard de pestañas autenticadas y cons
 
 Los permisos de la UI reflejan roles de propietario/administrador, pero el backend es quien los exige; los operadores no reciben borradores. [Flujo V1 y contrato](#/flow-branch-menu-pdf). V2 digital/IA no introduce editor, extracción ni dependencias en este candidato. Las pruebas web no acreditan instalación física de PWA ni QA en dispositivos Android/iOS.
 
-## Corrección de apertura PDF con service worker activo
+## Corrección histórica de apertura PDF con service worker activo
 
 La ampliación a 30 MiB conserva Expo SDK 54 y el visor del dispositivo. El SW excluye el proxy de medios y `/api` del fallback de navegación; los documentos firmados no se precachean. Para un SW anterior ya activo, `signed-menu-pdf.mjs` usa un GET sin caché para URLs del mismo origen, limita el stream a 30 MiB, valida MIME y `%PDF-` y abre un Blob en una pestaña creada por el usuario. La liberación espera al cierre del visor; no se persiste el documento en almacenamiento del navegador. Las URLs HTTPS de storage externo mantienen navegación directa y no agregan una exigencia CORS. Native conserva WebBrowser/Linking. El estado de despliegue y la reproducción con perfil anterior se registran en [Estado observado](#/runtime-snapshot).
+
+## Búsqueda y renderer interno · testing PR70
+
+Implementación autorizada el **18/10/2026**, [PR70 frontend](https://github.com/gonzalotev/app-fidelidad/pull/70), integrada y desplegada en `testing` como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`. La aceptación del recorrido real se registra por separado en [Estado observado](#/runtime-snapshot).
+
+`filterStoreLocations` aplica la misma búsqueda normalizada a mapa/lista a partir del inventario completo; favoritos permanece independiente del filtro. `MenuPdfPreview` y `/menu/:branchId` comparten `MenuPdfViewer`: iframe web y WebView 13.15.0 en Android, ambos con PDF.js 6.4.299 y recursos servidos por Puntazo. Se mantiene Expo SDK 54. La descarga firmada del mismo origen reutiliza `fetchSignedMenuPdf`; «Abrir aparte» conserva el fallback para HTTPS externo. [Controles, límites y configuración nativa](#/flow-branch-menu-pdf).
+
+El contenedor web incorpora `/pdf-viewer/` y una CSP específica para permitir su iframe del mismo origen. Workbox excluye renderer y medios del precache/fallback; no hay caché persistente de PDFs. No cambia servicios HTTP, API ni esquema; incorporar el módulo WebView requiere un nuevo build Android.
+
+- [Renderer y controles](https://github.com/gonzalotev/app-fidelidad/blob/testing/public/pdf-viewer/viewer.js)
+- [Búsqueda normalizada](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/storeMap/lib/store-map.mjs)
 
 ## Referencias de código
 

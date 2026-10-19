@@ -67,6 +67,12 @@ flowchart TB
 Toda mutación de Backoffice registra actor, motivo y estados anterior/posterior en
 una auditoría inmutable.
 
+## Operación del visor interno · testing frontend PR70
+
+La [lectura interna de testing](#/flow-branch-menu-pdf) agrega recursos PDF.js al contenedor web y una política CSP propia para `/pdf-viewer/`: framing del mismo origen, scripts/worker/fuentes del propio servidor y sin referrer. Las demás páginas conservan `frame-ancestors none`/DENY. El renderer queda fuera del precache y del fallback de navegación de Workbox; no se almacenan PDFs de forma persistente. No requiere cambios de API, storage, base ni migraciones.
+
+En Android, verificar `EXPO_PUBLIC_APP_URL` en cada perfil EAS antes de compilar; debe corresponder al origen público que sirve renderer y firma (testing usa `https://testing.puntazo.pro`). La nueva dependencia WebView requiere un build nativo nuevo y comprobación en dispositivo. Los recursos locales incluyen decodificadores JS para scans CCITT/JBIG2/JPEG2000 con `useWasm: false`; la CSP no necesita habilitar evaluación dinámica o WASM.
+
 ## Anexo implementado · operación PDF V1 candidata
 
 Backend `c12c94da5c62fcaf062a0094109ed47fc2dedc90` y frontend `72cf2229f8f732d705a63641692aff26481d5047`, ramas de integración `closed-test-readiness` y `testing`. [PR39 backend](https://github.com/am-p/app-loyalty/pull/39) abierta; [PR67](https://github.com/gonzalotev/app-fidelidad/pull/67) y [PR68](https://github.com/gonzalotev/app-fidelidad/pull/68) integradas en testing. Código implementado, **desplegado y verificado en testing**. El resto del documento conserva su condición propuesta; este anexo no acredita una nueva prueba de proveedores ni cambia producción.

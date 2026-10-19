@@ -16,7 +16,7 @@ authority: mixed
 
 Implementación autorizada el **18/10/2026**. La V1 está implementada, publicada y comprobada en testing; las fuentes y los límites de la aceptación se registran en [Estado observado](#/runtime-snapshot). No acredita una entrega productiva. V2 digital/IA permanece únicamente como idea futura.
 
-## Recorrido
+## Recorrido inicial de V1
 
 ```mermaid
 sequenceDiagram
@@ -45,7 +45,19 @@ Mi Tienda incorpora Menú, con sucursal explícita y estados de borrador/publica
 
 El cliente abre el menú desde el mapa o las tarjetas. Cuando la tarjeta corresponde a una marca con varias sucursales, debe elegirla en una lista alfabética. El mapa calcula cercanía cuando dispone de ubicación real; el selector de tarjetas no usa ubicación. El enlace público estable `/menu/:branchId` y su QR permiten consultar sin cuenta ni instalación. Un local sin publicación muestra «Menú todavía no disponible».
 
-La apertura usa el visor del navegador/dispositivo con alternativa explícita. No se incorpora un renderer PDF nativo pesado. La ficha modal del mapa se cierra antes de navegar, para mantener accionable el botón de apertura. Los archivos menores de 1 MiB muestran su tamaño en KiB. Cada apertura/vista previa resuelve una URL vigente; una URL vencida no equivale a un menú retirado. El QR del menú no reemplaza el QR de identidad del cliente.
+El corte inicial de V1 usaba el visor del navegador/dispositivo con alternativa explícita; la lectura interna de testing se describe a continuación. No se incorpora un renderer PDF nativo pesado. La ficha modal del mapa se cierra antes de navegar, para mantener accionable el botón de apertura. Los archivos menores de 1 MiB muestran su tamaño en KiB. Cada apertura/vista previa resuelve una URL vigente; una URL vencida no equivale a un menú retirado. El QR del menú no reemplaza el QR de identidad del cliente.
+
+## Lectura interna · testing del 18/10/2026
+
+Implementación autorizada el **18/10/2026**, [PR70 frontend](https://github.com/gonzalotev/app-fidelidad/pull/70), integrada y desplegada en `testing` como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`. La aceptación del recorrido real se registra por separado en [Estado observado](#/runtime-snapshot).
+
+`MenuPdfViewer` integra PDF.js **6.4.299**, servido desde `/pdf-viewer/` con sus worker, fuentes, CMaps y decodificadores locales. Web usa un iframe del mismo origen; Android usa `react-native-webview` **13.15.0**, compatible con Expo SDK 54, para cargar el mismo renderer. Se dibuja una página por vez en canvas, con anterior/siguiente, zoom, ajuste al ancho y texto extraído cuando el PDF lo contiene. No hay servicio externo de visualización ni extracción de productos.
+
+«Recargar PDF» vuelve a consultar el enlace firmado; «Abrir aparte» conserva la apertura existente y permite las URLs HTTPS de storage externo. El visor interno exige que la URL firmada y el origen web coincidan: no reescribe firmas ni incorpora un proxy nuevo. Los límites del contrato siguen en **30 MiB y 1–30 páginas**. La descarga valida MIME, `%PDF-` y tamaño real, se cancela al cerrar o tras 90 segundos; el canvas se limita a seis millones de píxeles y el renderer admite imágenes de hasta 64 millones de píxeles. Estos límites de presentación no modifican la validación del backend.
+
+La navegación del visor lleva la URL firmada en el fragmento, sin incluirla en la query del HTML ni en el referrer; la descarga del PDF sigue usando su query de firma. Documento y renderer no se precachean; no se persiste el PDF. El cierre cancela render/descarga y libera el worker. La CSP admite el iframe sólo en `/pdf-viewer/`, con scripts/recursos del propio origen; el resto de las páginas conserva la prohibición de ser enmarcado.
+
+Todos los perfiles Android requieren `EXPO_PUBLIC_APP_URL` como origen HTTPS; con API testing debe ser `https://testing.puntazo.pro`. La validación de build rechaza ausencia u origen incompatible antes de omitir los controles OAuth de perfiles no productivos. Incorporar WebView requiere un nuevo build nativo; esta entrega web no actualiza un binario instalado. Las pruebas de navegador y exportación no acreditan QA física Android/iOS ni PWA instalada. No cambia API, esquema, permisos, TTL ni V2 futura.
 
 ## Apertura con PWA activa y límite ampliado
 

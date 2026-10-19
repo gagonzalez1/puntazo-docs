@@ -13,6 +13,28 @@ diagram: false
 
 # Estado observado
 
+## Búsqueda y PDF interno · 18/10/2026 21:49:35 Argentina (19/10/2026 00:49:35 UTC)
+
+[PR70](https://github.com/gonzalotev/app-fidelidad/pull/70) integrada en la rama seleccionada `gonzalotev/app-fidelidad:testing` como `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`, desde la fuente final `492282d83cd7812ab06a11c2da75ca7b18e1c1fd`. La revisión final agrega safe areas nativas a las correcciones del visor y las fixtures codificadas. Fetch de testing confirmó la integración; estos SHA son evidencia, nunca selectores de futuros builds.
+
+| Componente | Runtime observado |
+|---|---|
+| Web testing | `b7de8ec5414c3e7144fa87bb700e9c2e6e4c00a6`, healthy, cero reinicios |
+| API testing | `64bb3fc901293791adcf7738c49d3bbf290c8a20`, esquema 0042; sin cambios, healthy |
+| Web / API producción | `34bbcb7` / `dbeb03c`, esquema 0035; sin cambios, healthy |
+
+Coolify `y3xxkiz5lzdax2enbfbdzckl` terminó a las 00:49:35 UTC; imagen web `sha256:f0c4f3463f1b5fcb69ccb3c4a1c7b09569b00c1fb38f8d0a04613fdab1d932da`. Web conserva 384 MiB/0,5 CPU y sus redes. CI [39181911865](https://github.com/gonzalotev/app-fidelidad/actions/runs/39181911865) y despliegue automático [39182300366](https://github.com/gonzalotev/app-fidelidad/actions/runs/39182300366) aprobados. **Despliegue saludable y aceptación del recorrido real aprobada a las 21:52:24 Argentina (00:52:24 UTC del 19/10).**
+
+El mapa filtra el inventario completo por marca, sucursal, dirección, localidad y provincia, sin sensibilidad a tildes/mayúsculas. PDF.js 6.4.299 local muestra una página en canvas con controles de página/zoom/texto, dentro de iframe web o WebView Android 13.15.0. Se conserva la alternativa explícita «Abrir aparte» y la renovación de firmas. No cambia backend, API, esquema 0042 ni límites de 30 MiB/1–30 páginas. [Funcionamiento y restricciones](#/flow-branch-menu-pdf).
+
+El reporte de la tarea acredita 140 pruebas unitarias, typecheck, Doctor 18/18, auditoría, build web y export JS nativo aprobados, más **14/14 casos browser dirigidos en 32,6 s**: 12 de mapa/PDF/PWA y dos de scans codificados. El renderer inline también mostró un PDF de 30 MiB exactos. La revisión independiente validó por estructura, Poppler y PDF.js un scan CCITT Group 4 de 8.535 bytes y otro RGB de 35 MP/972.365 bytes; son pruebas del renderer, no una ampliación de los límites de validación del servidor. Con límite de imagen 16 MP este último producía una página blanca; el límite corregido de 64 MP renderizó contenido. Los seis millones de píxeles del canvas acotan la superficie dibujada.
+
+QA real mediante login/logout de UI, sin interceptar respuestas ni inyectar estado: inventario de 37 tiendas, búsqueda `cafe tortoni - testing` con una coincidencia y Google Maps visible, sin coincidencias y limpieza del filtro. Desde la sucursal QA 29, lista → ficha → menú mostró el PDF dentro de Puntazo con la ficha cerrada. La consulta pública anónima en 390×844 y 1440×1000 verificó píxeles reales del canvas, zoom y recarga, sin desbordes y con una sola página de contexto, sin abrir pestaña externa. No hubo escrituras comerciales. El primer helper comprobó el conteo de diálogos durante la animación de cierre y falló; se corrigió para esperar a que quedara oculto, sin modificar producto. El reporte inicial se conserva y el resultado final es PASS. Evidencia: `artifacts/map-search-pdf-viewer-20261018/live-qa.json`.
+
+La comparación de siete recursos públicos contra los del contenedor aprobó; `/pdf-viewer/` respondió SAMEORIGIN/CSP del propio origen y las demás páginas conservaron DENY. Los cortes anteriores de PWA y 30 MiB se mantienen abajo como evidencia fechada, sin extender la QA física.
+
+La guardia Android se probó en perfil preview: falta de APP_URL y origen incompatible con API testing rechazados; origen testing correcto aceptado. No se compiló/publicó un binario nuevo en esta comprobación; los clientes instalados requieren el módulo WebView en un nuevo build. No acredita QA física Android/iOS, instalación de PWA, suite global browser ni publicación del portal. Producción queda fuera del alcance; V2 continúa futura.
+
 ## PDF de 30 MiB y apertura con PWA · 18/10/2026 21:04 Argentina (19/10/2026 00:04 UTC)
 
 | Componente testing | Rama seleccionada | Runtime observado |
