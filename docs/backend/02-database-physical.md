@@ -5,11 +5,11 @@ group: 03 · Backend objetivo
 order: 30
 parent: backend-review-index
 level: data
-status: target
-authority: proposal_codex
-summary: Tipos físicos, integridad, índices, borrado y estrategia de concurrencia propuesta.
+status: mixed
+authority: mixed
+summary: Diseño físico histórico y expansión implementada 0042 del límite PDF a 30 MiB.
 diagram: true
-codeRefs: optional
+codeRefs: required
 ---
 
 # Backend · PostgreSQL físico propuesto
@@ -81,3 +81,34 @@ positiva y el check verifica la aritmética entre saldo anterior y posterior.
 
 El orden de locks es tarjeta → beneficio → suscripción. Los errores PostgreSQL
 `40001` y `40P01` admiten hasta tres reintentos con jitter.
+
+## Anexo implementado · esquema 0041 de testing
+
+La migración `0041_branch_pdf_menus` en backend `c12c94da5c62fcaf062a0094109ed47fc2dedc90` implementa este anexo; **desplegado y verificado en testing**. [PR39](https://github.com/am-p/app-loyalty/pull/39) está abierta y depende de las migraciones 0036–0040 de la entrega del mapa, ausentes en el main oficial observado (0035). No se modifican números ni SQL previamente aplicados. Las propuestas físicas del resto del documento permanecen propuestas.
+
+`branch_menu_documents` almacena UUID, marca/sucursal, nombre de archivo, MIME PDF, tamaño entre 1 y 10 MiB, entre 1 y 30 páginas, SHA-256 de 32 bytes, clave de objeto única y estados `UPLOAD_PENDING`, `READY`, `DELETE_PENDING`, `DELETED`. Incluye fecha, `delete_after`, `lease_owner` y `lease_until`; el índice de limpieza cubre estado y fechas. La clave única `(id,sucursal_id,marca_id)` permite FKs compuestas desde los punteros del menú.
+
+`branch_menus` tiene PK por sucursal, marca, versión positiva y punteros nullable al borrador y al publicado. Ambas FKs `(document_id,sucursal_id,marca_id)` y la FK sucursal–marca preservan aislamiento de tenant/sucursal. Un CHECK impide que draft y published señalen el mismo documento. Sin fila previa, el repositorio devuelve versión lógica 1; la primera carga confirmada crea versión 2. GET no crea tablas ni filas.
+
+El orden implementado de locks para menú es marca → sucursal → menú/documentos. La carga reserva un documento desvinculado, realiza el PUT al storage sin retener locks de base y confirma el borrador solo después de revalidar permiso y versión. Publicar mueve draft a published en una transacción y retira el documento anterior. La firma ocurre antes del commit, también en la lectura pública protegida; un fallo previo revierte los cambios de punteros. La compensación solo afecta `UPLOAD_PENDING`: no retira un `READY` confirmado si se perdió la respuesta del commit.
+
+Los triggers de baja efectiva de marca/sucursal desvinculan menús e incrementan su versión antes de programar documentos para limpieza. La fecha usa `clock_timestamp()+6 minutes`, cubriendo las URLs de hasta 300 segundos con margen. La cola excluye documentos referenciados y usa lease/reintentos. La anonimización con otro propietario activo conserva los menús de la marca. [Datos V1](#/data-current), [operación PDF](#/backend-operations) y [recorrido](#/flow-branch-menu-pdf). No se agregan tablas de productos, precios o importaciones de V2.
+
+- [DDL y triggers exactos](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0041_branch_pdf_menus.up.sql)
+- [Locks, versiones y compensación](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu.go)
+- [Regresiones de upgrade y concurrencia](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu_integration_test.go)
+
+## Expansión implementada · esquema 0042 · 18/10/2026
+
+Backend `64bb3fc901293791adcf7738c49d3bbf290c8a20`, rama `closed-test-readiness`, añade `0042_branch_pdf_30mib`. Reemplaza únicamente `branch_menu_documents_byte_size_check` por `byte_size BETWEEN 1 AND 31457280`. La migración 0041 se conserva byte a byte; no crea más tablas ni reescribe tamaños, checksums, estados, fechas o punteros. Las FKs de tenant/sucursal, versiones, 1–30 páginas y cola de limpieza permanecen iguales. El anexo 0041 anterior conserva el corte histórico previo.
+
+Readiness y `EXPECTED_SCHEMA_VERSION` requieren `0042`. El upgrade desde 0041 y su segundo pase, tanto sobre restore aislado como sobre la base de testing, preservaron agregados y fingerprints de los menús. Las pruebas cubren tamaño positivo, aceptación de 30 MiB, rechazo de 30 MiB + 1 y conservación de la publicación/versiones.
+
+El DOWN de 0042 comprueba primero que no exista ningún metadato `byte_size > 10485760`, incluso si el documento está retirado; en ese caso aborta, sin borrar o truncar. **No ejecutar DOWN en live.** El rollback de aplicación conserva 0042 y alinea el esquema esperado del binario anterior; restaurar datos es una operación distinta.
+
+**Runtime API confirmado:** el proceso `64bb3fc` de testing atiende con esquema 0042, 42 migraciones y readiness 200; el despliegue terminó 23:47:39 UTC del 18/10/2026. La base migrada y el esquema requerido del proceso coinciden.
+
+**Aceptación live de 30 MiB aprobada:** carga exacta por UI y API, revisión PDF HTTP 200 con tamaño/hash esperado y descarte de los borradores sin cambiar la publicación. El exceso de un byte fue rechazado; los ocho negativos conservaron estado. El perfil con SW anterior actualizó su worker y abrió el PDF real sin HTML del SPA. [Estado observado](#/runtime-snapshot) registra las fuentes y los límites de la evidencia; producción no recibe esta entrega.
+
+- [Expansión CHECK 0042](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0042_branch_pdf_30mib.up.sql)
+- [Guardia de DOWN](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0042_branch_pdf_30mib.down.sql)

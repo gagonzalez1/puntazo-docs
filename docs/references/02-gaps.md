@@ -7,7 +7,7 @@ parent: documented-commits
 level: reference
 status: gap
 authority: mixed
-summary: Pendientes observados de publicación, configuración y reconciliación del contrato objetivo.
+summary: Brechas históricas y ampliación PDF de 30 MiB implementada y verificada en testing.
 diagram: false
 ---
 
@@ -37,3 +37,75 @@ La auditoría anterior de testing registró un pendiente de dependencias; esta r
 - [Defaults y validación de entorno](https://github.com/am-p/app-loyalty/blob/main/internal/config/config.go)
 - [Router Backoffice](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
 - [UI por períodos en testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/app/(tabs)/analytics/index.tsx)
+
+
+## Alta de cliente y pérdida de sesión · 19/10/2026
+
+La primera incidencia era una UI de confirmación de edad ausente en testing `9074aa`: una cuenta activa/verificada pero sin confirmación vigente recibía 403 `ADULT_CONFIRMATION_REQUIRED` antes de pasaporte/mapa. PR73 porta el flujo explícito a `ae706dda` y difiere pantallas/lecturas/SSE/contextos, conservando el menú público y evitando el bucle de onboarding comercial. La persona confirmó manualmente a las 04:05:58 UTC; tarjeta devolvió 200. No se modificó el gate ni se confirmó por SQL.
+
+Después, el usuario reportó cierre automático. El cliente desplegado borraba credenciales con cualquier refresh no exitoso, mientras se observaron SSE 401/503 y refresh 429. Los logs son agregados entre cuentas y no permiten atribuir individualmente todas las peticiones ni demostrar una causa concreta de revocación. La pérdida de sesión y su tratamiento transitorio requieren aceptación independiente de la corrección de edad.
+
+PR74 (desplegada en `testing` `7dfa39a` desde 04:26:46 UTC) conserva credenciales/reintento, serializa escrituras de cookie del mismo origen mediante Web Locks disponibles, renueva SSE sólo al expirar y separa la navegación pública de restore/stream. Quince pruebas simuladas aprobaron; la revisión de guardias ID/sesión fue estática. La QA real de tres pestañas no repitió logout, pero agotó diez refresh en unos once segundos y mantuvo el QR cargando por cuota. **Ese resultado de PR74 no cerró la incidencia**: serializar cookie no compartía el access vigente ni evitaba nuevas rotaciones REST por cada pestaña. PR75 está integrada en `testing` `ed9b9fa`: access compartido en memoria mediante BroadcastChannel, marcador de autoridad opaco/no secreto en localStorage y Web Locks, sin persistir tokens ni debilitar límites. CI, revisión estática, nueve unidades de protocolo y 19 casos browser aprobaron; la prueba de tres pestañas rechaza SID antiguos en REST, comparte una renovación al expirar y comprueba reload/logout/cambio de identidad. El despliegue se observó a las 04:46:56 UTC. La QA real posterior aprobó tres pestañas durante 242,73 s, con tarjetas visibles sin login ni error y vuelta desde mapa/PDF; una renovación 200 y cero refresh 401/429 en logs agregados, que no identifican actor o pestaña. La aceptación cubre esa ventana y no elimina el límite operativo de reconexiones SSE: hubo cinco respuestas 503 breves y recuperación visible sin rotación extra/logout. No cambia backend/esquema/producción; export JS Android no acredita APK/AAB distribuido ni QA física. [Cronología](#/runtime-snapshot).
+
+## Mapa y menús · 17/10/2026
+
+La corrección del mapa tiene su entrega independiente en PR38 backend y PR66 frontend. El inventario de testing de esa revisión registró 37 sucursales elegibles, de las cuales 34 no tenían coordenadas completas: deben permanecer en la lista con ubicación pendiente. Es un corte histórico, no un recuento vigente. El catálogo no acredita ubicaciones que no fueron cargadas. Ver [alcance y contrato](#/flow-customer-map-menu) y [verificación runtime](#/runtime-snapshot).
+
+## Menú PDF V1 · entrega de testing del 18/10/2026
+
+Backend `c12c94da5c62fcaf062a0094109ed47fc2dedc90`, frontend `72cf2229f8f732d705a63641692aff26481d5047` y landing `f22bc86ac41e07a28c203f0dc3cb0e4d4b49f32c` están desplegados y saludables. La QA real cubrió tienda, cliente desde mapa y visitante sin sesión, además del proxy con PDF de 3 MB, validaciones negativas y conservación de publicación. [Estado observado](#/runtime-snapshot) conserva fuentes y alcance.
+
+| Área | Resultado | Pendiente |
+|---|---|---|
+| V1 PDF | Carga, borrador privado, revisión, publicación, retiro, reemplazo y consulta pública verificados | Sin bloqueo conocido en el recorrido probado |
+| Promoción | Frontend PR67/68 y landing PR10 integradas en testing; backend PR39 abierta | Integrar backend en propietario y preparar promoción productiva; main oficial observado continúa en 0035 |
+| Plataformas | Navegador Chromium 390×844 y 1440×1000, export JS Android aprobada | QA física Android/iOS y PWA instalada |
+| V2 | Idea futura documentada | Sin editor, IA, buscador de productos, proveedor ni tablas implementadas |
+
+`puntazo-preview` está retirado. El OpenAPI objetivo y las propuestas históricas PC-xx conservan su autoridad; esta entrega no las aprueba. Las filas iniciales de esta página mantienen el corte histórico de octubre indicado allí.
+
+- [Persistencia PDF](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/repository/menu.go)
+- [Editor y estados](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/components/CommercialBranchMenuEditor.tsx)
+
+## Compatibilidad de PDFs reales · QA CABA del 19/10/2026
+
+La selección de cartas públicas encontró tres rechazos del validador estricto de la API testing `64bb3fc`/0042, reproducidos con la función fuente sin modificaciones. Los archivos estaban por debajo de 30 MiB y de 30 páginas; esas condiciones no bastan para superar la validación estructural.
+
+| Archivo real descartado | Diagnóstico observado |
+|---|---|
+| Baradentro (PDF 1.3) | Parámetro de transparencia BlendMode/BM que requiere PDF 1.4 |
+| Capitán Parrilla | Metadatos XMP con raíz RDF donde el parser espera xmpmeta |
+| FICO | XObject sin entrada obligatoria Subtype |
+
+Los tres PDFs rechazados **no se cargaron** ni sustituyeron una publicación. Amalia, Piegari y El Arte de la Pizza sí aprobaron el parser y se incorporaron al [dataset sintético de testing](#/flow-branch-menu-pdf). La descarga/visualización en otro lector no prueba conformidad con el validador del producto. No se modificaron límites ni parser ni se repararon los PDFs rechazados; una política de validación relajada o reparación automática no queda aprobada por esta QA.
+
+La carga del dataset por base de datos no ejercita el flujo de upload UI/HTTP, roles ni If-Match: su evidencia cubre persistencia/storage y consulta pública. La aceptación de API/storage y lectura pública de primera/última página de las tres cartas está aprobada, con contenido de texto e imagen; no amplía la evidencia del upload. [Suplemento de QA](#/runtime-snapshot).
+
+## Cliente a pantalla completa · testing PR71/72
+
+[PR71 frontend](https://github.com/gonzalotev/app-fidelidad/pull/71) y [PR72](https://github.com/gonzalotev/app-fidelidad/pull/72), integradas y desplegadas en la rama seleccionada `testing` como `9074aa57fe84d8f0ec03d50898d532d4857ce4c3`. Implementación autorizada y lectura pública comprobada contra testing real; fuentes y límites de aceptación en [Estado observado](#/runtime-snapshot).
+
+La entrega elimina las herramientas/metadatos del cliente, usa scroll continuo de páginas con carga visual diferida y presupuesto compartido de seis millones de píxeles, y limita la renovación de enlace a un intento automático. El comercio conserva su vista previa con controles. La prueba independiente del reader confirmó que un error de decodificación seguido de entradas/salidas de visibilidad emite un único callback; los duplicados no consumen la renovación. El despliegue final y la consulta pública anónima están verificados: título libre de Volver, PDF visible y un solo botón en una pantalla de 1280×720, sin desbordes. PR72 corrigió la superposición observada reservando 56 px al inicio del scroll. La exportación JS nativa aprobada no acredita APK/AAB distribuido, dispositivo físico ni PWA instalada. V2 y cambios de API/datos quedan fuera del alcance.
+
+## Corte PR70 · búsqueda y visor interno
+
+La búsqueda normalizada del inventario completo y el renderer PDF.js local están implementados y desplegados en el [frontend de testing](#/flow-branch-menu-pdf); su aceptación del recorrido real está verificada en móvil/escritorio según [Estado observado](#/runtime-snapshot). Las pruebas locales cubren un escaneo CCITT Group 4 y otro de 35 MP. La configuración del origen web se exige en todos los perfiles Android, pero el nuevo módulo WebView requiere un binario nuevo y QA física. Un PDF con firma de origen externo conserva «Abrir aparte»; el visor interno sólo admite el mismo origen. No se añade API, migración ni capacidad V2.
+
+## Ampliación PDF de 30 MiB · estado de fuente del 18/10/2026
+
+El corte anterior de las 16 UTC se conserva como histórico: no acredita el nuevo límite ni descarta la incidencia `/media` reportada después. Backend `64bb3fc901293791adcf7738c49d3bbf290c8a20`, rama `closed-test-readiness`, implementa 30 MiB de PDF y 30 MiB + 64 KiB de multipart; proxies coordinados 31 MiB. Conserva páginas, roles, ETags, TTL, parser de tres segundos y caps de decodificación. `0041` permanece intacta; `0042` amplía sólo el CHECK y exige readiness 0042. No usar DOWN live: la reversión nueva aborta si existen documentos mayores de 10 MiB.
+
+| Área | Evidencia disponible | Pendiente de esta ampliación |
+|---|---|---|
+| Código backend 30 MiB | Fronteras válida/exceso, rutas vecinas, race, vet, vulnerabilidades alcanzables, OpenAPI y Docker aprobados; PR39 continúa abierta | Integración del propietario y promoción productiva separadas |
+| Datos 0042 | Restore y migración live 0041→0042, ambos pases aprobados; agregados y fingerprints de menús preservados | Proceso/readiness 0042 ya confirmados; aceptación live del nuevo tamaño aprobada |
+| Recursos testing | Concurrencia global 2 / actor 2 y 768 MiB verificadas | Conservar margen al evaluar cargas concurrentes |
+| Apertura `/media` | Incidencia de entrega frontend/Service Worker coordinada | Corrección frontend verificada con SW anterior actualizado, PDF real y ausencia de HTML del SPA; no se atribuye al límite Go |
+| Plataformas | Se conserva la QA histórica del recorrido web pequeño | Aceptación live web de 30 MiB aprobada; QA física/PWA instalada no acreditada |
+
+**Runtime API confirmado:** `64bb3fc`/0042, 42 migraciones, readiness 200, healthy y cero reinicios, 768 MiB/1 CPU y concurrencia efectiva global 2 / actor 2. Coolify finalizó 23:47:39 UTC del 18/10/2026. Landing `6533196`/PR11 terminó 23:43:33 UTC; frontend `067dc68` integra PR69, con CI aprobada y despliegue terminado a las 23:53:18 UTC.
+
+**Aceptación live de 30 MiB aprobada:** carga exacta por UI y API, revisión PDF HTTP 200 con tamaño/hash esperado y descarte de los borradores sin cambiar la publicación. El exceso de un byte fue rechazado; los ocho negativos conservaron estado. El perfil con SW anterior actualizó su worker y abrió el PDF real sin HTML del SPA. [Estado observado](#/runtime-snapshot) registra las fuentes y los límites de la evidencia; producción no recibe esta entrega.
+
+- [Contrato implementado de fuente](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/openapi.yaml)
+- [Expansión compatible 0042](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/migrations/0042_branch_pdf_30mib.up.sql)

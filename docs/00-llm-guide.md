@@ -36,7 +36,7 @@ Para obtener contexto suficiente sin cargar toda la documentación:
 7. [`docs/references/02-gaps.md`](#/implementation-gaps) — brechas que no deben confundirse con comportamiento actual.
 8. [`docs/backend/00-review-index.md`](#/backend-review-index) — decisiones de backend propuestas por Codex que requieren aprobación.
 
-El corte actual es del **02/10/2026**: [estado observado](#/runtime-snapshot) y [topología](#/coolify-deployment-topology). La implementación funcional reemplazó la antigua base de mocks; los documentos objetivo siguen propuestos.
+Los cortes de fuentes y runtime conservan su fecha; consultar la actualización más reciente en [estado observado](#/runtime-snapshot) y [topología](#/coolify-deployment-topology). La implementación funcional reemplazó la antigua base de mocks; los documentos objetivo siguen propuestos.
 
 Después se debe abrir el flujo, la secuencia o el modelo de datos específico de la tarea.
 
@@ -93,6 +93,10 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 23. [`docs/flows/22-customer-passport.md`](#/flow-customer-passport) — identidad y pasaporte QR.
 24. [`docs/flows/23-customer-cards.md`](#/flow-customer-cards) — tarjetas de fidelidad.
 25. [`docs/flows/24-customer-profile.md`](#/flow-customer-profile) — perfil versionado, foto, cambio de email y baja.
+
+25. [`docs/flows/25-customer-map-menu.md`](#/flow-customer-map-menu) — mapa de sucursales, V1 PDF implementada e idea futura V2.
+
+26. [`docs/flows/26-branch-menu-pdf.md`](#/flow-branch-menu-pdf) — borrador/publicación PDF por sucursal, lectura pública a pantalla completa y vista previa comercial.
 
 ### 5. Secuencias de ejecución
 

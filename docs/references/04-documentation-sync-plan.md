@@ -33,3 +33,9 @@ La fuente compartida es el [repositorio puntazo-docs](https://github.com/gagonza
 - `openapi.yaml` y el spec objetivo mantienen su autoridad propuesta hasta una reconciliación explícita. No se aprueban decisiones por copiar una implementación.
 
 No hay sincronización automática de arquitectura con Coolify: las publicaciones son automáticas desde main, pero el contenido requiere esta revisión de evidencia.
+
+## Conciliación de PR frontend · 19/10/2026
+
+Única PR frontend pendiente de este lote: [PR82→testing](https://github.com/gonzalotev/app-fidelidad/pull/82), candidato6c8d1f7 sobre testing29f91e9 fresco. Publicada desde fork gagonzalez1/app-fidelidad para retirar la rama de trabajo del propietario; sustituye60/61/81; updatesGoogle/edad/canje/apellido ya están en la base y sólo se extraen precios dinámicos y la restricción de checkoutAndroid pendiente. La antigua dependencia404 de precios se resolvió: endpoint verificado200, sin cambios backend en esta tarea. Candidata validada localmente, no integrada ni desplegada. EstadosCI, evidencia y recuperación de las ramas propias retiradas: `artifacts/frontend-pr-cleanup-20261019/`.
+
+No promover contenido histórico archivado por ahead count o por el estado de una PR antigua: hay contenido único que requiere conciliación. Las referencias y bundles verificados permiten recuperarlo. Branches main/testing/develop y todos los worktrees preservados; refs previas y bundle registrados. C4, API, datos, secuencias y runtime sin nueva implementación desplegada. Portal no publicado.

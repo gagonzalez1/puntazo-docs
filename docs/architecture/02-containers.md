@@ -26,7 +26,7 @@ flowchart LR
  W -->|/api/v1 compatible| API
  W -->|medios firmados en testing| S[MinIO · testing]
  B[Backoffice · React y Nginx] -->|/v1/backoffice| API
- API --> DB[(PostgreSQL · esquema 0033)]
+ API --> DB[(PostgreSQL · esquema por ambiente)]
  API -->|testing| R[(Redis · rate limit)]
  API -->|testing| S
  API --> E[SMTP]
@@ -56,11 +56,27 @@ Cada ambiente conserva su propia API, base y objetos. El diagrama resume funcion
 
 La landing sirve `/` y redirige las antiguas páginas divididas a secciones de la misma página. El resto pertenece a Expo: `/login`, rutas autenticadas, manifest y service worker. Testing conserva `/api/v1` y el prefijo público de medios para clientes instalados. No se atribuye al Compose anterior el tráfico actual: está detenido.
 
-Producción informa esquema `0033`, pero eso no implica paridad de configuración con testing. Ver [integraciones](#/integration-matrix) y [brechas operativas](#/implementation-gaps).
+El esquema `0033` corresponde al corte histórico del 02/10 indicado arriba; no selecciona una versión para nuevos despliegues. Consultar el esquema observado por ambiente en [Estado observado](#/runtime-snapshot), las [integraciones](#/integration-matrix) y las [brechas operativas](#/implementation-gaps).
 
+## Menú PDF V1 · candidato del 18/10/2026
+
+El candidato incorpora publicación de PDF por sucursal sin agregar contenedores: Expo gestiona el documento y la consulta pública `/menu/:branchId`; la API Go valida el PDF, persiste borrador/publicación en PostgreSQL y firma el acceso al storage privado existente. El visitante abre el archivo sin cuenta en el visor del navegador o dispositivo. Las URLs duran como máximo 300 segundos; el enlace y QR de la sucursal permanecen estables.
+
+La migración `0041_branch_pdf_menus` amplía el esquema candidato 0040. Este apartado acredita código **desplegado y verificado en testing**: backend `c12c94da5c62fcaf062a0094109ed47fc2dedc90`, frontend `72cf2229f8f732d705a63641692aff26481d5047`. La promoción al propietario backend sigue abierta mediante [PR39](https://github.com/am-p/app-loyalty/pull/39); frontend [PR67](https://github.com/gonzalotev/app-fidelidad/pull/67) y [PR68](https://github.com/gonzalotev/app-fidelidad/pull/68) ya están integradas en `testing`. El circuito usa los repositorios separados; `puntazo-preview` está retirado. La corrección no publica producción. [Recorrido y límites V1](#/flow-branch-menu-pdf); V2 digital/IA permanece como idea futura.
+
+
+## Ampliación de PDF y PWA · 18/10/2026
+
+La ampliación mantiene los mismos contenedores: API de testing con esquema 0042 y máximo de archivo 30 MiB; entrada multipart de 31 MiB en web/landing sólo en la ruta PDF. La nueva migración amplía el CHECK y no altera 0041 ni los documentos. El SW de Expo deja pasar navegación de medios/API a la red; la apertura web usa un Blob validado del mismo origen para evitar el fallback de un SW anterior ya instalado. El origen de storage y la firma no se reescriben; las URL externas HTTPS conservan su navegación. [Estado y verificación](#/runtime-snapshot). Producción permanece fuera de esta entrega.
+
+## Renderer PDF interno · testing PR70
+
+La [implementación de testing](#/flow-branch-menu-pdf) sirve PDF.js y sus recursos desde el contenedor web existente, sin nuevos contenedores ni proveedor. Web lo integra en iframe y Android mediante WebView; ambas plataformas descargan directamente el PDF firmado del mismo origen. El storage y la API conservan contrato, firma y esquema 0042. [Estado de publicación](#/runtime-snapshot).
 
 ## Referencias de código
 
 - [Bootstrap API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/main.go)
 - [Cliente HTTP Expo](https://github.com/gonzalotev/app-fidelidad/blob/main/src/core/api/client.ts)
 - [Entrada y proxy landing](https://github.com/gagonzalez1/puntazo-landing/blob/main/nginx/default.conf.template)
+- [Servicio PDF del candidato](https://github.com/gagonzalez1/app-loyalty/blob/closed-test-readiness/internal/service/menu.go)
+- [Proxy de carga PDF y storage en testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/nginx/default.conf)
