@@ -51,6 +51,8 @@ erDiagram
 
 La baja conserva el ledger y anonimiza según el código de cuenta. La auditoría de todas las restricciones y políticas de retención queda fuera de este corte de arquitectura. El [DER objetivo](#/data-target) mantiene su carácter propuesto.
 
+**Ampliación aplicada en testing · 19/10/2026:** la [verificación del registro por código](#/sequence-registration-email-code) persiste la huella protegida, vencimiento, intentos y contexto de registro, sin conservar secretos en claro. La migración `0043` conserva tokens y enlaces existentes y concilia main oficial base hasta `0035` y testing hasta `0042`. Su upgrade se verificó en restauración aislada y se aplicó dos veces en testing, preservando 103 usuarios, 38 marcas, 39 sucursales, 42 tarjetas y 207 movimientos, con huellas de menús/documentos idénticas. Producción conserva `0035`. El DER y los recuentos del resto de esta página corresponden al corte histórico previo.
+
 
 ## Referencias de código
 

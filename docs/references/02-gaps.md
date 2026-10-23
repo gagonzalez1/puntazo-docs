@@ -31,6 +31,10 @@ La comparación inicial de agosto —sólo `users`, cuatro rutas y fidelidad moc
 
 La auditoría anterior de testing registró un pendiente de dependencias; esta revisión documental no repitió esa auditoría ni lo declara resuelto. Los respaldos y la restauración de producción se documentaron en el registro operativo privado: este portal no certifica una nueva restauración.
 
+## Publicación posterior en testing · 19/10/2026
+
+La [verificación de registro con código de seis dígitos](#/sequence-registration-email-code) está aprobada, implementada y probada en las fuentes enlazadas. API `f976d29`/`0043` y frontend `c7b13f3` ya están publicados en testing, con datos/menús preservados, pruebas aprobadas y `EMAIL_VERIFICATION_REQUIRED=true` efectiva. La recepción real del alta de cliente fue confirmada por el usuario y por la validación del código recibido, incluida sesión automática y rechazo de reutilización. Quedan pendientes la QA física/nativa y un recorrido comercial con otra bandeja real; la cobertura comercial automatizada está aprobada. Tras la aceptación podrá desactivarse para altas nuevas. El backend propietario PR #40 sigue abierto y producción conserva `dbeb03c`/`0035`; al promover el cambio deberá mantener la verificación obligatoria.
+
 
 ## Referencias de código
 
