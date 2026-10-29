@@ -52,3 +52,14 @@ Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. S
 - [Suscripción](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/merchant/services/subscriptionService.ts)
 - [Rutas reales](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
 - [Analíticas de testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/services/merchantService.ts)
+
+### Publicación verificada el 29/10/2026
+
+| UI | API implementada en la tarea | Restricción |
+| --- | --- | --- |
+| Usuarios | `GET /v1/backoffice/users` | Sesión staff + `ADMIN_SISTEMA`; cuentas sin baja; búsqueda y paginación |
+| Tiendas (antes Clientes) | `GET /v1/backoffice/customers` | Contrato existente conservado |
+
+UI main6c17760 y API fork/release/backoffice-users-production-20261029@9c802f7
+publicadas y probadas en producción. Integración oficial de API pendiente de
+aprobación del propietario; esquema0043 sin migraciones ni cambios de pagos.

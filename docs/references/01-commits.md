@@ -33,3 +33,15 @@ La revisión del [estado observado](#/runtime-snapshot) registra HEAD, imágenes
 3. Comparar fuente con runtime y con decisiones aprobadas. Un PR cerrado o un conteo ahead no prueba promoción funcional.
 4. Antes del build/deploy, verificar checkout limpio en el HEAD remoto actual.
 5. Después, comprobar imagen, salud y versión pública. Registrar SHA como evidencia, nunca como selector de la próxima entrega.
+
+## Backoffice · publicación del 29/10/2026
+
+| Plano | Rama elegida por fetch | Revisión observada |
+| --- | --- | --- |
+| UI productiva | gagonzalez1/puntazo-backoffice:main | 6c17760689ff0bc210398b3dcfbea95085da53ce |
+| API productiva autorizada | gagonzalez1/app-loyalty:release/backoffice-users-production-20261029 | 9c802f7e5422464a9b3280364bfeba0b8e614389 |
+| Base oficial intacta | am-p/app-loyalty:main | 676e0529fde66ca0283e2eb135af9bbe59346e62 |
+
+CI propio40946831631 SUCCESS. API schema0043 sin migraciones nuevas.
+Promoción oficial pendiente de aprobación en PR46; PR17 del fork registra la
+publicación completa. Estos SHA son evidencia y no selectores de futuros builds.

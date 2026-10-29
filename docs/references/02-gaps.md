@@ -37,3 +37,10 @@ La auditoría anterior de testing registró un pendiente de dependencias; esta r
 - [Defaults y validación de entorno](https://github.com/am-p/app-loyalty/blob/main/internal/config/config.go)
 - [Router Backoffice](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
 - [UI por períodos en testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/app/(tabs)/analytics/index.tsx)
+
+## Backoffice · corte adicional del 29/10/2026
+
+Tiendas y Usuarios están publicados y verificados en producción. La consulta de
+personas usa la API propia9c802f7, basada en main oficial676e052. La integración
+oficial de esta funcionalidad sigue pendiente en PR46, sin modificar su main.
+Publicación y propuesta de integración se distinguen en arquitectura Backoffice.

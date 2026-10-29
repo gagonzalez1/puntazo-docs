@@ -58,3 +58,11 @@ Las migraciones se ejecutan con `cmd/migrate`; `0033` es el esquema observado. N
 - [Movimientos](https://github.com/am-p/app-loyalty/blob/main/internal/repository/movement.go)
 - [Workers y proveedores](https://github.com/am-p/app-loyalty/blob/main/cmd/server/main.go)
 - [Migrador](https://github.com/am-p/app-loyalty/blob/main/cmd/migrate/main.go)
+
+## Consulta administrativa de personas · 29/10/2026
+
+La publicación productiva propia `gagonzalez1/app-loyalty:release/backoffice-users-production-20261029`
+agrega handler y repositorio para `GET /v1/backoffice/users`. Requiere
+ADMIN_SISTEMA, filtra cuentas sin baja, limita páginas a100 y propaga el contexto
+del request a pgx. No modifica cuentas, autenticación, esquema ni facturación.
+La integración en el propietario `am-p/app-loyalty` sigue pendiente de aprobación.
