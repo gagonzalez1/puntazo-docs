@@ -29,6 +29,52 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-11-01 — Verificación visual de teclado en baja de cuenta
+
+| Campo | Registro |
+|---|---|
+| Código | Sin cambios. Release `free` de `7a47558` igual al artefacto auditado e instalado |
+| Dispositivo/servicio | iPhone 802, iOS 26.5; API local HTTPS en backend `7fd33df`, schema 0045 y readiness 200 |
+| Recorrido | Teclado de software abierto; campo `BAJA`, `Cancelar` y `Dar de baja` completamente visibles. Escribir `BAJA` habilitó el botón. Se pulsó sólo `Cancelar`; modal/teclado cerraron y volvió a Editar perfil |
+| Integridad | Cero requests `DELETE`; cuentas 2/3, marca 2 y ledger de 11 movimientos permanecieron intactos. No se confirmó baja ni se probó tecla Done separadamente |
+| Alcance pendiente | Sin QA nueva de iPad/paisaje, Fotos/Files ni captura física. API/HTTPS/S3 se reanudaron para la sesión de prueba y se apagarán después; sin cambios de código/configuración o despliegue |
+| Evidencia | `reports/ios-implementation-20261101/keyboard-native-iphone-final.json`, gates `keyboard-resume-20261101T220520Z-*` |
+
+### 2026-11-01 — Carrera de leases en el coordinador de reseñas
+
+| Campo | Registro |
+|---|---|
+| Frontend | HEAD `origin/develop` `7a47558af1d81d109a69c0ffdac1b23e3f9a5bf4`; 10 tests nuevos, 434/434 unitarias y TypeScript pasaron localmente |
+| Causa y corrección | En `32f9e82`, un refresh de tarjetas/candidatos invalidaba la respuesta de una reserva aún vigente y el hook reintentaba el mismo ID. La fixture browser previa aceptaba leases repetidos, aunque backend excluye leases activos y responde `409`. El fix separa generación GET de contexto reserva, conserva leases en refresh y descarta respuestas tardías al cambiar actor/sesión/ruta/readiness; mock ahora modela lease y `409`, con aserción exacta de intentos |
+| Estado de leases | Backend reserva durante 60 s. Si la respuesta tardía se descarta tras adquirir lease, el servidor oculta la invitación hasta el vencimiento. La app no tiene timer; un trigger previo al vencimiento requiere otro ingreso/actualización/reconexión posterior para recuperarla |
+| CI | CI PR de `32f9e82` quedó verde tras retry; push falló dos veces en `google-reviews.spec.ts:43`, con los otros 160 casos pasando. La CI de push de `7a47558` (41353090192) quedó verde con 161 navegador sin retry, 433 unitarias y una omitida por Swift/Linux, config 9/9, Doctor 18/18 y audit 0; el PR41353093741 conserva su resultado independiente |
+| Artefactos/entorno | Releases `free`/interno y Android de `32f9e82` son históricos y anteriores al fix. Ambos Releases iOS actuales y Android JS pasaron auditoría e incluyen el coordinador exacto a HEAD (12/17/7 archivos comparados; fuentes2473/2493/2490). Las seis pruebas browser de reseñas pasaron en Chromium y WebKit; sin ejecución de compras en el interno nuevo. Sin cambio backend/schema, despliegue o servicios nuevos |
+| QA conservada | Export nativo sigue limitado a apertura/cancelación de hoja en iPad cliente e iPhone comercio, sin guardar a Files. La inspección inicial del teclado quedó pendiente por Mac bloqueada; una verificación posterior en iPhone 802/iOS26.5 confirmó el input y ambos botones visibles con teclado abierto, habilitación al escribir `BAJA` y cancelación con retorno a Editar perfil. No hubo `DELETE`; cuentas 2/3, marca2 y ledger11 se conservaron. Sin baja confirmada, Done separado, QA iPad/paisaje, Fotos/Files o captura física; ver evidencia siguiente |
+| Documentos | `docs/architecture/03-frontend-components.md`, `docs/data/03-integration-matrix.md`, `docs/delivery/02-ios-development-evidence.md`, `docs/flows/23-customer-cards.md`, `docs/flows/24-customer-profile.md`, `docs/references/02-gaps.md`, `docs/references/05-change-history.md` |
+
+### 2026-11-01 — Guard de caché entre ediciones iOS
+
+| Campo | Registro |
+|---|---|
+| Frontend | `origin/develop` `32f9e82da26f07789b7fd92f3480fd6ea9700260`; el código de producto export/baja/teclado continúa igual a `f4ceb708`. `4878aea` corrige la expectativa de una prueba existente y `32f9e82` incorpora guard de caché y tests |
+| Causa y corrección | En Release (`--dev=false`), Expo SDK 54 omitió el reset de Metro cuando `CI=1`, permitiendo reutilizar valores transformados de otra edición. El guard ahora deriva `cacheVersion` de SHA-256 sobre las variables `EXPO_PUBLIC_*` ordenadas, sin imprimir ni almacenar sus valores |
+| Validaciones | Cinco tests nuevos del guard; 424/424 unitarias localmente y TypeScript. CI `4878aea` completó con 161 browser aprobadas, 418 aprobaciones y un test Swift omitido. CI del PR de `32f9e82` verde (423 unitarias y una omitida, navegador 160+1 retry, config 9/9, Doctor 18/18 y audit 0). Releases de 32 auditados: free con 2473 fuentes, cero IAP, flags free correctos, 20 manifests y firma; interno con 2493 fuentes, 16 coincidencias exactas, flags internos correctos, Coordinator/IAP/OpenIAP/Sharing/FileSystem, 20 manifests, firma ad hoc y familias iPhone/iPad. El perfil free→internal con `CI=1` y sin reset manual pasó; conteos de bundles JS de prueba 2532/2552. El bundle intermedio `4878aea` CI=0 se conserva como evidencia anterior |
+| Límites | Release interno `32f9e82` aún no instalado/ejecutado; prueba de UI de teclado posterior a `f4ceb708` pendiente en dispositivo. Sin merge, despliegue o promoción de servicios |
+| Documentos | `docs/architecture/03-frontend-components.md`, `docs/data/03-integration-matrix.md`, `docs/delivery/02-ios-development-evidence.md`, `docs/flows/24-customer-profile.md`, `docs/references/02-gaps.md`, `docs/references/05-change-history.md` |
+
+### 2026-11-01 — Exportación y baja de cuenta; cierre de evidencias iOS
+
+| Campo | Registro |
+|---|---|
+| Documentación | Actualización de la evidencia de perfil y los límites de integración, componentes, brechas e historial; catálogo regenerado en el commit posterior para conservar el gate limpio de fuentes |
+| Frontend | Corte anterior: `origin/develop` en `4878aeac961bc92bd4468ad0e8e13a3bb9f9914e`; producto igual a `f4ceb708` y el commit posterior corrigió la expectativa de una prueba existente. En ese corte, CI de 487 seguía en curso; se cerró después, según la actualización siguiente |
+| Backend | Sin cambios; `gagonzalez1/app-loyalty` `fork/develop` permanece en `7fd33df`. PR #47 en borrador, sin promoción a `am-p/app-loyalty` |
+| Cambios detectados | Exportación de cuenta comprobada por API y UI web/nativa con límites separados; baja API comprobada con la cuenta descartable. La baja confirmada desde la UI nativa no se ejecutó; se verificó apertura, escritura de BAJA y cancelación sin eliminar las cuentas originales. La hoja de exportación nativa se mostró y canceló con limpieza del temporal, sin completar Guardar en Archivos |
+| Evidencia de cuenta | Export API devolvió 200; la baja API respondió 202 y la comprobación de base confirmó anonimización y revocación de sesiones para la cuenta descartable. Cuentas 2 y 3, marca 2 y ledger de 11 movimientos permanecieron intactos. El cambio de email recibió `503 EMAIL_CHANGE_UNAVAILABLE`; email sin cambios y no se envió correo |
+| Validaciones frontend | En `f4ceb708`: 419/419 pruebas unitarias y TypeScript; Chrome y WebKit 5/5 para export/baja y controles visibles a 390×480. En el corte de esta entrada, CI 487 y la auditoría interna nueva estaban pendientes; la actualización siguiente registra el resultado CI y la auditoría intermedia con `CI=0`. La auditoría `free` de f4 pasó (2473 fuentes, cero IAP, Expo Sharing/hash del backport y 20 manifests de privacidad). `69ad97f` seguía siendo la evidencia interna histórica |
+| Decisiones/entorno | Apple Developer y Google OAuth siguen pospuestos. No hubo merge ni promoción/despliegue de servicios; la rama frontend recibió commit directo en `develop` y su PR permanece abierto |
+| Documentos | `docs/data/03-integration-matrix.md`, `docs/architecture/03-frontend-components.md`, `docs/references/02-gaps.md`, `docs/references/05-change-history.md`; el flujo de perfil y la evidencia de entrega se actualizaron por separado |
+
 ### 2026-10-02 — Arquitectura vigente y topología por ambiente
 
 - Revisión desde ramas actuales en checkouts limpios; API oficial de Coolify, imágenes, endpoints de versión y 41 tablas por base comprobados. [Evidencia completa](#/runtime-snapshot).

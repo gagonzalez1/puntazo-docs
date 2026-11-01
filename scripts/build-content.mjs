@@ -150,15 +150,17 @@ const payload = {
 };
 const serialized = `${JSON.stringify(payload, null, 2)}\n`;
 
+const current = await readFile(outputPath, "utf8").catch(() => "");
+const normalize = (value) => value.replace(/"generatedAt":\s*"[^"]+"/, '"generatedAt": "<ignored>"');
+
 if (checkOnly) {
-  const current = await readFile(outputPath, "utf8").catch(() => "");
-  const normalize = (value) => value.replace(/"generatedAt":\s*"[^"]+"/, '"generatedAt": "<ignored>"');
   if (normalize(current) !== normalize(serialized)) {
     throw new Error("public/generated/catalog.json está desactualizado; ejecutar npm run content:build");
   }
   console.log(`Contenido válido: ${docs.length} documentos, ${ids.size} IDs únicos.`);
 } else {
   await mkdir(path.dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, serialized);
+  // An unchanged catalog must not dirty a freshly verified build checkout.
+  if (normalize(current) !== normalize(serialized)) await writeFile(outputPath, serialized);
   console.log(`Catálogo generado: ${docs.length} documentos.`);
 }

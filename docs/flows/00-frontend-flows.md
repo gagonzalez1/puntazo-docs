@@ -5,13 +5,15 @@ group: 02 · Flujos frontend
 order: 0
 parent: overview
 level: hub
-status: current
+status: mixed
 summary: Recorridos implementados con servicios reales y límites por ambiente.
 diagram: true
-authority: source_code
+authority: mixed
 ---
 
 # Flujos del frontend
+
+Los flujos de acceso y suscripción incorporan el [delta iOS local del 01/11/2026](#/ios-development), con Apple y dos ediciones. Su evidencia se distingue del runtime de octubre y de las verificaciones externas pendientes.
 
 ```mermaid
 flowchart LR

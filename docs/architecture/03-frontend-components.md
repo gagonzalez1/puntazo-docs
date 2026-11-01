@@ -5,14 +5,16 @@ group: 01 · Arquitectura C4
 order: 30
 parent: c4-containers
 level: component
-status: current
+status: mixed
 summary: Expo Router, sesiones, caché de servidor y servicios reales para comercio y cliente.
 diagram: true
 codeRefs: required
-authority: source_code
+authority: mixed
 ---
 
 # C4 · Componentes frontend
+
+El [delta iOS del 01/11/2026](#/ios-development) agrega fuentes de desarrollo. Los Releases locales `free` y `billing-internal` de `32f9e82` pasaron auditoría antes del cambio posterior al coordinador de reseñas; son evidencia histórica del código anterior y no de `7a47558`. `69ad97f` sigue como evidencia histórica de QA y compras. El HEAD actual `origin/develop` `7a47558af1d81d109a69c0ffdac1b23e3f9a5bf4` separa actualización de candidatos y contexto de reserva para evitar repetir leases al refrescar tarjetas. Ambos Releases iOS y Android JS del HEAD actual pasaron auditoría, incluyendo el coordinador corregido; la CI del push quedó verde con 161 navegador sin retry. El interno no se instaló ni ejecutó. La revisión de runtime que sigue conserva su fecha; las nuevas aristas son del candidato de desarrollo.
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
@@ -21,6 +23,10 @@ flowchart TD
  R[Expo Router · layouts y pantallas] --> AUTH[useAuthStore · identidad y contexto]
  AUTH --> AS[authService]
  AS --> DS[demoService · adaptador HTTP real]
+ AS -. candidato iOS .-> AID[appleIdentityService y API nativa Apple]
+ AID --> HTTP
+ R -. edición interna .-> IAP[Adaptador StoreKit · expo-iap 3.4.13]
+ IAP --> HTTP
  R --> Q[TanStack Query · hooks]
  Q --> DS
  Q --> MS[Servicios comerciales, personal y suscripción]
@@ -42,6 +48,14 @@ flowchart TD
 - Access token en memoria. Web usa cookie HttpOnly para refresh; nativo guarda refresh en SecureStore. El cliente intenta una sola recuperación ante un 401 compatible.
 - Web puede abrir SSE autenticado de tarjetas; el cliente combina actualización de consultas y comprobación de movimientos para las celebraciones.
 - El helper de instalación PWA está integrado y publicado en las imágenes actuales de testing y landing testing. El corte final acredita sus SHA y salud; la instalación física en cada dispositivo no se verificó en esta revisión.
+
+## Delta local iOS
+
+`appleIdentityService` coordina challenge, respuesta nativa y alta; `useAuthStore` conserva sólo el onboarding pendiente en memoria hasta completar el perfil/expirar el challenge. `AuthMethodsManager` ofrece vínculo explícito y reautenticación según `auth_methods`; una dirección relay no selecciona por sí sola una cuenta existente.
+
+`app.config.ts`, perfiles EAS y plugins de edición separan `free` de `billing-internal`. Las auditorías de ambos Releases locales de `32f9e82` pasaron antes del cambio de coordinador, pero no describen el HEAD actual. En `7a47558`, `ReviewInvitationCoordinator` separa la generación de la consulta de candidatos del contexto de reserva: refresh de tarjetas no descarta un lease ya adquirido; cambio de identidad, ruta o readiness descarta respuestas tardías. El coordinador conserva una cuota por entrada y un único diálogo/acuses. Backend mantiene leases 60 s; un lease cuya respuesta se descarte queda diferido hasta otro ingreso, actualización o reconexión, sin timer de vencimiento en la app. En `7a47558`: 434/434 pruebas unitarias y TypeScript pasaron localmente. El CI PR del HEAD previo `32f9e82` quedó verde (160 browser + retry); el push falló dos veces en `google-reviews.spec.ts:43` por carrera de reserva. La CI del push actual `7a47558` quedó verde (161 navegador limpios; 433 unitarias y una omitida, config 9/9, Doctor 18/18 y audit 0). Los artefactos actuales pasaron auditoría: free 2473 fuentes/12 exactas, interno 2493/17 exactas y Android JS 2490/7 exactas. Los flags e IAP corresponden a cada edición; ambos iOS tienen firma ad hoc, familias iPhone/iPad y 20 manifests. Las cifras 32 son históricas; el interno nuevo no se ejecutó ni usó para compras. La QA visual del teclado en iPhone 802/iOS26.5 pasó para campo visible, controles completos y cancelación sin DELETE; no incluye baja confirmada, Done independiente ni QA iPad/paisaje. El bundle intermedio `4878aea` con `CI=0` se conserva como evidencia anterior, no se instaló. `69ad97f` permanece como QA/compra histórica. `StoreLocationsMap` y `AddressPicker` usan el proveedor Google preparado para iOS. La configuración OAuth Google iOS fue pospuesta, aunque sus parámetros estén previstos en código. [Evidencia](#/ios-development-evidence)
+
+Paths del candidato: `src/features/auth/services/appleIdentityService.ts`, `nativeAppleIdentity.ios.ts`, `AuthMethodsManager.tsx`, `plugins/withIOSEdition.js` y `plugins/withStoreKitTests.js`. Los enlaces de código siguientes apuntan a ramas móviles, no acreditan que esos cambios locales ya estén publicados.
 
 
 ## Referencias de código
