@@ -36,7 +36,7 @@ Para obtener contexto suficiente sin cargar toda la documentación:
 7. [`docs/references/02-gaps.md`](#/implementation-gaps) — brechas que no deben confundirse con comportamiento actual.
 8. [`docs/backend/00-review-index.md`](#/backend-review-index) — decisiones de backend propuestas por Codex que requieren aprobación.
 
-El corte actual es del **02/10/2026**: [estado observado](#/runtime-snapshot) y [topología](#/coolify-deployment-topology). La implementación funcional reemplazó la antigua base de mocks; los documentos objetivo siguen propuestos.
+El último corte de runtime conservado aquí es del **02/10/2026**: [estado observado](#/runtime-snapshot) y [topología](#/coolify-deployment-topology). La entrega iOS del **01/11/2026** agrega [fuentes locales y alcance aprobado](#/ios-development), con [evidencia y pendientes separados](#/ios-development-evidence); no actualiza ese runtime ni acredita un build iOS. Los documentos objetivo conservan su autoridad propuesta.
 
 Después se debe abrir el flujo, la secuencia o el modelo de datos específico de la tarea.
 
@@ -65,7 +65,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 
 ### 2. Estado real de datos e integración
 
-9. [`docs/data/01-current.md`](#/data-current) — modelo persistido en PostgreSQL 0033.
+9. [`docs/data/01-current.md`](#/data-current) — PostgreSQL 0033 observado y migraciones Apple locales separadas.
 10. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — relación pantalla–API y contratos faltantes.
 11. [`docs/references/02-gaps.md`](#/implementation-gaps) — diferencias entre código, documentación y propuesta.
 
@@ -106,6 +106,12 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 ### 6. Diseño objetivo
 
 32. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
+
+### 7. Entrega iOS en desarrollo · 01/11/2026
+
+33. [`docs/delivery/01-ios-development.md`](#/ios-development) — dos ediciones, identidad Apple, Google Maps, reglas de billing y configuración; alcance aprobado con implementación local.
+34. [`docs/delivery/02-ios-development-evidence.md`](#/ios-development-evidence) — fuentes/commits iniciales, pruebas y pendientes; sin publicar ni usar SHA históricos como selector de build.
+35. [`docs/sequences/06-apple.md`](#/sequence-apple) — challenge, acceso, vínculo, reautenticación y baja Apple; credenciales reales pendientes.
 
 ## Estrategia de carga para un LLM
 

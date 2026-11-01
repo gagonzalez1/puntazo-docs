@@ -14,6 +14,8 @@ authority: mixed
 
 # C4 · Contenedores
 
+El [delta iOS del 01/11/2026](#/ios-development) pertenece a fuentes locales, con verificación externa pendiente. Las aristas marcadas como candidato no describen un servicio publicado; el resto del corte de runtime mantiene su fecha histórica.
+
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ```mermaid
@@ -31,6 +33,9 @@ flowchart LR
  API -->|testing| S
  API --> E[SMTP]
  API -->|testing configurado| MP[Mercado Pago]
+ N -. iOS candidato .-> AI[Apple Identity]
+ API -. candidato local .-> AI
+ API -. billing interno .-> AS[App Store Server API y notificaciones V2]
  D[Docs · React y vinext] -. independiente .- L
  LEG[Sitio legal estático] -. independiente .- L
  click API href "#/backend-components" "Ver backend"
@@ -57,6 +62,12 @@ Cada ambiente conserva su propia API, base y objetos. El diagrama resume funcion
 La landing sirve `/` y redirige las antiguas páginas divididas a secciones de la misma página. El resto pertenece a Expo: `/login`, rutas autenticadas, manifest y service worker. Testing conserva `/api/v1` y el prefijo público de medios para clientes instalados. No se atribuye al Compose anterior el tráfico actual: está detenido.
 
 Producción informa esquema `0033`, pero eso no implica paridad de configuración con testing. Ver [integraciones](#/integration-matrix) y [brechas operativas](#/implementation-gaps).
+
+## Extensión iOS en fuentes locales
+
+La app pública `free` y la interna `billing-internal` comparten la API propia y el ciclo de sesión. Apple Identity es un proveedor distinto de StoreKit/App Store Server API: usa otras credenciales y una cola de revocación de identidad separada de la reconciliación comercial. La edición gratis debe excluir la integración de cobro de su artefacto; no llama a un checkout externo como alternativa.
+
+Google Maps se prepara como proveedor nativo tanto para explorar sucursales como para seleccionar su dirección. El SDK Maps iOS está habilitado y la clave restringida fue creada en la tarea; eso no acredita una llamada real desde una app iOS compilada. Google OAuth iOS permanece pospuesto. [Estado de verificación](#/ios-development-evidence)
 
 
 ## Referencias de código

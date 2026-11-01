@@ -5,8 +5,8 @@ group: 05 · Referencias
 order: 10
 parent: overview
 level: reference
-status: current
-authority: source_code
+status: mixed
+authority: mixed
 summary: Repositorios dueños, ramas por ambiente y evidencia separada del runtime.
 diagram: false
 ---
@@ -17,9 +17,9 @@ Las ramas seleccionan fuentes; los SHA registran lo inspeccionado o desplegado. 
 
 | Plano | Repositorio y ramas | Responsabilidad |
 |---|---|---|
-| Frontend | [gonzalotev/app-fidelidad](https://github.com/gonzalotev/app-fidelidad), `main` / `testing`; `develop` sólo para el clon observado | Producto Expo y web de cada ambiente |
+| Frontend | [gonzalotev/app-fidelidad](https://github.com/gonzalotev/app-fidelidad), `main` / `testing`; `origin/develop` seleccionada para la entrega iOS | Producto Expo y web de cada ambiente; iOS local todavía sin publicación |
 | Backend dueño | [am-p/app-loyalty](https://github.com/am-p/app-loyalty), `main` | API, Backoffice API y migraciones; destino de promoción funcional |
-| Backend publicación testing | [gagonzalez1/app-loyalty](https://github.com/gagonzalez1/app-loyalty/tree/testing), `testing` | Fork de build/publicación; diferencias comparadas con el dueño |
+| Backend fork | [gagonzalez1/app-loyalty](https://github.com/gagonzalez1/app-loyalty), `testing` para publicación histórica y `fork/develop` para trabajo iOS | Fork de trabajo/publicación; requiere promoción funcional al dueño |
 | Landing | [gagonzalez1/puntazo-landing](https://github.com/gagonzalez1/puntazo-landing), `main` / `testing` | Marketing y entrada/proxy a Expo |
 | Backoffice UI | `gagonzalez1/puntazo-backoffice` (privado), `testing` / `main` | UI interna; main preparada sin publicación activa |
 | Docs | [gagonzalez1/puntazo-docs](https://github.com/gagonzalez1/puntazo-docs), `main` | Portal público separado; Markdown y catálogo generado |
@@ -27,6 +27,8 @@ Las ramas seleccionan fuentes; los SHA registran lo inspeccionado o desplegado. 
 | Preview histórico | [gagonzalez1/puntazo-preview](https://github.com/gagonzalez1/puntazo-preview/tree/testing), `testing` | Integración anterior retenida; su Compose ya no atiende el tráfico actual |
 
 La revisión del [estado observado](#/runtime-snapshot) registra HEAD, imágenes y configuración del 02/10/2026. Los enlaces de código siguen ramas móviles: hay que fetched/leer el HEAD vigente antes de afirmar una implementación nueva.
+
+La [entrega iOS del 01/11/2026](#/ios-development) seleccionó `origin/develop` del frontend oficial, `fork/develop` del backend y esta rama docs basada en `origin/main`. Frontend y backend están guardados y publicados: frontend `69ad97f445cb7c96d69686b7497ba72a77d41909`, PR borrador [#110](https://github.com/gonzalotev/app-fidelidad/pull/110) y CI verde [run 41279001660](https://github.com/gonzalotev/app-fidelidad/actions/runs/41279001660); backend fork `90cde5d29f86c8f16dfb91ab4273c48dd4f45dc4`, con promoción al dueño [#47](https://github.com/am-p/app-loyalty/pull/47) y CI verde [run 41279693752](https://github.com/gagonzalez1/app-loyalty/actions/runs/41279693752). El baseline backend `9c802f7` incorpora upstream `676e052` y el PR publicado de Backoffice #46, todavía no integrado en el dueño. Freshness verificó docs `origin/main` `9e91ff0` y frontend `origin/develop`; el backend `fork/develop` fue verificado online y su CI y pruebas finales corresponden a `90cde5d29f86c8f16dfb91ab4273c48dd4f45dc4`. La cobertura del índice fue 45/45, sin referencias rotas. Los checkouts activos son `.worktrees/ios-development/{frontend,backend,docs}`. Un commit publicado o PR abierto no actualiza otras ramas ni runtime. Mis logros PR104 no forma parte de esta integración.
 
 1. Seleccionar repositorio dueño y rama de integración explícitamente.
 2. Fetch y comparar checkout; preservar trabajo local si está sucio o desactualizado.

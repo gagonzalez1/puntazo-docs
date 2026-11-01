@@ -13,6 +13,8 @@ authority: mixed
 
 # Datos · Matriz pantalla–API
 
+La tabla histórica conserva su corte de runtime. El [delta iOS local](#/ios-development) se registra por separado abajo: rutas implementadas en el checkout de trabajo no equivalen a rutas desplegadas ni al OpenAPI objetivo.
+
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ```mermaid
@@ -43,6 +45,21 @@ flowchart LR
 | Instalación PWA asistida | Helper integrado en ramas testing frontend/landing | Publicado en las imágenes actuales de testing; instalación física no verificada |
 
 Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. Su existencia se comprobó en el router real y las llamadas frontend. No se sustituyó por el OpenAPI objetivo. La revisión runtime comprobó versiones, salud, configuración no secreta y estructura de las bases; no creó movimientos, cobros ni sesiones de usuarios.
+
+## Delta local iOS · 01/11/2026
+
+| Pantalla o proceso | Contrato implementado en el candidato local | Estado y límite |
+|---|---|---|
+| Acceso/alta Apple | `POST /v1/auth/apple/challenge`, `POST /v1/auth/apple` | Challenge 5 minutos, nonce intacto hacia Apple; no consumir código antes de completar perfil. Credenciales y consentimiento reales pendientes |
+| Métodos de acceso y reauth | `POST /v1/auth/apple/link`, `POST /v1/auth/reauthenticate`; `auth_methods.apple` adicional | Vínculo explícito, autenticación reciente y versión; relay no produce fusión automática |
+| Privacidad/cuenta | Export/baja existentes integran identidad y cola durable de revocación | Export sin tokens; revocación externa reintentable. Prueba de código/base local no acredita revocación real en Apple |
+| Estado comercial | `GET /v1/marcas/:brand_id/billing`, `GET /v1/marcas/:brand_id/billing/apple/catalog` | `FREE` conserva acceso; 20 productos. Catálogo de precios/ofertas reales pendiente de App Store Connect |
+| Compra/restauración interna | `POST /v1/marcas/:brand_id/billing/apple/intents`, `POST /v1/marcas/:brand_id/billing/apple/sync` | Intención/idempotencia y gates de compra nueva. `sync` admite `restore?: boolean` (default `false`); sólo Restaurar explícito habilita reclamar una transacción tokenless existente tras validación criptográfica y estado canónico Apple, aun con compras nuevas deshabilitadas o trial activo. Se valida proveedor/programa/capacidad/referido antes de reservar y asignar token; reserva de cadena inmutable y confirmación canónica antes de guardar derechos. Prueba HTTP local en `90cde5d29f86c8f16dfb91ab4273c48dd4f45dc4` confirmó recibo Xcode válido `200`/una fila, duplicado idempotente, firma alterada `400`, conflicto de otra marca `409` y `503` para nuevas compras deshabilitadas mientras la compra existente sincronizó durante trial. No prueba puente JS/StoreKit ni App Store API/Sandbox reales; ver [evidencia](#/ios-development-evidence) |
+| Eventos Apple | `POST /v1/apple/app-store/notifications` | Sobre V2/JWS anidado verificados, inbox durable e idempotencia; cadena desconocida queda pendiente sin derechos |
+| Mapa/dirección iOS | `StoreLocationsMap` y `AddressPicker` con proveedor Google | SDK iOS habilitado y clave restringida creada; ejecución nativa/llamadas reales pendientes |
+| Google OAuth iOS | Parámetros y adaptador nativo preparados | Configuración externa pospuesta expresamente por el usuario; no acreditar login iOS |
+
+Estas rutas respetan el envelope existente, `X-Client-Platform`, sesión y versiones. El frontend hace preflight de entitlements antes de preparar y antes de comprar/canjear; sólo una asociación única confirmada por servidor permite continuar con cadena existente. Reserva durable permite reanudar la misma operación/offer para el mismo actor, marca y producto tras incertidumbre. Carreras entre dispositivos posteriores al preflight y Ask to Buy antes de exponer una transacción conservan límites de observabilidad de Apple; propiedad de cadena se valida en backend. **No se desplegaron estas rutas en esta entrega.** La edición iOS gratis excluye el recorrido de compra y enlaces a facturación externa; la interna requiere flags separados de verificación y nuevas compras. Ver [secuencia Apple](#/sequence-apple), [programa y suscripción](#/flow-plan-selection) y [evidencia](#/ios-development-evidence).
 
 
 ## Referencias de código
