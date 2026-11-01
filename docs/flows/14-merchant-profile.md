@@ -36,5 +36,7 @@ Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y 
 
 ## Referencias de código
 
+En la rama de desarrollo iOS, el propietario ve **Plan y facturación → Prueba gratuita** en la pestaña General de Mi Tienda cuando el build usa `EXPO_PUBLIC_IOS_EDITION=free` (también por defecto). Es un aviso estático de la edición gratuita, sin fechas ni acciones de pago y sin llamadas al servicio de suscripciones. No aparece para administradores, operadores ni clientes. Web y Android conservan sus recorridos. La edición `billing-internal` muestra el acceso interno Apple en su lugar; la [separación y publicación futura](#/ios-development) requieren un nuevo build, no un flag remoto.
+
 - [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/merchant/services/commercialService.ts)
 - [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)

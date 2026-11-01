@@ -53,10 +53,12 @@ Los paths son relativos al workspace Puntazo. Los commits iniciales sólo son ev
 
 | Edición | Comportamiento aprobado | Límite de publicación |
 |---|---|---|
-| `free` | Acceso sin facturación, incluso cuando haya vencido el trial comercial; sin checkout, enlaces a cobros externos ni Mercado Pago en el recorrido iOS | Debe excluir autolinking de `expo-iap` y entrypoints JavaScript de billing del artefacto, además de sus botones |
+| `free` | Acceso sin facturación, incluso cuando haya vencido el trial comercial; el propietario ve **Plan y facturación → Prueba gratuita** en Mi Tienda. Sin checkout, enlaces a cobros externos ni Mercado Pago en el recorrido iOS | Debe excluir autolinking de `expo-iap` y entrypoints JavaScript de billing del artefacto, además de sus botones |
 | `billing-internal` | Catálogo, intención de compra, compra/restauración, sincronización y gestión de suscripción Apple | Perfil interno; `expo-iap` fijado en `3.4.13`; configuración `.storekit` local para desarrollo |
 
 El empaquetado y el harness nativo están en preparación/verificación. Esta tabla fija las condiciones de aceptación; no prueba por sí misma el contenido de un `.ipa`. Una activación pública futura requiere un nuevo build y revisión de Apple. No se contempla encender funciones de cobro ocultas mediante un flag remoto. La regla 2.5.19 prohíbe incluir funciones ocultas, inactivas o sin documentar en el binario. [Guidelines oficiales](https://developer.apple.com/app-store/review/guidelines/)
+
+El aviso gratuito fue solicitado expresamente por el usuario en el seguimiento del 01/11. Reutiliza la selección de edición del build, sin añadir otro flag comercial: `free` muestra el estado informativo y `billing-internal` conserva el acceso interno a compras. El aviso no consulta suscripciones ni inventa vencimientos, no reinicia el trial del servidor y no implica cancelar cobros de proveedores ya contratados. Cambiar la variable selecciona la siguiente compilación; no habilita compras en una app gratuita ya instalada. La habilitación pública sigue requiriendo catálogo/configuración y una nueva versión revisada.
 
 ## Identidad y sesión
 
