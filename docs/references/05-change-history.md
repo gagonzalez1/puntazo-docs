@@ -29,6 +29,18 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-11-01 — Carrera de leases en el coordinador de reseñas
+
+| Campo | Registro |
+|---|---|
+| Frontend | HEAD `origin/develop` `7a47558af1d81d109a69c0ffdac1b23e3f9a5bf4`; 10 tests nuevos, 434/434 unitarias y TypeScript pasaron localmente |
+| Causa y corrección | En `32f9e82`, un refresh de tarjetas/candidatos invalidaba la respuesta de una reserva aún vigente y el hook reintentaba el mismo ID. La fixture browser previa aceptaba leases repetidos, aunque backend excluye leases activos y responde `409`. El fix separa generación GET de contexto reserva, conserva leases en refresh y descarta respuestas tardías al cambiar actor/sesión/ruta/readiness; mock ahora modela lease y `409`, con aserción exacta de intentos |
+| Estado de leases | Backend reserva durante 60 s. Si la respuesta tardía se descarta tras adquirir lease, el servidor oculta la invitación hasta el vencimiento. La app no tiene timer; un trigger previo al vencimiento requiere otro ingreso/actualización/reconexión posterior para recuperarla |
+| CI | CI PR de `32f9e82` quedó verde tras retry; push falló dos veces en `google-reviews.spec.ts:43`, con los otros 160 casos pasando. La CI de push de `7a47558` (41353090192) quedó verde con 161 navegador sin retry, 433 unitarias y una omitida por Swift/Linux, config 9/9, Doctor 18/18 y audit 0; el PR41353093741 conserva su resultado independiente |
+| Artefactos/entorno | Releases `free`/interno y Android de `32f9e82` son históricos y anteriores al fix. Ambos Releases iOS actuales y Android JS pasaron auditoría e incluyen el coordinador exacto a HEAD (12/17/7 archivos comparados; fuentes2473/2493/2490). Las seis pruebas browser de reseñas pasaron en Chromium y WebKit; sin ejecución de compras en el interno nuevo. Sin cambio backend/schema, despliegue o servicios nuevos |
+| QA conservada | Export nativo sigue limitado a apertura/cancelación de hoja en iPad cliente e iPhone comercio, sin guardar a Files; la inspección visual nativa del fix de teclado post-`f4ceb708` sigue pendiente por Mac bloqueada |
+| Documentos | `docs/architecture/03-frontend-components.md`, `docs/data/03-integration-matrix.md`, `docs/delivery/02-ios-development-evidence.md`, `docs/flows/23-customer-cards.md`, `docs/flows/24-customer-profile.md`, `docs/references/02-gaps.md`, `docs/references/05-change-history.md` |
+
 ### 2026-11-01 — Guard de caché entre ediciones iOS
 
 | Campo | Registro |
