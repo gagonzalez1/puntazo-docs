@@ -8,7 +8,7 @@ level: integration
 status: current
 summary: Medición web opcional en GA4 y conteo persistido de marcas en Backoffice.
 diagram: true
-authority: implemented
+authority: source_code
 ---
 
 # Visitas y altas de comercios
