@@ -37,3 +37,8 @@ La auditoría anterior de testing registró un pendiente de dependencias; esta r
 - [Defaults y validación de entorno](https://github.com/am-p/app-loyalty/blob/main/internal/config/config.go)
 - [Router Backoffice](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
 - [UI por períodos en testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/app/(tabs)/analytics/index.tsx)
+
+
+## Actualización acotada · adquisición web, 01/11/2026
+
+[Visitas y altas de comercios](#/acquisition-measurement) describe el proveedor GA4 opcional, consentimiento, contrato de eventos y conteo persistido en Backoffice. Este corte específico no actualiza ni certifica las demás integraciones de la revisión histórica anterior.

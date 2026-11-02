@@ -52,3 +52,8 @@ Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. S
 - [Suscripción](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/merchant/services/subscriptionService.ts)
 - [Rutas reales](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
 - [Analíticas de testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/services/merchantService.ts)
+
+
+## Actualización acotada · adquisición web, 01/11/2026
+
+[Visitas y altas de comercios](#/acquisition-measurement) describe el proveedor GA4 opcional, consentimiento, contrato de eventos y conteo persistido en Backoffice. Este corte específico no actualiza ni certifica las demás integraciones de la revisión histórica anterior.

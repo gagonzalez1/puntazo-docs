@@ -44,3 +44,8 @@ flowchart LR
 
 - [Rutas y límites de acceso](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
 - [Integraciones y workers](https://github.com/am-p/app-loyalty/blob/main/cmd/server/main.go)
+
+
+## Actualización acotada · adquisición web, 01/11/2026
+
+[Visitas y altas de comercios](#/acquisition-measurement) describe el proveedor GA4 opcional, consentimiento, contrato de eventos y conteo persistido en Backoffice. Este corte específico no actualiza ni certifica las demás integraciones de la revisión histórica anterior.
