@@ -69,6 +69,8 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 10. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — relación pantalla–API y contratos faltantes.
 11. [`docs/references/02-gaps.md`](#/implementation-gaps) — diferencias entre código, documentación y propuesta.
 
+12. [`docs/data/04-acquisition-measurement.md`](#/acquisition-measurement) — visitas web opcionales en GA4 y altas persistidas en Backoffice; corte específico de noviembre.
+
 ### 3. Backend objetivo pendiente de aprobación
 
 12. [`docs/backend/00-review-index.md`](#/backend-review-index) — checklist de decisiones `PC-01` a `PC-14`.

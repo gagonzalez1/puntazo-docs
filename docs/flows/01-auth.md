@@ -40,3 +40,8 @@ Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y 
 
 - [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/auth/store/useAuthStore.ts)
 - [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
+
+
+## Actualización acotada · adquisición web, 01/11/2026
+
+[Visitas y altas de comercios](#/acquisition-measurement) describe el proveedor GA4 opcional, consentimiento, contrato de eventos y conteo persistido en Backoffice. Este corte específico no actualiza ni certifica las demás integraciones de la revisión histórica anterior.

@@ -68,3 +68,8 @@ Los defaults se resolvieron contra `internal/config/config.go` de la imagen fuen
 
 - [Defaults y validación](https://github.com/am-p/app-loyalty/blob/main/internal/config/config.go)
 - [Rutas desplegables](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
+
+
+## Actualización acotada · adquisición, 02/11/2026
+
+GA4 opcional y Backoffice de altas publicados: landing main `d88d4ea`, web main `f77ab72`, Backoffice main `9158c02`. API productiva `9c802f7`/0043 preservada. QR raíz conservado; corrección permanente de DNS del proxy probada al reemplazar upstream sin recarga. [Fuentes, contrato, pruebas y límites](#/acquisition-measurement). Los otros estados de este documento mantienen su fecha histórica.

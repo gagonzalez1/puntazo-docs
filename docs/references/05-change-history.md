@@ -63,3 +63,8 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 | Documentos modificados | Arquitectura, flujos, secuencias, datos, backend spec y `openapi.yaml` |
 | Decisiones | Las decisiones `PROPUESTA CODEX PC-01` a `PC-14` continúan pendientes de revisión humana |
 | Validaciones | Catálogo Markdown, Mermaid, referencias, OpenAPI, lint, build y pruebas de renderizado |
+
+
+## Actualización acotada · adquisición, 02/11/2026
+
+GA4 opcional y Backoffice de altas publicados: landing main `d88d4ea`, web main `f77ab72`, Backoffice main `9158c02`. API productiva `9c802f7`/0043 preservada. QR raíz conservado; corrección permanente de DNS del proxy probada al reemplazar upstream sin recarga. [Fuentes, contrato, pruebas y límites](#/acquisition-measurement). Los otros estados de este documento mantienen su fecha histórica.

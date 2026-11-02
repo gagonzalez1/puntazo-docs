@@ -64,3 +64,8 @@ Producción informa esquema `0033`, pero eso no implica paridad de configuració
 - [Bootstrap API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/main.go)
 - [Cliente HTTP Expo](https://github.com/gonzalotev/app-fidelidad/blob/main/src/core/api/client.ts)
 - [Entrada y proxy landing](https://github.com/gagonzalez1/puntazo-landing/blob/main/nginx/default.conf.template)
+
+
+## Actualización acotada · adquisición web, 01/11/2026
+
+[Visitas y altas de comercios](#/acquisition-measurement) describe el proveedor GA4 opcional, consentimiento, contrato de eventos y conteo persistido en Backoffice. Este corte específico no actualiza ni certifica las demás integraciones de la revisión histórica anterior.
