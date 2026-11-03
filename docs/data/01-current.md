@@ -14,6 +14,13 @@ authority: mixed
 
 # Datos · Estado implementado
 
+## Actualización operativa iOS · 03/11/2026
+
+La migración 0044 de identidad Apple quedó desplegada en producción y testing independientes; los modelos previos se conservan. Credencial Apple cifrada/revocable validada en producción con un ingreso físico, sesión y destino push activos; no se publican subjects, correos ni tokens. Testing conserva datos de55 tablas comprobados en ensayo de restauración/migración. Por petición explícita se dieron de baja las marcas demoApple 9/10/11 productivas, sucursales/programas/tarjeta/membresías/accesos; cuentas e historial intactos y filas ajenas de57 tablas comparadas. No se agregó fecha de nacimiento.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
 **Delta productivo03/11/2026:**0044 añade apple_identities, apple_auth_challenges y apple_identity_revocations. La fuente314248b y55tablas anteriores preservadas se comprobaron con backup/restore aislado e invariancia antes/después;0045billing no se aplicó. El DER/corte de octubre siguientes siguen siendo históricos y las entidades billing locales conservan ese límite. [Evidencia de entrega](#/ios-development-evidence).
 
 El [delta iOS del 01/11/2026](#/ios-development) añade tablas locales de identidad y billing Apple. Se validaron en una base aislada de pruebas; no se aplicaron a los ambientes descritos en el corte histórico. El DER distingue esas relaciones con el sufijo `local`.

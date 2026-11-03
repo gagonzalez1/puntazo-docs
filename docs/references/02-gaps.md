@@ -13,6 +13,13 @@ diagram: false
 
 # Brechas y límites actuales
 
+## Actualización operativa iOS · 03/11/2026
+
+Resueltos en este corte: configuración Sign in with Apple de backend, consentimiento físico productivo hasta Mi tarjeta, APNs en EAS y publicación AASA JSON. Pendientes específicos: consentimiento Apple contra testing, Google en un dispositivo físico, entrega push física y redirección/universal-link física. El cierre del comercio de revisión exige no reutilizar sus credenciales antiguas: notas Apple actualizadas con Cliente y alta gratuita de Comercio. La clasificación13+ y el control 18+ legado permanecen distintos por instrucción de diferir el cambio; no se declara coherencia de ese flujo resuelta. Las PR 48 de identidad, 117 de iOS y 120 de QA siguen propuestas de integración en sus propietarios; no se afirma merge de main ni envío a App Review.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
 ## Actualización de entrega · 03/11/2026
 
 Cerrados: subida y procesamiento de TestFlight1.0.0(2), seis capturas, ficha/privacidad, cuentas Cliente32/Comercio36 verificadas y configuración/rutas Apple productivas0044. QA nativa comprobó Cliente iPhone/iPad y Comercio/Sellos en iPhone. Pendientes de revisión: consentimiento Apple real, APNs, AASA y reconciliación de gate/legales18 con la clasificación13+ pedida por el usuario. StoreKit0045 continúa fuera de producción. [Evidencia actual y cortes históricos](#/ios-development-evidence).

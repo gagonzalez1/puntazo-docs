@@ -13,6 +13,13 @@ authority: mixed
 
 # Evidencia del desarrollo iOS
 
+## Actualización operativa iOS · 03/11/2026
+
+Corte03/11: producción backend2cd172f/0044, testing c80fa9b/0044 saludables; cliente Apple físico llegó a Mi tarjeta en producción y se conserva. APNs CBQ789L8BS en EAS; AASA JSON público y legales1.3 publicados. Candidato público 83c7a8f/build 4 firmado,20 manifiestos de privacidad idénticos al build 2 y permisosApple/push correctos; cargado a Apple/procesando. QA 59eecab/build 5, EAS 63326765-17a9-4050-a8f3-9aa71bc575c2, en compilación sobretesting con sesiones/borradores/catálogo aislados. TypeScript/453 unitarias/10 controles iOS/Doctor 18/18/auditoría 0/build web PASS. Marcas demoApple 9/10/11 dadas de baja en producción por pedido explícito; cuentas e historial preservados. Capturas publicadas y clasificación13+ conservadas; retirar 18+ sigue diferido. No se envió a App Review. Informes operativos locales: reports/ios-appstore-20261103/{apple-demo-cleanup.md,apple-testing-readiness.md,native-legal-ipa4-audit.json}.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
 ## Actualización de entrega · 03/11/2026
 
 La primera edición gratuita iOS está en TestFlight **1.0.0(2)**: frontend propietario `gonzalotev/app-fidelidad`, rama seleccionada `release/ios-appstore-20261103`, fuente5fccb3d5e405372c450a43e8ef6bb4dfcb2af617, [PR117](https://github.com/gonzalotev/app-fidelidad/pull/117). EASbuildc3da8510-bfbd-4837-a845-765488b59327 y submission5f2ab2ae-2728-4f67-a5fd-5e07b164b0ac finalizados; AppleVALID/READY_FOR_BETA_TESTING. Se guardaron3capturas nativas iPhone y3iPad13, privacidad17tipos sin tracking y disponibilidad gratuita sólo Argentina. No se envió a App Review.

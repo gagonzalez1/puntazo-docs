@@ -12,6 +12,13 @@ summary: Registro funcional de las actualizaciones de documentación y de los co
 
 # Historial de sincronizaciones documentales
 
+## Actualización operativa iOS · 03/11/2026
+
+03/11/2026: evidencia de entrega iOS y aislamiento de QA actualizada. No aprueba propuestas ajenas. Identidad Apple publicada y login físico productivo confirmado, APNs configurada, AASA y legales1.3 públicos. Retiro del control 18+ diferido por el usuario, clasificación13+ guardada. Demos comerciales Apple productivas dadas de baja conservando usuarios/historia, futuras pruebas sólo testing. Backendtesting0044 y frontendQA 59eecab preparados; compilaciones4pública / 5 QA pendientes de procesamiento/terminación al registrar este corte. Los estados históricos siguientes conservan su fecha.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
 Este historial explica **qué cambió y qué documentación se revisó**. No reemplaza a `git log`: agrega contexto funcional para humanos y LLM.
 
 ## Cómo registrar una actualización

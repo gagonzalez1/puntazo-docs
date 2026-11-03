@@ -14,6 +14,13 @@ authority: mixed
 
 # C4 · Componentes frontend
 
+## Actualización operativa iOS · 03/11/2026
+
+La rama propietaria qa/ios-review-testing-20261103/59eecab agrega un perfil iOS de QA que apunta a api-testing.puntazo.pro y separa llavero, borradores de registro/invitaciones/sucursales y catálogo MMKV mediante namespace testing. El candidato público 83c7a8f conserva producción y sus claves existentes. El aislamiento no cambia permisos ni controles backend. La clasificación13+ está guardada en Apple; el usuario difirió retirar el control 18+ del onboarding, que permanece.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
 El [delta iOS del 01/11/2026](#/ios-development) agrega fuentes de desarrollo. Los Releases locales `free` y `billing-internal` de `32f9e82` pasaron auditoría antes del cambio posterior al coordinador de reseñas; son evidencia histórica del código anterior y no de `7a47558`. `69ad97f` sigue como evidencia histórica de QA y compras. El HEAD actual `origin/develop` `7a47558af1d81d109a69c0ffdac1b23e3f9a5bf4` separa actualización de candidatos y contexto de reserva para evitar repetir leases al refrescar tarjetas. Ambos Releases iOS y Android JS del HEAD actual pasaron auditoría, incluyendo el coordinador corregido; la CI del push quedó verde con 161 navegador sin retry. El interno no se instaló ni ejecutó. La revisión de runtime que sigue conserva su fecha; las nuevas aristas son del candidato de desarrollo.
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.

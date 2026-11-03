@@ -14,6 +14,13 @@ authority: mixed
 
 # C4 · Contenedores
 
+## Actualización operativa iOS · 03/11/2026
+
+La API de producción observada en 2cd172f/0044 y la API de testing en c80fa9b/0044 soportan identidad Apple nativa. Testing usa una base y secreto JWT distintos; backend challenge200 verificado en ambos. La clave de identidad Q9F8VDN8NL permanece privada en VPS, sólo montada en backend. APNs CBQ789L8BS quedó guardada en EAS para com.puntazo.app/producción; entrega física pendiente. No hay cambio de topología ni StoreKit en esta entrega.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
 Identidad Apple está publicada desde el03/11/2026 en API producción314248b/esquema0044; iOS1.0.0(2) está en TestFlight y el consentimiento físico sigue pendiente. StoreKit conserva el estado interno/local y no se promovió. [Fuentes, datos, pruebas y límites](#/ios-development-evidence).
 
 El [delta iOS del 01/11/2026](#/ios-development) pertenece a fuentes locales, con verificación externa pendiente. Las aristas marcadas como candidato no describen un servicio publicado; el resto del corte de runtime mantiene su fecha histórica.

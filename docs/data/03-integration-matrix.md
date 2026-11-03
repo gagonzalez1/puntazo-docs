@@ -13,6 +13,13 @@ authority: mixed
 
 # Datos · Matriz pantalla–API
 
+## Actualización operativa iOS · 03/11/2026
+
+Corte iOS03/11: Apple nativo→API producción2cd172f/0044 pasó consentimiento físico y altaCliente hasta Mi tarjeta; Apple nativo→API testing c80fa9b/0044 tiene challenge200/configuración privada comprobados, consentimiento físico pendiente. Build 4 público 83c7a8f fue cargado a Apple y está procesando; build 5QA 59eecab se está compilando y usará exclusivamente testing. AASA en las dos rutas públicas responde200/application-json, appID8Y4J9DXGM7.com.puntazo.app y diez rutas de identidad; redirección física aún no acreditada. APNs configurada en EAS; entrega física pendiente.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
 **Delta03/11/2026:** challenge/login/link/reauth/export/bajaApple están publicados en API producción314248b/0044; configuración de clave y challenge200 comprobados. Login por email/roles/operaciónSellos y tarjeta persistida se probaron desde iPhone/iPad según la [evidencia](#/ios-development-evidence). Consentimiento real Apple, APNs y AASA siguen pendientes; StoreKit0045 no fue promovido. Las tablas siguientes conservan su corte histórico.
 
 La tabla histórica conserva su corte de runtime. El [delta iOS local](#/ios-development) se registra por separado abajo: rutas implementadas en el checkout de trabajo no equivalen a rutas desplegadas ni al OpenAPI objetivo.
