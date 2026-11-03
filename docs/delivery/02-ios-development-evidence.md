@@ -23,14 +23,14 @@ El usuario pidió reconstruir el código probado en TestFlight 5 contra producci
 | Proveedores | La audiencia Google del servidor coincide con la configuración iOS; cliente Apple nativo configurado; API productiva saludable. Runtime observado `2cd172fe28e9278682bfdc55a13b27e13cfe8bab`, esquema `0044` |
 | IPA firmado | Firma válida, bundle `com.puntazo.app`, API productiva presente y API de testing ausente en el bundle real; permisos Apple y push de producción presentes; 20 manifiestos de privacidad idénticos al build QA 5; frameworks de billing ausentes |
 | Integridad del IPA | SHA-256 `152d7eb5724dedef5b5c843d610f8215ffda8137a5fd96ef2d4770c823c2b23a` |
-| Apple | Subida del archivo completada con éxito; procesamiento y selección del build 6 pendientes. La consulta de builds de Apple todavía no lo lista. No se envió a App Review |
-| Límites | La sesión web de App Store Connect caducó y debe renovarse para continuar allí. Este corte no acredita procesamiento `VALID`, selección del build 6, login físico de ese build, entrega push ni apertura física de enlaces universales |
+| Apple | Subida completada y procesamiento `VALID`/`APP_STORE_ELIGIBLE`, ID `ab1346b6-0d82-4c44-954b-df43de1450fe`, `usesNonExemptEncryption=false`. Estado interno `READY_FOR_BETA_TESTING`; no asignado al grupo QA. Selección del build 6 y envío final a App Review pendientes |
+| Límites | La sesión web de App Store Connect caducó y debe renovarse para seleccionar el build 6. Este corte no acredita esa selección, login físico de ese build, entrega push ni apertura física de enlaces universales |
 
 No hubo cambios de fuente o base de datos para esta reconstrucción. La propagación al testing y producción de Gonzalo y al backend/fork de Ariel queda para una tarea futura **después de la aprobación de Apple**; no se realizaron merges ni se programó una promoción automática. El dueño oficial del backend sigue siendo `am-p/app-loyalty`; cualquier promoción futura debe resolver las ramas y remotos actuales y preservar los cambios de cada repositorio.
 
-El grupo interno `Validacion iOS Gabriel` conserva únicamente el build QA 5 en estado `VALID`, con `hasAccessToAllBuilds=false`; el build 6 no se añadió a ese grupo. La confirmación de acceso Apple/Google del usuario corresponde al build QA 5 descrito abajo. El último borrador Apple comprobado conserva el build público 4; la subida del IPA 6 no actualiza ese borrador.
+El grupo interno `Validacion iOS Gabriel` conserva únicamente el build QA 5 en estado `VALID` e `IN_BETA_TESTING`, con `hasAccessToAllBuilds=false`; el build 6 no se añadió a ese grupo. La confirmación de acceso Apple/Google del usuario corresponde al build QA 5 descrito abajo. La versión pública continúa `READY_FOR_REVIEW` con el build público 4 seleccionado; la validación del IPA 6 no reemplaza esa selección ni envía la versión a revisión.
 
-Evidencia local en `reports/ios-appstore-20261103/`: `production6-build-status.json`, `production6-eas-env-validation.json`, `production6-provider-check.json`, `production6-ipa-audit.json`, `production6-apple-upload-proof.json`, `production6-qa-group-status.json` y `production6-release-plan.json`.
+Evidencia local en `reports/ios-appstore-20261103/`: `production6-build-status.json`, `production6-eas-env-validation.json`, `production6-provider-check.json`, `production6-ipa-audit.json`, `production6-apple-upload-proof.json`, `asc-builds-status.json`, `production6-qa-group-status.json` y `production6-release-plan.json`. El reporte de subida conserva su corte previo con procesamiento pendiente; la consulta posterior de builds acredita `VALID`.
 
 ## Actualización operativa iOS · 03/11/2026
 
