@@ -36,6 +36,10 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 03/11/2026 · Reconstrucción productiva del candidato QA 5
+
+Se documentó el build EAS terminado `1.0.0 (6)`, `480dee9e-24ed-4b0f-9047-50f66e34b7d8`, misma fuente propietaria `59eecab` que el QA 5, usando `ios-production`. La configuración validó orígenes productivos, almacenamiento original, OAuth/Maps y ausencia de excepción de simulador; los proveedores comprobaron audiencia Google coincidente y Apple configurado sobre API saludable `2cd172f`/`0044`. El IPA pasó firma, API productiva presente/testing ausente, permisos Apple/push productivos, 20 manifiestos iguales al QA 5 y ausencia de frameworks de billing. La subida a Apple terminó con éxito; procesamiento y selección del build 6 siguen pendientes, la sesión web de App Store Connect caducó y no se envió a revisión. El grupo interno conserva sólo QA 5 y no accede automáticamente a todos los builds. Código, backend y base de datos sin cambios por esta reconstrucción; propagación a Gonzalo y Ariel diferida por el usuario hasta después de la aprobación de Apple, sin merges ni automatización. Se actualizaron evidencia/entrega iOS, componentes frontend, matriz de integración, fuentes, brechas e historial. La rama documental se obtuvo de nuevo y el índice cubrió 45 documentos sin omisiones ni enlaces rotos antes de editar. [Evidencia detallada](#/ios-development-evidence).
+
 ### 03/11/2026 · Preparación App Store e identidad productiva
 
 Documentados frontend5fccb3d/TestFlight1.0.0(2), propietario backend5af3bd5/PR48, candidato publicado314248b/0044, backup/recuperación, capturas y QA sintética. C4contenedores, datos actuales, matriz, flujo/auth, secuenciaApple, gaps y evidencia actualizados sin convertir StoreKit0045 ni propuestasPC en acuerdos. Clasificación13+ por corrección expresa; gate/legales18 legado y consentimiento físico/APNs/AASA todavía pendientes. Fetch/índice45Markdown verificados; fuente y runtime diferenciados.

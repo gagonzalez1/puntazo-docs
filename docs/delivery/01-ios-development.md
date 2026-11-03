@@ -14,6 +14,12 @@ authority: mixed
 
 # Desarrollo iOS · edición gratis y StoreKit interno
 
+## Reconstrucción para producción · 03/11/2026
+
+EAS terminó la edición gratis **1.0.0 (6)** desde la misma fuente `59eecab` probada en TestFlight 5, rama propietaria `qa/ios-review-testing-20261103`, con el perfil `ios-production`. La auditoría del IPA confirma API productiva, firma y permisos Apple/push de producción, 20 manifiestos de privacidad y ausencia de frameworks de billing. La configuración conserva las claves productivas originales. La subida a Apple terminó con éxito; siguen pendientes procesamiento y selección del build 6. La sesión web de App Store Connect caducó y el envío final a App Review no se realizó. El usuario difirió la propagación a testing/producción de Gonzalo y al backend/fork de Ariel hasta después de la aprobación de Apple; no hubo merges ni cambios de fuente/base de datos. [Evidencia y límites](#/ios-development-evidence).
+
+Los cortes anteriores siguientes conservan su fecha y su alcance.
+
 ## Actualización de entrega · 03/11/2026
 
 La primera edición gratuita está en TestFlight1.0.0(2), frontend propietario5fccb3d/PR117. Identidad Apple fue promovida por separado a producción314248b/esquema0044, con dueño backendPR48 y publicación que conserva Backoffice;0045StoreKit, compras y sus gates quedaron fuera. El usuario mantiene clasificación13+ y define el bloqueo18 como legado; fecha de nacimiento queda para futura entrega. Reconciliación del gate/legales, consentimiento Apple físico, APNs y AASA siguen pendientes. [Fuentes, pruebas y artefactos](#/ios-development-evidence).

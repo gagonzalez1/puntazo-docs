@@ -17,6 +17,8 @@ authority: mixed
 
 Apple nativo contra producción `2cd172f` pasó el consentimiento físico y el alta de Cliente hasta Mi tarjeta. Testing `c80fa9b` tiene challenge 200 y configuración privada comprobados. El usuario confirmó accesos satisfactorios con Apple y Google tras la prueba solicitada en TestFlight 5 contra testing. Ambos usan esquema 0044. El build público 4, fuente `83c7a8f`, está VALID y seleccionado en un borrador READY_FOR_REVIEW, sin envío final. El build QA 5, fuente `59eecab`, está VALID e IN_BETA_TESTING, asignado al grupo interno de Gabriel (un tester), y usa sólo testing. El build productivo 2 se retiró de ese grupo sin hacer caducar el binario. Las dos rutas AASA públicas responden 200 con application/json para `8Y4J9DXGM7.com.puntazo.app`. La apertura física de enlaces y la entrega APNs siguen pendientes.
 
+El build 6 usa la misma fuente `59eecab` del QA 5 con el perfil `ios-production`. EAS finalizó y el IPA firmado contiene `https://api.puntazo.pro`, sin la API de testing; la configuración selecciona `https://puntazo.pro`, edición gratis y almacenamiento productivo original. La audiencia Google coincide con el servidor y Apple nativo está configurado; la API productiva observada sigue en `2cd172f`/`0044`, saludable. No hubo cambios de fuente/base de datos ni propagación a otras ramas. La subida a Apple terminó con éxito; procesamiento y selección del build 6 siguen pendientes y la sesión web de App Store Connect caducó. El grupo interno conserva sólo QA 5 y no accede automáticamente a todos los builds. [Evidencia del candidato y promoción diferida](#/ios-development-evidence).
+
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 
 

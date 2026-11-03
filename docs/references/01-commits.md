@@ -15,6 +15,14 @@ diagram: false
 
 Las ramas seleccionan fuentes; los SHA registran lo inspeccionado o desplegado. Un checkout histórico, una rama de trabajo o el tag `latest` no prueba integración ni publicación.
 
+## Candidato iOS reconstruido para producción · 03/11/2026
+
+Fuente propietaria seleccionada: `gonzalotev/app-fidelidad`, remoto `origin`, rama `qa/ios-review-testing-20261103`, checkout `.worktrees/ios-apple-ready-20261103/frontend-testing`. El build QA 5 y el nuevo productivo 6 registran `59eecab5fe78b409e53a21ff2025623688bc8785`; cambia el perfil a `ios-production`, con API/app productivas y claves productivas originales. EAS `480dee9e-24ed-4b0f-9047-50f66e34b7d8` finalizó el build 6, su IPA pasó auditoría y la subida a Apple terminó con éxito; procesamiento y selección Apple siguen pendientes. Documentación de esta reconciliación: `gagonzalez1/puntazo-docs`, remoto `origin`, rama `docs/ios-appstore-readiness-20261103`, checkout `.worktrees/ios-apple-ready-20261103/docs`; base remota verificada `dc7d137` antes de estos cambios locales.
+
+El usuario difirió la propagación a las ramas testing/producción de Gonzalo y al backend/fork de Ariel hasta después de la aprobación de Apple. No hubo merges ni promoción automática; los remotos y ramas destino se resolverán de nuevo en esa tarea, respetando a `am-p/app-loyalty` como dueño backend. No se sustituyó el frontend web desplegado ni el backend con esta reconstrucción. [Evidencia del artefacto y límites](#/ios-development-evidence).
+
+## Mapa y selección histórica de fuentes
+
 | Plano | Repositorio y ramas | Responsabilidad |
 |---|---|---|
 | Frontend | [gonzalotev/app-fidelidad](https://github.com/gonzalotev/app-fidelidad), `main` / `testing`; `origin/develop` seleccionada para la entrega iOS | Producto Expo y web de cada ambiente; iOS local todavía sin publicación |

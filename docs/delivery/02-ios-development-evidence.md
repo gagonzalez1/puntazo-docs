@@ -13,6 +13,25 @@ authority: mixed
 
 # Evidencia del desarrollo iOS
 
+## Candidato probado reconstruido para producción · 03/11/2026
+
+El usuario pidió reconstruir el código probado en TestFlight 5 contra producción y difirió la propagación a otras ramas hasta después de la aprobación de Apple. EAS terminó **1.0.0 (6)**, build `480dee9e-24ed-4b0f-9047-50f66e34b7d8`, perfil `ios-production`, desde `gonzalotev/app-fidelidad:qa/ios-review-testing-20261103`, fuente `59eecab5fe78b409e53a21ff2025623688bc8785`. Es la misma fuente del build QA 5; el perfil selecciona API/app productivas y las claves originales del almacenamiento productivo. El número 5 ya estaba consumido en Apple y no se reutiliza. Estos SHA identifican los artefactos observados; futuros builds requieren seleccionar y obtener de nuevo la rama vigente.
+
+| Comprobación | Evidencia confirmada del build 6 |
+|---|---|
+| Configuración EAS y nativa | API `https://api.puntazo.pro`, app `https://puntazo.pro`, legales públicos, edición `free`, namespace productivo por defecto y sin excepción de autenticación de simulador; OAuth Google iOS y Maps presentes |
+| Proveedores | La audiencia Google del servidor coincide con la configuración iOS; cliente Apple nativo configurado; API productiva saludable. Runtime observado `2cd172fe28e9278682bfdc55a13b27e13cfe8bab`, esquema `0044` |
+| IPA firmado | Firma válida, bundle `com.puntazo.app`, API productiva presente y API de testing ausente en el bundle real; permisos Apple y push de producción presentes; 20 manifiestos de privacidad idénticos al build QA 5; frameworks de billing ausentes |
+| Integridad del IPA | SHA-256 `152d7eb5724dedef5b5c843d610f8215ffda8137a5fd96ef2d4770c823c2b23a` |
+| Apple | Subida del archivo completada con éxito; procesamiento y selección del build 6 pendientes. La consulta de builds de Apple todavía no lo lista. No se envió a App Review |
+| Límites | La sesión web de App Store Connect caducó y debe renovarse para continuar allí. Este corte no acredita procesamiento `VALID`, selección del build 6, login físico de ese build, entrega push ni apertura física de enlaces universales |
+
+No hubo cambios de fuente o base de datos para esta reconstrucción. La propagación al testing y producción de Gonzalo y al backend/fork de Ariel queda para una tarea futura **después de la aprobación de Apple**; no se realizaron merges ni se programó una promoción automática. El dueño oficial del backend sigue siendo `am-p/app-loyalty`; cualquier promoción futura debe resolver las ramas y remotos actuales y preservar los cambios de cada repositorio.
+
+El grupo interno `Validacion iOS Gabriel` conserva únicamente el build QA 5 en estado `VALID`, con `hasAccessToAllBuilds=false`; el build 6 no se añadió a ese grupo. La confirmación de acceso Apple/Google del usuario corresponde al build QA 5 descrito abajo. El último borrador Apple comprobado conserva el build público 4; la subida del IPA 6 no actualiza ese borrador.
+
+Evidencia local en `reports/ios-appstore-20261103/`: `production6-build-status.json`, `production6-eas-env-validation.json`, `production6-provider-check.json`, `production6-ipa-audit.json`, `production6-apple-upload-proof.json`, `production6-qa-group-status.json` y `production6-release-plan.json`.
+
 ## Actualización operativa iOS · 03/11/2026
 
 El build público 1.0.0 (4), EAS `9ef5a916-225f-4ad1-a869-99760c4fd569`, fuente `83c7a8f`, está VALID y APP_STORE_ELIGIBLE. Firma, bundle, equipo, permisos Apple/push y 20 manifiestos de privacidad idénticos al build 2 aprobados. Está seleccionado en el borrador READY_FOR_REVIEW; no se pulsó Enviar a revisión. El build QA 1.0.0 (5), EAS `63326765-17a9-4050-a8f3-9aa71bc575c2`, fuente `59eecab`, está VALID e IN_BETA_TESTING, disponible en el grupo interno de Gabriel (un tester). El build productivo 2 se retiró sólo de ese grupo. Su paquete firmado contiene la URL real de testing y almacenamiento aislado. CI de ambos candidatos aprobada: `41705090149` y `41711067153`. QA pasó TypeScript, 453 unitarias, 10 controles iOS, Doctor 18/18, auditoría sin vulnerabilidades, build web, tres rutas legales en navegador y 13 comprobaciones de API exclusivamente en testing. Las demos Apple 9/10/11 productivas quedaron dadas de baja conservando cuentas e historial. La clasificación 13+ permanece y retirar el control 18+ sigue diferido. Informes operativos locales bajo `reports/ios-appstore-20261103/`.

@@ -17,6 +17,8 @@ diagram: false
 
 Resueltos en este corte: configuración de Sign in with Apple, consentimiento físico productivo hasta Mi tarjeta, APNs en EAS, AASA JSON público y validación de metadatos del borrador de App Review. El usuario confirmó accesos satisfactorios con Apple y Google en la prueba solicitada contra testing. Siguen sin acreditarse la entrega push y la apertura física de enlaces universales. Las notas Apple ya no contienen el acceso comercial de demo cerrado; conservan Cliente y el alta gratuita de Comercio. La clasificación 13+ y el control 18+ legado siguen distintos por la decisión de diferir ese cambio. Las PR 48, 117 y 120 permanecen como promociones a los propietarios; no se afirma merge de main ni envío final a App Review.
 
+El build productivo 6 ya terminó en EAS y pasó auditoría de IPA: misma fuente `59eecab` del QA 5, API productiva embebida, firma válida, permisos Apple/push de producción, 20 manifiestos de privacidad y sin frameworks de billing. La subida a Apple terminó con éxito; procesamiento `VALID`, selección Apple y login físico siguen pendientes. La sesión web de App Store Connect caducó y debe renovarse para continuar allí. El grupo interno ofrece sólo QA 5 y no tiene acceso automático a todos los builds. La propagación a testing/producción de Gonzalo y al backend/fork de Ariel está diferida expresamente hasta después de la aprobación de Apple; no hay merges ni promoción automática. [Evidencia y alcance](#/ios-development-evidence).
+
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 
 
