@@ -17,6 +17,8 @@ authority: mixed
 
 El build público 1.0.0 (4), EAS `9ef5a916-225f-4ad1-a869-99760c4fd569`, fuente `83c7a8f`, está VALID y APP_STORE_ELIGIBLE. Firma, bundle, equipo, permisos Apple/push y 20 manifiestos de privacidad idénticos al build 2 aprobados. Está seleccionado en el borrador READY_FOR_REVIEW; no se pulsó Enviar a revisión. El build QA 1.0.0 (5), EAS `63326765-17a9-4050-a8f3-9aa71bc575c2`, fuente `59eecab`, está VALID e IN_BETA_TESTING, disponible en el grupo interno de Gabriel (un tester). El build productivo 2 se retiró sólo de ese grupo. Su paquete firmado contiene la URL real de testing y almacenamiento aislado. CI de ambos candidatos aprobada: `41705090149` y `41711067153`. QA pasó TypeScript, 453 unitarias, 10 controles iOS, Doctor 18/18, auditoría sin vulnerabilidades, build web, tres rutas legales en navegador y 13 comprobaciones de API exclusivamente en testing. Las demos Apple 9/10/11 productivas quedaron dadas de baja conservando cuentas e historial. La clasificación 13+ permanece y retirar el control 18+ sigue diferido. Informes operativos locales bajo `reports/ios-appstore-20261103/`.
 
+Confirmación posterior: el usuario validó el acceso con Apple y con Google tras la prueba solicitada en el iPhone con TestFlight 5. Se registra como evidencia declarada por el usuario; no acredita entrega push ni enlaces universales físicos. El envío final a Apple sigue pendiente.
+
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 
 
