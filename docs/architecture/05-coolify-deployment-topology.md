@@ -15,7 +15,7 @@ diagram: true
 
 ## Actualización operativa iOS · 03/11/2026
 
-Runtime verificado03/11: API producción recurso 0yyhsbzttzprrrukoccrwfp6, gagonzalez1/app-loyalty:release/ios-apple-identity-20261103, HEAD observado 2cd172f/esquema 0044. API testing recurso qr5wvgsjhookhyjrjkms9s3w, release/ios-apple-testing-20261103, HEAD observado c80fa9b/esquema 0044, despliegue kr0sa7kgjjyykiv85gw8gxxc/finished, healthy/cero reinicios. Ambos selectores terminaron en HEAD; las bases y secretos siguen separados. Recuperación testing recompilada con código previo más manifiestoSQL 0044, ensayada contra copia migrada; no DOWN. Estas ramas son selectores explícitos, los SHA sólo evidencia del corte.
+Runtime verificado el 03/11: API de producción, recurso `0yyhsbzttzprrrukoccrwfp6`, rama de publicación `release/ios-apple-identity-20261103`, commit observado `2cd172f`, esquema 0044. API de testing, recurso `qr5wvgsjhookhyjrjkms9s3w`, rama `release/ios-apple-testing-20261103`, commit `c80fa9b`, esquema 0044; despliegue `kr0sa7kgjjyykiv85gw8gxxc` terminado, healthy y sin reinicios. Ambos selectores finalizaron en `HEAD`. La recuperación de testing conserva el código anterior y añade sólo SQL 0044 al manifiesto embebido; pasó contra una copia migrada. No ejecutar DOWN. Los SHA son evidencia del corte, no selectores futuros.
 
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 

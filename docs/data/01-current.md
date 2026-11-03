@@ -16,7 +16,7 @@ authority: mixed
 
 ## Actualización operativa iOS · 03/11/2026
 
-La migración 0044 de identidad Apple quedó desplegada en producción y testing independientes; los modelos previos se conservan. Credencial Apple cifrada/revocable validada en producción con un ingreso físico, sesión y destino push activos; no se publican subjects, correos ni tokens. Testing conserva datos de55 tablas comprobados en ensayo de restauración/migración. Por petición explícita se dieron de baja las marcas demoApple 9/10/11 productivas, sucursales/programas/tarjeta/membresías/accesos; cuentas e historial intactos y filas ajenas de57 tablas comparadas. No se agregó fecha de nacimiento.
+La migración 0044 de identidad Apple está desplegada en producción y testing, con bases independientes. El ingreso físico en producción confirmó una identidad nativa, credencial de revocación cifrada, sesión y destino push activos. No se publican subjects, correos ni tokens. La restauración y migración aisladas de testing conservaron los datos previos de 55 tablas. Por pedido explícito se dieron de baja las marcas demo Apple 9, 10 y 11 de producción y sus recursos comerciales activos; todas las cuentas e historial permanecen. Se compararon los registros ajenos de 57 tablas. No se agregó fecha de nacimiento.
 
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 

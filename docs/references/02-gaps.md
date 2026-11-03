@@ -15,7 +15,7 @@ diagram: false
 
 ## Actualización operativa iOS · 03/11/2026
 
-Resueltos en este corte: configuración Sign in with Apple de backend, consentimiento físico productivo hasta Mi tarjeta, APNs en EAS y publicación AASA JSON. Pendientes específicos: consentimiento Apple contra testing, Google en un dispositivo físico, entrega push física y redirección/universal-link física. El cierre del comercio de revisión exige no reutilizar sus credenciales antiguas: notas Apple actualizadas con Cliente y alta gratuita de Comercio. La clasificación13+ y el control 18+ legado permanecen distintos por instrucción de diferir el cambio; no se declara coherencia de ese flujo resuelta. Las PR 48 de identidad, 117 de iOS y 120 de QA siguen propuestas de integración en sus propietarios; no se afirma merge de main ni envío a App Review.
+Resueltos en este corte: configuración de Sign in with Apple, consentimiento físico productivo hasta Mi tarjeta, APNs en EAS, AASA JSON público y validación de metadatos del borrador de App Review. Siguen pendientes el consentimiento Apple contra testing, Google físico, entrega push y apertura física de enlaces universales. Las notas Apple ya no contienen el acceso comercial de demo cerrado; conservan Cliente y el alta gratuita de Comercio. La clasificación 13+ y el control 18+ legado siguen distintos por la decisión de diferir ese cambio. Las PR 48, 117 y 120 permanecen como promociones a los propietarios; no se afirma merge de main ni envío final a App Review.
 
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 

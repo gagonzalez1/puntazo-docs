@@ -15,7 +15,7 @@ authority: mixed
 
 ## Actualización operativa iOS · 03/11/2026
 
-Corte iOS03/11: Apple nativo→API producción2cd172f/0044 pasó consentimiento físico y altaCliente hasta Mi tarjeta; Apple nativo→API testing c80fa9b/0044 tiene challenge200/configuración privada comprobados, consentimiento físico pendiente. Build 4 público 83c7a8f fue cargado a Apple y está procesando; build 5QA 59eecab se está compilando y usará exclusivamente testing. AASA en las dos rutas públicas responde200/application-json, appID8Y4J9DXGM7.com.puntazo.app y diez rutas de identidad; redirección física aún no acreditada. APNs configurada en EAS; entrega física pendiente.
+Apple nativo contra producción `2cd172f` pasó el consentimiento físico y el alta de Cliente hasta Mi tarjeta. Testing `c80fa9b` tiene challenge 200 y configuración privada comprobados; su consentimiento físico sigue pendiente. Ambos usan esquema 0044. El build público 4, fuente `83c7a8f`, está VALID y seleccionado en un borrador READY_FOR_REVIEW, sin envío final. El build QA 5, fuente `59eecab`, terminó y fue cargado a Apple; continúa procesando y usa sólo testing. Las dos rutas AASA públicas responden 200 con application/json para `8Y4J9DXGM7.com.puntazo.app`. La apertura física de enlaces y la entrega APNs siguen pendientes.
 
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 

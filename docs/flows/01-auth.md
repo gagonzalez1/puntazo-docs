@@ -16,7 +16,7 @@ authority: mixed
 
 ## Actualización operativa iOS · 03/11/2026
 
-El usuario completó «Continuar con Apple», eligió Cliente y llegó a Mi tarjeta en iPhone/TestFlight 2. Lectura agregada confirmó identidad nativa, credencial cifrada de revocación, sesión activa y destino push. Esto ocurrió en producción antes del pedido de usar testing. Toda QA posterior se traslada a testing; la rama QA 59eecab evita reutilizar un refresh token productivo al instalar el mismo bundle. El permiso Apple pertenece al mismo com.puntazo.app: no usar la identidad personal para ensayar revocación/baja aunque las bases sean distintas. El control 18+ permanece por decisión expresa de diferirlo.
+El usuario completó Continuar con Apple, eligió Cliente y llegó a Mi tarjeta en un iPhone con TestFlight 2. La lectura agregada de producción confirmó identidad nativa, credencial cifrada de revocación, sesión y destino push. Esto ocurrió antes del pedido de trasladar las pruebas a testing. La rama QA `59eecab` impide reutilizar el refresh token productivo al instalar el mismo bundle. Las comprobaciones de acceso, renovación y cierre de sesión de Cliente y Comercio pasaron contra testing. El permiso de Apple pertenece al mismo `com.puntazo.app`: no usar la identidad personal para probar revocación o eliminación. El control 18+ se conserva por decisión expresa.
 
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 

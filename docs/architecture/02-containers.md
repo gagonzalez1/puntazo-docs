@@ -16,7 +16,7 @@ authority: mixed
 
 ## Actualización operativa iOS · 03/11/2026
 
-La API de producción observada en 2cd172f/0044 y la API de testing en c80fa9b/0044 soportan identidad Apple nativa. Testing usa una base y secreto JWT distintos; backend challenge200 verificado en ambos. La clave de identidad Q9F8VDN8NL permanece privada en VPS, sólo montada en backend. APNs CBQ789L8BS quedó guardada en EAS para com.puntazo.app/producción; entrega física pendiente. No hay cambio de topología ni StoreKit en esta entrega.
+La API de producción observada en `2cd172f` y la API de testing en `c80fa9b` soportan identidad Apple nativa y esquema 0044. Testing conserva una base y un secreto JWT diferentes. El challenge nativo responde 200 en ambos entornos. La clave de identidad `Q9F8VDN8NL` permanece privada en la VPS y se monta sólo en el backend. La clave APNs `CBQ789L8BS` está asignada en EAS para `com.puntazo.app`, en producción; su entrega física sigue pendiente. No se incorporó StoreKit.
 
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 

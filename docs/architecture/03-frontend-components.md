@@ -16,7 +16,7 @@ authority: mixed
 
 ## Actualización operativa iOS · 03/11/2026
 
-La rama propietaria qa/ios-review-testing-20261103/59eecab agrega un perfil iOS de QA que apunta a api-testing.puntazo.pro y separa llavero, borradores de registro/invitaciones/sucursales y catálogo MMKV mediante namespace testing. El candidato público 83c7a8f conserva producción y sus claves existentes. El aislamiento no cambia permisos ni controles backend. La clasificación13+ está guardada en Apple; el usuario difirió retirar el control 18+ del onboarding, que permanece.
+La rama propietaria `qa/ios-review-testing-20261103`, fuente `59eecab`, agrega un perfil de TestFlight que apunta a testing. Separa llavero, borradores de registro, invitaciones y sucursales, y catálogo MMKV mediante el namespace `testing`. El candidato público `83c7a8f` conserva la API y las claves existentes de producción. El aislamiento del almacenamiento no cambia la autorización del backend. Apple tiene clasificación 13+ guardada; el control 18+ del onboarding permanece porque el usuario difirió su retirada.
 
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 
