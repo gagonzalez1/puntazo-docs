@@ -14,6 +14,11 @@ authority: mixed
 
 # Autenticación y onboarding
 
+## Actualización de entrega · 03/11/2026
+
+La API de producción314248b/0044 publica challenge/login/link/reautenticación Apple, sin unir por coincidencia de email. Clave real y challenge200 comprobados; consentimiento real en iPhone pendiente. Email y accesos sintéticos Cliente/Comercio funcionan y sobreviven navegación; no se acredita un login Google real. Clasificación13+ según corrección del usuario; el gate18 y su texto legal son legado todavía por reconciliar en esta versión. [Evidencia](#/ios-development-evidence).
+
+
 El [candidato iOS del 01/11/2026](#/ios-development) añade Apple en fuentes locales. Su verificación externa queda pendiente; el corte de runtime de octubre conserva su fecha.
 
 ```mermaid

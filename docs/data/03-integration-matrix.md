@@ -13,6 +13,8 @@ authority: mixed
 
 # Datos · Matriz pantalla–API
 
+**Delta03/11/2026:** challenge/login/link/reauth/export/bajaApple están publicados en API producción314248b/0044; configuración de clave y challenge200 comprobados. Login por email/roles/operaciónSellos y tarjeta persistida se probaron desde iPhone/iPad según la [evidencia](#/ios-development-evidence). Consentimiento real Apple, APNs y AASA siguen pendientes; StoreKit0045 no fue promovido. Las tablas siguientes conservan su corte histórico.
+
 La tabla histórica conserva su corte de runtime. El [delta iOS local](#/ios-development) se registra por separado abajo: rutas implementadas en el checkout de trabajo no equivalen a rutas desplegadas ni al OpenAPI objetivo.
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.

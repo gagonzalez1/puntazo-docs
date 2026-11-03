@@ -14,6 +14,8 @@ authority: mixed
 
 # C4 · Contenedores
 
+Identidad Apple está publicada desde el03/11/2026 en API producción314248b/esquema0044; iOS1.0.0(2) está en TestFlight y el consentimiento físico sigue pendiente. StoreKit conserva el estado interno/local y no se promovió. [Fuentes, datos, pruebas y límites](#/ios-development-evidence).
+
 El [delta iOS del 01/11/2026](#/ios-development) pertenece a fuentes locales, con verificación externa pendiente. Las aristas marcadas como candidato no describen un servicio publicado; el resto del corte de runtime mantiene su fecha histórica.
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
@@ -34,7 +36,7 @@ flowchart LR
  API --> E[SMTP]
  API -->|testing configurado| MP[Mercado Pago]
  N -. iOS candidato .-> AI[Apple Identity]
- API -. candidato local .-> AI
+ API -->|identidad en producción0044| AI
  API -. billing interno .-> AS[App Store Server API y notificaciones V2]
  D[Docs · React y vinext] -. independiente .- L
  LEG[Sitio legal estático] -. independiente .- L

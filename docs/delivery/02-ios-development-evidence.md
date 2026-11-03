@@ -13,6 +13,21 @@ authority: mixed
 
 # Evidencia del desarrollo iOS
 
+## Actualización de entrega · 03/11/2026
+
+La primera edición gratuita iOS está en TestFlight **1.0.0(2)**: frontend propietario `gonzalotev/app-fidelidad`, rama seleccionada `release/ios-appstore-20261103`, fuente5fccb3d5e405372c450a43e8ef6bb4dfcb2af617, [PR117](https://github.com/gonzalotev/app-fidelidad/pull/117). EASbuildc3da8510-bfbd-4837-a845-765488b59327 y submission5f2ab2ae-2728-4f67-a5fd-5e07b164b0ac finalizados; AppleVALID/READY_FOR_BETA_TESTING. Se guardaron3capturas nativas iPhone y3iPad13, privacidad17tipos sin tracking y disponibilidad gratuita sólo Argentina. No se envió a App Review.
+
+Identidad Apple fue extraída del trabajo previo y propuesta al dueño en [backend PR48](https://github.com/am-p/app-loyalty/pull/48): baseorigin/main obtenida de nuevo, cambio5af3bd59e3628ef247f9217425c288fcbbe9a952, CI41687869821SUCCESS. La fuente de publicación `gagonzalez1/app-loyalty:release/ios-apple-identity-20261103` combina esa identidad con Backoffice ya desplegado y resuelve314248b32cb4a2305aa2bd34de2380859296f2d3. Producción sirve ese commit/esquema0044, readiness200, challengeApple200 y prueba inválida401. No se promovió StoreKit:0045, compras y restricciones comerciales Apple quedan fuera. PR47 continúa separado; el fork de publicación no sustituye al dueño.
+
+Clave de identidadQ9F8VDN8NL, Team8Y4J9DXGM7, exclusiva de com.puntazo.app, creada con confirmación expresa y montada privadamente por API oficial de Coolify. El secreto no forma parte de frontend, Git ni estos documentos. Respaldo cifrado/descifrado/checksum, restore aislado, migración repetida e invariancia de55tablas anteriores aprobados. Recuperación compatible: API previa con manifiesto0044, rama release/ios-apple-rollback-20261103/7b46ef4, imagen puntazo-api-production-rollback:apple-schema44-20261103; readiness sobre copia44 comprobada. No ejecutar DOWN ni restauración automática; conservar diario de bajas.
+
+Cliente32 y Comercio36 tienen correo confirmado y login real. En iPhone/iPad se comprobó Cliente; en iPhone, Comercio completó Sellos/premio de prueba, confirmó1sello a Cliente32 y mostró cliente, guard de canje insuficiente y estadísticas1operación. Edición gratis sin checkout. Perfil/baja accesibles; confirmación de baja cancelada, sin eliminar cuentas seleccionadas. Export abrió hoja nativa, guardar archivo aún no acreditado. Google iOS tiene configuración y abre la hoja del proveedor; consentimiento real no probado.
+
+**Pendientes:** consentimiento Apple real en iPhone (Gabriel recibió invitación como único tester interno), notificacionesAPNs y asociación universalAASA. El usuario pidió mantener clasificación13+ y aclaró que18no es obligatorio de producto; se retiró el override18 en la ficha. El gate18 y los textos legales18 son legado: reconciliación de esta versión pendiente de alcance, fecha de nacimiento reservada a futuro. No declarar la app totalmente lista mientras estos puntos sigan abiertos.
+
+Evidencia operativa: workspace `reports/ios-appstore-20261103/`, en particular apple-production-release-evidence.json, apple-production-runtime.json, apple-native-qa-progress.json y screenshots-manifest.json. Los SHA registran lo observado; futuros builds vuelven a seleccionar/fetch de la rama y exigen verify-context limpio en el checkout real. Ninguno de estos valores fija la próxima fuente.
+
+
 **Corte 01/11/2026. No es un acta de release ni de despliegue.** El [alcance aprobado](#/ios-development) está implementado en ramas de desarrollo; las PR de promoción siguen abiertas. Los enlaces al [runtime histórico](#/runtime-snapshot) conservan su fecha y no prueban la entrega iOS.
 
 ### Coordinador de reseñas · `7a47558`

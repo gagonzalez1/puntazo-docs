@@ -14,6 +14,8 @@ authority: mixed
 
 # Datos · Estado implementado
 
+**Delta productivo03/11/2026:**0044 añade apple_identities, apple_auth_challenges y apple_identity_revocations. La fuente314248b y55tablas anteriores preservadas se comprobaron con backup/restore aislado e invariancia antes/después;0045billing no se aplicó. El DER/corte de octubre siguientes siguen siendo históricos y las entidades billing locales conservan ese límite. [Evidencia de entrega](#/ios-development-evidence).
+
 El [delta iOS del 01/11/2026](#/ios-development) añade tablas locales de identidad y billing Apple. Se validaron en una base aislada de pruebas; no se aplicaron a los ambientes descritos en el corte histórico. El DER distingue esas relaciones con el sufijo `local`.
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.

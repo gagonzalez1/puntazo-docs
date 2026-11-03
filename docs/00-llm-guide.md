@@ -113,6 +113,8 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 34. [`docs/delivery/02-ios-development-evidence.md`](#/ios-development-evidence) — fuentes/commits iniciales, pruebas y pendientes; sin publicar ni usar SHA históricos como selector de build.
 35. [`docs/sequences/06-apple.md`](#/sequence-apple) — challenge, acceso, vínculo, reautenticación y baja Apple; credenciales reales pendientes.
 
+**Entrega03/11/2026:** TestFlight1.0.0(2), capturas/ficha guardadas e identidad Apple publicada en producción0044; [fuentes y pendientes actuales](#/ios-development-evidence). Los cortes históricos siguientes no seleccionan builds futuros.
+
 ## Estrategia de carga para un LLM
 
 - **Cambio de frontend:** reglas + contenedores + componente frontend + flujo afectado + secuencia relacionada.

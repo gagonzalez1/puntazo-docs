@@ -13,6 +13,11 @@ diagram: false
 
 # Brechas y límites actuales
 
+## Actualización de entrega · 03/11/2026
+
+Cerrados: subida y procesamiento de TestFlight1.0.0(2), seis capturas, ficha/privacidad, cuentas Cliente32/Comercio36 verificadas y configuración/rutas Apple productivas0044. QA nativa comprobó Cliente iPhone/iPad y Comercio/Sellos en iPhone. Pendientes de revisión: consentimiento Apple real, APNs, AASA y reconciliación de gate/legales18 con la clasificación13+ pedida por el usuario. StoreKit0045 continúa fuera de producción. [Evidencia actual y cortes históricos](#/ios-development-evidence).
+
+
 El [desarrollo iOS del 01/11/2026](#/ios-development) tiene un plano propio de fuentes locales y pruebas. No actualiza las observaciones runtime de octubre que siguen ni convierte los pendientes de publicación en bloqueos de desarrollo local.
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.

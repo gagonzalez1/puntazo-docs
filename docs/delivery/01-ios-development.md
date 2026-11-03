@@ -14,6 +14,11 @@ authority: mixed
 
 # Desarrollo iOS · edición gratis y StoreKit interno
 
+## Actualización de entrega · 03/11/2026
+
+La primera edición gratuita está en TestFlight1.0.0(2), frontend propietario5fccb3d/PR117. Identidad Apple fue promovida por separado a producción314248b/esquema0044, con dueño backendPR48 y publicación que conserva Backoffice;0045StoreKit, compras y sus gates quedaron fuera. El usuario mantiene clasificación13+ y define el bloqueo18 como legado; fecha de nacimiento queda para futura entrega. Reconciliación del gate/legales, consentimiento Apple físico, APNs y AASA siguen pendientes. [Fuentes, pruebas y artefactos](#/ios-development-evidence).
+
+
 **Corte del 01/11/2026, plano de fuentes.** El usuario aprobó implementar Apple junto con email y Google, Google Maps en iOS y el cobro Apple completo en una edición interna. La primera edición pública será gratuita. La implementación está guardada en las ramas seleccionadas y sus PR de promoción siguen pendientes; no acredita una app subida, un despliegue ni compras de App Store reales. La [evidencia y los pendientes](#/ios-development-evidence) separan esas etapas.
 
 El contrato de esta entrega fue aprobado expresamente por el usuario. No convierte otras rutas del OpenAPI objetivo ni decisiones `PC-xx` en acuerdos. **Mis logros, PR104, queda fuera** de la integración.
