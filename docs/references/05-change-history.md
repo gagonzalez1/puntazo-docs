@@ -14,7 +14,7 @@ summary: Registro funcional de las actualizaciones de documentación y de los co
 
 ## Actualización operativa iOS · 03/11/2026
 
-El 03/11 se reconciliaron las evidencias de preparación iOS y aislamiento de QA. Identidad Apple publicada, ingreso físico productivo confirmado, APNs configurada, AASA y legales 1.3 públicos. El usuario difirió retirar el control 18+ y autorizó la clasificación 13+. Demos comerciales Apple productivas dadas de baja conservando usuarios e historial; pruebas posteriores sólo en testing. Backend de testing `c80fa9b` y esquema 0044 publicados y saludables. Candidato público 4 validado y en borrador READY_FOR_REVIEW; candidato QA 5 cargado y procesando. Ningún envío final a App Review. Estas observaciones no aprueban propuestas ajenas ni alteran la autoridad de los registros históricos.
+El 03/11 se reconciliaron las evidencias de preparación iOS y aislamiento de QA. Identidad Apple publicada, ingreso físico productivo confirmado, APNs configurada, AASA y legales 1.3 públicos. El usuario difirió retirar el control 18+ y autorizó la clasificación 13+. Demos comerciales Apple productivas dadas de baja conservando usuarios e historial; pruebas posteriores sólo en testing. Backend de testing `c80fa9b` y esquema 0044 publicados y saludables. Candidato público 4 validado y en borrador READY_FOR_REVIEW; candidato QA 5 VALID e IN_BETA_TESTING, asignado al grupo interno de Gabriel con un tester. El grupo ya no ofrece el build productivo 2. Ningún envío final a App Review. Estas observaciones no aprueban propuestas ajenas ni alteran la autoridad de los registros históricos.
 
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 

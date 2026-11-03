@@ -15,7 +15,7 @@ authority: mixed
 
 ## Actualización operativa iOS · 03/11/2026
 
-Apple nativo contra producción `2cd172f` pasó el consentimiento físico y el alta de Cliente hasta Mi tarjeta. Testing `c80fa9b` tiene challenge 200 y configuración privada comprobados; su consentimiento físico sigue pendiente. Ambos usan esquema 0044. El build público 4, fuente `83c7a8f`, está VALID y seleccionado en un borrador READY_FOR_REVIEW, sin envío final. El build QA 5, fuente `59eecab`, terminó y fue cargado a Apple; continúa procesando y usa sólo testing. Las dos rutas AASA públicas responden 200 con application/json para `8Y4J9DXGM7.com.puntazo.app`. La apertura física de enlaces y la entrega APNs siguen pendientes.
+Apple nativo contra producción `2cd172f` pasó el consentimiento físico y el alta de Cliente hasta Mi tarjeta. Testing `c80fa9b` tiene challenge 200 y configuración privada comprobados; su consentimiento físico sigue pendiente. Ambos usan esquema 0044. El build público 4, fuente `83c7a8f`, está VALID y seleccionado en un borrador READY_FOR_REVIEW, sin envío final. El build QA 5, fuente `59eecab`, está VALID e IN_BETA_TESTING, asignado al grupo interno de Gabriel (un tester), y usa sólo testing. El build productivo 2 se retiró de ese grupo sin hacer caducar el binario. Las dos rutas AASA públicas responden 200 con application/json para `8Y4J9DXGM7.com.puntazo.app`. La apertura física de enlaces y la entrega APNs siguen pendientes.
 
 El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
 
