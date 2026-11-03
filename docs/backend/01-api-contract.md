@@ -58,6 +58,15 @@ flowchart TB
 | `PATCH /backoffice/suscripciones/{id}` | acción discriminada y motivo | Cambio inmediato o programado |
 | `POST /marcas/{id}/invitaciones` | email, rol y sucursales | Invitación de un solo uso |
 
+## Contrato de identidad Google observado en la remediación
+
+El siguiente contrato fue acordado e implementado en el candidato backend de testing; su presencia en fuente/integración no certifica aún el runtime, cuyo job está en cola. El login Google no vincula automáticamente por email. Una colisión requiere vinculación explícita y devuelve `409 GOOGLE_LINK_REQUIRED` o `409 GOOGLE_IDENTITY_CONFLICT`; no se reasigna un `sub` ya vinculado.
+
+- `POST /v1/auth/google/link`, autenticado: `{ "id_token": "…", "password": "…" }` → `AuthData`.
+- `POST /v1/auth/reauthenticate`, autenticado: `{ "password": "…" }` o `{ "id_token": "…" }`; en el segundo caso el `sub` debe ser el mismo ya vinculado → `AuthData`.
+
+Este trabajo no añade recuperación, reclamación ni reparación de cuentas históricas. Consultar [plan de remediación](#/stress-remediation-plan) para estados y límites de aceptación.
+
 ## Autorización propuesta
 
 - `PROPIETARIO`: configuración total de su marca y personal.

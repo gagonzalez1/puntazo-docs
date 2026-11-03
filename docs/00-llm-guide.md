@@ -107,6 +107,10 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 
 32. [`docs/data/02-target.md`](#/data-target) — DER propuesto `v1.5-review`; no representa todavía la base implementada.
 
+### 7. Entrega y remediación
+
+33. [`docs/delivery/05-stress-remediation-plan.md`](#/stress-remediation-plan) — fases aprobadas para remediación de seguridad, rendimiento y campaña de estrés; incluye conciliación inicial, contrato Google y criterios de aceptación.
+
 ## Estrategia de carga para un LLM
 
 - **Cambio de frontend:** reglas + contenedores + componente frontend + flujo afectado + secuencia relacionada.
