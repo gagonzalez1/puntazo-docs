@@ -29,6 +29,31 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-10-12 — Aviso opcional de actualización Android · rama fuente pendiente
+
+- Frontend: [PR #57](https://github.com/gonzalotev/app-fidelidad/pull/57), rama `codex/android-flexible-updates-20261012`, commit funcional `464db14`, HEAD verificado `5e2d5e0`, basado en main remoto `2871299`. Los SHA son evidencia del cambio revisado y no seleccionan builds futuros.
+- El usuario aprobó el flujo flexible con **Actualizar** y **Más tarde**; al descargar se solicita reinicio explícito. Google Play coordina consentimiento, descarga y actualización.
+- Backend, contrato HTTP, esquema y runtime: sin cambios ni publicación.
+- Actualizados contenedores, componentes frontend, matriz de integración, brechas, índice de secuencias y guía. Agregada secuencia Android. README fuente incluye requisitos y procedimiento de prueba desde Play.
+- Tipos, 133 pruebas unitarias (13 del flujo nuevo), Expo Doctor 18/18 y autolinking Android verificados. Exportación Android, build web/PWA y compilación Kotlin release del módulo verificados; para Gradle 8.14.3 se usó el JDK 17 instalado. Catálogo y Mermaid validados con 43 documentos.
+- En este registro inicial quedaban pendientes la publicación y la instalación real. La entrega Android internal posterior del mismo día se registra debajo; no acredita instalación en celulares.
+
+### 2026-10-12 — AAB interno 1.0.0 (16) y confirmación 18+
+
+- Candidato dueño [PR #61](https://github.com/gonzalotev/app-fidelidad/pull/61), rama `release/android-internal-20261012`, HEAD remoto verificado `a1e0622`; basado en testing actual `d2fd8c6` e incorpora los PR #57/#58/#59. Precios (#60) excluidos por dependencia API ausente (404).
+- Recuperación/adaptación puntual de confirmación 18+ y restricción de checkout externo Android desde `closed-test-readiness`, conservando los campos y flujos más nuevos de testing. Google no sustituye la aceptación; sólo el servidor confirma y habilita los contextos protegidos.
+- Tipos, 136/136 unitarias, Expo Doctor 18/18, web/PWA, CI y 10/10 Chromium verificados. Identidad/HTTP de UI ficticios; ruta age-confirmation e historial reconocidas por el runtime con 401 sin autenticación. API testing observada `3d77120`, esquema 0035, readiness OK; no se desplegó backend/web ni se cambió esquema.
+- [EAS build](https://expo.dev/accounts/gabrieldgs-team/projects/puntazo/builds/b72b5c59-cdb2-4598-afa4-7fe834184f33) FINISHED, fuente `a1e0622`, firma remota existente, min SDK 24 / target 36. ZIP, módulo nativo, firma y bundletool validados. SHA-256 AAB `b2858ef8d00bef06167ca1c19bd1cb0c1633863534ba1c26cfea9a7bb49995f2`.
+- Google validó/confirmó la edición `12554666965124270906`; lectura nueva de internal confirmó `Puntazo (16)`, versionCodes `[16]`, completed. No acredita instalación por testers ni publicación pública. El primer intento EAS falló antes de crear job y reservó 15; se reintentó sin cambiar fuente/firma.
+- Integración a main/testing y QA de instalación, firma de Play/Google login y actualización flexible entre dos versiones quedan pendientes. Los SHA y el build ID son evidencia de esta entrega; futuras compilaciones deben resolver otra vez las ramas remotas actuales.
+
+### 2026-10-12 — Promoción del AAB 16 a pruebas cerradas
+
+- Por solicitud explícita del usuario, el mismo AAB `1.0.0 (16)` se promovió de `internal` al canal cerrado existente `testing`; no se recompiló ni se subió otro archivo. Se verificó el SHA-256 local contra el bundle guardado por Google.
+- Antes de la promoción se resolvieron nuevamente los HEAD remotos de `app-fidelidad:release/android-internal-20261012` (`a1e0622`) y docs `main` (`12ba775`), con fuente limpia y cobertura del índice válida. La rama base frontend `testing` también fue fetched (`d2fd8c6`). Checkout fuente: `.worktrees/android-internal-20261012/frontend`.
+- Google validó y confirmó la edición `00206849744240804998` a las 17:48 UTC. Una edición nueva confirmó `testing`, versión `[16]`, estado de rollout `completed`; la API de ciclo de publicación confirmó `RELEASE_LIFECYCLE_STATE_IN_REVIEW`. El rollout configurado no equivale a aprobación: la versión 14 continuaba `PUBLISHED` y disponible para ese grupo.
+- Se verificó que los otros canales y la configuración de testers no cambiaron. Backend, esquema, web y producción pública: sin cambios. La disponibilidad de 16 para testers cerrados queda pendiente de la revisión de Google; instalación física aún no acreditada.
+
 ### 2026-10-02 — Arquitectura vigente y topología por ambiente
 
 - Revisión desde ramas actuales en checkouts limpios; API oficial de Coolify, imágenes, endpoints de versión y 41 tablas por base comprobados. [Evidencia completa](#/runtime-snapshot).
