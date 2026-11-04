@@ -14,6 +14,15 @@ authority: mixed
 
 # C4 · Contenedores
 
+## Actualización operativa iOS · 03/11/2026
+
+La API de producción observada en `2cd172f` y la API de testing en `c80fa9b` soportan identidad Apple nativa y esquema 0044. Testing conserva una base y un secreto JWT diferentes. El challenge nativo responde 200 en ambos entornos. La clave de identidad `Q9F8VDN8NL` permanece privada en la VPS y se monta sólo en el backend. La clave APNs `CBQ789L8BS` está asignada en EAS para `com.puntazo.app`, en producción; su entrega física sigue pendiente. No se incorporó StoreKit.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
+Identidad Apple está publicada desde el03/11/2026 en API producción314248b/esquema0044; iOS1.0.0(2) está en TestFlight y el consentimiento físico sigue pendiente. StoreKit conserva el estado interno/local y no se promovió. [Fuentes, datos, pruebas y límites](#/ios-development-evidence).
+
 El [delta iOS del 01/11/2026](#/ios-development) pertenece a fuentes locales, con verificación externa pendiente. Las aristas marcadas como candidato no describen un servicio publicado; el resto del corte de runtime mantiene su fecha histórica.
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
@@ -34,7 +43,7 @@ flowchart LR
  API --> E[SMTP]
  API -->|testing configurado| MP[Mercado Pago]
  N -. iOS candidato .-> AI[Apple Identity]
- API -. candidato local .-> AI
+ API -->|identidad en producción0044| AI
  API -. billing interno .-> AS[App Store Server API y notificaciones V2]
  D[Docs · React y vinext] -. independiente .- L
  LEG[Sitio legal estático] -. independiente .- L

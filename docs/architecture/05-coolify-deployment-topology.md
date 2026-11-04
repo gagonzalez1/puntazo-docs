@@ -13,6 +13,13 @@ diagram: true
 
 # Topología desplegada · Coolify
 
+## Actualización operativa iOS · 03/11/2026
+
+Runtime verificado el 03/11: API de producción, recurso `0yyhsbzttzprrrukoccrwfp6`, rama de publicación `release/ios-apple-identity-20261103`, commit observado `2cd172f`, esquema 0044. API de testing, recurso `qr5wvgsjhookhyjrjkms9s3w`, rama `release/ios-apple-testing-20261103`, commit `c80fa9b`, esquema 0044; despliegue `kr0sa7kgjjyykiv85gw8gxxc` terminado, healthy y sin reinicios. Ambos selectores finalizaron en `HEAD`. La recuperación de testing conserva el código anterior y añade sólo SQL 0044 al manifiesto embebido; pasó contra una copia migrada. No ejecutar DOWN. Los SHA son evidencia del corte, no selectores futuros.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
 Esta vista resume cómo están distribuidos los recursos de Puntazo en Coolify.
 La distribución se volvió a comprobar el **02/10/2026, 22:30–22:33 UTC**, mediante API oficial de Coolify y runtime Docker. Describe ese corte; el panel puede cambiar después. Ver [versiones y configuración observadas](#/runtime-snapshot).
 

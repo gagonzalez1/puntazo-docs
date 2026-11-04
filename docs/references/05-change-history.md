@@ -12,6 +12,13 @@ summary: Registro funcional de las actualizaciones de documentación y de los co
 
 # Historial de sincronizaciones documentales
 
+## Actualización operativa iOS · 03/11/2026
+
+El 03/11 se reconciliaron las evidencias de preparación iOS y aislamiento de QA. Identidad Apple publicada, ingreso físico productivo confirmado, APNs configurada, AASA y legales 1.3 públicos. El usuario difirió retirar el control 18+ y autorizó la clasificación 13+. Demos comerciales Apple productivas dadas de baja conservando usuarios e historial; pruebas posteriores sólo en testing. Backend de testing `c80fa9b` y esquema 0044 publicados y saludables. Candidato público 4 validado y en borrador READY_FOR_REVIEW; candidato QA 5 VALID e IN_BETA_TESTING, asignado al grupo interno de Gabriel con un tester. El grupo ya no ofrece el build productivo 2. El usuario confirmó posteriormente los accesos Apple y Google tras la prueba física solicitada con TestFlight 5. Ningún envío final a App Review. Estas observaciones no aprueban propuestas ajenas ni alteran la autoridad de los registros históricos.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
 Este historial explica **qué cambió y qué documentación se revisó**. No reemplaza a `git log`: agrega contexto funcional para humanos y LLM.
 
 ## Cómo registrar una actualización
@@ -28,6 +35,15 @@ Cada PR de sincronización aceptado debe agregar una entrada al principio de la 
 Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omitirlo.
 
 ## Actualizaciones
+
+### 03/11/2026 · Reconstrucción productiva del candidato QA 5
+
+Se documentó el build EAS terminado `1.0.0 (6)`, `480dee9e-24ed-4b0f-9047-50f66e34b7d8`, misma fuente propietaria `59eecab` que el QA 5, usando `ios-production`. La configuración validó orígenes productivos, almacenamiento original, OAuth/Maps y ausencia de excepción de simulador; los proveedores comprobaron audiencia Google coincidente y Apple configurado sobre API saludable `2cd172f`/`0044`. El IPA pasó firma, API productiva presente/testing ausente, permisos Apple/push productivos, 20 manifiestos iguales al QA 5 y ausencia de frameworks de billing. Apple lo recibió y procesó como `VALID`/`APP_STORE_ELIGIBLE`, estado interno `READY_FOR_BETA_TESTING`; con la sesión renovada y el build 6 seleccionado en la versión 1.0.0, el usuario ejecutó «Enviar a revisión». La API oficial confirma `WAITING_FOR_REVIEW` y publicación `AFTER_APPROVAL` a las 21:19 Argentina del 03/11 (00:19 UTC del 04/11); no acredita aprobación ni publicación. El grupo interno conserva sólo QA 5 y no accede automáticamente a todos los builds. Código, backend y base de datos sin cambios por esta reconstrucción; propagación a Gonzalo y Ariel diferida por el usuario hasta después de la aprobación de Apple, sin merges ni automatización. Se actualizaron evidencia/entrega iOS, componentes frontend, matriz de integración, fuentes, brechas, historial y catálogo generado. La rama documental se obtuvo de nuevo y el índice cubrió 45 documentos sin omisiones ni enlaces rotos antes de editar. [Evidencia detallada](#/ios-development-evidence).
+
+### 03/11/2026 · Preparación App Store e identidad productiva
+
+Documentados frontend5fccb3d/TestFlight1.0.0(2), propietario backend5af3bd5/PR48, candidato publicado314248b/0044, backup/recuperación, capturas y QA sintética. C4contenedores, datos actuales, matriz, flujo/auth, secuenciaApple, gaps y evidencia actualizados sin convertir StoreKit0045 ni propuestasPC en acuerdos. Clasificación13+ por corrección expresa; gate/legales18 legado y consentimiento físico/APNs/AASA todavía pendientes. Fetch/índice45Markdown verificados; fuente y runtime diferenciados.
+
 
 ### 2026-11-01 — Verificación visual de teclado en baja de cuenta
 

@@ -14,6 +14,18 @@ authority: mixed
 
 # Autenticación y onboarding
 
+## Actualización operativa iOS · 03/11/2026
+
+El usuario completó Continuar con Apple, eligió Cliente y llegó a Mi tarjeta en un iPhone con TestFlight 2. La lectura agregada de producción confirmó identidad nativa, credencial cifrada de revocación, sesión y destino push. Esto ocurrió antes del pedido de trasladar las pruebas a testing. La rama QA `59eecab` impide reutilizar el refresh token productivo al instalar el mismo bundle. Las comprobaciones de acceso, renovación y cierre de sesión de Cliente y Comercio pasaron contra testing. Posteriormente, el usuario confirmó accesos satisfactorios con Apple y Google tras la prueba solicitada en el iPhone con TestFlight 5; esta evidencia es su confirmación explícita. El permiso de Apple pertenece al mismo `com.puntazo.app`: no usar la identidad personal para probar revocación o eliminación. El control 18+ se conserva por decisión expresa.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
+## Actualización de entrega · 03/11/2026
+
+La API de producción314248b/0044 publica challenge/login/link/reautenticación Apple, sin unir por coincidencia de email. Clave real y challenge200 comprobados; consentimiento real en iPhone pendiente. Email y accesos sintéticos Cliente/Comercio funcionan y sobreviven navegación; no se acredita un login Google real. Clasificación13+ según corrección del usuario; el gate18 y su texto legal son legado todavía por reconciliar en esta versión. [Evidencia](#/ios-development-evidence).
+
+
 El [candidato iOS del 01/11/2026](#/ios-development) añade Apple en fuentes locales. Su verificación externa queda pendiente; el corte de runtime de octubre conserva su fecha.
 
 ```mermaid

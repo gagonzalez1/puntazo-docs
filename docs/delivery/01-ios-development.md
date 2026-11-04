@@ -14,6 +14,17 @@ authority: mixed
 
 # Desarrollo iOS · edición gratis y StoreKit interno
 
+## Reconstrucción para producción · 03/11/2026
+
+EAS terminó la edición gratis **1.0.0 (6)** desde la misma fuente `59eecab` probada en TestFlight 5, rama propietaria `qa/ios-review-testing-20261103`, con el perfil `ios-production`. La auditoría del IPA confirma API productiva, firma y permisos Apple/push de producción, 20 manifiestos de privacidad y ausencia de frameworks de billing. La configuración conserva las claves productivas originales. Apple procesó el build 6 como `VALID` y `APP_STORE_ELIGIBLE`. Con la sesión renovada y el build 6 seleccionado en la versión 1.0.0, el usuario ejecutó el envío a revisión. La API oficial confirma `WAITING_FOR_REVIEW`, con publicación `AFTER_APPROVAL`; no se acredita aprobación ni publicación. El grupo QA conserva sólo el build 5. El usuario difirió la propagación a testing/producción de Gonzalo y al backend/fork de Ariel hasta después de la aprobación de Apple; no hubo merges ni cambios de fuente/base de datos. [Evidencia y límites](#/ios-development-evidence).
+
+Los cortes anteriores siguientes conservan su fecha y su alcance.
+
+## Actualización de entrega · 03/11/2026
+
+La primera edición gratuita está en TestFlight1.0.0(2), frontend propietario5fccb3d/PR117. Identidad Apple fue promovida por separado a producción314248b/esquema0044, con dueño backendPR48 y publicación que conserva Backoffice;0045StoreKit, compras y sus gates quedaron fuera. El usuario mantiene clasificación13+ y define el bloqueo18 como legado; fecha de nacimiento queda para futura entrega. Reconciliación del gate/legales, consentimiento Apple físico, APNs y AASA siguen pendientes. [Fuentes, pruebas y artefactos](#/ios-development-evidence).
+
+
 **Corte del 01/11/2026, plano de fuentes.** El usuario aprobó implementar Apple junto con email y Google, Google Maps en iOS y el cobro Apple completo en una edición interna. La primera edición pública será gratuita. La implementación está guardada en las ramas seleccionadas y sus PR de promoción siguen pendientes; no acredita una app subida, un despliegue ni compras de App Store reales. La [evidencia y los pendientes](#/ios-development-evidence) separan esas etapas.
 
 El contrato de esta entrega fue aprobado expresamente por el usuario. No convierte otras rutas del OpenAPI objetivo ni decisiones `PC-xx` en acuerdos. **Mis logros, PR104, queda fuera** de la integración.

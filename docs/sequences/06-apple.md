@@ -14,6 +14,11 @@ authority: mixed
 
 # Acceso y vinculación con Apple
 
+## Actualización de entrega · 03/11/2026
+
+La secuencia descrita ya tiene implementación productiva en314248b/0044 y propuesta al dueño enPR48. El challenge200 genera nonce43caracteres y una prueba inválida devuelve401. La clave real está montada sólo en backend; no hay credenciales de pruebas ni fusión por correo. Consentimiento Apple, relay y revocación contra una identidad real todavía requieren validación física; los tests PostgreSQL/race de alta/vínculo/reauth/baja sí pasaron. [Fuentes y límites](#/ios-development-evidence).
+
+
 **Delta de fuentes locales del 01/11/2026.** El comportamiento está implementado en el candidato de desarrollo, con pruebas controladas; no se declara publicado ni autenticado contra una cuenta Apple real. Ver [evidencia iOS](#/ios-development-evidence).
 
 ```mermaid

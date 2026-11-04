@@ -14,6 +14,15 @@ authority: mixed
 
 # C4 · Componentes frontend
 
+## Actualización operativa iOS · 03/11/2026
+
+La rama propietaria `qa/ios-review-testing-20261103`, fuente `59eecab`, agrega un perfil de TestFlight que apunta a testing. Separa llavero, borradores de registro, invitaciones y sucursales, y catálogo MMKV mediante el namespace `testing`. El candidato público `83c7a8f` conserva la API y las claves existentes de producción. El aislamiento del almacenamiento no cambia la autorización del backend. Apple tiene clasificación 13+ guardada; el control 18+ del onboarding permanece porque el usuario difirió su retirada.
+
+Posteriormente, esa misma fuente `59eecab` se reconstruyó como `1.0.0 (6)` con `ios-production`: API y app productivas, edición gratis y claves productivas originales sin prefijo `testing`. EAS terminó y el IPA firmado confirmó API productiva, permisos Apple/push de producción y ausencia de frameworks de billing. Apple lo procesó como `VALID`/`APP_STORE_ELIGIBLE`; con la sesión renovada y el build 6 seleccionado, el usuario ejecutó el envío a revisión. La API oficial confirma `WAITING_FOR_REVIEW` y publicación `AFTER_APPROVAL`; todavía no acredita aprobación ni publicación. El helper mantiene separados credenciales, los borradores indicados y catálogo; no implica que todas las cachés de interfaz estén separadas. El acceso Apple/Google validado por el usuario sigue correspondiendo al build QA 5, único disponible en su grupo. No se propagaron cambios a otras ramas; la promoción queda diferida hasta después de la aprobación de Apple. [Artefacto y límites de publicación](#/ios-development-evidence).
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
 El [delta iOS del 01/11/2026](#/ios-development) agrega fuentes de desarrollo. Los Releases locales `free` y `billing-internal` de `32f9e82` pasaron auditoría antes del cambio posterior al coordinador de reseñas; son evidencia histórica del código anterior y no de `7a47558`. `69ad97f` sigue como evidencia histórica de QA y compras. El HEAD actual `origin/develop` `7a47558af1d81d109a69c0ffdac1b23e3f9a5bf4` separa actualización de candidatos y contexto de reserva para evitar repetir leases al refrescar tarjetas. Ambos Releases iOS y Android JS del HEAD actual pasaron auditoría, incluyendo el coordinador corregido; la CI del push quedó verde con 161 navegador sin retry. El interno no se instaló ni ejecutó. La revisión de runtime que sigue conserva su fecha; las nuevas aristas son del candidato de desarrollo.
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.

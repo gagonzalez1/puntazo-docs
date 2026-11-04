@@ -13,6 +13,17 @@ authority: mixed
 
 # Datos · Matriz pantalla–API
 
+## Actualización operativa iOS · 03/11/2026
+
+Apple nativo contra producción `2cd172f` pasó el consentimiento físico y el alta de Cliente hasta Mi tarjeta. Testing `c80fa9b` tiene challenge 200 y configuración privada comprobados. El usuario confirmó accesos satisfactorios con Apple y Google tras la prueba solicitada en TestFlight 5 contra testing. Ambos usan esquema 0044. El build público 4, fuente `83c7a8f`, quedó reemplazado por el productivo 6; el usuario ejecutó el envío y la versión está WAITING_FOR_REVIEW. El build QA 5, fuente `59eecab`, está VALID e IN_BETA_TESTING, asignado al grupo interno de Gabriel (un tester), y usa sólo testing. El build productivo 2 se retiró de ese grupo sin hacer caducar el binario. Las dos rutas AASA públicas responden 200 con application/json para `8Y4J9DXGM7.com.puntazo.app`. La apertura física de enlaces y la entrega APNs siguen pendientes.
+
+El build 6 usa la misma fuente `59eecab` del QA 5 con el perfil `ios-production`. EAS finalizó y el IPA firmado contiene `https://api.puntazo.pro`, sin la API de testing; la configuración selecciona `https://puntazo.pro`, edición gratis y almacenamiento productivo original. La audiencia Google coincide con el servidor y Apple nativo está configurado; la API productiva observada sigue en `2cd172f`/`0044`, saludable. No hubo cambios de fuente/base de datos ni propagación a otras ramas. Apple recibió y procesó el build 6 como `VALID`/`APP_STORE_ELIGIBLE`; con la sesión renovada y ese build seleccionado, el usuario ejecutó el envío. La API oficial confirma `WAITING_FOR_REVIEW` y publicación `AFTER_APPROVAL`, sin aprobación o publicación acreditadas. El grupo interno conserva sólo QA 5 y no accede automáticamente a todos los builds. [Evidencia del candidato y promoción diferida](#/ios-development-evidence).
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
+**Delta03/11/2026:** challenge/login/link/reauth/export/bajaApple están publicados en API producción314248b/0044; configuración de clave y challenge200 comprobados. Login por email/roles/operaciónSellos y tarjeta persistida se probaron desde iPhone/iPad según la [evidencia](#/ios-development-evidence). Consentimiento real Apple, APNs y AASA siguen pendientes; StoreKit0045 no fue promovido. Las tablas siguientes conservan su corte histórico.
+
 La tabla histórica conserva su corte de runtime. El [delta iOS local](#/ios-development) se registra por separado abajo: rutas implementadas en el checkout de trabajo no equivalen a rutas desplegadas ni al OpenAPI objetivo.
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.

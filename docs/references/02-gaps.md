@@ -13,6 +13,20 @@ diagram: false
 
 # Brechas y límites actuales
 
+## Actualización operativa iOS · 03/11/2026
+
+Resueltos en este corte: configuración de Sign in with Apple, consentimiento físico productivo hasta Mi tarjeta, APNs en EAS, AASA JSON público y validación de metadatos del borrador de App Review. El usuario confirmó accesos satisfactorios con Apple y Google en la prueba solicitada contra testing. Siguen sin acreditarse la entrega push y la apertura física de enlaces universales. Las notas Apple ya no contienen el acceso comercial de demo cerrado; conservan Cliente y el alta gratuita de Comercio. La clasificación 13+ y el control 18+ legado siguen distintos por la decisión de diferir ese cambio. Las PR 48, 117 y 120 permanecen como promociones a los propietarios; no se afirma merge de main, aprobación de Apple ni publicación.
+
+El build productivo 6 ya terminó en EAS y pasó auditoría de IPA: misma fuente `59eecab` del QA 5, API productiva embebida, firma válida, permisos Apple/push de producción, 20 manifiestos de privacidad y sin frameworks de billing. Apple lo procesó como `VALID`/`APP_STORE_ELIGIBLE`. Con la sesión renovada y el build 6 seleccionado, el usuario ejecutó «Enviar a revisión»; la API oficial confirma `WAITING_FOR_REVIEW` y publicación `AFTER_APPROVAL`. Queda esperar la revisión de Apple; todavía no hay aprobación ni publicación acreditadas. El grupo interno ofrece sólo QA 5 y no tiene acceso automático a todos los builds. El acceso físico confirmado corresponde al QA 5; este corte no acredita login físico del build 6. La propagación a testing/producción de Gonzalo y al backend/fork de Ariel está diferida expresamente hasta después de la aprobación de Apple; no hay merges ni promoción automática. [Evidencia y alcance](#/ios-development-evidence).
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
+## Actualización de entrega · 03/11/2026
+
+Cerrados: subida y procesamiento de TestFlight1.0.0(2), seis capturas, ficha/privacidad, cuentas Cliente32/Comercio36 verificadas y configuración/rutas Apple productivas0044. QA nativa comprobó Cliente iPhone/iPad y Comercio/Sellos en iPhone. Pendientes de revisión: consentimiento Apple real, APNs, AASA y reconciliación de gate/legales18 con la clasificación13+ pedida por el usuario. StoreKit0045 continúa fuera de producción. [Evidencia actual y cortes históricos](#/ios-development-evidence).
+
+
 El [desarrollo iOS del 01/11/2026](#/ios-development) tiene un plano propio de fuentes locales y pruebas. No actualiza las observaciones runtime de octubre que siguen ni convierte los pendientes de publicación en bloqueos de desarrollo local.
 
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.

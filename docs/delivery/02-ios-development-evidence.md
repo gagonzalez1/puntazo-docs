@@ -13,6 +13,50 @@ authority: mixed
 
 # Evidencia del desarrollo iOS
 
+## Candidato probado reconstruido para producción · 03/11/2026
+
+El usuario pidió reconstruir el código probado en TestFlight 5 contra producción y difirió la propagación a otras ramas hasta después de la aprobación de Apple. EAS terminó **1.0.0 (6)**, build `480dee9e-24ed-4b0f-9047-50f66e34b7d8`, perfil `ios-production`, desde `gonzalotev/app-fidelidad:qa/ios-review-testing-20261103`, fuente `59eecab5fe78b409e53a21ff2025623688bc8785`. Es la misma fuente del build QA 5; el perfil selecciona API/app productivas y las claves originales del almacenamiento productivo. El número 5 ya estaba consumido en Apple y no se reutiliza. Estos SHA identifican los artefactos observados; futuros builds requieren seleccionar y obtener de nuevo la rama vigente.
+
+| Comprobación | Evidencia confirmada del build 6 |
+|---|---|
+| Configuración EAS y nativa | API `https://api.puntazo.pro`, app `https://puntazo.pro`, legales públicos, edición `free`, namespace productivo por defecto y sin excepción de autenticación de simulador; OAuth Google iOS y Maps presentes |
+| Proveedores | La audiencia Google del servidor coincide con la configuración iOS; cliente Apple nativo configurado; API productiva saludable. Runtime observado `2cd172fe28e9278682bfdc55a13b27e13cfe8bab`, esquema `0044` |
+| IPA firmado | Firma válida, bundle `com.puntazo.app`, API productiva presente y API de testing ausente en el bundle real; permisos Apple y push de producción presentes; 20 manifiestos de privacidad idénticos al build QA 5; frameworks de billing ausentes |
+| Integridad del IPA | SHA-256 `152d7eb5724dedef5b5c843d610f8215ffda8137a5fd96ef2d4770c823c2b23a` |
+| Apple | Subida completada y procesamiento `VALID`/`APP_STORE_ELIGIBLE`, ID `ab1346b6-0d82-4c44-954b-df43de1450fe`, `usesNonExemptEncryption=false`. Estado interno `READY_FOR_BETA_TESTING`; no asignado al grupo QA |
+| Envío a revisión | Con la sesión renovada y el build 6 seleccionado en la versión 1.0.0, el usuario ejecutó «Enviar a revisión». La API oficial confirma `WAITING_FOR_REVIEW`, versión `bfcc8fa5-94da-4648-864d-a1ee01a9c99b`, build `ab1346b6-0d82-4c44-954b-df43de1450fe` y publicación `AFTER_APPROVAL`. Corte: 03/11/2026 21:19 Argentina, 04/11/2026 00:19 UTC |
+| Límites | El envío está ejecutado y queda esperar la revisión de Apple. `WAITING_FOR_REVIEW` no acredita aprobación ni publicación; tampoco acredita login físico del build 6, entrega push ni apertura física de enlaces universales |
+
+No hubo cambios de fuente o base de datos para esta reconstrucción. La propagación al testing y producción de Gonzalo y al backend/fork de Ariel queda para una tarea futura **después de la aprobación de Apple**; no se realizaron merges ni se programó una promoción automática. El dueño oficial del backend sigue siendo `am-p/app-loyalty`; cualquier promoción futura debe resolver las ramas y remotos actuales y preservar los cambios de cada repositorio.
+
+El grupo interno `Validacion iOS Gabriel` conserva únicamente el build QA 5 en estado `VALID` e `IN_BETA_TESTING`, con `hasAccessToAllBuilds=false`; el build 6 no se añadió a ese grupo. La confirmación de acceso Apple/Google del usuario corresponde al build QA 5 descrito abajo. El build productivo 6 reemplazó al 4 en la selección de la versión pública y el usuario completó el envío; la versión está esperando revisión.
+
+Evidencia local en `reports/ios-appstore-20261103/`: `production6-build-status.json`, `production6-eas-env-validation.json`, `production6-provider-check.json`, `production6-ipa-audit.json`, `production6-apple-upload-proof.json`, `asc-builds-status.json`, `asc-versions-status.json`, `production6-qa-group-status.json`, `production6-release-plan.json` y captura `production6-ready-for-review.png`. La captura conserva la preparación previa al envío; la consulta posterior de la API oficial acredita `WAITING_FOR_REVIEW` con el build 6 seleccionado y `AFTER_APPROVAL`.
+
+## Actualización operativa iOS · 03/11/2026
+
+El build público 1.0.0 (4), EAS `9ef5a916-225f-4ad1-a869-99760c4fd569`, fuente `83c7a8f`, está VALID y APP_STORE_ELIGIBLE. Firma, bundle, equipo, permisos Apple/push y 20 manifiestos de privacidad idénticos al build 2 aprobados. Está seleccionado en el borrador READY_FOR_REVIEW; no se pulsó Enviar a revisión. El build QA 1.0.0 (5), EAS `63326765-17a9-4050-a8f3-9aa71bc575c2`, fuente `59eecab`, está VALID e IN_BETA_TESTING, disponible en el grupo interno de Gabriel (un tester). El build productivo 2 se retiró sólo de ese grupo. Su paquete firmado contiene la URL real de testing y almacenamiento aislado. CI de ambos candidatos aprobada: `41705090149` y `41711067153`. QA pasó TypeScript, 453 unitarias, 10 controles iOS, Doctor 18/18, auditoría sin vulnerabilidades, build web, tres rutas legales en navegador y 13 comprobaciones de API exclusivamente en testing. Las demos Apple 9/10/11 productivas quedaron dadas de baja conservando cuentas e historial. La clasificación 13+ permanece y retirar el control 18+ sigue diferido. Informes operativos locales bajo `reports/ios-appstore-20261103/`.
+
+Confirmación posterior: el usuario validó el acceso con Apple y con Google tras la prueba solicitada en el iPhone con TestFlight 5. Se registra como evidencia declarada por el usuario; no acredita entrega push ni enlaces universales físicos. El envío final a Apple sigue pendiente.
+
+El corte histórico siguiente conserva su fecha; esta actualización prevalece sólo en el alcance iOS indicado.
+
+
+## Actualización de entrega · 03/11/2026
+
+La primera edición gratuita iOS está en TestFlight **1.0.0(2)**: frontend propietario `gonzalotev/app-fidelidad`, rama seleccionada `release/ios-appstore-20261103`, fuente5fccb3d5e405372c450a43e8ef6bb4dfcb2af617, [PR117](https://github.com/gonzalotev/app-fidelidad/pull/117). EASbuildc3da8510-bfbd-4837-a845-765488b59327 y submission5f2ab2ae-2728-4f67-a5fd-5e07b164b0ac finalizados; AppleVALID/READY_FOR_BETA_TESTING. Se guardaron3capturas nativas iPhone y3iPad13, privacidad17tipos sin tracking y disponibilidad gratuita sólo Argentina. No se envió a App Review.
+
+Identidad Apple fue extraída del trabajo previo y propuesta al dueño en [backend PR48](https://github.com/am-p/app-loyalty/pull/48): baseorigin/main obtenida de nuevo, cambio5af3bd59e3628ef247f9217425c288fcbbe9a952, CI41687869821SUCCESS. La fuente de publicación `gagonzalez1/app-loyalty:release/ios-apple-identity-20261103` combina esa identidad con Backoffice ya desplegado y resuelve314248b32cb4a2305aa2bd34de2380859296f2d3. Producción sirve ese commit/esquema0044, readiness200, challengeApple200 y prueba inválida401. No se promovió StoreKit:0045, compras y restricciones comerciales Apple quedan fuera. PR47 continúa separado; el fork de publicación no sustituye al dueño.
+
+Clave de identidadQ9F8VDN8NL, Team8Y4J9DXGM7, exclusiva de com.puntazo.app, creada con confirmación expresa y montada privadamente por API oficial de Coolify. El secreto no forma parte de frontend, Git ni estos documentos. Respaldo cifrado/descifrado/checksum, restore aislado, migración repetida e invariancia de55tablas anteriores aprobados. Recuperación compatible: API previa con manifiesto0044, rama release/ios-apple-rollback-20261103/7b46ef4, imagen puntazo-api-production-rollback:apple-schema44-20261103; readiness sobre copia44 comprobada. No ejecutar DOWN ni restauración automática; conservar diario de bajas.
+
+Cliente32 y Comercio36 tienen correo confirmado y login real. En iPhone/iPad se comprobó Cliente; en iPhone, Comercio completó Sellos/premio de prueba, confirmó1sello a Cliente32 y mostró cliente, guard de canje insuficiente y estadísticas1operación. Edición gratis sin checkout. Perfil/baja accesibles; confirmación de baja cancelada, sin eliminar cuentas seleccionadas. Export abrió hoja nativa, guardar archivo aún no acreditado. Google iOS tiene configuración y abre la hoja del proveedor; consentimiento real no probado.
+
+**Pendientes:** consentimiento Apple real en iPhone (Gabriel recibió invitación como único tester interno), notificacionesAPNs y asociación universalAASA. El usuario pidió mantener clasificación13+ y aclaró que18no es obligatorio de producto; se retiró el override18 en la ficha. El gate18 y los textos legales18 son legado: reconciliación de esta versión pendiente de alcance, fecha de nacimiento reservada a futuro. No declarar la app totalmente lista mientras estos puntos sigan abiertos.
+
+Evidencia operativa: workspace `reports/ios-appstore-20261103/`, en particular apple-production-release-evidence.json, apple-production-runtime.json, apple-native-qa-progress.json y screenshots-manifest.json. Los SHA registran lo observado; futuros builds vuelven a seleccionar/fetch de la rama y exigen verify-context limpio en el checkout real. Ninguno de estos valores fija la próxima fuente.
+
+
 **Corte 01/11/2026. No es un acta de release ni de despliegue.** El [alcance aprobado](#/ios-development) está implementado en ramas de desarrollo; las PR de promoción siguen abiertas. Los enlaces al [runtime histórico](#/runtime-snapshot) conservan su fecha y no prueban la entrega iOS.
 
 ### Coordinador de reseñas · `7a47558`
