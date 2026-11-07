@@ -34,6 +34,12 @@ El alta de cliente usa `/v1/auth/register`; el alta comercial usa `/v1/demo/come
 
 Ver [registro](#/sequence-register), [login](#/sequence-login), [Google](#/sequence-google) y [restauración](#/sequence-restore).
 
+El registro de última apertura está en revisión. La app llama a
+`POST /v1/me/app-open` al iniciar con una sesión válida, al quedar
+autenticada o al volver a primer plano. En web se activa al volver a una
+pestaña visible. Los menús públicos quedan fuera. El envío necesita conexión
+y un fallo de registro no impide usar la app.
+
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ## Referencias de código

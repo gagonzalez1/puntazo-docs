@@ -38,6 +38,22 @@ Testing está activo y su `/healthz` responde 200. Producción está preparada y
 No se publican usuarios, contraseñas ni datos de cuentas en Docs. El aislamiento de red sigue pendiente de demostración en la topología operativa.
 
 
+## Última apertura en Usuarios
+
+El cambio está implementado en ramas de revisión y pendiente de publicación.
+Usuarios conserva el permiso `ADMIN_SISTEMA` para consultar
+`GET /v1/backoffice/users`. El campo opcional durante el despliegue
+`last_app_opened_at` muestra la fecha en horario de Buenos Aires. Las cuentas
+sin una apertura registrada muestran **Sin registro**.
+
+La app informa una apertura autenticada al recuperar la sesión o pasar a
+primer plano. La API guarda un único valor por cuenta con la hora del servidor
+en `usuarios.last_app_opened_at` desde la migración 0046. La exportación de datos
+de la cuenta incluye esa fecha y la baja la elimina. No hay carga retroactiva
+de aperturas. [API](https://github.com/am-p/app-loyalty/pull/51) ·
+[App](https://github.com/gonzalotev/app-fidelidad/pull/123) ·
+[Backoffice](https://github.com/gagonzalez1/puntazo-backoffice/pull/5)
+
 ## Referencias de código
 
 - [Sesiones y cookie internas](https://github.com/am-p/app-loyalty/blob/main/internal/handler/backoffice.go)
