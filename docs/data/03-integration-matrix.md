@@ -13,6 +13,12 @@ authority: mixed
 
 # Datos · Matriz pantalla–API
 
+## Actualización iOS y Apple por navegador · 07/11/2026
+
+La versión pública iOS 1.0.0 (6) figura disponible en Argentina. El recorrido de [Apple por navegador](#/sequence-apple) añade inicio, callback y canje para Android, web y PWA. El vínculo por `sub` y las credenciales por cliente pertenecen al backend. La aplicación conserva el transporte de sesión según la plataforma. La entrega y el QA de esta extensión corresponden a testing.
+
+La API de testing `a874a0b` respondió saludable con esquema 0045. Pasaron el challenge nativo y las pruebas públicas de inicio, espera, cancelación, retorno y bloqueo de reintentos para web y Android. La web/PWA `3c18ec9` sirve el bundle verificado y abre la autorización real de Apple. El [APK interno 1.0.0 (28)](https://expo.dev/accounts/gabrieldgs-team/projects/puntazo/builds/c17181be-fe9b-4524-a6a7-fcd353d6fd41) tiene firma válida y contiene los orígenes de testing. La validación de la misma cuenta con Apple real requiere recorrer TestFlight, Android y web/PWA con una identidad vinculada en testing.
+
 ## Actualización operativa iOS · 03/11/2026
 
 Apple nativo contra producción `2cd172f` pasó el consentimiento físico y el alta de Cliente hasta Mi tarjeta. Testing `c80fa9b` tiene challenge 200 y configuración privada comprobados. El usuario confirmó accesos satisfactorios con Apple y Google tras la prueba solicitada en TestFlight 5 contra testing. Ambos usan esquema 0044. El build público 4, fuente `83c7a8f`, quedó reemplazado por el productivo 6; el usuario ejecutó el envío y la versión está WAITING_FOR_REVIEW. El build QA 5, fuente `59eecab`, está VALID e IN_BETA_TESTING, asignado al grupo interno de Gabriel (un tester), y usa sólo testing. El build productivo 2 se retiró de ese grupo sin hacer caducar el binario. Las dos rutas AASA públicas responden 200 con application/json para `8Y4J9DXGM7.com.puntazo.app`. La apertura física de enlaces y la entrega APNs siguen pendientes.
