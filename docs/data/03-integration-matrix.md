@@ -13,6 +13,8 @@ authority: mixed
 
 # Datos · Matriz pantalla–API
 
+**Actualización parcial 12/11/2026:** APIs publicadas con Go 1.26.11 y esquema 0051; Nginx web 1.30.6. Cuenta dedicada de testing: login, perfil/tarjetas, refresh y logout/revocación aprobados. Proveedores y configuración efectiva preservados. [Detalle y límites](#/schema-nginx-runtime). La matriz funcional siguiente mantiene su corte de octubre; esta entrega no volvió a validar todos sus flujos.
+
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ```mermaid

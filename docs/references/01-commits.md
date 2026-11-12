@@ -19,14 +19,14 @@ Las ramas seleccionan fuentes; los SHA registran lo inspeccionado o desplegado. 
 |---|---|---|
 | Frontend | [gonzalotev/app-fidelidad](https://github.com/gonzalotev/app-fidelidad), `main` / `testing`; `develop` sólo para el clon observado | Producto Expo y web de cada ambiente |
 | Backend dueño | [am-p/app-loyalty](https://github.com/am-p/app-loyalty), `main` | API, Backoffice API y migraciones; destino de promoción funcional |
-| Backend publicación testing | [gagonzalez1/app-loyalty](https://github.com/gagonzalez1/app-loyalty/tree/testing), `testing` | Fork de build/publicación; diferencias comparadas con el dueño |
+| Backend publicación testing y producción | [gagonzalez1/app-loyalty](https://github.com/gagonzalez1/app-loyalty/tree/release/schema-reconciliation-20261112), `release/schema-reconciliation-20261112` | Fork de publicación desde main oficial más PR54/55 con CI aprobado, pendientes de promoción al dueño |
 | Landing | [gagonzalez1/puntazo-landing](https://github.com/gagonzalez1/puntazo-landing), `main` / `testing` | Marketing y entrada/proxy a Expo |
 | Backoffice UI | `gagonzalez1/puntazo-backoffice` (privado), `testing` / `main` | UI interna; main preparada sin publicación activa |
 | Docs | [gagonzalez1/puntazo-docs](https://github.com/gagonzalez1/puntazo-docs), `main` | Portal público separado; Markdown y catálogo generado |
 | Legales | [gagonzalez1/puntazo-legal](https://github.com/gagonzalez1/puntazo-legal), `main` | Publicación legal con estado de revisión propio |
 | Preview histórico | [gagonzalez1/puntazo-preview](https://github.com/gagonzalez1/puntazo-preview/tree/testing), `testing` | Integración anterior retenida; su Compose ya no atiende el tráfico actual |
 
-La revisión del [estado observado](#/runtime-snapshot) registra HEAD, imágenes y configuración del 02/10/2026. Los enlaces de código siguen ramas móviles: hay que fetched/leer el HEAD vigente antes de afirmar una implementación nueva.
+La [actualización del 12/11/2026](#/schema-nginx-runtime) registra API, web y esquemas vigentes de esa entrega. El [estado observado de octubre](#/runtime-snapshot) conserva su fecha histórica. Los enlaces siguen ramas móviles: hay que obtener y leer el HEAD vigente antes de afirmar una implementación nueva.
 
 1. Seleccionar repositorio dueño y rama de integración explícitamente.
 2. Fetch y comparar checkout; preservar trabajo local si está sucio o desactualizado.

@@ -29,6 +29,14 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-11-12 — Reconciliación de esquemas y seguridad del runtime
+
+- Producción 0044→0051 y testing 0049→0051, con historial divergente 0045 conservado y adopción browser auditada. Setenta tablas y objetos auxiliares equivalentes; respaldo cifrado, restauración aislada, ensayo repetido y fingerprints de datos aprobados.
+- API de ambos ambientes publicada desde `release/schema-reconciliation-20261112`, commit `dd2003875d22c41c764b7df6a9be2db3d428398e`, Go 1.26.11. PR54/55 del dueño siguen pendientes; no se confunde publicación con promoción.
+- Frontend testing `29ca05fa15a051b72d2b4394d209295bda339ce0` y main `ae0fb372d278fc7fcc17267f2e2ea077483c9e65`, PR143/144 integrados; únicamente imagen Nginx 1.30.6 fijada por digest. CI aprobado y runtime healthy.
+- Actualizados datos, fuentes, C4/topología en el alcance afectado, matriz, brechas, índice e historia. Nuevo [registro operativo fechado](#/schema-nginx-runtime); conservados los cortes históricos y la autoridad propuesta de spec/DER/OpenAPI. Sin decisiones nuevas de producto.
+- Validación operativa: versiones y readiness directos/proxies, web pública, PWA/PDF, sesión dedicada testing y recuperación compatible. La entrega no acredita cobros ni una nueva publicación nativa.
+
 ### 2026-10-02 — Arquitectura vigente y topología por ambiente
 
 - Revisión desde ramas actuales en checkouts limpios; API oficial de Coolify, imágenes, endpoints de versión y 41 tablas por base comprobados. [Evidencia completa](#/runtime-snapshot).

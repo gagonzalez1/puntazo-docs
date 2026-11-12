@@ -14,6 +14,8 @@ authority: mixed
 
 # C4 · Contenedores
 
+**Actualización parcial 12/11/2026:** API Go 1.26.11, PostgreSQL 0051 y web Nginx 1.30.6 verificados en ambos ambientes. La entrega preservó topología, proveedores y límites existentes; [fuentes y evidencia](#/schema-nginx-runtime). El diagrama y las observaciones de integraciones siguientes conservan el corte de octubre y no certifican configuración actual de los otros componentes.
+
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 ```mermaid
@@ -26,7 +28,7 @@ flowchart LR
  W -->|/api/v1 compatible| API
  W -->|medios firmados en testing| S[MinIO · testing]
  B[Backoffice · React y Nginx] -->|/v1/backoffice| API
- API --> DB[(PostgreSQL · esquema 0033)]
+ API --> DB[(PostgreSQL · esquema 0051)]
  API -->|testing| R[(Redis · rate limit)]
  API -->|testing| S
  API --> E[SMTP]
@@ -56,7 +58,7 @@ Cada ambiente conserva su propia API, base y objetos. El diagrama resume funcion
 
 La landing sirve `/` y redirige las antiguas páginas divididas a secciones de la misma página. El resto pertenece a Expo: `/login`, rutas autenticadas, manifest y service worker. Testing conserva `/api/v1` y el prefijo público de medios para clientes instalados. No se atribuye al Compose anterior el tráfico actual: está detenido.
 
-Producción informa esquema `0033`, pero eso no implica paridad de configuración con testing. Ver [integraciones](#/integration-matrix) y [brechas operativas](#/implementation-gaps).
+Producción y testing informan esquema `0051`; esta paridad estructural no implica paridad de configuración ni aprobación de funcionalidades. Ver [la actualización operativa](#/schema-nginx-runtime).
 
 
 ## Referencias de código

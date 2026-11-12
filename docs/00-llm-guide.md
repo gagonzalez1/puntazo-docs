@@ -36,7 +36,7 @@ Para obtener contexto suficiente sin cargar toda la documentación:
 7. [`docs/references/02-gaps.md`](#/implementation-gaps) — brechas que no deben confundirse con comportamiento actual.
 8. [`docs/backend/00-review-index.md`](#/backend-review-index) — decisiones de backend propuestas por Codex que requieren aprobación.
 
-El corte actual es del **02/10/2026**: [estado observado](#/runtime-snapshot) y [topología](#/coolify-deployment-topology). La implementación funcional reemplazó la antigua base de mocks; los documentos objetivo siguen propuestos.
+API, web y esquema tienen una [actualización operativa del **12/11/2026**](#/schema-nginx-runtime): esquema 0051, Go 1.26.11 y Nginx 1.30.6 en ambos ambientes, con promoción backend al dueño todavía pendiente. El [estado observado de octubre](#/runtime-snapshot) y la [topología](#/coolify-deployment-topology) conservan evidencia histórica para los demás componentes. Los documentos objetivo siguen propuestos.
 
 Después se debe abrir el flujo, la secuencia o el modelo de datos específico de la tarea.
 
@@ -52,6 +52,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 6. [`docs/00-overview.md`](#/overview) — puerta de entrada al mapa completo.
 
 7. [`docs/references/06-runtime-snapshot.md`](#/runtime-snapshot) — versiones, configuración y diferencias de publicación verificadas.
+8. [`docs/references/07-schema-nginx-runtime.md`](#/schema-nginx-runtime) — reconciliación 0051 y publicación de Go/Nginx del 12/11/2026; promoción oficial pendiente.
 
 ### 1. Arquitectura del sistema
 
@@ -65,7 +66,7 @@ Después se debe abrir el flujo, la secuencia o el modelo de datos específico d
 
 ### 2. Estado real de datos e integración
 
-9. [`docs/data/01-current.md`](#/data-current) — modelo persistido en PostgreSQL 0033.
+9. [`docs/data/01-current.md`](#/data-current) — PostgreSQL 0051 y núcleo del modelo documentado en octubre.
 10. [`docs/data/03-integration-matrix.md`](#/integration-matrix) — relación pantalla–API y contratos faltantes.
 11. [`docs/references/02-gaps.md`](#/implementation-gaps) — diferencias entre código, documentación y propuesta.
 

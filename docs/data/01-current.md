@@ -6,7 +6,7 @@ order: 10
 parent: overview
 level: data
 status: current
-summary: Modelo persistido en PostgreSQL 0033; dominios comerciales, fidelidad y operación interna.
+summary: PostgreSQL 0051 en ambos ambientes; núcleo comercial y ampliaciones de identidad/facturación.
 diagram: true
 codeRefs: required
 authority: source_code
@@ -14,9 +14,9 @@ authority: source_code
 
 # Datos · Estado implementado
 
-Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
+**Actualización 12/11/2026:** ambas bases contienen **70 tablas públicas** y versiones 0001–0051 completas. Estructuras equivalentes verificadas; testing conserva su historial 0045 Apple browser y una entrada auditada de adopción 0050. Ver [fuentes, reconciliación, respaldo y límites](#/schema-nginx-runtime). A las tablas del núcleo se suman identidad Apple/browser, datos StoreKit y `schema_reconciliation_log`; la presencia de tablas no acredita facturación activada.
 
-Ambas bases observadas contienen **41 tablas públicas**, incluida `schema_migrations`. Este DER muestra el núcleo y omite columnas/tablas auxiliares; no es un DDL completo.
+El DER y el inventario de dominios siguientes describen el núcleo revisado el **02/10/2026**, entonces de 41 tablas; omiten ampliaciones y tablas auxiliares, y no constituyen un DDL completo de 0051.
 
 ```mermaid
 erDiagram
