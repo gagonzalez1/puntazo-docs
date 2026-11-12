@@ -13,6 +13,8 @@ diagram: false
 
 # Estado observado · 02/10/2026
 
+**Registro histórico.** Las versiones de API, web y bases fueron reemplazadas por la [publicación del 12/11/2026](#/schema-nginx-runtime): ambas bases 0051, Go 1.26.11 y Nginx 1.30.6. Los datos siguientes acreditan únicamente el corte de octubre.
+
 Corte de consulta **22:30–22:33 UTC (19:30–19:33 Argentina)**. Fuentes seleccionadas por rama y fetched en checkouts limpios; API oficial de Coolify, imágenes/health de Docker, endpoints públicos y nombres de tablas consultados sin leer datos de usuarios. Este registro es evidencia fechada, no un pin para futuros builds.
 
 ## Fuente y runtime

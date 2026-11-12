@@ -13,6 +13,8 @@ diagram: true
 
 # Topología desplegada · Coolify
 
+**Actualización parcial 12/11/2026:** se conservaron recursos, dominios, montajes y límites al publicar API Go 1.26.11/esquema 0051 y web Nginx 1.30.6 en ambos ambientes. [Fuentes y comprobaciones](#/schema-nginx-runtime). El mapa completo siguiente conserva el inventario e integraciones de octubre; no es un inventario actual de los demás recursos.
+
 Esta vista resume cómo están distribuidos los recursos de Puntazo en Coolify.
 La distribución se volvió a comprobar el **02/10/2026, 22:30–22:33 UTC**, mediante API oficial de Coolify y runtime Docker. Describe ese corte; el panel puede cambiar después. Ver [versiones y configuración observadas](#/runtime-snapshot).
 

@@ -13,6 +13,8 @@ diagram: false
 
 # Brechas y límites actuales
 
+**Actualización parcial 12/11/2026:** resueltas la deriva de esquemas (ambos 0051), la vulnerabilidad de Go 1.26.10 (1.26.11 publicado) y el Nginx web 1.27.5 (1.30.6 publicado). Pendiente integrar PR54/55 en el backend dueño; los cambios ya se publican desde el fork identificado. [Evidencia y límites](#/schema-nginx-runtime). La tabla siguiente conserva el corte de octubre y no acredita el estado actual de sus otros pendientes.
+
 Revisión de fuentes y runtime del **02/10/2026, 22:30–22:33 UTC**. Los SHA y las diferencias por ambiente están en [Estado observado](#/runtime-snapshot). Esta revisión describe arquitectura e integración; no certifica todos los invariantes de negocio ni ejecuta operaciones sobre cuentas reales.
 
 La comparación inicial de agosto —sólo `users`, cuatro rutas y fidelidad mock— fue superada por el código actual. El historial de Git conserva esa revisión. Estas son las diferencias que afectan la lectura de la arquitectura hoy:
