@@ -51,5 +51,5 @@ El catálogo solo se consulta mientras el modal está montado. La sesión, cach�
 - [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/demo/services/demoService.ts)
 - [Rutas API](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
 
-- [Tarjetas aprobadas en este corte](https://github.com/gonzalotev/app-fidelidad/blob/c2bfa2d109773a5be49c791935164189f4baf8cc/src/components/cards/shared/ApprovedCard.tsx)
-- [Modal de tienda en este corte](https://github.com/gonzalotev/app-fidelidad/blob/c2bfa2d109773a5be49c791935164189f4baf8cc/src/features/demo/components/CardStoreAction.tsx)
+- [Tarjetas aprobadas en testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/components/cards/shared/ApprovedCard.tsx)
+- [Modal de tienda en testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/demo/components/CardStoreAction.tsx)
