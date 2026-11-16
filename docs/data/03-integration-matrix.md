@@ -54,3 +54,7 @@ Las rutas de esta tabla son relativas a `/v1` salvo que se indique el prefijo. S
 - [Suscripción](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/merchant/services/subscriptionService.ts)
 - [Rutas reales](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
 - [Analíticas de testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/merchant/services/merchantService.ts)
+
+## Tarjetas · corte de testing del 15/11/2026
+
+El frontend oficial `testing` integra el diseño aprobado y el modal Ver tienda en [PR 148](https://github.com/gonzalotev/app-fidelidad/pull/148), commit `c2bfa2d109773a5be49c791935164189f4baf8cc`. Reutiliza tarjetas del usuario y catálogo de tiendas autenticado existentes. No hay cambios de contrato backend, schema ni proveedores. Ver [flujo y disponibilidad](#/flow-customer-cards). Rollout público verificado: imagen healthy y hashes de HTML de tarjetas, service worker y manifest iguales a los de la imagen c2bfa2d. La API conserva dd2003875d22c41c764b7df6a9be2db3d428398e y schema 0051 con readiness ok; este corte no acredita despliegue en producción.
