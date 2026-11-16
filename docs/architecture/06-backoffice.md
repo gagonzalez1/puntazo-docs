@@ -43,3 +43,27 @@ No se publican usuarios, contraseñas ni datos de cuentas en Docs. El aislamient
 - [Sesiones y cookie internas](https://github.com/am-p/app-loyalty/blob/main/internal/handler/backoffice.go)
 - [Rutas actuales](https://github.com/am-p/app-loyalty/blob/main/cmd/server/router.go)
 - [Persistencia interna](https://github.com/am-p/app-loyalty/blob/main/migrations/0023_referrals.up.sql)
+
+## Publicación verificada · 29/10/2026
+
+Producción publica Tiendas (antes Clientes; `#clientes` sigue funcionando) y
+Usuarios. El nuevo `GET /v1/backoffice/users` requiere sesión propia y
+`ADMIN_SISTEMA`; consulta cuentas de producto no dadas de baja, con búsqueda
+literal por nombre/apellido/email, filtro de tipo de cuenta y paginación por ID
+(50 por defecto, máximo 100). Devuelve identidad básica, estado, verificación del
+email y fecha de alta. No selecciona secretos ni QR y no permite editar cuentas.
+
+Fuente UI: `gagonzalez1/puntazo-backoffice:main`, revisión verificada `6c17760`
+(PR3). Fuente API publicada con autorización del usuario:
+`gagonzalez1/app-loyalty:release/backoffice-users-production-20261029`, `9c802f7`.
+La base es el `main` oficial vigente `676e052`, más siete archivos de esta
+funcionalidad. `am-p/app-loyalty:main` permanece intacto: la promoción funcional
+PR46 espera aprobación del propietario y la publicación propia PR17 contiene
+además la corrección OpenAPI3.1. La rama de publicación no cambia fork/main ni
+testing. Los SHA acreditan esta entrega; futuros builds deben resolver la rama.
+
+CI completo, build, permisos, búsqueda y filtros reales, salud y navegador
+productivo: PASS. Se observaron21 cuentas (17clientes y4personal de tiendas),
+sin datos personales en estos documentos. Esquema0043, sin nuevas migraciones;
+precios públicos y definiciones de entorno preservados; pagos deshabilitados.
+API y UI healthy, sin reinicios ni puertos host; recuperación conservada en VPS.
