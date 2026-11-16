@@ -46,6 +46,12 @@ La verificación con sesión real cubrió sellos, puntos, ambos temas, datos del
 
 El catálogo solo se consulta mientras el modal está montado. La sesión, caché y actualizaciones de tarjetas conservan los servicios y eventos existentes; no se agregan endpoints, migraciones ni datos de muestra.
 
+## Igualdad con el mapa · 16/11/2026
+
+En [PR 149](https://github.com/gonzalotev/app-fidelidad/pull/149), Ver tienda reutiliza la ficha del mapa: imagen rectangular, botones con el mismo estilo y fila de Instagram, Facebook, TikTok y LinkedIn con sus iconos y colores. Los enlaces dependen de los datos publicados y de la disponibilidad online del catálogo. Instagram permanece como acción con icono de marca cuando es el único enlace y el mapa utiliza esa presentación. El selector de sucursal, modal flotante, disponibilidad dorada/gris y retorno del foco se conservan.
+
+La prueba de regresión compara ambas entradas a 320/402/768 px y en ambos temas, con enlaces, reseña y menú en inglés; el cambio no modifica autenticación, API o datos reales. Fuente: [ficha compartida en testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/storeMap/components/StoreProfileCard.tsx).
+
 ## Referencias de código
 
 - [Implementación frontend](https://github.com/gonzalotev/app-fidelidad/blob/main/src/features/demo/services/demoService.ts)
