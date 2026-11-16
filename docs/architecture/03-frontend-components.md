@@ -44,6 +44,14 @@ flowchart TD
 - El helper de instalación PWA está integrado y publicado en las imágenes actuales de testing y landing testing. El corte final acredita sus SHA y salud; la instalación física en cada dispositivo no se verificó en esta revisión.
 
 
+## Tarjetas compartidas · actualización de testing 15/11/2026
+
+[PR 148](https://github.com/gonzalotev/app-fidelidad/pull/148) integra `ApprovedCard` en los registros de las 39 plantillas: selector comercial, vista previa y tarjetas del cliente usan la misma composición y tamaño de logo. Las acciones integradas permanecen en la pantalla de tarjetas. `CardStoreAction` monta el modal y reutiliza `useStoreCatalog` / `demoService`, sin llamadas HTTP directas desde presentación ni nuevas suscripciones para tarjetas cerradas. El flujo y límites están en [Tarjetas del cliente](#/flow-customer-cards). Alcance: rama oficial `testing`; no implica promoción a producción.
+
+## Ficha de tienda compartida · corrección de testing 16/11/2026
+
+[PR 149](https://github.com/gonzalotev/app-fidelidad/pull/149) extrae la ficha del mapa a `StoreProfileCard` y `StoreProfileActions`, reutilizadas por el mapa y el modal Ver tienda. La imagen, tipografía, estilos y orden de acciones, selección de enlaces e iconos de redes se definen una sola vez. Las redes usan sus glifos y colores de marca; el menú en inglés sigue la versión publicada, y las reseñas reutilizan `useBranchReviewDestination`. Se conservan los contenedores y navegación de cada entrada, las acciones de detalle/favoritos del mapa y los beneficios dorados/grises de la tarjeta. Sin contratos API, esquema o permisos nuevos. Alcance: frontend oficial `testing`.
+
 ## Referencias de código
 
 - [Layout y guards](https://github.com/gonzalotev/app-fidelidad/blob/main/app/(tabs)/_layout.tsx)
