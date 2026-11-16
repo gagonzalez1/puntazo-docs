@@ -40,7 +40,7 @@ Las 18 plantillas de sellos y 21 de puntos comparten un componente React Native 
 
 Los sellos muestran cinco posiciones con índices absolutos y el saldo acumulado, sin denominador fijo. Los requisitos reales se representan con regalos dorados; los sellos completos usan su icono lleno. El movimiento reducido limita la animación y las señales de premio nuevo usan transacciones confirmadas, sin modificar saldos localmente.
 
-Ver tienda abre un modal con las sucursales reales del catálogo existente. Muestra dirección, favoritos de la respuesta en vivo y menú/enlaces publicados cuando están disponibles. Beneficios está centrado y presenta disponibilidad según los requisitos y estado activo recibidos en la tarjeta; no crea una regla nueva de vencimiento en el cliente. Sin conexión se informa que los datos guardados son de lectura y los enlaces que dependen del estado actualizado permanecen deshabilitados. Cerrar el modal devuelve el foco al botón de origen.
+Ver tienda abre directamente la ficha del comercio a partir del catálogo existente, sin selector de sucursal. Conserva el local inicial que se mostraba antes: el primero por nombre dentro de la marca. Muestra dirección, favoritos de la respuesta en vivo y menú/enlaces publicados cuando están disponibles. Beneficios está centrado y presenta disponibilidad según los requisitos y estado activo recibidos en la tarjeta; no crea una regla nueva de vencimiento en el cliente. Sin conexión se informa que los datos guardados son de lectura y los enlaces que dependen del estado actualizado permanecen deshabilitados. Cerrar el modal devuelve el foco al botón de origen.
 
 La verificación con sesión real cubrió sellos, puntos, ambos temas, datos del comercio y premios disponibles/pendientes a 402×874 y en escritorio. La exportación JavaScript de iOS y Android también aprobó; no se verificaron dispositivos nativos.
 
@@ -48,7 +48,7 @@ El catálogo solo se consulta mientras el modal está montado. La sesión, cach�
 
 ## Igualdad con el mapa · 16/11/2026
 
-En [PR 149](https://github.com/gonzalotev/app-fidelidad/pull/149), Ver tienda reutiliza la ficha del mapa: imagen rectangular, botones con el mismo estilo y fila de Instagram, Facebook, TikTok y LinkedIn con sus iconos y colores. Los enlaces dependen de los datos publicados y de la disponibilidad online del catálogo. Instagram permanece como acción con icono de marca cuando es el único enlace y el mapa utiliza esa presentación. El selector de sucursal, modal flotante, disponibilidad dorada/gris y retorno del foco se conservan.
+En [PR 149](https://github.com/gonzalotev/app-fidelidad/pull/149), Ver tienda reutiliza la ficha del mapa: imagen rectangular, botones con el mismo estilo y fila de Instagram, Facebook, TikTok y LinkedIn con sus iconos y colores. Los enlaces dependen de los datos publicados y de la disponibilidad online del catálogo. Instagram permanece como acción con icono de marca cuando es el único enlace y el mapa utiliza esa presentación. El modal flotante, disponibilidad dorada/gris y retorno del foco se conservan. El ajuste posterior [PR 150](https://github.com/gonzalotev/app-fidelidad/pull/150) elimina el bloque de selección de sucursal por decisión del usuario.
 
 La prueba de regresión compara ambas entradas a 320/402/768 px y en ambos temas, con enlaces, reseña y menú en inglés; el cambio no modifica autenticación, API o datos reales. Fuente: [ficha compartida en testing](https://github.com/gonzalotev/app-fidelidad/blob/testing/src/features/storeMap/components/StoreProfileCard.tsx).
 
