@@ -29,6 +29,13 @@ Si un repositorio no cambió, debe indicarse como `sin cambios` en lugar de omit
 
 ## Actualizaciones
 
+### 2026-11-16 — Búsqueda desplazable y densidad de tarjetas
+
+- Frontend dirigido a `testing`: [PR151](https://github.com/gonzalotev/app-fidelidad/pull/151), desde `b53ea3cb7af6ce6a51f8709ad67f87fd5d528752` hasta `b5f8d03b8b0d1d11b2962e98f8b6879ae11e6725`. Buscador dentro del desplazamiento, menos espacio fijo y botones de premios/tienda de al menos 44 px; se preservan modelos, texto, logos y saldos.
+- Actualizado el flujo de tarjetas en el alcance visual. C4, servicios, OpenAPI, integración API y modelo de datos sin cambios. Backend sin cambios; runtime observado `dd2003875d22c41c764b7df6a9be2db3d428398e`, schema0051.
+- TypeScript, 489 unitarias, Doctor18/18 y export web/PWA aprobados. Pruebas de navegador verifican al menos 2,5 tiendas a 390×720 y 390×844 px tras desplazar el buscador, búsqueda/vacío y acciones de premios/tienda. La paridad de modelos compartidos se comprobó entre selector, comercio y cliente. No acredita QA física Android/iOS ni una publicación nativa. CI y publicación web se registran en la conciliación operativa de la tarea.
+- Publicado en testing el16/11/2026 a23:15Argentina: merge`22ea12114cb192c9635731600b1c25dd3aed5ca1`, CI completa190browserPASS/4omitidas y auditoría0vulnerabilidades. Imagen healthy y archivos públicos coincidentes; API/schema0051 preservados. Estos SHA registran lo observado, no fijan fuentes futuras.
+
 ### 2026-11-12 — Reconciliación de esquemas y seguridad del runtime
 
 - Producción 0044→0051 y testing 0049→0051, con historial divergente 0045 conservado y adopción browser auditada. Setenta tablas y objetos auxiliares equivalentes; respaldo cifrado, restauración aislada, ensayo repetido y fingerprints de datos aprobados.
